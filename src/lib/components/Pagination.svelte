@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { createEventDispatcher, onDestroy, onMount, tick } from 'svelte';
 
-	import InfiniteScroll from '$lib/utils/components/InfiniteScroll.svelte';
-	import Loader from '$lib/utils/components/Loader.svelte';
+	import InfiniteScroll from './InfiniteScroll.svelte';
+	import Loader from './Loader.svelte';
 
 	export let items = [];
 	export let itemComponent;

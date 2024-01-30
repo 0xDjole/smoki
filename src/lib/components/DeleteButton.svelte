@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Close from '$lib/utils/icons/close.svg?raw';
-	import SvgIcon from '$lib/utils/components/SvgIcon.svelte';
+	import Close from './icons/close.svg?raw';
+	import SvgIcon from './SvgIcon.svelte';
 
 	export let onClick = () => {};
 </script>

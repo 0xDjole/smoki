@@ -3,14 +3,14 @@
 /** @typedef {typeof __propDef.slots}  SvgIconSlots */
 export default class SvgIcon extends SvelteComponentTyped<{
     [x: string]: any;
-    fill?: string | undefined;
     data?: string | undefined;
-    size?: string | undefined;
-    height?: string | undefined;
-    width?: string | undefined;
     viewBox?: string | undefined;
+    size?: string | undefined;
+    width?: string | undefined;
+    height?: string | undefined;
     color?: string | undefined;
     stroke?: string | undefined;
+    fill?: string | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {}> {
@@ -22,14 +22,14 @@ import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
         [x: string]: any;
-        fill?: string | undefined;
         data?: string | undefined;
-        size?: string | undefined;
-        height?: string | undefined;
-        width?: string | undefined;
         viewBox?: string | undefined;
+        size?: string | undefined;
+        width?: string | undefined;
+        height?: string | undefined;
         color?: string | undefined;
         stroke?: string | undefined;
+        fill?: string | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

@@ -2,20 +2,14 @@
 /** @typedef {typeof __propDef.events}  IndexEvents */
 /** @typedef {typeof __propDef.slots}  IndexSlots */
 export default class Index extends SvelteComponentTyped<{
-    headerClass: any;
+    showBorder?: boolean | undefined;
     sticky?: boolean | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {
-    left: {
-        class: string;
-    };
-    middle: {
-        class: string;
-    };
-    right: {
-        class: string;
-    };
+    left: {};
+    middle: {};
+    right: {};
 }> {
 }
 export type IndexProps = typeof __propDef.props;
@@ -24,22 +18,16 @@ export type IndexSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        headerClass: any;
+        showBorder?: boolean | undefined;
         sticky?: boolean | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;
     };
     slots: {
-        left: {
-            class: string;
-        };
-        middle: {
-            class: string;
-        };
-        right: {
-            class: string;
-        };
+        left: {};
+        middle: {};
+        right: {};
     };
 };
 export {};

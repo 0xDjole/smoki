@@ -2,7 +2,7 @@
 	import { _ } from 'svelte-i18n';
 	import Modal from '../Modal/index.svelte';
 
-	import SvgIcon from '$lib/utils/components/SvgIcon.svelte';
+	import SvgIcon from '../SvgIcon.svelte';
 	import DropDownIcon from '$lib/utils/icons/dropdown.svg?raw';
 
 	export let value = null;

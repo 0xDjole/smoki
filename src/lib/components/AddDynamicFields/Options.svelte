@@ -1,6 +1,6 @@
 <script lang="ts">
-	import Input from '$lib/utils/components/Input/index.svelte';
-	import DropDown from '$lib/utils/components/DropDown/index.svelte';
+	import Input from '../Input/index.svelte';
+	import DropDown from '../DropDown/index.svelte';
 
 	export let label = '';
 	export let options = [];

@@ -1,9 +1,9 @@
 <script lang="ts">
 	import { DateTime, Info } from 'luxon';
 	import DayItem from './DayItem.svelte';
-	import SvgIcon from '$lib/utils/components/SvgIcon.svelte';
-	import Great from '$lib/utils/icons/great.svg?raw';
-	import Less from '$lib/utils/icons/less.svg?raw';
+	import SvgIcon from '../SvgIcon.svelte';
+	import Great from '../utils/icons/great.svg?raw';
+	import Less from '../utils/icons/less.svg?raw';
 	import { createEventDispatcher } from 'svelte';
 
 	export let onSelect;

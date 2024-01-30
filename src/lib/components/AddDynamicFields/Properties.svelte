@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Switch from '$lib/utils/components/Switch/index.svelte';
-	import Options from '$lib/utils/components/AddDynamicFields/Options.svelte';
-	import Range from '$lib/utils/components/AddDynamicFields/Range.svelte';
+	import Switch from '../Switch/index.svelte';
+	import Options from '../AddDynamicFields/Options.svelte';
+	import Range from '../AddDynamicFields/Range.svelte';
 
 	export let label = 'Custom fields';
 	export let value;

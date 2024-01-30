@@ -1,5 +1,5 @@
 <script lang="ts">
-	import Input from '$lib/utils/components/Input/index.svelte';
+	import Input from '../Input/index.svelte';
 
 	export let label = '';
 	export let errors = [];

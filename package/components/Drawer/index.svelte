@@ -1,8 +1,5 @@
 <script>
-	import { onMount } from 'svelte';
-
 	export let open = false;
-	export let animate = true;
 	export let duration = 0.8;
 	export let placement = 'right';
 	export let size = null;
@@ -10,8 +7,6 @@
 	export let height = null;
 	export let width = null;
 	export let left = null;
-
-	let mounted = false;
 
 	let h = '100vh';
 
@@ -35,49 +30,16 @@
 
 	$: transform =
 		placement === 'right'
-			? `transform: translate(${percentageX}%, 0);`
-			: `transform: translate(0, ${percentageX}%);`;
+			? `transform: translate(${percentageX}%, 0)`
+			: `transform: translate(0, ${percentageX}%)`;
 
 	$: style = `--duration: ${duration}s; --size: ${size}; z-index: ${zIndex}; ${transform}; height: ${h}; width: ${w}; left: ${l}px`;
 
 	$: if (open) {
-		if (animate) {
-			duration = 0.8;
-			percentageX = 100;
-
-			setTimeout(() => {
-				percentageX = 0;
-			}, 20);
-		} else {
-			duration = 0;
-			percentageX = 0;
-		}
+		percentageX = 0;
 	} else {
-		if (animate) {
-			duration = 0.8;
-			percentageX = 0;
-			setTimeout(() => {
-				percentageX = 100;
-			}, 20);
-		} else {
-			duration = 0;
-			percentageX = 100;
-		}
+		percentageX = 100;
 	}
-
-	function scrollLock(open) {
-		if (mounted) {
-			const body = document.querySelector('body');
-			body.style.overflow = open ? 'hidden' : 'auto';
-		}
-	}
-
-	$: scrollLock(open);
-
-	onMount(() => {
-		mounted = true;
-		scrollLock(open);
-	});
 </script>
 
 <div class="drawer" {style}>

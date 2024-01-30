@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import Modal from '$lib/utils/components/Modal/index.svelte';
-	import TimePicker from '$lib/utils/components/TimePicker/index.svelte';
-	import formatDuration from '$lib/utils/helpers/formatDuration';
+	import Modal from '../Modal/index.svelte';
+	import TimePicker from '../TimePicker/index.svelte';
+	import formatDuration from '../utils/helpers/formatDuration';
 
 	export let confirmText = 'Confirm';
 	export let label = 'Add Duration';

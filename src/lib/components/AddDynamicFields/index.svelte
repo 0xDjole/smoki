@@ -1,10 +1,10 @@
 <script lang="ts">
-	import Input from '$lib/utils/components/Input/index.svelte';
-	import Modal from '$lib/utils/components/Modal/index.svelte';
+	import Input from '../Input/index.svelte';
+	import Modal from '../Modal/index.svelte';
 	import Close from '$lib/utils/icons/close.svg?raw';
-	import SvgIcon from '$lib/utils/components/SvgIcon.svelte';
-	import NiceSelect from '$lib/utils/components/NiceSelect/index.svelte';
-	import DropDown from '$lib/utils/components/DropDown/index.svelte';
+	import SvgIcon from '../SvgIcon.svelte';
+	import NiceSelect from '../NiceSelect/index.svelte';
+	import DropDown from '../DropDown/index.svelte';
 	import Properties from './Properties.svelte';
 
 	export let label = 'Custom fields';

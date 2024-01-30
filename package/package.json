@@ -1,6 +1,6 @@
 {
   "name": "kaizen-ui",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "repository": "github:0xdjole/kaizen-ui",
   "exports": {
     "./package.json": "./package.json",
@@ -18,6 +18,7 @@
     "./components/Drawer/index.svelte": "./components/Drawer/index.svelte",
     "./components/DropDown/index.svelte": "./components/DropDown/index.svelte",
     "./components/Duration/index.svelte": "./components/Duration/index.svelte",
+    "./components/DynamicFieldFilter/index.svelte": "./components/DynamicFieldFilter/index.svelte",
     "./components/DynamicFieldForm/index.svelte": "./components/DynamicFieldForm/index.svelte",
     "./components/ErrorMessage.svelte": "./components/ErrorMessage.svelte",
     "./components/FakeScreen.svelte": "./components/FakeScreen.svelte",
@@ -31,6 +32,7 @@
     "./components/NiceSelect/MultiSelect.svelte": "./components/NiceSelect/MultiSelect.svelte",
     "./components/NiceSelect/index.svelte": "./components/NiceSelect/index.svelte",
     "./components/Pagination.svelte": "./components/Pagination.svelte",
+    "./components/Range/index.svelte": "./components/Range/index.svelte",
     "./components/Search/index.svelte": "./components/Search/index.svelte",
     "./components/Select/index.svelte": "./components/Select/index.svelte",
     "./components/SvgIcon.svelte": "./components/SvgIcon.svelte",

@@ -30,7 +30,7 @@
 
 <style type="text/postcss">
 	.toast {
-		@apply rounded-md text-primary font-bold w-full p-1;
+		@apply rounded-md text-primary font-bold w-full p-1 bg-success;
 	}
 
 	.toast-content {

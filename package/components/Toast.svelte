@@ -33,6 +33,8 @@ $: computedClass =
 
     border-radius: 0.375rem;
 
+    background-color: var(--success-background-color);
+
     padding: 0.25rem;
 
     font-weight: 700;

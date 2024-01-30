@@ -1,0 +1,81 @@
+<script lang="ts">
+	import SvgIcon from '$lib/utils/components/SvgIcon.svelte';
+	import Upload from '$lib/utils/icons/upload.svg?raw';
+	import Loader from '$lib/utils/components/Loader.svelte';
+
+	export let image = null;
+	export let label = null;
+	export let alt = 'Alt';
+
+	let fileInput;
+	let avatar;
+	let loading = false;
+
+	$: if (image) {
+		const reader = new FileReader();
+		reader.readAsDataURL(image);
+		reader.onload = (e) => {
+			avatar = e.target.result;
+			loading = false;
+		};
+	}
+
+	const onFileSelected = (e) => {
+		loading = true;
+
+		const imageFile = e.target.files[0];
+
+		if (!imageFile || !['image/jpg', 'image/jpeg', 'image/png'].includes(imageFile.type)) {
+			loading = false;
+			return;
+		}
+
+		image = imageFile;
+	};
+</script>
+
+{#if label}
+	<label class="label" for="label">{label}</label>
+{/if}
+
+<div
+	class="avatar-uploader"
+	on:click={() => fileInput.click()}
+	aria-role="button"
+	aria-label="Image uploader"
+>
+	{#if loading}
+		<Loader />
+	{:else if avatar}
+		<img class="avatar" src={avatar} {alt} />
+	{:else}
+		<SvgIcon data={Upload} size={'200px'} fill="white" />
+	{/if}
+</div>
+
+<input
+	id="image-uploader"
+	style="display:none"
+	type="file"
+	accept=".jpg, .jpeg, .png"
+	on:change={onFileSelected}
+	bind:this={fileInput}
+	aria-label="File input"
+/>
+
+<style type="text/postcss">
+	.label {
+		@apply text-primary text-2xl mb-2 font-bold;
+	}
+
+	.avatar-uploader {
+		@apply cursor-pointer;
+	}
+
+	.avatar {
+		@apply rounded-md;
+		display: flex;
+		height: 250px;
+		width: 250px;
+	}
+</style>

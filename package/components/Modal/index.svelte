@@ -1,7 +1,7 @@
 <script>
 	import Close from '../../utils/icons/close.svg?raw';
-	import SvgIcon from '../../utils/components/SvgIcon.svelte';
-	import Button from '../../utils/components/Button/index.svelte';
+	import SvgIcon from '../SvgIcon.svelte';
+	import Button from '../Button/index.svelte';
 
 	export let title = '';
 	export let showModal;

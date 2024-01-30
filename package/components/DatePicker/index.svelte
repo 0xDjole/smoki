@@ -1,8 +1,8 @@
 <script>import { DateTime, Info } from 'luxon';
 import DayItem from './DayItem.svelte';
 import SvgIcon from '../SvgIcon.svelte';
-import Great from '../utils/icons/great.svg?raw';
-import Less from '../utils/icons/less.svg?raw';
+import Great from '../../utils/icons/great.svg?raw';
+import Less from '../../utils/icons/less.svg?raw';
 import { createEventDispatcher } from 'svelte';
 export let onSelect;
 export let selectedValues = [];

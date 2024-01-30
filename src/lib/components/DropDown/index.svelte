@@ -3,7 +3,7 @@
 	import Modal from '../Modal/index.svelte';
 
 	import SvgIcon from '../SvgIcon.svelte';
-	import DropDownIcon from '$lib/utils/icons/dropdown.svg?raw';
+	import DropDownIcon from '../../utils/icons/dropdown.svg?raw';
 
 	export let value = null;
 	export let options = [];

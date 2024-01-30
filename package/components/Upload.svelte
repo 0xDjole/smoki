@@ -1,6 +1,6 @@
-<script>import SvgIcon from '../utils/components/SvgIcon.svelte';
-import Upload from '../utils/icons/upload.svg?raw';
-import Loader from '../utils/components/Loader.svelte';
+<script>import SvgIcon from './SvgIcon.svelte';
+import UploadSvg from '../utils/icons/upload.svg?raw';
+import Loader from './Loader.svelte';
 export let image = null;
 export let label = null;
 export let alt = 'Alt';
@@ -41,7 +41,7 @@ const onFileSelected = (e) => {
 	{:else if avatar}
 		<img class="avatar" src={avatar} {alt} />
 	{:else}
-		<SvgIcon data={Upload} size={'200px'} fill="white" />
+		<SvgIcon data={UploadSvg} size={'200px'} fill="white" />
 	{/if}
 </div>
 

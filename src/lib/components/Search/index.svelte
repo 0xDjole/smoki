@@ -1,8 +1,8 @@
 <script lang="ts">
 	import { createEventDispatcher } from 'svelte';
-	import SvgIcon from '$lib/utils/components/SvgIcon.svelte';
+	import SvgIcon from '../SvgIcon.svelte';
 
-	import Search from '$lib/utils/icons/search.svg?raw';
+	import Search from '../../utils/icons/search.svg?raw';
 	import SearchSuggestion from './SearchSuggestion/index.svelte';
 
 	export let value;

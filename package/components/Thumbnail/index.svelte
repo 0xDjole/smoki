@@ -1,5 +1,5 @@
 <script>import { STORAGE_URL } from '../../utils/env';
-import SvgIcon from '../../utils/components/SvgIcon.svelte';
+import SvgIcon from '../SvgIcon.svelte';
 import DefaultThumnail from '../../utils/icons/defaultThumbnail.svg?raw';
 import { onMount } from 'svelte';
 export let url = null;

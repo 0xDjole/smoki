@@ -1,7 +1,7 @@
 <script lang="ts">
-	import SvgIcon from '$lib/utils/components/SvgIcon.svelte';
-	import Upload from '$lib/utils/icons/upload.svg?raw';
-	import Loader from '$lib/utils/components/Loader.svelte';
+	import SvgIcon from './SvgIcon.svelte';
+	import UploadSvg from '../utils/icons/upload.svg?raw';
+	import Loader from './Loader.svelte';
 
 	export let image = null;
 	export let label = null;
@@ -49,7 +49,7 @@
 	{:else if avatar}
 		<img class="avatar" src={avatar} {alt} />
 	{:else}
-		<SvgIcon data={Upload} size={'200px'} fill="white" />
+		<SvgIcon data={UploadSvg} size={'200px'} fill="white" />
 	{/if}
 </div>
 

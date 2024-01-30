@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { STORAGE_URL } from '$lib/utils/env';
-	import SvgIcon from '$lib/utils/components/SvgIcon.svelte';
-	import DefaultThumnail from '$lib/utils/icons/defaultThumbnail.svg?raw';
+	import { STORAGE_URL } from '../../utils/env';
+	import SvgIcon from '../SvgIcon.svelte';
+	import DefaultThumnail from '../../utils/icons/defaultThumbnail.svg?raw';
 
 	import { onMount } from 'svelte';
 

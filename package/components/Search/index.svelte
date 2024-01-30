@@ -1,5 +1,5 @@
 <script>import { createEventDispatcher } from 'svelte';
-import SvgIcon from '../../utils/components/SvgIcon.svelte';
+import SvgIcon from '../SvgIcon.svelte';
 import Search from '../../utils/icons/search.svg?raw';
 import SearchSuggestion from './SearchSuggestion/index.svelte';
 export let value;

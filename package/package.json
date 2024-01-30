@@ -1,6 +1,6 @@
 {
   "name": "kaizen-ui",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "repository": "github:0xdjole/kaizen-ui",
   "exports": {
     "./package.json": "./package.json",

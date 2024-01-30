@@ -1,4 +1,4 @@
-<script>import Input from '../../utils/components/Input/index.svelte';
+<script>import Input from '../Input/index.svelte';
 export let label = 'Custom fields';
 export let fieldConfigs;
 export let fields = [];

@@ -1,5 +1,5 @@
 {
-	"name": "super-ui",
+	"name": "kaizen-ui",
 	"version": "0.0.1",
 	"scripts": {
 		"dev": "vite dev",
@@ -10,10 +10,13 @@
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write ."
 	},
-	"repository": "github:0xdjole/super-ui",
+	"repository": "github:0xdjole/kaizen-ui",
 	"exports": {
 		".": "./index.js"
 	},
+    "publishConfig": {
+       "access": "public"
+    },
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^1.0.0-next.90",
 		"@sveltejs/kit": "^1.0.0-next.587",

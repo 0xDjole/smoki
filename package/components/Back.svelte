@@ -1,4 +1,4 @@
-<script>import SvgIcon from '../utils/components/SvgIcon.svelte';
+<script>import SvgIcon from './SvgIcon.svelte';
 import Less from '../utils/icons/less.svg?raw';
 </script>
 

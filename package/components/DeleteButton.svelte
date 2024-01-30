@@ -1,4 +1,4 @@
-<script>import Close from './icons/close.svg?raw';
+<script>import Close from '../utils/icons/close.svg?raw';
 import SvgIcon from './SvgIcon.svelte';
 export let onClick = () => { };
 </script>

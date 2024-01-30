@@ -1,116 +1,59 @@
-<script>import { createEventDispatcher } from 'svelte';
-import SvgIcon from '../SvgIcon.svelte';
+<script>import SvgIcon from '../SvgIcon.svelte';
 import Search from '../../utils/icons/search.svg?raw';
-import SearchSuggestion from './SearchSuggestion/index.svelte';
-export let value;
-export let suggestionOpened = false;
-export let suggestionItems = [];
-export let onSearch = () => { };
+import { createEventDispatcher } from 'svelte';
 const dispatch = createEventDispatcher();
-export let onClickItem = () => { };
+export let value;
+export let placeholder;
 </script>
 
-<div class="search-name">
+<div class="search-name" on:click={() => {}}>
 	<div class="search-button">
-		<div class="search-button2">
-			<SvgIcon data={Search} width={'25px'} size={'25px'} color={'white'} />
-		</div>
+		<SvgIcon data={Search} color={'white'} />
 	</div>
 
-	<div class="search-input" style="" type="text" kind="primary">
-		<input
-			on:input={(e) => {
-				const value = e.target.value;
+	<input
+		on:input={(e) => {
+			const value = e.target.value;
 
-				dispatch('searching', { value });
-			}}
-			class="input"
-			placeholder="Try anything here"
-			{value}
-			style="background: transparent; outline: none"
-			type="text"
-		/>
-		<div class="confirm-search">
-			<div
-				on:click={() => {
-					dispatch('search');
-				}}
-				class="confirm-search-button"
-			>
-				Search
-			</div>
-		</div>
-	</div>
-	<SearchSuggestion
-		on:itemClick={(input) => {
-			value = input.detail.item.name;
-			suggestionOpened = false;
+			dispatch('searching', { value });
 		}}
-		title="AI suggestions"
-		opened={suggestionOpened}
-		items={suggestionItems}
+		{placeholder}
+		bind:value
+		class="search-input"
+		type="text"
 	/>
 </div>
 
 <style>
 	.search-name {
-		position: relative;
-		margin: 2.5rem;
-		margin-bottom: 1.25rem;
 		display: flex;
-		height: 45px
+		border-radius: 9999px;
+		background-color: var(--secondary-background-color);
+		height: 45px;
+		width: 100%
 }
 
-		@media (min-width: 768px) {
-	.search-name {
-			width: 800px
+	.search-button {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding-left: 0.75rem;
+		border-bottom-left-radius: 20px;
+		border-top-left-radius: 20px;
+		width: 30px
+}
+
+	@media (min-width: 768px) {
+
+	.search-button {
+			width: 50px
 	}
 		}
 
-	.search-button {
-		position: relative
-}
-
-	.confirm-search {
-		position: absolute;
-		border-radius: 0.375rem;
-		background-color: var(--primary-background-color);
-		width: 100px;
-		right: 5px;
-		bottom: 5px
-}
-
-	.confirm-search-button {
-		padding-left: 0.75rem;
-		padding-right: 0.75rem;
-		font-size: 1.5rem;
-		line-height: 2rem;
-		font-weight: 700;
-		color: var(--primary-text-color);
-		width: 100%;
-		height: 100%;
-		margin: 0px
-}
-
-	.search-button2 {
-		display: grid;
-		align-items: center;
-		background-color: var(--secondary-background-color);
-		padding-left: 0.75rem;
-		padding-right: 0.75rem;
-		border-bottom-left-radius: 20px;
-		border-top-left-radius: 20px;
-		width: 100%;
-		height: 100%;
-		margin: 0px
-}
-
 	.search-input {
-		position: relative;
+		flex-grow: 1;
 		cursor: pointer;
-		background-color: var(--secondary-background-color);
-		padding-right: 1rem;
-		padding-top: 0.25rem;
+		background-color: transparent;
 		font-size: 1rem;
 		line-height: 1.5rem;
 		font-weight: 600;
@@ -122,20 +65,19 @@ export let onClickItem = () => { };
 		border-bottom-right-radius: 20px;
 		border-top-left-radius: 0px;
 		border-bottom-left-radius: 0px;
-
-		flex-grow: 1
+		padding-left: 0.5rem;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis
 }
 
 	@media (min-width: 768px) {
 
 	.search-input {
-				padding-top: 0px;
+				padding-top: 0.5rem;
+				padding-bottom: 0.5rem;
 				font-size: 1.25rem;
 				line-height: 1.75rem
 		}
-		}
+		}</style>
 
-	.input {
-		height: 100%;
-		width: 100%
-}</style>

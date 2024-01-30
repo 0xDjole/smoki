@@ -1,6 +1,6 @@
-<script>import Upload from '../../utils/components/Upload.svelte';
+<script>import Upload from '../Upload.svelte';
 import Close from '../../utils/icons/close.svg?raw';
-import SvgIcon from '../../utils/components/SvgIcon.svelte';
+import SvgIcon from '../SvgIcon.svelte';
 export let images;
 export let label;
 </script>

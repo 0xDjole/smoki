@@ -1,7 +1,7 @@
 <script lang="ts">
-	import Upload from '$lib/utils/components/Upload.svelte';
-	import Close from '$lib/utils/icons/close.svg?raw';
-	import SvgIcon from '$lib/utils/components/SvgIcon.svelte';
+	import Upload from '../Upload.svelte';
+	import Close from '../../utils/icons/close.svg?raw';
+	import SvgIcon from '../SvgIcon.svelte';
 
 	export let images;
 	export let label;

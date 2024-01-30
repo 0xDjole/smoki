@@ -1,7 +1,7 @@
 {
-  "name": "super-ui",
+  "name": "kaizen-ui",
   "version": "0.0.1",
-  "repository": "github:0xdjole/super-ui",
+  "repository": "github:0xdjole/kaizen-ui",
   "exports": {
     "./package.json": "./package.json",
     ".": "./index.js",
@@ -24,7 +24,6 @@
     "./components/Gallery/index.svelte": "./components/Gallery/index.svelte",
     "./components/Header/index.svelte": "./components/Header/index.svelte",
     "./components/InfiniteScroll.svelte": "./components/InfiniteScroll.svelte",
-    "./components/Input/Search/index.svelte": "./components/Input/Search/index.svelte",
     "./components/Input/index.svelte": "./components/Input/index.svelte",
     "./components/Layouts/Form/index.svelte": "./components/Layouts/Form/index.svelte",
     "./components/Loader.svelte": "./components/Loader.svelte",
@@ -32,7 +31,6 @@
     "./components/NiceSelect/MultiSelect.svelte": "./components/NiceSelect/MultiSelect.svelte",
     "./components/NiceSelect/index.svelte": "./components/NiceSelect/index.svelte",
     "./components/Pagination.svelte": "./components/Pagination.svelte",
-    "./components/Search/SearchSuggestion/index.svelte": "./components/Search/SearchSuggestion/index.svelte",
     "./components/Search/index.svelte": "./components/Search/index.svelte",
     "./components/Select/index.svelte": "./components/Select/index.svelte",
     "./components/SvgIcon.svelte": "./components/SvgIcon.svelte",
@@ -81,6 +79,9 @@
     "./utils/icons/user.svg": "./utils/icons/user.svg",
     "./utils/icons/visa.png": "./utils/icons/visa.png",
     "./utils": "./utils/index.js"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "^1.0.0-next.90",

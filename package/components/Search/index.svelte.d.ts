@@ -2,14 +2,10 @@ import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
         value: any;
-        suggestionOpened?: boolean | undefined;
-        suggestionItems?: any[] | undefined;
-        onSearch?: (() => void) | undefined;
-        onClickItem?: (() => void) | undefined;
+        placeholder: any;
     };
     events: {
         searching: CustomEvent<any>;
-        search: CustomEvent<any>;
     } & {
         [evt: string]: CustomEvent<any>;
     };

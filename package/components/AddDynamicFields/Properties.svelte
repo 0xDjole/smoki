@@ -1,27 +1,29 @@
-<script>import Switch from '../Switch/index.svelte';
-import Options from '../AddDynamicFields/Options.svelte';
-import Range from '../AddDynamicFields/Range.svelte';
-export let label = 'Custom fields';
+<script>import Switch from "../Switch/index.svelte";
+import Options from "../AddDynamicFields/Options.svelte";
+import Range from "../AddDynamicFields/Range.svelte";
+import Label from "../Label.svelte";
+export let label = "Custom fields";
 export let value;
 export let errors = [];
 </script>
 
-{#if label}
-	<label class:label-error={errors.length} for={label} class="label">{label}</label>
-{/if}
+<Label {label} {errors} />
 
 <div class="properties">
-	<Switch label="Is custom input allowed" bind:value={value.isCustomInputAllowed} />
+  <Switch
+    label="Is custom input allowed"
+    bind:value={value.isCustomInputAllowed}
+  />
 
-	<Switch label="Is multiselect" bind:value={value.isMultiSelect} />
+  <Switch label="Is multiselect" bind:value={value.isMultiSelect} />
 
-	<Options label="Options" bind:options={value.options} />
+  <Options label="Options" bind:options={value.options} />
 
-	<Range label="Range" bind:range={value.range} />
+  <Range label="Range" bind:range={value.range} />
 </div>
 
 <style>
-	.properties {
+  .properties {
 
     display: flex;
 
@@ -32,7 +34,7 @@ export let errors = [];
     padding: 0.75rem
 }
 
-	.custom-field-body {
+  .custom-field-body {
 
     display: flex;
 
@@ -51,7 +53,7 @@ export let errors = [];
     border-style: solid
 }
 
-	.add-field-body {
+  .add-field-body {
 
     height: 600px;
 
@@ -60,7 +62,7 @@ export let errors = [];
     padding: 0.75rem
 }
 
-	.field-item {
+  .field-item {
 
     display: flex;
 
@@ -71,7 +73,7 @@ export let errors = [];
     color: var(--primary-text-color)
 }
 
-	.fields {
+  .fields {
 
     display: flex;
 
@@ -80,22 +82,4 @@ export let errors = [];
     font-weight: 700;
 
     color: var(--primary-text-color)
-}
-
-	.label {
-
-    margin-bottom: 0.5rem;
-
-    font-size: 1.5rem;
-
-    line-height: 2rem;
-
-    font-weight: 700;
-
-    color: var(--primary-text-color)
-}
-
-	.label-error {
-
-    color: var(--error-background-color)
 }</style>

@@ -1,25 +1,21 @@
-<script>
-  import Input from "../Input/index.svelte";
-  export let label = "";
-  export let errors = [];
-  export let range;
-  let minCondition;
-  let maxCondition;
-  let minInput;
-  let maxInput;
-  $: if (minInput && minCondition) {
+<script>import Input from "../Input/index.svelte";
+import Label from "../Label.svelte";
+export let label = "";
+export let errors = [];
+export let range;
+let minCondition;
+let maxCondition;
+let minInput;
+let maxInput;
+$: if (minInput && minCondition) {
     range.min = `${minCondition}${minInput}`;
-  }
-  $: if (maxInput && maxCondition) {
+}
+$: if (maxInput && maxCondition) {
     range.max = `${maxCondition}${maxInput}`;
-  }
+}
 </script>
 
-{#if label}
-  <label class:label-error={errors.length} for={label} class="label"
-    >{label}</label
-  >
-{/if}
+<Label {label} {errors} />
 
 <div class="range">
   <Input bind:value={minInput} type="text" kind="primary" placeholder="Min" />
@@ -29,48 +25,53 @@
 
 <style>
   .range {
+
     display: flex;
 
     -moz-column-gap: 0.5rem;
 
-    column-gap: 0.5rem;
-  }
+         column-gap: 0.5rem
+}
 
   .input {
+
     display: flex;
 
     align-items: center;
 
     -moz-column-gap: 0.5rem;
 
-    column-gap: 0.5rem;
-  }
+         column-gap: 0.5rem
+}
 
   .add-options {
+
     font-size: 1.25rem;
 
     line-height: 1.75rem;
 
     font-weight: 700;
 
-    color: var(--primary-text-color);
-  }
+    color: var(--primary-text-color)
+}
 
   .list {
+
     display: flex;
 
     -moz-column-gap: 0.75rem;
 
-    column-gap: 0.75rem;
+         column-gap: 0.75rem;
 
     font-size: 1.25rem;
 
     line-height: 1.75rem;
 
-    font-weight: 700;
-  }
+    font-weight: 700
+}
 
   .item {
+
     min-width: 100px;
 
     border-radius: 0.375rem;
@@ -93,22 +94,11 @@
 
     border-width: 1px;
 
-    border-style: solid;
-  }
-
-  .label {
-    margin-bottom: 0.5rem;
-
-    font-size: 1.5rem;
-
-    line-height: 2rem;
-
-    font-weight: 700;
-
-    color: var(--primary-text-color);
-  }
+    border-style: solid
+}
 
   .custom-field-body {
+
     display: flex;
 
     flex-direction: column;
@@ -123,38 +113,36 @@
 
     border-width: 1px;
 
-    border-style: solid;
-  }
-
-  .label-body {
-    display: flex;
-  }
+    border-style: solid
+}
 
   .add-field-body {
+
     height: 600px;
 
     overflow-y: scroll;
 
-    padding: 0.75rem;
-  }
+    padding: 0.75rem
+}
 
   .field-item {
+
     display: flex;
 
     justify-content: space-between;
 
     font-weight: 700;
 
-    color: var(--primary-text-color);
-  }
+    color: var(--primary-text-color)
+}
 
   .fields {
+
     display: flex;
 
     gap: 0.5rem;
 
     font-weight: 700;
 
-    color: var(--primary-text-color);
-  }
-</style>
+    color: var(--primary-text-color)
+}</style>

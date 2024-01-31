@@ -1,10 +1,11 @@
-<script>import { _ } from 'svelte-i18n';
-import Modal from '../Modal/index.svelte';
-import SvgIcon from '../SvgIcon.svelte';
-import DropDownIcon from '../../utils/icons/dropdown.svg?raw';
+<script>import { _ } from "svelte-i18n";
+import Modal from "../Modal/index.svelte";
+import SvgIcon from "../SvgIcon.svelte";
+import Label from "../Label.svelte";
+import DropDownIcon from "../../utils/icons/dropdown.svg?raw";
 export let value = null;
 export let options = [];
-export let label = '';
+export let label = "";
 export let errors = [];
 let showModal = false;
 const selectOption = (optionValue) => {
@@ -15,35 +16,39 @@ $: selectedOption = options.find((option) => option.value === value);
 </script>
 
 <div>
-	{#if label}
-		<label class:label-error={errors.length} for={label} class="label">{label}</label>
-	{/if}
+  <Label {errors} {label} />
+  <div
+    on:click={() => (showModal = true)}
+    class="flex justify-between option bg-secondary border-primary selected"
+  >
+    <span>{selectedOption?.label || $_("choose")}</span>
 
-	<div
-		on:click={() => (showModal = true)}
-		class="flex justify-between option bg-secondary border-primary selected"
-	>
-		<span>{selectedOption?.label || $_('choose')}</span>
-
-		<SvgIcon data={DropDownIcon} width={'25px'} size={'25px'} color={'white'} />
-	</div>
+    <SvgIcon data={DropDownIcon} width={"25px"} size={"25px"} color={"white"} />
+  </div>
 </div>
 
-<Modal height={'60%'} title={`${$_('choose')}`} {showModal} onCancel={() => (showModal = false)}>
-	<div class="px-3">
-		{#each options as option}
-			<div
-				on:click={() => selectOption(option.value)}
-				class="option bg-secondary border-primary {value === option.value ? 'selected' : ''}"
-			>
-				{option.label}
-			</div>
-		{/each}
-	</div>
+<Modal
+  height={"60%"}
+  title={`${$_("choose")}`}
+  {showModal}
+  onCancel={() => (showModal = false)}
+>
+  <div class="px-3">
+    {#each options as option}
+      <div
+        on:click={() => selectOption(option.value)}
+        class="option bg-secondary border-primary {value === option.value
+          ? 'selected'
+          : ''}"
+      >
+        {option.label}
+      </div>
+    {/each}
+  </div>
 </Modal>
 
 <style>
-	.option {
+  .option {
 
     margin-top: 0.5rem;
 
@@ -89,39 +94,9 @@ $: selectedOption = options.find((option) => option.value === value);
     }
 }
 
-	.selected {
+  .selected {
 
     background-color: var(--accent-background-color);
 
     color: var(--primary-text-color)
-}
-
-	.label {
-
-    margin-bottom: 0.5rem;
-
-    font-size: 1.125rem;
-
-    line-height: 1.75rem;
-
-    font-weight: 700;
-
-    --tw-text-opacity: 1;
-
-    color: rgb(255 255 255 / var(--tw-text-opacity))
-}
-
-	@media (min-width: 768px) {
-
-    .label {
-
-        font-size: 1.5rem;
-
-        line-height: 2rem
-    }
-}
-
-	.label-error {
-
-    color: var(--error-background-color)
 }</style>

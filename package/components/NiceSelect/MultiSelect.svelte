@@ -1,8 +1,9 @@
-<script>export let values = [];
+<script>import Label from "../Label.svelte";
+export let values = [];
 export let options = [];
-export let label = '';
+export let label = "";
 export let errors = [];
-export let className = '';
+export let className = "";
 const selectOption = (optionValue) => {
     const isSelected = values.includes(optionValue);
     if (isSelected) {
@@ -15,26 +16,26 @@ const selectOption = (optionValue) => {
 </script>
 
 <div>
-	{#if label}
-		<label class:label-error={errors.length} for={label} class="label">{label}</label>
-	{/if}
+  <Label {label} {errors} />
 
-	<div class={className}>
-		{#each options as option}
-			<div
-				on:click={() => selectOption(option.value)}
-				class="option bg-secondary border-primary {values?.includes(option.value)
-					? 'selected'
-					: ''}"
-			>
-				{option.label}
-			</div>
-		{/each}
-	</div>
+  <div class={className}>
+    {#each options as option}
+      <div
+        on:click={() => selectOption(option.value)}
+        class="option bg-secondary border-primary {values?.includes(
+          option.value
+        )
+          ? 'selected'
+          : ''}"
+      >
+        {option.label}
+      </div>
+    {/each}
+  </div>
 </div>
 
 <style>
-	.option {
+  .option {
 
     margin-top: 0.5rem;
 
@@ -75,27 +76,9 @@ const selectOption = (optionValue) => {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)
 }
 
-	.selected {
+  .selected {
 
     background-color: var(--accent-background-color);
 
     color: var(--primary-text-color)
-}
-
-	.label {
-
-    margin-bottom: 0.5rem;
-
-    font-size: 1.5rem;
-
-    line-height: 2rem;
-
-    font-weight: 700;
-
-    color: var(--primary-text-color)
-}
-
-	.label-error {
-
-    color: var(--error-background-color)
 }</style>

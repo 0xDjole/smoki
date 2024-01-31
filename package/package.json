@@ -26,6 +26,7 @@
     "./components/Header/index.svelte": "./components/Header/index.svelte",
     "./components/InfiniteScroll.svelte": "./components/InfiniteScroll.svelte",
     "./components/Input/index.svelte": "./components/Input/index.svelte",
+    "./components/Label.svelte": "./components/Label.svelte",
     "./components/Layouts/Form/index.svelte": "./components/Layouts/Form/index.svelte",
     "./components/Loader.svelte": "./components/Loader.svelte",
     "./components/Modal/index.svelte": "./components/Modal/index.svelte",

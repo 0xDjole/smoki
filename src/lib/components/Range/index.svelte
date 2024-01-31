@@ -2,6 +2,8 @@
   import { createEventDispatcher } from "svelte";
   import { fly, fade } from "svelte/transition";
 
+  import Label from "../Label.svelte";
+
   // Props
   export let min = 0;
   export let max = 100;
@@ -165,11 +167,7 @@
   }
 </script>
 
-{#if label}
-  <label class:label-error={errors.length} for={label} class="label"
-    >{label}</label
-  >
-{/if}
+<Label {errors} {label} />
 
 <svelte:window
   on:touchmove|nonpassive={updateValueOnEvent}
@@ -324,13 +322,5 @@
     clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
     transform: rotate(-45deg);
     border-radius: 0 0 0 3px;
-  }
-
-  .label {
-    @apply text-white text-lg mb-2 font-bold md:text-2xl;
-  }
-
-  .label-error {
-    @apply text-error;
   }
 </style>

@@ -10,6 +10,7 @@ export default class Index extends SvelteComponentTyped<{
     open?: boolean | undefined;
     placement?: string | undefined;
     left?: null | undefined;
+    targetElement?: null | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {
@@ -30,6 +31,7 @@ declare const __propDef: {
         open?: boolean | undefined;
         placement?: string | undefined;
         left?: null | undefined;
+        targetElement?: null | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

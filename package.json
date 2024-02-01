@@ -1,14 +1,22 @@
 {
   "name": "smoki",
   "version": "0.0.3",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
+  "type": "module",
   "scripts": {
+    "build": "svelte-package",
     "lint": "prettier --plugin-search-dir . --check . && eslint .",
     "format": "prettier --plugin-search-dir . --write ."
   },
   "repository": "github:0xdjole/kaizen-ui",
   "publishConfig": {
     "access": "public"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "svelte": "./dist/index.js"
+    }
   },
   "devDependencies": {
     "@types/lodash": "^4.14.197",
@@ -28,7 +36,10 @@
     "@typescript-eslint/parser": "^6.20.0",
     "svelte": "^4.2.9",
     "svelte-preprocess": "^5.1.3",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vite": "^5.0.12",
+    "@sveltejs/vite-plugin-svelte": "^3.0.2",
+    "@sveltejs/package": "2.2.6"
   },
   "dependencies": {
     "luxon": "^3.4.4",

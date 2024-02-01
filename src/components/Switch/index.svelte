@@ -32,7 +32,7 @@
   }
 
   .slider {
-    @apply absolute cursor-pointer bg-green-500 border-primary;
+    @apply absolute cursor-pointer bg-secondary border-primary;
     cursor: pointer;
     top: 0;
     left: 0;

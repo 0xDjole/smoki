@@ -1,19 +1,14 @@
 {
 	"name": "kaizen-ui",
 	"version": "0.0.10",
+	"main": "dist/index.es.js",
 	"scripts": {
 		"dev": "vite dev",
-		"build": "svelte-kit sync && svelte-package",
-		"prepublishOnly": "echo 'Did you mean to publish `./package/`, instead of `./`?' && exit 1",
-		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"build": "vite build",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write ."
 	},
 	"repository": "github:0xdjole/kaizen-ui",
-	"exports": {
-		".": "./index.js"
-	},
 	"publishConfig": {
 		"access": "public"
 	},

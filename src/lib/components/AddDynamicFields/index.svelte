@@ -86,7 +86,7 @@
 	};
 
 	const removeField = (index) => {
-		fields = fields.splice(index, 1);
+		fields = fields.filter((_, i) => i !== index);
 	};
 
 	let isAddModalOpen = false;
@@ -130,6 +130,7 @@
 
 		<Properties
 			label="Properties"
+			fieldType={field.type}
 			bind:value={field.properties}
 			bind:errors={fieldStatus.properties.errors}
 		/>

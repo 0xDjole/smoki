@@ -8,6 +8,7 @@
 	export let label = '';
 	export let options = [];
 	export let errors = [];
+	export let type = 'text';
 
 	let value;
 	let condition;
@@ -26,14 +27,14 @@
 	};
 
 	const removeOption = (index) => {
-		options = options.splice(index, 1);
+		options = options.filter((_, i) => i !== index);
 	};
 </script>
 
 <Label {label} {errors} />
 
 <div class="input">
-	<Input bind:value type="text" kind="primary" placeholder="Please enter value" />
+	<Input bind:value {type} kind="primary" placeholder="Please enter value" />
 
 	<DropDown options={operations} bind:value={condition} />
 

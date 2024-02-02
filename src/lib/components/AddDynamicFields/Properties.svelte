@@ -2,6 +2,7 @@
 	import Switch from '../Switch/index.svelte';
 	import Options from './Options.svelte';
 	import Range from './Range.svelte';
+	import DropDown from '../DropDown/index.svelte';
 	import Label from '../Label.svelte';
 
 	export let label = 'Custom fields';
@@ -12,11 +13,25 @@
 	const rangeFieldTypes = ['number', 'date'];
 	const optionFieldTypes = ['text', 'number', 'date'];
 	const propertyTypes = ['text', 'number', 'date'];
+
+	const operationOptions = [
+		{ label: 'Greater than', value: 'plus' },
+		{ label: 'Less than', value: 'minus' },
+		{ label: 'Less than or equal', value: 'less_than_or_equal' },
+		{ label: 'Greater than or equal', value: 'greater_than_or_equal' },
+		{ label: 'Equals', value: 'equals' },
+		{ label: 'Greater than', value: 'greater_than' },
+		{ label: 'Less than', value: 'less_than' },
+		{ label: 'Contains', value: 'contains' },
+		{ label: 'Range', value: 'range' }
+	];
 </script>
 
 {#if propertyTypes.includes(fieldType)}
 	<Label {label} {errors} />
 	<div class="properties">
+		<DropDown label="Operation" bind:value={value.operation} options={operationOptions} />
+
 		{#if optionFieldTypes.includes(fieldType)}
 			<Options label="Options" type={fieldType} bind:options={value.options} />
 

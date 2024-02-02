@@ -14,5 +14,5 @@
 {#if isMultiSelect}
 	<MultiSelect bind:values={value} {options} {position} {errors} {label} />
 {:else}
-	<SingleSelect bind:values={value} {options} {position} {errors} {label} />
+	<SingleSelect bind:value {options} {position} {errors} {label} />
 {/if}

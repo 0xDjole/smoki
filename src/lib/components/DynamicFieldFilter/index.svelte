@@ -43,6 +43,7 @@
 				{:else}
 					<DropDown
 						label={field.key}
+						isMultiSelect={field?.properties.isMultiSelect}
 						bind:value={fields[index].value}
 						options={field.properties.options.map((option) => ({
 							label: parseLabel(option),

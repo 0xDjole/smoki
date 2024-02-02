@@ -11,18 +11,6 @@
 	export let label = 'Custom fields';
 	export let fields;
 
-	const operationOptions = [
-		{ label: 'Greater than', value: 'plus' },
-		{ label: 'Less than', value: 'minus' },
-		{ label: 'Less than or equal', value: 'less_than_or_equal' },
-		{ label: 'Greater than or equal', value: 'greater_than_or_equal' },
-		{ label: 'Equals', value: 'equals' },
-		{ label: 'Greater than', value: 'greater_than' },
-		{ label: 'Less than', value: 'less_than' },
-		{ label: 'Contains', value: 'contains' },
-		{ label: 'Range', value: 'range' }
-	];
-
 	const types = [
 		{ label: 'Text', value: 'text' },
 		{ label: 'Number', value: 'number' },
@@ -44,8 +32,8 @@
 		key: '',
 		type: '',
 		operation: 'equals',
-		isRequired: false,
-		isFilter: false,
+		isRequired: true,
+		isFilter: true,
 		properties: {
 			range: {}
 		}
@@ -110,23 +98,16 @@
 			placeholder="Please enter key"
 		/>
 
+		<NiceSelect label="Is requird" bind:value={field.isRequired} options={isRequiredOptions} />
+
+		<NiceSelect label="Is filter" bind:value={field.isFilter} options={isFilterOptions} />
+
 		<DropDown
 			label="Type"
 			options={types}
 			bind:errors={fieldStatus.type.errors}
 			bind:value={field.type}
 		/>
-
-		<DropDown
-			label="Operation"
-			bind:errors={fieldStatus.operation.errors}
-			bind:value={field.operation}
-			options={operationOptions}
-		/>
-
-		<NiceSelect label="Is requird" bind:value={field.isRequired} options={isRequiredOptions} />
-
-		<NiceSelect label="Is filter" bind:value={field.isFilter} options={isFilterOptions} />
 
 		<Properties
 			label="Properties"

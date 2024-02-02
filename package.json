@@ -1,7 +1,7 @@
 {
 	"name": "smoki",
 	"version": "0.0.8",
-	"main": "dist/index.js",
+	"main": "src/lib/index.ts",
 	"type": "module",
 	"scripts": {
 		"build": "svelte-package",
@@ -14,8 +14,8 @@
 	},
 	"exports": {
 		".": {
-			"types": "./dist/index.d.ts",
-			"svelte": "./dist/index.js"
+			"types": "./src/lib/index.d.ts",
+			"svelte": "./src/lib/index.ts"
 		}
 	},
 	"devDependencies": {

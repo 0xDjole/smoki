@@ -1,5 +1,6 @@
 <script lang="ts">
 	import Input from '../Input/index.svelte';
+	import Upload from '../Upload.svelte';
 	import Modal from '../Modal/index.svelte';
 	import Close from '../../utils/icons/close.svg?raw';
 	import SvgIcon from '../SvgIcon.svelte';
@@ -33,7 +34,7 @@
 			{ label: 'Default', value: 'default' },
 			{ label: 'Nice select', value: 'nice_select' }
 		],
-		nubmer: [
+		number: [
 			{ label: 'Default', value: 'default' },
 			{ label: 'Nice select', value: 'nice_select' }
 		],
@@ -103,6 +104,7 @@
 <Modal
 	showModal={isAddModalOpen}
 	confirmText="Add"
+	title="Create a field"
 	confirm={confirmFieldAdd}
 	onCancel={() => {
 		isAddModalOpen = false;
@@ -121,6 +123,8 @@
 		<NiceSelect label="Is requird" bind:value={field.isRequired} options={isRequiredOptions} />
 
 		<NiceSelect label="Is filter" bind:value={field.isFilter} options={isFilterOptions} />
+
+		<Upload label="Thumbnail" bind:image={field.thumbnail} />
 
 		<DropDown
 			label="Type"

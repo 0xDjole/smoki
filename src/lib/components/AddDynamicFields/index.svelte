@@ -28,10 +28,21 @@
 		{ label: 'Is not filter', value: false }
 	];
 
-	const uiOptions = [
-		{ label: 'Default', value: 'default' },
-		{ label: 'Nice select', value: 'nice_select' }
-	];
+	const uiOptions = {
+		text: [
+			{ label: 'Default', value: 'default' },
+			{ label: 'Nice select', value: 'nice_select' }
+		],
+		nubmer: [
+			{ label: 'Default', value: 'default' },
+			{ label: 'Nice select', value: 'nice_select' }
+		],
+		date: [
+			{ label: 'Default', value: 'default' },
+			{ label: 'Nice select', value: 'nice_select' }
+		],
+		boolean: [{ label: 'Default', value: 'default' }]
+	};
 
 	const defaultField = {
 		key: '',
@@ -112,18 +123,20 @@
 		<NiceSelect label="Is filter" bind:value={field.isFilter} options={isFilterOptions} />
 
 		<DropDown
-			label="UI"
-			options={uiOptions}
-			bind:errors={fieldStatus.ui.errors}
-			bind:value={field.ui}
-		/>
-
-		<DropDown
 			label="Type"
 			options={types}
 			bind:errors={fieldStatus.type.errors}
 			bind:value={field.type}
 		/>
+
+		{#if field.type}
+			<DropDown
+				label="UI"
+				options={uiOptions[field.type]}
+				bind:errors={fieldStatus.ui.errors}
+				bind:value={field.ui}
+			/>
+		{/if}
 
 		<Properties
 			label="Properties"

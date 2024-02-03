@@ -28,9 +28,15 @@
 		{ label: 'Is not filter', value: false }
 	];
 
+	const uiOptions = [
+		{ label: 'Default', value: 'default' },
+		{ label: 'Nice select', value: 'nice_select' }
+	];
+
 	const defaultField = {
 		key: '',
 		type: '',
+		ui: 'default',
 		operation: 'equals',
 		isRequired: true,
 		isFilter: true,
@@ -43,6 +49,9 @@
 
 	let fieldStatus = {
 		key: {
+			errors: []
+		},
+		ui: {
 			errors: []
 		},
 		type: {
@@ -101,6 +110,13 @@
 		<NiceSelect label="Is requird" bind:value={field.isRequired} options={isRequiredOptions} />
 
 		<NiceSelect label="Is filter" bind:value={field.isFilter} options={isFilterOptions} />
+
+		<DropDown
+			label="UI"
+			options={uiOptions}
+			bind:errors={fieldStatus.ui.errors}
+			bind:value={field.ui}
+		/>
 
 		<DropDown
 			label="Type"

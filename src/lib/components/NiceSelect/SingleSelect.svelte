@@ -8,6 +8,7 @@
 	export let position = 'vertical';
 	export let ui = 'default';
 	export let isMultiSelect = false;
+	export let labelThumbnail = null;
 
 	const selectOption = (optionValue) => {
 		const isSelected = value === optionValue;
@@ -16,7 +17,7 @@
 </script>
 
 <div>
-	<Label {label} {errors} />
+	<Label {label} {labelThumbnail} {errors} />
 
 	<div
 		class="list"

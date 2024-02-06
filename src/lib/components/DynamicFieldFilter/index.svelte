@@ -26,10 +26,6 @@
 <div class="custom-field-body">
 	{#each fieldConfigs as field, index}
 		<div class="flex gap-x-2">
-			{#if field?.thumbnail?.url}
-				<div><Thumbnail url={field.thumbnail.url} alt="Category thumbnail" /></div>
-			{/if}
-
 			<div class="md:p-1 md:px-6 w-full box-border">
 				{#if field?.properties?.options?.length}
 					{#if field?.ui === 'nice_select'}
@@ -38,6 +34,7 @@
 							isMultiSelect={field?.properties.isMultiSelect}
 							position="horizontal"
 							label={field.key}
+							labelThumbnail={field.thumbnail}
 							bind:value={fields[index].value}
 							options={field.properties.options.map((option) => ({
 								label: parseLabel(option),
@@ -60,6 +57,7 @@
 				{#if field?.properties?.isCustomInputAllowed}
 					<Input
 						label={!field?.properties?.options?.length && field.key}
+						labelThumbnail={field.thumbnail}
 						bind:errors={field.errors}
 						bind:value={fields[index].value}
 						type={field.type}
@@ -81,7 +79,11 @@
 				{/if}
 
 				{#if field.type === 'boolean'}
-					<Switch label={field.key} bind:value={fields[index].value} />
+					<Switch
+						label={field.key}
+						labelThumbnail={field.thumbnail}
+						bind:value={fields[index].value}
+					/>
 				{/if}
 			</div>
 		</div>

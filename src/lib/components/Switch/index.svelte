@@ -4,11 +4,12 @@
 	export let color = '#2196F3';
 
 	export let label = '';
+	export let labelThumbnail = null;
 	export let errors = [];
 </script>
 
 <div class="switch-container">
-	<Label {label} {errors} />
+	<Label {errors} {label} {labelThumbnail} />
 
 	<label class="switch">
 		<input type="checkbox" bind:checked={value} />

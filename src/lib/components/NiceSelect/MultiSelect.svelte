@@ -3,6 +3,7 @@
 	export let values = [];
 	export let options = [];
 	export let label = '';
+	export let labelThumbnail = null;
 	export let errors = [];
 	export let position = 'vertical';
 
@@ -17,7 +18,7 @@
 </script>
 
 <div>
-	<Label {label} {errors} />
+	<Label {label} {labelThumbnail} {errors} />
 
 	<div
 		class="list"

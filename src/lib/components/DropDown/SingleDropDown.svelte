@@ -9,6 +9,7 @@
 	export let value = null;
 	export let options = [];
 	export let label = '';
+	export let labelThumbnail = null;
 	export let errors = [];
 	let showModal = false;
 
@@ -21,7 +22,7 @@
 </script>
 
 <div>
-	<Label {errors} {label} />
+	<Label {errors} {label} {labelThumbnail} />
 	<div
 		on:click={() => (showModal = true)}
 		class="flex justify-between option bg-secondary border-primary selected"

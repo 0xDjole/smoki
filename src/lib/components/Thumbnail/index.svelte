@@ -8,6 +8,7 @@
 	export let url = null;
 	export let isPrefix = true;
 	export let alt = 'thumbnail';
+	export let size = 'md';
 
 	$: src = isPrefix ? `${STORAGE_URL}/${url}` : url;
 
@@ -25,7 +26,7 @@
 	});
 </script>
 
-<div class="thumbnail">
+<div class={`thumbnail`} class:sm={size === 'sm'} class:md={size === 'md'}>
 	{#if imageValid}
 		<img class="image" {alt} {src} on:error={handleImageError} />
 	{:else}
@@ -35,7 +36,15 @@
 
 <style type="text/postcss">
 	.thumbnail {
-		@apply w-12 h-12 sm:w-16 sm:h-16 rounded-full overflow-hidden shadow-md;
+		@apply rounded-full overflow-hidden shadow-md;
+	}
+
+	.md {
+		@apply w-12 h-12 sm:w-16 sm:h-16;
+	}
+
+	.sm {
+		@apply w-8 h-8 sm:w-9 sm:h-9;
 	}
 
 	.image {

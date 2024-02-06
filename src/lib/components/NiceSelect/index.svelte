@@ -5,6 +5,7 @@
 	export let value = null;
 	export let options = [];
 	export let label = '';
+	export let labelThumbnail = null;
 	export let errors = [];
 	export let position = 'vertical';
 	export let ui = 'default';
@@ -12,7 +13,7 @@
 </script>
 
 {#if isMultiSelect}
-	<MultiSelect bind:values={value} {options} {position} {errors} {label} />
+	<MultiSelect bind:values={value} {options} {position} {errors} {label} {labelThumbnail} />
 {:else}
-	<SingleSelect bind:value {options} {position} {errors} {label} />
+	<SingleSelect bind:value {options} {position} {errors} {label} {labelThumbnail} />
 {/if}

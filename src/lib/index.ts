@@ -12,7 +12,6 @@ export { default as TimePicker } from './components/TimePicker/index.svelte';
 export { default as Select } from './components/Select/index.svelte';
 export { default as Card } from './components/Card/index.svelte';
 export { default as DynamicFieldForm } from './components/DynamicFieldForm/index.svelte';
-export { default as DynamicFieldFilter } from './components/DynamicFieldFilter/index.svelte';
 export { default as Range } from './components/Range/index.svelte';
 export { default as NiceSelect } from './components/NiceSelect/index.svelte';
 export { default as Search } from './components/Search/index.svelte';

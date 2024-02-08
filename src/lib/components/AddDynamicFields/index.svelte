@@ -13,6 +13,7 @@
 
 	export let label = 'Custom fields';
 	export let fields;
+	export let autofillOptions = [];
 
 	const types = [
 		{ label: 'Text', value: 'text' },
@@ -66,6 +67,9 @@
 			errors: []
 		},
 		ui: {
+			errors: []
+		},
+		autofillIds: {
 			errors: []
 		},
 		type: {
@@ -150,6 +154,14 @@
 			bind:value={field.properties}
 			bind:errors={fieldStatus.properties.errors}
 		/>
+
+		<DropDown
+			label="Autofill"
+			isMultiSelect={true}
+			options={autofillOptions}
+			bind:errors={fieldStatus.type.errors}
+			bind:value={field.autofillIds}
+		/>
 	</div>
 </Modal>
 
@@ -160,19 +172,25 @@
 		<button on:click={addField} class="add-field-button">Add field</button>
 	</div>
 	<div class="custom-field-body">
-		<div>
+		<div class="field-header">
+			<div class="header-item">Key</div>
+			<div class="header-item">Type</div>
+			<div class="header-item">Operation</div>
+			<div class="header-item">Is required</div>
+			<div class="header-item">Is filter</div>
+		</div>
+		<div class="fields">
 			{#each fields as field, index}
 				<div class="field-item">
-					<div class="fields">
-						<span>Key: {field.key}</span>
-						<span>Type: {field.type}</span>
-						<span>Condition: {field.condition}</span>
-						<span>Is required: {field.isRequired}</span>
-						<span>Is filter: {field.isFilter}</span>
-					</div>
-
-					<div on:click={() => removeField(index)}>
-						<SvgIcon data={Close} size={'30px'} color={'white'} />
+					<div class="field">{field.key}</div>
+					<div class="field">{field.type}</div>
+					<div class="field">{field.operation}</div>
+					<div class="field">{field.isRequired}</div>
+					<div class="field last-item">
+						{field.isFilter}
+						<div class="remove-button" on:click={() => removeField(index)}>
+							<SvgIcon data={Close} size={'30px'} color={'white'} />
+						</div>
 					</div>
 				</div>
 			{/each}
@@ -181,20 +199,12 @@
 </div>
 
 <style type="text/postcss">
-	.custom-field-body {
-		@apply flex flex-col rounded-md p-2 gap-y-2;
-	}
-
 	.add-field-body {
 		@apply p-3 h-[550px] overflow-y-scroll;
 	}
 
 	.field-item {
-		@apply flex text-primary font-bold justify-between;
-	}
-
-	.fields {
-		@apply flex text-primary font-bold gap-2;
+		@apply flex w-full text-primary font-bold justify-between flex-1;
 	}
 
 	.field-body {
@@ -203,5 +213,41 @@
 
 	.add-field-button {
 		@apply text-primary font-bold p-2 px-5 rounded-xl bg-accent;
+	}
+
+	.custom-field-body {
+		@apply flex flex-col my-3;
+	}
+
+	.field-header,
+	.field-item {
+		@apply flex items-center justify-between text-white font-bold text-xl;
+	}
+
+	.field-header {
+		@apply bg-secondary rounded-t-xl;
+	}
+
+	.header-item {
+		@apply pl-2 flex-1;
+	}
+
+	.fields {
+		@apply bg-accent;
+	}
+
+	.field {
+		@apply flex-1 pl-2;
+	}
+
+	.remove-button {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		cursor: pointer;
+	}
+
+	.last-item {
+		@apply flex;
 	}
 </style>

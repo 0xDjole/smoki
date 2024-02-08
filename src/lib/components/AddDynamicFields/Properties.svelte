@@ -36,12 +36,12 @@
 	<div class="properties">
 		<DropDown label="Operation" bind:value={value.operation} options={operationOptions} />
 
+		<Switch label="Is custom input allowed" bind:value={value.isCustomInputAllowed} />
+
 		{#if optionFieldTypes.includes(fieldType)}
 			<Options label="Options" type={fieldType} bind:options={value.options} />
 
 			{#if value?.options?.length}
-				<Switch label="Is custom input allowed" bind:value={value.isCustomInputAllowed} />
-
 				<Switch label="Is multiselect" bind:value={value.isMultiSelect} />
 			{/if}
 		{/if}

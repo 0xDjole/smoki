@@ -53,10 +53,7 @@
 	$: parsedValue = formatDuration(value);
 </script>
 
-<button
-	class="bg-primary text-primary font-bold rounded-md text-xl p-3"
-	on:click={() => (showModal = true)}>{label} {parsedValue}</button
->
+<button on:click={() => (showModal = true)}>{label} {parsedValue}</button>
 
 <Modal
 	title={`Pick duration`}
@@ -94,6 +91,10 @@
 </Modal>
 
 <style type="text/postcss">
+	button {
+		@apply bg-secondary flex justify-center items-center cursor-pointer p-2 my-2 rounded-xl font-bold text-lg transition-all duration-200 ease-in-out shadow-sm text-secondary hover:opacity-60 min-w-[60px];
+	}
+
 	.time-range {
 		@apply flex items-center justify-center rounded-md mx-auto;
 		height: 70%;

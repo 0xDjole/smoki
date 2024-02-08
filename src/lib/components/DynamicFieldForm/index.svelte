@@ -66,7 +66,7 @@
 					/>
 				{/if}
 
-				{#if field.properties.range}
+				{#if field.properties.range && fields[index].value >= field.properties.range.min && fields[index].value <= field.properties.range.max}
 					<div class={`${field?.properties?.isCustomInputAllowed ? 'mt-3' : ''}`}>
 						<Range
 							label={field?.properties?.isCustomInputAllowed ? null : field.key}

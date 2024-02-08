@@ -55,7 +55,7 @@
 	}
 
 	.options {
-		@apply w-full pb-2;
+		@apply mx-5 pb-5;
 	}
 	.header-title {
 		@apply w-full text-3xl font-bold text-center pt-2;

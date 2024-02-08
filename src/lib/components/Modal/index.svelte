@@ -50,7 +50,7 @@
 		@apply flex flex-col relative rounded-md inset-0 z-40 bg-primary text-white border-2 border-secondary border-solid mx-auto;
 		width: 95%;
 		@screen lg {
-			width: 55%;
+			width: 75%;
 		}
 	}
 

@@ -25,6 +25,10 @@
 		{ label: 'Contains', value: 'contains' },
 		{ label: 'Range', value: 'range' }
 	];
+
+	$: if (propertyTypes.includes(fieldType) && !value) {
+		value = {};
+	}
 </script>
 
 {#if propertyTypes.includes(fieldType)}

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { v4 } from '@lukeed/uuid';
+
 	import Input from '../Input/index.svelte';
 	import Upload from '../Upload.svelte';
 	import Modal from '../Modal/index.svelte';
@@ -46,15 +48,15 @@
 	};
 
 	const defaultField = {
+		id: v4(),
 		key: '',
 		type: '',
 		ui: 'default',
 		operation: 'equals',
 		isRequired: true,
 		isFilter: true,
-		properties: {
-			range: {}
-		}
+		properties: null,
+		autofillIds: []
 	};
 
 	let field = defaultField;
@@ -152,10 +154,10 @@
 </Modal>
 
 <div>
-	<div class="flex">
+	<div class="field-body">
 		<Label {label} errors={[]} />
 
-		<button on:click={addField} class="text-primary font-bold p-2 bg-primary">Add field</button>
+		<button on:click={addField} class="add-field-button">Add field</button>
 	</div>
 	<div class="custom-field-body">
 		<div>
@@ -184,7 +186,7 @@
 	}
 
 	.add-field-body {
-		@apply p-3 h-[600px] overflow-y-scroll;
+		@apply p-3 h-[550px] overflow-y-scroll;
 	}
 
 	.field-item {
@@ -193,5 +195,13 @@
 
 	.fields {
 		@apply flex text-primary font-bold gap-2;
+	}
+
+	.field-body {
+		@apply flex gap-x-5;
+	}
+
+	.add-field-button {
+		@apply text-primary font-bold p-2 px-5 rounded-xl bg-accent;
 	}
 </style>

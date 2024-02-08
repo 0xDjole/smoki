@@ -180,20 +180,24 @@
 			<div class="header-item">Is filter</div>
 		</div>
 		<div class="fields">
-			{#each fields as field, index}
-				<div class="field-item">
-					<div class="field">{field.key}</div>
-					<div class="field">{field.type}</div>
-					<div class="field">{field.operation}</div>
-					<div class="field">{field.isRequired}</div>
-					<div class="field last-item">
-						{field.isFilter}
-						<div class="remove-button" on:click={() => removeField(index)}>
-							<SvgIcon data={Close} size={'30px'} color={'white'} />
+			{#if fields.length}
+				{#each fields as field, index}
+					<div class="field-item">
+						<div class="field">{field.key}</div>
+						<div class="field">{field.type}</div>
+						<div class="field">{field.operation}</div>
+						<div class="field">{field.isRequired}</div>
+						<div class="field last-item">
+							{field.isFilter}
+							<div class="remove-button" on:click={() => removeField(index)}>
+								<SvgIcon data={Close} size={'30px'} color={'white'} />
+							</div>
 						</div>
 					</div>
-				</div>
-			{/each}
+				{/each}
+			{:else}
+				<div class="no-field">Please add fields</div>
+			{/if}
 		</div>
 	</div>
 </div>
@@ -219,8 +223,11 @@
 		@apply flex flex-col my-3;
 	}
 
-	.field-header,
-	.field-item {
+	.field-header {
+		@apply flex items-center justify-between text-white font-bold text-2xl;
+	}
+
+	.field-header {
 		@apply flex items-center justify-between text-white font-bold text-xl;
 	}
 
@@ -229,7 +236,12 @@
 	}
 
 	.header-item {
-		@apply pl-2 flex-1;
+		@apply pl-2 flex-1 border-solid border-r-2 border-gray-500;
+	}
+
+	.field:last-child,
+	.header-item:last-child {
+		@apply border-none;
 	}
 
 	.fields {
@@ -237,7 +249,12 @@
 	}
 
 	.field {
-		@apply flex-1 pl-2;
+		@apply flex-1 h-[30px] items-center pl-2 border-r-2 border-solid border-gray-500 text-white font-bold;
+	}
+
+	.no-field {
+		@apply flex-1 h-[30px] items-center text-white font-bold pt-1;
+		text-align: center;
 	}
 
 	.remove-button {
@@ -248,6 +265,6 @@
 	}
 
 	.last-item {
-		@apply flex;
+		@apply flex justify-between;
 	}
 </style>

@@ -149,13 +149,22 @@
 	// Set a class based on if dragging
 	$: holding = Boolean(currentThumb);
 
+	const getPercent = (value, min, max) => {
+		if (value <= min) {
+			return 0;
+		}
+
+		if (value >= max) {
+			return 100;
+		}
+
+		return ((value - min) * 100) / (max - min);
+	};
+
 	// Update progressbar and thumb styles to represent value
 	$: if (progressBar && thumb) {
-		// Limit value min -> max
-		value = value > min ? value : min;
-		value = value < max ? value : max;
-
-		let percent = ((value - min) * 100) / (max - min);
+		let percent = getPercent(value, min, max);
+		console.log('percent ', percent);
 		let offsetLeft = (container.clientWidth - 10) * (percent / 100) + 5;
 
 		// Update thumb position + active range track width
@@ -163,8 +172,6 @@
 		progressBar.style.width = `${offsetLeft}px`;
 	}
 </script>
-
-<Label {errors} {label} {labelThumbnail} />
 
 <svelte:window
 	on:touchmove|nonpassive={updateValueOnEvent}

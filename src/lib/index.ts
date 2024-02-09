@@ -29,3 +29,4 @@ export { default as InfiniteScroll } from './components/InfiniteScroll.svelte';
 export { default as FakeScreen } from './components/FakeScreen.svelte';
 export { default as DeleteButton } from './components/DeleteButton.svelte';
 export { default as Back } from './components/Back.svelte';
+export { default as Label } from './components/Label.svelte';

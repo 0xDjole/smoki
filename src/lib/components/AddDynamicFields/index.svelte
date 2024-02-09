@@ -165,8 +165,6 @@
 <div>
 	<div class="field-body">
 		<Label {label} errors={[]} />
-
-		<button on:click={addField} class="add-field-button">Add field</button>
 	</div>
 
 	<FieldsTable bind:isAddModalOpen bind:fields bind:autofillOptions />

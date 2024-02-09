@@ -93,7 +93,7 @@
 	}
 
 	.fields {
-		@apply bg-accent;
+		@apply bg-accent rounded-b-xl;
 	}
 
 	.field {

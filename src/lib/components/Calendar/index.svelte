@@ -352,9 +352,11 @@
 					class="calendar-item"
 				>
 					<div class="p-2">
-						<span>
-							{item.service.name},
-						</span>
+						{#if item.service}
+							<span>
+								{item.service.name},
+							</span>
+						{/if}
 
 						<span>
 							{getItemTime(item)}

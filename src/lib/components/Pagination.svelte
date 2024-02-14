@@ -168,7 +168,7 @@
 	}
 
 	.wrap {
-		@apply overflow-hidden;
+		@apply overflow-hidden w-full;
 		height: var(--smallHeight);
 		@screen md {
 			height: var(--height);

@@ -1,7 +1,10 @@
 <script lang="ts">
+	import Plus from '../../utils/icons/plus.svg?raw';
 	import Close from '../../utils/icons/close.svg?raw';
+	import Less from '../../utils/icons/less.svg?raw';
 	import SvgIcon from '../SvgIcon.svelte';
 
+	export let svgName = '';
 	export let position = '';
 
 	export let onClick = () => {};
@@ -14,10 +17,24 @@
 			return 'left';
 		}
 	};
+
+	const parseSvgName = (svgName) => {
+		console.log('scg ', svgName);
+		if (svgName === 'back') {
+			return Less;
+		}
+		if (svgName === 'delete') {
+			return Close;
+		}
+
+		if (svgName === 'add') {
+			return Plus;
+		}
+	};
 </script>
 
 <span class={`remove ${parsePosition(position)}`} on:click={onClick}>
-	<SvgIcon data={Close} size={'30px'} color={'white'} />
+	<SvgIcon data={parseSvgName(svgName)} size={'30px'} color={'white'} />
 </span>
 
 <style type="text/postcss">

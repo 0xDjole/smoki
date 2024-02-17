@@ -1,5 +1,5 @@
 <script lang="ts">
-	import DeleteButton from './DeleteButton.svelte';
+	import SvgButton from './SvgButton.svelte';
 
 	export let kind = 'base';
 	export let size = 'small';
@@ -36,10 +36,14 @@
 
 		return '';
 	};
+
+	const svgKinds = ['delete', 'add', 'back'];
+
+	$: console.log('kind', kind);
 </script>
 
-{#if kind === 'delete'}
-	<DeleteButton {position} {onClick} />
+{#if svgKinds.includes(kind)}
+	<SvgButton svgName={kind} {onClick} />
 {:else}
 	<button
 		class={`base ${parseSize(size)} ${parseKind(kind)} ${disabled ? 'disabled' : ''} ${className}`}

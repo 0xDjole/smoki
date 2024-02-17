@@ -1,5 +1,5 @@
 <script lang="ts">
-	import DeleteButton from '../DeleteButton.svelte';
+	import DeleteButton from './DeleteButton.svelte';
 
 	export let kind = 'base';
 	export let size = 'small';

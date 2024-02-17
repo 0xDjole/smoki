@@ -1,17 +1,38 @@
 <script lang="ts">
-	export let kind = '';
+	export let kind = 'base';
+	export let size = 'small';
 	export let onClick;
-	export let end = false;
-	export let size = '';
 	export let style = '';
 	export let disabled = false;
 	export let className = '';
+
+	const parseSize = (size) => {
+		if (size === 'large') {
+			return 'large';
+		}
+
+		if (size === 'full') {
+			return 'full';
+		}
+
+		return 'small';
+	};
+
+	const parseKind = (kind) => {
+		if (kind === 'success') {
+			return 'success';
+		}
+
+		if (kind === 'error') {
+			return 'error';
+		}
+
+		return '';
+	};
 </script>
 
 <button
-	class={`base ${kind === 'submit' ? 'submit' : ''} ${size === 'small' ? 'small' : ''} ${
-		end ? 'end' : ''
-	} ${disabled ? 'disabled' : ''} ${className}`}
+	class={`base ${parseSize(size)} ${parseKind(kind)} ${disabled ? 'disabled' : ''} ${className}`}
 	{style}
 	title={disabled ? 'Choose an item and date' : ''}
 	on:click={(e) => {
@@ -22,21 +43,31 @@
 
 <style type="text/postcss">
 	.base {
-		@apply w-full bg-accent text-primary rounded-lg  border-secondary  font-semibold p-2 cursor-pointer hover:bg-secondary hover:text-success whitespace-nowrap text-2xl;
+		@apply bg-accent text-primary rounded-lg  font-semibold cursor-pointer hover:opacity-80 whitespace-nowrap
+		p-2 m-0 h-full;
 	}
 
-	.submit {
-		@apply mt-5 text-3xl p-4;
+	.success {
+		@apply bg-success;
+	}
+
+	.error {
+		@apply bg-error;
 	}
 
 	.small {
-		@apply p-1 m-0 w-fit h-full text-lg;
+		@apply w-fit;
 	}
 
-	.end {
-		@apply self-end;
+	.large {
+		@apply w-full;
 	}
+
+	.full {
+		@apply w-full rounded-none;
+	}
+
 	.disabled {
-		@apply opacity-50;
+		@apply opacity-40;
 	}
 </style>

@@ -31,7 +31,7 @@
 			</div>
 			{#if confirmText}
 				<div class="options">
-					<Button kind={'submit'} onClick={() => confirm()}>{confirmText}</Button>
+					<Button size={'large'} onClick={() => confirm()}>{confirmText}</Button>
 				</div>
 			{/if}
 		</div>

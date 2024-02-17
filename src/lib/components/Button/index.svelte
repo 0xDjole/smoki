@@ -3,6 +3,7 @@
 
 	export let kind = 'base';
 	export let size = 'small';
+	export let position = '';
 	export let onClick;
 	export let style = '';
 	export let disabled = false;
@@ -29,12 +30,16 @@
 			return 'error';
 		}
 
+		if (kind === 'boring') {
+			return 'boring';
+		}
+
 		return '';
 	};
 </script>
 
 {#if kind === 'delete'}
-	<DeleteButton {onClick} />
+	<DeleteButton {position} {onClick} />
 {:else}
 	<button
 		class={`base ${parseSize(size)} ${parseKind(kind)} ${disabled ? 'disabled' : ''} ${className}`}
@@ -71,6 +76,10 @@
 
 	.full {
 		@apply w-full rounded-none;
+	}
+
+	.boring {
+		@apply bg-transparent;
 	}
 
 	.disabled {

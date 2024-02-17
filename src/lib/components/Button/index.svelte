@@ -1,4 +1,6 @@
 <script lang="ts">
+	import DeleteButton from '../DeleteButton.svelte';
+
 	export let kind = 'base';
 	export let size = 'small';
 	export let onClick;
@@ -31,15 +33,19 @@
 	};
 </script>
 
-<button
-	class={`base ${parseSize(size)} ${parseKind(kind)} ${disabled ? 'disabled' : ''} ${className}`}
-	{style}
-	title={disabled ? 'Choose an item and date' : ''}
-	on:click={(e) => {
-		e.preventDefault();
-		onClick();
-	}}><slot /></button
->
+{#if kind === 'delete'}
+	<DeleteButton {onClick} />
+{:else}
+	<button
+		class={`base ${parseSize(size)} ${parseKind(kind)} ${disabled ? 'disabled' : ''} ${className}`}
+		{style}
+		title={disabled ? 'Choose an item and date' : ''}
+		on:click={(e) => {
+			e.preventDefault();
+			onClick();
+		}}><slot /></button
+	>
+{/if}
 
 <style type="text/postcss">
 	.base {

@@ -64,30 +64,25 @@
 			navigation.back();
 		}}
 	/>
-	<span slot="middle" class="text-primary font-bold text-lg sm:text-3xl">{headerTitle}</span>
-	<div class="flex flex-col sm:flex-row gap-2" slot="right">
+	<span slot="middle" class="title">{headerTitle}</span>
+	<div class="right-header" slot="right">
 		{#if headerAction}
-			<button class="delete-btn" on:click={clickHeaderAction}>{headerActionName}</button>
+			<Button size="small" kind="error" onClick={clickHeaderAction}>{headerActionName}</Button>
 		{/if}
 	</div>
 </Header>
 
 {#if isLoading}
-	<div class="absolute flex justify-center items-center h-full w-full z-50">
+	<div class="loader">
 		<Loader />
 	</div>
 {/if}
 
 <div class="layout">
-	<div
-		style={isLoading ? 'opacity: 50%;' : ''}
-		class={`main-content h-[calc(100vh-55px-60px-50px)] md:h-[calc(100vh-55px-80px-50px)]`}
-	>
+	<div style={isLoading ? 'opacity: 50%;' : ''} class={`form-wrap`}>
 		<div class="form"><slot /></div>
 	</div>
-	<button style={`height: 50px`} class="update-btn" on:click={clickBottomAction}
-		>{bottomActionName}</button
-	>
+	<Button size="full" style={`height: 50px`} onClick={clickBottomAction}>{bottomActionName}</Button>
 </div>
 
 <style type="text/postcss">
@@ -107,12 +102,19 @@
 		@apply flex overflow-y-scroll justify-center;
 	}
 
-	.update-btn {
-		@apply text-primary font-bold w-full text-2xl py-2 mx-auto bg-accent;
+	.form-wrap {
+		@apply main-content h-[calc(100vh-55px-60px-50px)] md:h-[calc(100vh-55px-80px-50px)];
 	}
 
-	.delete-btn {
-		@apply bg-error text-sm sm:text-xl px-1 sm:px-3 py-1  rounded-md;
-		background: linear-gradient(to right, #ff4500, #ff0000);
+	.loader {
+		@apply absolute flex justify-center items-center h-full w-full z-50;
+	}
+
+	.title {
+		@apply text-primary font-bold text-lg sm:text-3xl;
+	}
+
+	.right-header {
+		@apply flex-col sm:flex-row gap-2;
 	}
 </style>

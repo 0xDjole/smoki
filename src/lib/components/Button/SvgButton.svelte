@@ -2,6 +2,8 @@
 	import Plus from '../../utils/icons/plus.svg?raw';
 	import Close from '../../utils/icons/close.svg?raw';
 	import Less from '../../utils/icons/less.svg?raw';
+	import User from '../../utils/icons/user.svg?raw';
+	import Search from '../../utils/icons/search.svg?raw';
 	import SvgIcon from '../SvgIcon.svelte';
 
 	export let svgName = '';
@@ -19,7 +21,6 @@
 	};
 
 	const parseSvgName = (svgName) => {
-		console.log('scg ', svgName);
 		if (svgName === 'back') {
 			return Less;
 		}
@@ -29,6 +30,14 @@
 
 		if (svgName === 'add') {
 			return Plus;
+		}
+
+		if (svgName === 'user') {
+			return User;
+		}
+
+		if (svgName === 'search') {
+			return Search;
 		}
 	};
 </script>

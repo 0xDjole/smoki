@@ -37,9 +37,7 @@
 		return '';
 	};
 
-	const svgKinds = ['delete', 'add', 'back'];
-
-	$: console.log('kind', kind);
+	const svgKinds = ['delete', 'add', 'back', 'search', 'user'];
 </script>
 
 {#if svgKinds.includes(kind)}
@@ -75,7 +73,7 @@
 	}
 
 	.large {
-		@apply w-full;
+		@apply w-full text-2xl;
 	}
 
 	.full {

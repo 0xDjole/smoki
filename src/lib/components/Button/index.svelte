@@ -4,7 +4,7 @@
 	export let kind = 'base';
 	export let size = 'small';
 	export let position = '';
-	export let onClick;
+	export let onClick = null;
 	export let style = '';
 	export let disabled = false;
 	export let className = '';
@@ -49,7 +49,9 @@
 		title={disabled ? 'Choose an item and date' : ''}
 		on:click={(e) => {
 			e.preventDefault();
-			onClick();
+			if (onClick) {
+				onClick();
+			}
 		}}><slot /></button
 	>
 {/if}

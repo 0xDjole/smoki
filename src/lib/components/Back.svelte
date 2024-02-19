@@ -1,6 +1,5 @@
 <script lang="ts">
-	import SvgIcon from './SvgIcon.svelte';
-	import Less from '../utils/icons/less.svg?raw';
+	import Button from './Button/index.svelte';
 </script>
 
-<SvgIcon data={Less} color={'white'} size={'20px'} />
+<Button kind="back" />

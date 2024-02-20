@@ -3,6 +3,7 @@
 	import SingleSelect from './SingleSelect.svelte';
 
 	export let value = null;
+	export let disabled = false;
 	export let options = [];
 	export let label = '';
 	export let labelThumbnail = null;
@@ -13,7 +14,15 @@
 </script>
 
 {#if isMultiSelect}
-	<MultiSelect bind:values={value} {options} {position} {errors} {label} {labelThumbnail} />
+	<MultiSelect
+		{disabled}
+		bind:values={value}
+		{options}
+		{position}
+		{errors}
+		{label}
+		{labelThumbnail}
+	/>
 {:else}
-	<SingleSelect bind:value {options} {position} {errors} {label} {labelThumbnail} />
+	<SingleSelect {disabled} bind:value {options} {position} {errors} {label} {labelThumbnail} />
 {/if}

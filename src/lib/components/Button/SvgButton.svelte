@@ -4,6 +4,7 @@
 	import Less from '../../utils/icons/less.svg?raw';
 	import User from '../../utils/icons/user.svg?raw';
 	import Search from '../../utils/icons/search.svg?raw';
+	import Success from '../../utils/icons/checkmark.svg?raw';
 	import SvgIcon from '../SvgIcon.svelte';
 
 	export let svgName = '';
@@ -38,6 +39,14 @@
 
 		if (svgName === 'search') {
 			return Search;
+		}
+
+		if (svgName === 'close') {
+			return Close;
+		}
+
+		if (svgName === 'success') {
+			return Success;
 		}
 	};
 </script>

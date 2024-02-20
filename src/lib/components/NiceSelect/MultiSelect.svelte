@@ -3,16 +3,19 @@
 	export let values = [];
 	export let options = [];
 	export let label = '';
+	export let disabled = false;
 	export let labelThumbnail = null;
 	export let errors = [];
 	export let position = 'vertical';
 
 	const selectOption = (optionValue) => {
-		const isSelected = values.includes(optionValue);
-		if (isSelected) {
-			values = values.filter((value) => value !== optionValue);
-		} else {
-			values = [...values, optionValue];
+		if (!disabled) {
+			const isSelected = values.includes(optionValue);
+			if (isSelected) {
+				values = values.filter((value) => value !== optionValue);
+			} else {
+				values = [...values, optionValue];
+			}
 		}
 	};
 </script>

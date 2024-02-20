@@ -37,7 +37,7 @@
 		return '';
 	};
 
-	const svgKinds = ['delete', 'add', 'back', 'search', 'user'];
+	const svgKinds = ['delete', 'add', 'back', 'search', 'user', 'success', 'close'];
 </script>
 
 {#if svgKinds.includes(kind)}

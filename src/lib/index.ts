@@ -21,6 +21,7 @@ export { default as Input } from './components/Input/index.svelte';
 export { default as Gallery } from './components/Gallery/index.svelte';
 export { default as Duration } from './components/Duration/index.svelte';
 export { default as Header } from './components/Header/index.svelte';
+export { default as Fields } from './components/Fields/index.svelte';
 export { default as Upload } from './components/Upload.svelte';
 export { default as Toast } from './components/Toast.svelte';
 export { default as ErrorMessage } from './components/ErrorMessage.svelte';

@@ -5,14 +5,17 @@
 	export let options = [];
 	export let label = '';
 	export let errors = [];
+	export let disabled = false;
 	export let position = 'vertical';
 	export let ui = 'default';
 	export let isMultiSelect = false;
 	export let labelThumbnail = null;
 
 	const selectOption = (optionValue) => {
-		const isSelected = value === optionValue;
-		value = isSelected ? null : optionValue;
+		if (!disabled) {
+			const isSelected = value === optionValue;
+			value = isSelected ? null : optionValue;
+		}
 	};
 </script>
 

@@ -31,9 +31,7 @@
 		{#each options as option}
 			<div
 				on:click={() => selectOption(option.value)}
-				class="option bg-secondary border-primary {values?.includes(option.value)
-					? 'selected'
-					: ''}"
+				class="option {values?.includes(option.value) ? 'selected' : ''}"
 			>
 				{option.label}
 			</div>
@@ -47,7 +45,7 @@
 	}
 
 	.list-horizontal {
-		@apply flex-row;
+		@apply flex-row overflow-scroll;
 	}
 
 	.list-vertical {
@@ -55,7 +53,7 @@
 	}
 
 	.option {
-		@apply flex justify-center items-center cursor-pointer p-2 m-2 rounded-xl font-bold text-lg transition-all duration-200 ease-in-out shadow-sm text-secondary min-w-[60px];
+		@apply flex justify-center items-center cursor-pointer p-1.5 m-2 rounded-xl font-bold text-base md:text-lg transition-all duration-200 ease-in-out shadow-sm text-secondary min-w-[100px] bg-secondary;
 	}
 
 	.selected {

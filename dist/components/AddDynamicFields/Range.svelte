@@ -1,6 +1,6 @@
-<script>import Input from "../Input/index.svelte";
-import Label from "../Label.svelte";
-export let label = "";
+<script>import Input from '../Input/index.svelte';
+import Label from '../Label.svelte';
+export let label = '';
 export let errors = [];
 export let range;
 let minCondition;
@@ -18,13 +18,13 @@ $: if (maxInput && maxCondition) {
 <Label {label} {errors} />
 
 <div class="range">
-  <Input bind:value={minInput} type="text" kind="primary" placeholder="Min" />
+	<Input bind:value={minInput} type="text" kind="primary" placeholder="Min" />
 
-  <Input bind:value={maxInput} type="text" kind="primary" placeholder="Max" />
+	<Input bind:value={maxInput} type="text" kind="primary" placeholder="Max" />
 </div>
 
 <style>
-  .range {
+	.range {
 
     display: flex;
 
@@ -33,7 +33,7 @@ $: if (maxInput && maxCondition) {
          column-gap: 0.5rem
 }
 
-  .input {
+	.input {
 
     display: flex;
 
@@ -44,7 +44,7 @@ $: if (maxInput && maxCondition) {
          column-gap: 0.5rem
 }
 
-  .add-options {
+	.add-options {
 
     font-size: 1.25rem;
 
@@ -55,7 +55,7 @@ $: if (maxInput && maxCondition) {
     color: var(--primary-text-color)
 }
 
-  .list {
+	.list {
 
     display: flex;
 
@@ -70,7 +70,7 @@ $: if (maxInput && maxCondition) {
     font-weight: 700
 }
 
-  .item {
+	.item {
 
     min-width: 100px;
 
@@ -97,7 +97,7 @@ $: if (maxInput && maxCondition) {
     border-style: solid
 }
 
-  .custom-field-body {
+	.custom-field-body {
 
     display: flex;
 
@@ -116,7 +116,7 @@ $: if (maxInput && maxCondition) {
     border-style: solid
 }
 
-  .add-field-body {
+	.add-field-body {
 
     height: 600px;
 
@@ -125,7 +125,7 @@ $: if (maxInput && maxCondition) {
     padding: 0.75rem
 }
 
-  .field-item {
+	.field-item {
 
     display: flex;
 
@@ -136,7 +136,7 @@ $: if (maxInput && maxCondition) {
     color: var(--primary-text-color)
 }
 
-  .fields {
+	.fields {
 
     display: flex;
 

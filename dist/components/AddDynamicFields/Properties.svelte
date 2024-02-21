@@ -1,29 +1,54 @@
-<script>import Switch from "../Switch/index.svelte";
-import Options from "./Options.svelte";
-import Range from "./Range.svelte";
-import Label from "../Label.svelte";
-export let label = "Custom fields";
+<script>import Switch from '../Switch/index.svelte';
+import Options from './Options.svelte';
+import Range from './Range.svelte';
+import DropDown from '../DropDown/index.svelte';
+import Label from '../Label.svelte';
+export let label = 'Custom fields';
 export let value;
 export let errors = [];
+export let fieldType;
+const rangeFieldTypes = ['number', 'date'];
+const optionFieldTypes = ['text', 'number', 'date'];
+const propertyTypes = ['text', 'number', 'date'];
+const operationOptions = [
+    { label: 'Greater than', value: 'plus' },
+    { label: 'Less than', value: 'minus' },
+    { label: 'Less than or equal', value: 'less_than_or_equal' },
+    { label: 'Greater than or equal', value: 'greater_than_or_equal' },
+    { label: 'Equals', value: 'equals' },
+    { label: 'Greater than', value: 'greater_than' },
+    { label: 'Less than', value: 'less_than' },
+    { label: 'Contains', value: 'contains' },
+    { label: 'Range', value: 'range' }
+];
+$: if (propertyTypes.includes(fieldType) && !value) {
+    value = {};
+}
 </script>
 
-<Label {label} {errors} />
+{#if propertyTypes.includes(fieldType)}
+	<Label {label} {errors} />
+	<div class="properties">
+		<DropDown label="Operation" bind:value={value.operation} options={operationOptions} />
 
-<div class="properties">
-  <Switch
-    label="Is custom input allowed"
-    bind:value={value.isCustomInputAllowed}
-  />
+		<Switch label="Is custom input allowed" bind:value={value.isCustomInputAllowed} />
 
-  <Switch label="Is multiselect" bind:value={value.isMultiSelect} />
+		{#if optionFieldTypes.includes(fieldType)}
+			<Options label="Options" type={fieldType} bind:options={value.options} />
 
-  <Options label="Options" bind:options={value.options} />
+			{#if value?.options?.length}
+				<Switch label="Is multiselect" bind:value={value.isMultiSelect} />
+			{/if}
+		{/if}
 
-  <Range label="Range" bind:range={value.range} />
-</div>
+		{#if rangeFieldTypes.includes(fieldType)}
+			<Range label="Range" bind:range={value.range} />
+		{/if}
+	</div>
+{/if}
 
 <style>
-  .properties {
+	.properties {
 
     display: flex;
 
@@ -34,7 +59,7 @@ export let errors = [];
     padding: 0.75rem
 }
 
-  .custom-field-body {
+	.custom-field-body {
 
     display: flex;
 
@@ -53,7 +78,7 @@ export let errors = [];
     border-style: solid
 }
 
-  .add-field-body {
+	.add-field-body {
 
     height: 600px;
 
@@ -62,7 +87,7 @@ export let errors = [];
     padding: 0.75rem
 }
 
-  .field-item {
+	.field-item {
 
     display: flex;
 
@@ -73,7 +98,7 @@ export let errors = [];
     color: var(--primary-text-color)
 }
 
-  .fields {
+	.fields {
 
     display: flex;
 

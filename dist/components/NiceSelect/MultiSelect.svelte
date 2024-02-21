@@ -1,49 +1,68 @@
-<script>import Label from "../Label.svelte";
+<script>import Label from '../Label.svelte';
 export let values = [];
 export let options = [];
-export let label = "";
+export let label = '';
+export let disabled = false;
+export let labelThumbnail = null;
 export let errors = [];
-export let className = "";
+export let position = 'vertical';
 const selectOption = (optionValue) => {
-    const isSelected = values.includes(optionValue);
-    if (isSelected) {
-        values = values.filter((value) => value !== optionValue);
-    }
-    else {
-        values = [...values, optionValue];
+    if (!disabled) {
+        const isSelected = values.includes(optionValue);
+        if (isSelected) {
+            values = values.filter((value) => value !== optionValue);
+        }
+        else {
+            values = [...values, optionValue];
+        }
     }
 };
 </script>
 
 <div>
-  <Label {label} {errors} />
+	<Label {label} {labelThumbnail} {errors} />
 
-  <div class={className}>
-    {#each options as option}
-      <div
-        on:click={() => selectOption(option.value)}
-        class="option bg-secondary border-primary {values?.includes(
-          option.value
-        )
-          ? 'selected'
-          : ''}"
-      >
-        {option.label}
-      </div>
-    {/each}
-  </div>
+	<div
+		class="list"
+		class:list-vertical={position === 'vertical'}
+		class:list-horizontal={position === 'horizontal'}
+	>
+		{#each options as option}
+			<div
+				on:click={() => selectOption(option.value)}
+				class="option {values?.includes(option.value) ? 'selected' : ''}"
+			>
+				{option.label}
+			</div>
+		{/each}
+	</div>
 </div>
 
 <style>
-  .option {
+	.list {
 
-    margin-top: 0.5rem;
+    display: flex
+}
 
-    margin-bottom: 0.5rem;
+	.list-horizontal {
+
+    flex-direction: row;
+
+    overflow: scroll
+}
+
+	.list-vertical {
+
+    flex-direction: column
+}
+
+	.option {
+
+    margin: 0.25rem;
 
     display: flex;
 
-    min-width: 60px;
+    min-width: 100px;
 
     cursor: pointer;
 
@@ -53,11 +72,13 @@ const selectOption = (optionValue) => {
 
     border-radius: 0.75rem;
 
-    padding: 0.5rem;
+    background-color: var(--secondary-background-color);
 
-    font-size: 1.125rem;
+    padding: 0.375rem;
 
-    line-height: 1.75rem;
+    font-size: 1rem;
+
+    line-height: 1.5rem;
 
     font-weight: 700;
 
@@ -76,7 +97,17 @@ const selectOption = (optionValue) => {
     transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)
 }
 
-  .selected {
+	@media (min-width: 768px) {
+
+    .option {
+
+        font-size: 1.125rem;
+
+        line-height: 1.75rem
+    }
+}
+
+	.selected {
 
     background-color: var(--accent-background-color);
 

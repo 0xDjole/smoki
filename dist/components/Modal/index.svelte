@@ -31,7 +31,7 @@
 			</div>
 			{#if confirmText}
 				<div class="options">
-					<Button kind={'submit'} onClick={() => confirm()}>{confirmText}</Button>
+					<Button size={'large'} onClick={() => confirm()}>{confirmText}</Button>
 				</div>
 			{/if}
 		</div>
@@ -73,12 +73,13 @@
 }
 	@media (min-width: 1024px) {
 	.modal {
-			width: 55%
+			width: 75%
 	}
 		}
 	.options {
-		width: 100%;
-		padding-bottom: 0.5rem
+		margin-left: 1.25rem;
+		margin-right: 1.25rem;
+		padding-bottom: 1.25rem
 }
 	.header-title {
 		margin-left: auto;

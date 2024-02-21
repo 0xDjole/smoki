@@ -41,10 +41,7 @@ const onTimePickerConfirm = () => {
 $: parsedValue = formatDuration(value);
 </script>
 
-<button
-	class="bg-primary text-primary font-bold rounded-md text-xl p-3"
-	on:click={() => (showModal = true)}>{label} {parsedValue}</button
->
+<button on:click={() => (showModal = true)}>{label} {parsedValue}</button>
 
 <Modal
 	title={`Pick duration`}
@@ -82,6 +79,33 @@ $: parsedValue = formatDuration(value);
 </Modal>
 
 <style>
+	button {
+		margin-top: 0.5rem;
+		margin-bottom: 0.5rem;
+		display: flex;
+		min-width: 60px;
+		cursor: pointer;
+		align-items: center;
+		justify-content: center;
+		border-radius: 0.75rem;
+		background-color: var(--secondary-background-color);
+		padding: 0.5rem;
+		font-size: 1.125rem;
+		line-height: 1.75rem;
+		font-weight: 700;
+		color: var(--secondary-text-color);
+		--tw-shadow: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+		--tw-shadow-colored: 0 1px 2px 0 var(--tw-shadow-color);
+		box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
+		transition-property: all;
+		transition-duration: 200ms;
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)
+}
+
+button:hover {
+		opacity: 0.6
+}
+
 	.time-range {
 		margin-left: auto;
 		margin-right: auto;
@@ -96,7 +120,8 @@ $: parsedValue = formatDuration(value);
 		width: 95%
 }
 
-		@media (min-width: 768px) {
+	@media (min-width: 768px) {
+
 	.time-range {
 			width: 60%
 	}

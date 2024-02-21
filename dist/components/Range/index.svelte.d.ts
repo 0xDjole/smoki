@@ -2,6 +2,7 @@
 /** @typedef {typeof __propDef.events}  IndexEvents */
 /** @typedef {typeof __propDef.slots}  IndexSlots */
 export default class Index extends SvelteComponentTyped<{
+    labelThumbnail: any;
     max?: number | undefined;
     id?: null | undefined;
     min?: number | undefined;
@@ -21,6 +22,7 @@ export type IndexSlots = typeof __propDef.slots;
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
+        labelThumbnail: any;
         max?: number | undefined;
         id?: null | undefined;
         min?: number | undefined;

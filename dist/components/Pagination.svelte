@@ -145,6 +145,7 @@ const fetchData = async (isFromTop) => {
 	}
 
 	.wrap {
+		width: 100%;
 		overflow: hidden;
 		height: var(--smallHeight);
 }

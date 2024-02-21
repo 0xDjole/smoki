@@ -2,9 +2,9 @@ import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
         kind?: string | undefined;
-        onClick: any;
-        end?: boolean | undefined;
         size?: string | undefined;
+        position?: string | undefined;
+        onClick?: null | undefined;
         style?: string | undefined;
         disabled?: boolean | undefined;
         className?: string | undefined;

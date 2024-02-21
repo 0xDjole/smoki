@@ -3,6 +3,7 @@ declare const __propDef: {
     props: {
         label?: string | undefined;
         fields: any;
+        autofillOptions?: any[] | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

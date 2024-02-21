@@ -2,10 +2,12 @@ import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
         value?: null | undefined;
+        disabled?: boolean | undefined;
         options?: any[] | undefined;
         label?: string | undefined;
+        labelThumbnail?: null | undefined;
         errors?: any[] | undefined;
-        className?: string | undefined;
+        position?: string | undefined;
         ui?: string | undefined;
         isMultiSelect?: boolean | undefined;
     };

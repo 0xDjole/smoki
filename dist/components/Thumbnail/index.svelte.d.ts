@@ -4,6 +4,7 @@ declare const __propDef: {
         url?: null | undefined;
         isPrefix?: boolean | undefined;
         alt?: string | undefined;
+        size?: string | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

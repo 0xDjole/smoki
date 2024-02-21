@@ -1,17 +1,33 @@
-<script>export let label = "";
+<script>import Thumbnail from './Thumbnail/index.svelte';
+export let label = '';
+export let labelThumbnail = null;
 export let errors = [];
 </script>
 
 {#if label}
-  <label class:label-error={errors.length} for={label} class="label"
-    >{label}</label
-  >
+	<div class="thumbnail-wrapper">
+		{#if labelThumbnail}
+			<div class="thumbnail-container">
+				<Thumbnail size="sm" url={labelThumbnail.url} alt="Category thumbnail" />
+			</div>
+		{/if}
+		<div class:label-error={errors.length} for={label} class="label">{label}</div>
+	</div>
 {/if}
 
 <style>
-  .label {
+	.thumbnail-wrapper {
 
-    margin-bottom: 0.5rem;
+    display: flex;
+
+    align-items: flex-end;
+
+    -moz-column-gap: 0.5rem;
+
+         column-gap: 0.5rem
+}
+
+	.label {
 
     font-size: 1.125rem;
 
@@ -24,7 +40,7 @@ export let errors = [];
     color: rgb(255 255 255 / var(--tw-text-opacity))
 }
 
-@media (min-width: 768px) {
+	@media (min-width: 768px) {
 
     .label {
 
@@ -34,7 +50,14 @@ export let errors = [];
     }
 }
 
-  .label-error {
+	.thumbnail-container {
+
+    display: flex;
+
+    align-items: flex-end
+}
+
+	.label-error {
 
     color: var(--error-background-color)
 }</style>

@@ -1,47 +1,54 @@
-<script>import Input from "../Input/index.svelte";
-import DropDown from "../DropDown/index.svelte";
-import Label from "../Label.svelte";
-export let label = "";
+<script>import Input from '../Input/index.svelte';
+import DropDown from '../DropDown/index.svelte';
+import Label from '../Label.svelte';
+import Close from '../../utils/icons/close.svg?raw';
+import SvgIcon from '../SvgIcon.svelte';
+export let label = '';
 export let options = [];
 export let errors = [];
+export let type = 'text';
 let value;
 let condition;
 const operations = [
-    { label: "Smaller than", value: "<" },
-    { label: "Greater than", value: ">" },
-    { label: "Equals", value: "=" },
+    { label: 'Smaller than', value: '<' },
+    { label: 'Greater than', value: '>' },
+    { label: 'Equals', value: '=' }
 ];
 const add = () => {
     let option = `${condition}${value}`;
     options = [...options, option];
-    value = "";
-    condition = "=";
+    value = '';
+    condition = '=';
+};
+const removeOption = (index) => {
+    options = options.filter((_, i) => i !== index);
 };
 </script>
 
 <Label {label} {errors} />
 
 <div class="input">
-  <Input
-    bind:value
-    type="text"
-    kind="primary"
-    placeholder="Please enter value"
-  />
+	<Input bind:value {type} kind="primary" placeholder="Please enter value" />
 
-  <DropDown options={operations} bind:value={condition} />
+	<DropDown options={operations} bind:value={condition} />
 
-  <button on:click={add} class="add-options">Add options</button>
+	<button on:click={add} class="add-options">Add options</button>
 </div>
 
 <div class="list">
-  {#each options as option}
-    <div class="item">{option}</div>
-  {/each}
+	{#each options as option, index}
+		<div class="item">
+			<span>{option}</span>
+
+			<div on:click={() => removeOption(index)}>
+				<SvgIcon data={Close} size={'30px'} color={'white'} />
+			</div>
+		</div>
+	{/each}
 </div>
 
 <style>
-  .input {
+	.input {
 
     display: flex;
 
@@ -52,7 +59,7 @@ const add = () => {
          column-gap: 0.5rem
 }
 
-  .add-options {
+	.add-options {
 
     font-size: 1.25rem;
 
@@ -63,7 +70,7 @@ const add = () => {
     color: var(--primary-text-color)
 }
 
-  .list {
+	.list {
 
     display: flex;
 
@@ -78,7 +85,9 @@ const add = () => {
     font-weight: 700
 }
 
-  .item {
+	.item {
+
+    display: flex;
 
     min-width: 100px;
 
@@ -105,7 +114,7 @@ const add = () => {
     border-style: solid
 }
 
-  .custom-field-body {
+	.custom-field-body {
 
     display: flex;
 
@@ -124,7 +133,7 @@ const add = () => {
     border-style: solid
 }
 
-  .add-field-body {
+	.add-field-body {
 
     height: 600px;
 
@@ -133,7 +142,7 @@ const add = () => {
     padding: 0.75rem
 }
 
-  .field-item {
+	.field-item {
 
     display: flex;
 
@@ -144,7 +153,7 @@ const add = () => {
     color: var(--primary-text-color)
 }
 
-  .fields {
+	.fields {
 
     display: flex;
 

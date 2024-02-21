@@ -5,6 +5,7 @@ import { onMount } from 'svelte';
 export let url = null;
 export let isPrefix = true;
 export let alt = 'thumbnail';
+export let size = 'md';
 $: src = isPrefix ? `${STORAGE_URL}/${url}` : url;
 let imageValid = true;
 function handleImageError() {
@@ -18,7 +19,7 @@ onMount(() => {
 });
 </script>
 
-<div class="thumbnail">
+<div class={`thumbnail`} class:sm={size === 'sm'} class:md={size === 'md'}>
 	{#if imageValid}
 		<img class="image" {alt} {src} on:error={handleImageError} />
 	{:else}
@@ -28,10 +29,6 @@ onMount(() => {
 
 <style>
 	.thumbnail {
-
-    height: 3rem;
-
-    width: 3rem;
 
     overflow: hidden;
 
@@ -44,13 +41,37 @@ onMount(() => {
     box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow)
 }
 
-@media (min-width: 640px) {
+	.md {
 
-    .thumbnail {
+    height: 3rem;
+
+    width: 3rem
+}
+
+	@media (min-width: 640px) {
+
+    .md {
 
         height: 4rem;
 
         width: 4rem
+    }
+}
+
+	.sm {
+
+    height: 2rem;
+
+    width: 2rem
+}
+
+	@media (min-width: 640px) {
+
+    .sm {
+
+        height: 2.25rem;
+
+        width: 2.25rem
     }
 }
 

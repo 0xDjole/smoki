@@ -1,27 +1,28 @@
-<script>import Label from "../Label.svelte";
+<script>import Label from '../Label.svelte';
 export let value;
 export let defaultOption;
 export let options = [];
-export let label = "";
+export let label = '';
+export let labelThumbnail = null;
 export let errors = [];
 </script>
 
 <div>
-  <Label {errors} {label} />
+	<Label {errors} {label} {labelThumbnail} />
 
-  <select class="select" bind:value>
-    {#if defaultOption}
-      <option>{defaultOption}</option>
-    {/if}
+	<select class="select" bind:value>
+		{#if defaultOption}
+			<option>{defaultOption}</option>
+		{/if}
 
-    {#each options as option}
-      <option value={option.value}>{option.label}</option>
-    {/each}
-  </select>
+		{#each options as option}
+			<option value={option.value}>{option.label}</option>
+		{/each}
+	</select>
 </div>
 
 <style>
-  .select {
+	.select {
     width: 100%;
     border-radius: 0.5rem;
     background-color: var(--secondary-background-color);

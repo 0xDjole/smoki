@@ -4,8 +4,10 @@ declare const __propDef: {
         values?: any[] | undefined;
         options?: any[] | undefined;
         label?: string | undefined;
+        disabled?: boolean | undefined;
+        labelThumbnail?: null | undefined;
         errors?: any[] | undefined;
-        className?: string | undefined;
+        position?: string | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

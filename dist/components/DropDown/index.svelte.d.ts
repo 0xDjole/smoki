@@ -4,7 +4,9 @@ declare const __propDef: {
         value?: null | undefined;
         options?: any[] | undefined;
         label?: string | undefined;
+        labelThumbnail?: null | undefined;
         errors?: any[] | undefined;
+        isMultiSelect?: boolean | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

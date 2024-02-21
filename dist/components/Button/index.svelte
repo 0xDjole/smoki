@@ -1,28 +1,57 @@
-<script>export let kind = '';
-export let onClick;
-export let end = false;
-export let size = '';
+<script>import SvgButton from './SvgButton.svelte';
+export let kind = 'base';
+export let size = 'small';
+export let position = '';
+export let onClick = null;
 export let style = '';
 export let disabled = false;
 export let className = '';
+const parseSize = (size) => {
+    if (size === 'large') {
+        return 'large';
+    }
+    if (size === 'full') {
+        return 'full';
+    }
+    return 'small';
+};
+const parseKind = (kind) => {
+    if (kind === 'success') {
+        return 'success';
+    }
+    if (kind === 'error') {
+        return 'error';
+    }
+    if (kind === 'boring') {
+        return 'boring';
+    }
+    return '';
+};
+const svgKinds = ['delete', 'add', 'back', 'search', 'user', 'success', 'close'];
 </script>
 
-<button
-	class={`base ${kind === 'submit' ? 'submit' : ''} ${size === 'small' ? 'small' : ''} ${
-		end ? 'end' : ''
-	} ${disabled ? 'disabled' : ''} ${className}`}
-	{style}
-	title={disabled ? 'Choose an item and date' : ''}
-	on:click={(e) => {
-		e.preventDefault();
-		onClick();
-	}}><slot /></button
->
+{#if svgKinds.includes(kind)}
+	<SvgButton svgName={kind} {onClick} />
+{:else}
+	<button
+		class={`base ${parseSize(size)} ${parseKind(kind)} ${disabled ? 'disabled' : ''} ${className}`}
+		{style}
+		title={disabled ? 'Choose an item and date' : ''}
+		on:click={(e) => {
+			e.preventDefault();
+			if (onClick) {
+				onClick();
+			}
+		}}><slot /></button
+	>
+{/if}
 
 <style>
 	.base {
 
-    width: 100%;
+    margin: 0px;
+
+    height: 100%;
 
     cursor: pointer;
 
@@ -34,62 +63,63 @@ export let className = '';
 
     padding: 0.5rem;
 
-    font-size: 1.5rem;
+    font-size: 1.125rem;
 
-    line-height: 2rem;
+    line-height: 1.75rem;
 
     font-weight: 600;
 
-    color: var(--primary-text-color);
-
-    border-color: var(--primary-border-color);
-
-    border-width: 1px;
-
-    border-style: solid
+    color: var(--primary-text-color)
 }
 
 .base:hover {
 
-    background-color: var(--secondary-background-color);
-
-    color: var(--success-background-color)
+    opacity: 0.8
 }
 
-	.submit {
+	.success {
 
-    margin-top: 1.25rem;
+    background-color: var(--success-background-color)
+}
 
-    padding: 1rem;
+	.error {
 
-    font-size: 1.875rem;
-
-    line-height: 2.25rem
+    background-color: var(--error-background-color)
 }
 
 	.small {
 
-    margin: 0px;
-
-    height: 100%;
-
     width: -moz-fit-content;
 
-    width: fit-content;
-
-    padding: 0.25rem;
-
-    font-size: 1.125rem;
-
-    line-height: 1.75rem
+    width: fit-content
 }
 
-	.end {
+	.large {
 
-    align-self: flex-end
+    width: 100%;
+
+    font-size: 1.5rem;
+
+    line-height: 2rem
+}
+
+	.full {
+
+    width: 100%;
+
+    border-radius: 0px;
+
+    font-size: 1.5rem;
+
+    line-height: 2rem
+}
+
+	.boring {
+
+    background-color: transparent
 }
 
 	.disabled {
 
-    opacity: 0.5
+    opacity: 0.4
 }</style>

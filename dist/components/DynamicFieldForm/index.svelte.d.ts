@@ -2,7 +2,7 @@ import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
         label?: string | undefined;
-        fieldConfigs: any;
+        fieldConfigs?: any[] | undefined;
         fields?: any[] | undefined;
     };
     events: {

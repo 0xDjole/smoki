@@ -1,57 +1,81 @@
-<script>import Input from "../Input/index.svelte";
-import Modal from "../Modal/index.svelte";
-import Close from "../../utils/icons/close.svg?raw";
-import SvgIcon from "../SvgIcon.svelte";
-import NiceSelect from "../NiceSelect/index.svelte";
-import DropDown from "../DropDown/index.svelte";
-import Properties from "./Properties.svelte";
-import Label from "../Label.svelte";
-export let label = "Custom fields";
+<script>import { v4 } from '@lukeed/uuid';
+import Input from '../Input/index.svelte';
+import Upload from '../Upload.svelte';
+import Modal from '../Modal/index.svelte';
+import NiceSelect from '../NiceSelect/index.svelte';
+import DropDown from '../DropDown/index.svelte';
+import Properties from './Properties.svelte';
+import FieldsTable from './FieldsTable.svelte';
+import Label from '../Label.svelte';
+export let label = 'Custom fields';
 export let fields;
+export let autofillOptions = [];
 const types = [
-    { label: "Text", value: "text" },
-    { label: "Number", value: "number" },
-    { label: "Boolean", value: "boolean" },
-    { label: "Date", value: "date" },
+    { label: 'Text', value: 'text' },
+    { label: 'Number', value: 'number' },
+    { label: 'Boolean', value: 'boolean' },
+    { label: 'Date', value: 'date' }
 ];
 const isRequiredOptions = [
-    { label: "Is required", value: true },
-    { label: "Is not required", value: false },
+    { label: 'Is required', value: true },
+    { label: 'Is not required', value: false }
 ];
 const isFilterOptions = [
-    { label: "Is filter", value: true },
-    { label: "Is not filter", value: false },
+    { label: 'Is filter', value: true },
+    { label: 'Is not filter', value: false }
 ];
+const uiOptions = {
+    text: [
+        { label: 'Default', value: 'default' },
+        { label: 'Nice select', value: 'nice_select' }
+    ],
+    number: [
+        { label: 'Default', value: 'default' },
+        { label: 'Nice select', value: 'nice_select' }
+    ],
+    date: [
+        { label: 'Default', value: 'default' },
+        { label: 'Nice select', value: 'nice_select' }
+    ],
+    boolean: [{ label: 'Default', value: 'default' }]
+};
 const defaultField = {
-    key: "",
-    type: "",
-    operation: "equals",
-    isRequired: false,
-    isFilter: false,
-    properties: {
-        range: {},
-    },
+    id: v4(),
+    key: '',
+    type: '',
+    ui: 'default',
+    operation: 'equals',
+    isRequired: true,
+    isFilter: true,
+    properties: null,
+    autofillIds: []
 };
 let field = defaultField;
 let fieldStatus = {
     key: {
-        errors: [],
+        errors: []
+    },
+    ui: {
+        errors: []
+    },
+    autofillIds: {
+        errors: []
     },
     type: {
-        errors: [],
+        errors: []
     },
     operation: {
-        errors: [],
+        errors: []
     },
     isRequired: {
-        errors: [],
+        errors: []
     },
     isFilter: {
-        errors: [],
+        errors: []
     },
     properties: {
-        errors: [],
-    },
+        errors: []
+    }
 };
 const addField = () => {
     isAddModalOpen = true;
@@ -61,135 +85,90 @@ const confirmFieldAdd = () => {
     field = defaultField;
     isAddModalOpen = false;
 };
-const removeField = (index) => {
-    fields = fields.splice(index, 1);
-};
 let isAddModalOpen = false;
 </script>
 
 <Modal
-  showModal={isAddModalOpen}
-  confirmText="Add"
-  confirm={confirmFieldAdd}
-  onCancel={() => {
-    isAddModalOpen = false;
-  }}
+	showModal={isAddModalOpen}
+	confirmText="Add"
+	title="Create a field"
+	confirm={confirmFieldAdd}
+	onCancel={() => {
+		isAddModalOpen = false;
+	}}
 >
-  <div class="add-field-body">
-    <Input
-      label="Key"
-      bind:errors={fieldStatus.key.errors}
-      bind:value={field.key}
-      type="text"
-      kind="primary"
-      placeholder="Please enter key"
-    />
+	<div class="add-field-body">
+		<Input
+			label="Key"
+			bind:errors={fieldStatus.key.errors}
+			bind:value={field.key}
+			type="text"
+			kind="primary"
+			placeholder="Please enter key"
+		/>
 
-    <DropDown
-      label="Type"
-      options={types}
-      bind:errors={fieldStatus.type.errors}
-      bind:value={field.type}
-    />
+		<NiceSelect label="Is requird" bind:value={field.isRequired} options={isRequiredOptions} />
 
-    <Input
-      label="Operation"
-      bind:errors={fieldStatus.operation.errors}
-      bind:value={field.operation}
-      type="text"
-      kind="primary"
-      placeholder="Please enter type"
-    />
-    <NiceSelect
-      label="Is requird"
-      bind:value={field.isRequired}
-      options={isRequiredOptions}
-    />
+		<NiceSelect label="Is filter" bind:value={field.isFilter} options={isFilterOptions} />
 
-    <NiceSelect
-      label="Is filter"
-      bind:value={field.isFilter}
-      options={isFilterOptions}
-    />
+		<Upload label="Thumbnail" bind:image={field.thumbnail} />
 
-    <Properties
-      label="Properties"
-      bind:value={field.properties}
-      bind:errors={fieldStatus.properties.errors}
-    />
-  </div>
+		<DropDown
+			label="Type"
+			options={types}
+			bind:errors={fieldStatus.type.errors}
+			bind:value={field.type}
+		/>
+
+		{#if field.type}
+			<DropDown
+				label="UI"
+				options={uiOptions[field.type]}
+				bind:errors={fieldStatus.ui.errors}
+				bind:value={field.ui}
+			/>
+		{/if}
+
+		<Properties
+			label="Properties"
+			fieldType={field.type}
+			bind:value={field.properties}
+			bind:errors={fieldStatus.properties.errors}
+		/>
+
+		<DropDown
+			label="Autofill"
+			isMultiSelect={true}
+			options={autofillOptions}
+			bind:errors={fieldStatus.type.errors}
+			bind:value={field.autofillIds}
+		/>
+	</div>
 </Modal>
 
 <div>
-  <div class="flex">
-    <Label {label} errors={[]} />
+	<div class="field-body">
+		<Label {label} errors={[]} />
+	</div>
 
-    <button on:click={addField} class="text-primary font-bold p-2 bg-primary"
-      >Add field</button
-    >
-  </div>
-  <div class="custom-field-body">
-    <div>
-      {#each fields as field, index}
-        <div class="field-item">
-          <div class="fields">
-            <span>Key: {field.key}</span>
-            <span>Type: {field.type}</span>
-            <span>Condition: {field.condition}</span>
-            <span>Is required: {field.isRequired}</span>
-            <span>Is filter: {field.isFilter}</span>
-          </div>
-
-          <div on:click={() => removeField(index)}>
-            <SvgIcon data={Close} size={"30px"} color={"white"} />
-          </div>
-        </div>
-      {/each}
-    </div>
-  </div>
+	<FieldsTable bind:isAddModalOpen bind:fields bind:autofillOptions />
 </div>
 
 <style>
-  .custom-field-body {
+	.add-field-body {
 
-    display: flex;
-
-    flex-direction: column;
-
-    row-gap: 0.5rem;
-
-    border-radius: 0.375rem;
-
-    padding: 0.5rem
-}
-
-  .add-field-body {
-
-    height: 600px;
+    height: 550px;
 
     overflow-y: scroll;
 
     padding: 0.75rem
 }
 
-  .field-item {
+	.field-body {
 
     display: flex;
 
-    justify-content: space-between;
+    -moz-column-gap: 1.25rem;
 
-    font-weight: 700;
-
-    color: var(--primary-text-color)
-}
-
-  .fields {
-
-    display: flex;
-
-    gap: 0.5rem;
-
-    font-weight: 700;
-
-    color: var(--primary-text-color)
+         column-gap: 1.25rem
 }</style>

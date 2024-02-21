@@ -10,6 +10,7 @@ declare const __propDef: {
         style?: string | undefined;
         errors?: any[] | undefined;
         label?: string | undefined;
+        labelThumbnail: any;
     };
     events: {
         [evt: string]: CustomEvent<any>;

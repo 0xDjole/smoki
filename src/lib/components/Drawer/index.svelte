@@ -16,8 +16,6 @@
 
 	let h = '100%';
 
-	let drawerTargetTop = 0;
-
 	let percentageX = 0;
 
 	$: if (left) {
@@ -39,7 +37,7 @@
 
 	$: style = `--duration: ${duration}s; --size: ${size}; z-index: ${zIndex}; ${
 		percentageX > 0 && transform
-	}; height: ${h}; width: ${w}; left: ${l}px; top: ${drawerTargetTop}px`;
+	}; height: calc(${h} - ${drawerTargetTop}px); width: ${w}; left: ${l}px; top: ${drawerTargetTop}px`;
 
 	$: if (open) {
 		percentageX = 0;
@@ -47,7 +45,7 @@
 		percentageX = 100;
 	}
 
-	$: drawerTargetTop = targetElement?.getBoundingClientRect()?.top;
+	$: drawerTargetTop = targetElement?.getBoundingClientRect()?.top || 0;
 
 	function updatePosition() {
 		if (typeof window !== 'undefined' && targetElement) {
@@ -69,10 +67,8 @@
 	});
 </script>
 
-<div class="drawer" {style}>
-	<div class="panel {placement}">
-		<slot />
-	</div>
+<div class="drawer" {style} {placement}>
+	<slot />
 </div>
 
 <style type="text/postcss">
@@ -80,17 +76,8 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		height: 100%;
 		width: 100%;
 		z-index: -1;
-		transition: transform var(--duration) ease;
-	}
-
-	.panel {
-		position: absolute;
-		width: 100%;
-		height: 100%;
-		z-index: 3;
-		overflow: hidden;
+		transition: all var(--duration) ease;
 	}
 </style>

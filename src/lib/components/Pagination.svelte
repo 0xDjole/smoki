@@ -121,7 +121,7 @@
 		<svelte:component this={loaderComponent} />
 	</div>
 
-	<ul style={`height: ${parentHeight}px`} class="flex flex-col w-full">
+	<ul class="flex flex-wrap w-full items-center justify-center">
 		{#each items as item, index}
 			<svelte:component this={itemComponent} {item} {index} {...itemProps} />
 		{/each}

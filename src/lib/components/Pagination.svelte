@@ -13,10 +13,8 @@
 	export let id;
 	export let notFoundText;
 	let component;
-	let parentComponent;
 
-	export let height = 'calc(100vh - 55px - 80px)';
-	export let smallHeight = 'calc(100vh - 55px - 60px)';
+	export let height = '100%';
 
 	export let listStyle = '';
 
@@ -112,54 +110,52 @@
 	};
 </script>
 
-<div
-	bind:this={parentComponent}
+<ul
 	bind:clientHeight={parentHeight}
-	class="wrap"
-	id={`wrap-${id}`}
-	style={`--height: ${height}; --smallHeight: ${smallHeight};`}
+	bind:this={component}
+	style={`--height: ${height}; ${listStyle}`}
+	class="list"
+	{id}
 >
-	<ul bind:this={component} style={`${listStyle}`} class="list" {id}>
-		<div class="load-wrap">
-			<svelte:component this={loaderComponent} />
-		</div>
+	<div class="load-wrap">
+		<svelte:component this={loaderComponent} />
+	</div>
 
-		{#each items as item, index}
-			<svelte:component this={itemComponent} {item} {index} {...itemProps} />
-		{/each}
+	{#each items as item, index}
+		<svelte:component this={itemComponent} {item} {index} {...itemProps} />
+	{/each}
 
-		{#if !fetchingMore && !items.length}
-			<div class="py-5"><span class="text-2xl text-primary font-bold">{notFoundText}</span></div>
-		{/if}
+	{#if !fetchingMore && !items.length}
+		<div class="py-5"><span class="text-2xl text-primary font-bold">{notFoundText}</span></div>
+	{/if}
 
-		<div class="spacer" bind:this={spacer} />
+	<div class="spacer" bind:this={spacer} />
 
-		<div class="load-wrap load-bottom">
-			<svelte:component this={loaderComponent} />
-		</div>
+	<div class="load-wrap load-bottom">
+		<svelte:component this={loaderComponent} />
+	</div>
 
-		<InfiniteScroll
-			on:topScrollReset={async (e) => {
-				if (e.detail.fetchData) {
-					const responseItems = await fetchMore(true);
-					const showedOnTop = items.filter((item) => item.showTop === true);
-					items = [...showedOnTop, ...responseItems];
-				}
+	<InfiniteScroll
+		on:topScrollReset={async (e) => {
+			if (e.detail.fetchData) {
+				const responseItems = await fetchMore(true);
+				const showedOnTop = items.filter((item) => item.showTop === true);
+				items = [...showedOnTop, ...responseItems];
+			}
 
-				component.scrollTo({ top: 50 });
-			}}
-			hasMore={true}
-			threshold={0}
-			on:bottomScrollReset={async (e) => {
-				if (e.detail.fetchData) {
-					await fetchData(false);
-				} else {
-					component.scrollTo({ top: component.scrollHeight - component.clientHeight - 75 });
-				}
-			}}
-		/>
-	</ul>
-</div>
+			component.scrollTo({ top: 50 });
+		}}
+		hasMore={true}
+		threshold={0}
+		on:bottomScrollReset={async (e) => {
+			if (e.detail.fetchData) {
+				await fetchData(false);
+			} else {
+				component.scrollTo({ top: component.scrollHeight - component.clientHeight - 75 });
+			}
+		}}
+	/>
+</ul>
 
 <style type="text/postcss">
 	.spacer {
@@ -169,10 +165,7 @@
 
 	.wrap {
 		@apply overflow-hidden w-full;
-		height: var(--smallHeight);
-		@screen md {
-			height: var(--height);
-		}
+		height: var(--height);
 	}
 	.load-wrap {
 		@apply grid justify-center z-10 w-full my-2;
@@ -187,9 +180,6 @@
 		justify-content: center;
 		align-content: start;
 		overflow-y: scroll;
-		max-height: var(--smallHeight);
-		@screen md {
-			max-height: var(--height);
-		}
+		height: var(--height);
 	}
 </style>

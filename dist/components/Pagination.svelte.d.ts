@@ -11,7 +11,6 @@ declare const __propDef: {
         id: any;
         notFoundText: any;
         height?: string | undefined;
-        smallHeight?: string | undefined;
         listStyle?: string | undefined;
     };
     events: {

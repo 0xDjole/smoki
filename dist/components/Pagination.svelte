@@ -10,9 +10,7 @@ export let itemProps;
 export let id;
 export let notFoundText;
 let component;
-let parentComponent;
-export let height = 'calc(100vh - 55px - 80px)';
-export let smallHeight = 'calc(100vh - 55px - 60px)';
+export let height = '100%';
 export let listStyle = '';
 const dispatch = createEventDispatcher();
 let fetchingMore = false;
@@ -90,52 +88,52 @@ const fetchData = async (isFromTop) => {
 </script>
 
 <div
-	bind:this={parentComponent}
 	bind:clientHeight={parentHeight}
-	class="wrap"
-	id={`wrap-${id}`}
-	style={`--height: ${height}; --smallHeight: ${smallHeight};`}
+	bind:this={component}
+	style={`--height: ${height}; ${listStyle}`}
+	class="list"
+	{id}
 >
-	<ul bind:this={component} style={`${listStyle}`} class="list" {id}>
-		<div class="load-wrap">
-			<svelte:component this={loaderComponent} />
-		</div>
+	<div class="load-wrap">
+		<svelte:component this={loaderComponent} />
+	</div>
 
+	<ul style={`height: ${parentHeight}px`} class="flex flex-col w-full">
 		{#each items as item, index}
 			<svelte:component this={itemComponent} {item} {index} {...itemProps} />
 		{/each}
-
-		{#if !fetchingMore && !items.length}
-			<div class="py-5"><span class="text-2xl text-primary font-bold">{notFoundText}</span></div>
-		{/if}
-
-		<div class="spacer" bind:this={spacer} />
-
-		<div class="load-wrap load-bottom">
-			<svelte:component this={loaderComponent} />
-		</div>
-
-		<InfiniteScroll
-			on:topScrollReset={async (e) => {
-				if (e.detail.fetchData) {
-					const responseItems = await fetchMore(true);
-					const showedOnTop = items.filter((item) => item.showTop === true);
-					items = [...showedOnTop, ...responseItems];
-				}
-
-				component.scrollTo({ top: 50 });
-			}}
-			hasMore={true}
-			threshold={0}
-			on:bottomScrollReset={async (e) => {
-				if (e.detail.fetchData) {
-					await fetchData(false);
-				} else {
-					component.scrollTo({ top: component.scrollHeight - component.clientHeight - 75 });
-				}
-			}}
-		/>
 	</ul>
+
+	{#if !fetchingMore && !items.length}
+		<div class="py-5"><span class="text-2xl text-primary font-bold">{notFoundText}</span></div>
+	{/if}
+
+	<div class="spacer" bind:this={spacer} />
+
+	<div class="load-wrap load-bottom">
+		<svelte:component this={loaderComponent} />
+	</div>
+
+	<InfiniteScroll
+		on:topScrollReset={async (e) => {
+			if (e.detail.fetchData) {
+				const responseItems = await fetchMore(true);
+				const showedOnTop = items.filter((item) => item.showTop === true);
+				items = [...showedOnTop, ...responseItems];
+			}
+
+			component.scrollTo({ top: 50 });
+		}}
+		hasMore={true}
+		threshold={0}
+		on:bottomScrollReset={async (e) => {
+			if (e.detail.fetchData) {
+				await fetchData(false);
+			} else {
+				component.scrollTo({ top: component.scrollHeight - component.clientHeight - 75 });
+			}
+		}}
+	/>
 </div>
 
 <style>
@@ -144,24 +142,11 @@ const fetchData = async (isFromTop) => {
 		flex-grow: 1;
 	}
 
-	.wrap {
-		width: 100%;
-		overflow: hidden;
-		height: var(--smallHeight);
-}
-
-	@media (min-width: 768px) {
-
-	.wrap {
-			height: var(--height)
-	}
-		}
-
 	.load-wrap {
 		z-index: 10;
 		margin-top: 0.5rem;
 		margin-bottom: 0.5rem;
-		display: grid;
+		display: flex;
 		width: 100%;
 		justify-content: center;
 		height: 30px;
@@ -179,12 +164,5 @@ const fetchData = async (isFromTop) => {
 		justify-content: center;
 		align-content: start;
 		overflow-y: scroll;
-		max-height: var(--smallHeight);
-}
-
-	@media (min-width: 768px) {
-
-	.list {
-			max-height: var(--height)
-	}
-		}</style>
+		height: var(--height);
+}</style>

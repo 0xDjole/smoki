@@ -24,6 +24,10 @@
 
 	$: if (height) {
 		h = height;
+	} else if (drawerTargetTop) {
+		h = `calc(100vh - ${drawerTargetTop}px)`;
+	} else {
+		h = `100vh`;
 	}
 
 	$: if (width) {
@@ -37,7 +41,7 @@
 
 	$: style = `--duration: ${duration}s; --size: ${size}; z-index: ${zIndex}; ${
 		percentageX > 0 && transform
-	}; height: calc(${h} - ${drawerTargetTop}px); width: ${w}; left: ${l}px; top: ${drawerTargetTop}px`;
+	}; height: ${h}; width: ${w}; left: ${l}px; top: ${drawerTargetTop}px`;
 
 	$: if (open) {
 		percentageX = 0;
@@ -76,7 +80,6 @@
 		position: absolute;
 		top: 0;
 		left: 0;
-		width: 100%;
 		z-index: -1;
-		transition: all var(--duration) ease;
+		transition: transform var(--duration) ease;
 	}</style>

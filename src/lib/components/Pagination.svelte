@@ -110,7 +110,7 @@
 	};
 </script>
 
-<ul
+<div
 	bind:clientHeight={parentHeight}
 	bind:this={component}
 	style={`--height: ${height}; ${listStyle}`}
@@ -121,9 +121,11 @@
 		<svelte:component this={loaderComponent} />
 	</div>
 
-	{#each items as item, index}
-		<svelte:component this={itemComponent} {item} {index} {...itemProps} />
-	{/each}
+	<ul style={`height: ${parentHeight}px`} class="flex flex-col w-full">
+		{#each items as item, index}
+			<svelte:component this={itemComponent} {item} {index} {...itemProps} />
+		{/each}
+	</ul>
 
 	{#if !fetchingMore && !items.length}
 		<div class="py-5"><span class="text-2xl text-primary font-bold">{notFoundText}</span></div>
@@ -155,7 +157,7 @@
 			}
 		}}
 	/>
-</ul>
+</div>
 
 <style type="text/postcss">
 	.spacer {
@@ -163,12 +165,8 @@
 		flex-grow: 1;
 	}
 
-	.wrap {
-		@apply overflow-hidden w-full;
-		height: var(--height);
-	}
 	.load-wrap {
-		@apply grid justify-center z-10 w-full my-2;
+		@apply flex justify-center z-10 w-full my-2;
 		height: 30px;
 	}
 	.load-bottom {

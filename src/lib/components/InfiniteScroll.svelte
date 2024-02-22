@@ -21,7 +21,6 @@
 	}
 
 	const onScroll = (e) => {
-		console.log('evo ga');
 		clearTimeout(clearTopTimeoutId);
 		clearTimeout(clearBottomTimeoutId);
 

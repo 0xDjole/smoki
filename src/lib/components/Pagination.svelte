@@ -13,6 +13,7 @@
 	export let id;
 	export let notFoundText;
 	let component;
+	let listComponent;
 
 	export let height = '100%';
 
@@ -23,6 +24,7 @@
 	let fetchingMore = false;
 
 	let parentHeight;
+	let listHeight;
 	let spacer;
 
 	let currentItems = [];
@@ -31,7 +33,7 @@
 	let loadedMoreBottom = false;
 
 	$: if (!currentItems.length && component) {
-		const height = parentHeight + 125 - (component.scrollHeight - spacerHeight);
+		const height = parentHeight + 10 - listComponent.scrollHeight;
 		if (height > 0) {
 			spacer.style.height = `${height}px`;
 			spacerHeight = height;
@@ -42,7 +44,7 @@
 		if (component) {
 			if (currentItems.length !== items.length) {
 				tick().then(() => {
-					const height = parentHeight + 125 - (component.scrollHeight - spacerHeight);
+					const height = parentHeight + 10 - listComponent.scrollHeight;
 					if (height > 0) {
 						spacer.style.height = `${height}px`;
 						spacerHeight = height;
@@ -121,7 +123,7 @@
 		<svelte:component this={loaderComponent} />
 	</div>
 
-	<ul class="flex flex-wrap w-full items-center justify-center">
+	<ul bind:this={listComponent} class="flex flex-wrap w-full justify-center">
 		{#each items as item, index}
 			<svelte:component this={itemComponent} {item} {index} {...itemProps} />
 		{/each}

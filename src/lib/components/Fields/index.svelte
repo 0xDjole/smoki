@@ -27,11 +27,21 @@
 	onCancel={() => {
 		values = [];
 		key = '';
-	}}><NiceSelect disabled={true} options={values} /></Modal
+	}}><div class="modal-body"><NiceSelect disabled={true} options={values} /></div></Modal
 >
 
 <ul class="custom-field-body">
-	{#each fields as field, index}
+	{#each fields.filter((field) => {
+		if (field.value === null) {
+			return false;
+		}
+
+		if (Array.isArray(field.value) && !field.value.length) {
+			return false;
+		}
+
+		return true;
+	}) as field, index}
 		<div class="field">
 			<div class="key">{field.key}</div>
 
@@ -68,6 +78,10 @@
 	}
 
 	.view-butotn {
-		@apply w-full text-end;
+		@apply w-full text-end cursor-pointer;
+	}
+
+	.modal-body {
+		@apply m-3;
 	}
 </style>

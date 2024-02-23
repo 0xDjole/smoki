@@ -36,12 +36,11 @@
 
 	$: transform =
 		placement === 'right'
-			? `transform: translate(${percentageX}%, 0)`
-			: `transform: translate(0, ${percentageX}%)`;
+			? `transform: translate(${percentageX}%, 0);`
+			: `transform: translate(0, ${percentageX}%);`;
 
-	$: style = `--duration: ${duration}s; --size: ${size}; z-index: ${zIndex}; ${
-		percentageX > 0 && transform
-	}; height: ${h}; width: ${w}; left: ${l}px; top: ${drawerTargetTop}px`;
+	$: style = `--duration: ${duration}s; --size: ${size}; z-index: ${zIndex};
+	 ${transform} height: ${h}; width: ${w}; left: ${l}px; top: ${drawerTargetTop}px`;
 
 	$: if (open) {
 		percentageX = 0;

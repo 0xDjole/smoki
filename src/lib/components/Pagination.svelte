@@ -32,7 +32,7 @@
 
 	let loadedMoreBottom = false;
 
-	$: if (!currentItems.length && component) {
+	$: if (!currentItems.length && component && listComponent) {
 		const height = component.clientHeight + 10 - listComponent.scrollHeight;
 		if (height > 0) {
 			spacer.style.height = `${height}px`;

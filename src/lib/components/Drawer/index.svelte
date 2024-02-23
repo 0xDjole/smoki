@@ -25,9 +25,9 @@
 	$: if (height) {
 		h = height;
 	} else if (drawerTargetTop) {
-		h = `calc(100vh - ${drawerTargetTop}px)`;
+		h = `calc(100% - ${drawerTargetTop}px)`;
 	} else {
-		h = `100vh`;
+		h = `100%`;
 	}
 
 	$: if (width) {

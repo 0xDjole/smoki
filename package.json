@@ -1,21 +1,20 @@
 {
 	"name": "smoki",
 	"version": "0.0.21",
-	"main": "src/lib/index.ts",
+	"main": "dist/index.js",
 	"type": "module",
 	"scripts": {
 		"build": "svelte-package",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write ."
 	},
-	"repository": "github:0xdjole/kaizen-ui",
 	"publishConfig": {
 		"access": "public"
 	},
 	"exports": {
 		".": {
-			"types": "./src/lib/index.d.ts",
-			"svelte": "./src/lib/index.ts"
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js"
 		}
 	},
 	"devDependencies": {

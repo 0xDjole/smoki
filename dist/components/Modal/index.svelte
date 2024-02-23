@@ -51,7 +51,10 @@
 		--tw-bg-opacity: 0.8
 }
 	.content {
+		display: flex;
+		width: 100%;
 		flex-grow: 1;
+		justify-content: center;
 		overflow-y: scroll
 }
 	.modal {

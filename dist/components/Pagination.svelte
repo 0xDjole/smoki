@@ -21,8 +21,8 @@ let spacer;
 let currentItems = [];
 let spacerHeight = 0;
 let loadedMoreBottom = false;
-$: if (!currentItems.length && component) {
-    const height = parentHeight + 10 - listComponent.scrollHeight;
+$: if (!currentItems.length && component && listComponent) {
+    const height = component.clientHeight + 10 - listComponent.scrollHeight;
     if (height > 0) {
         spacer.style.height = `${height}px`;
         spacerHeight = height;
@@ -32,7 +32,8 @@ $: {
     if (component) {
         if (currentItems.length !== items.length) {
             tick().then(() => {
-                const height = parentHeight + 10 - listComponent.scrollHeight;
+                const height = component.clientHeight + 10 - listComponent.scrollHeight;
+                console.log('height', height);
                 if (height > 0) {
                     spacer.style.height = `${height}px`;
                     spacerHeight = height;

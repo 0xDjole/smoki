@@ -116,14 +116,14 @@
 	bind:clientHeight={parentHeight}
 	bind:this={component}
 	style={`--height: ${height}; ${listStyle}`}
-	class="list"
+	class="pagination"
 	{id}
 >
 	<div class="load-wrap">
 		<svelte:component this={loaderComponent} />
 	</div>
 
-	<ul bind:this={listComponent} class="flex flex-wrap w-full justify-center">
+	<ul bind:this={listComponent} class="list">
 		{#each items as item, index}
 			<svelte:component this={itemComponent} {item} {index} {...itemProps} />
 		{/each}
@@ -175,11 +175,15 @@
 		@apply mb-8;
 	}
 
-	.list {
+	.pagination {
 		@apply flex flex-wrap z-10 scroll-smooth;
 		justify-content: center;
 		align-content: start;
 		overflow-y: scroll;
 		height: var(--height);
+	}
+
+	.list {
+		@apply flex flex-wrap w-full justify-center;
 	}
 </style>

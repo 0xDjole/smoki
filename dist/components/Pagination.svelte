@@ -10,17 +10,19 @@ export let itemProps;
 export let id;
 export let notFoundText;
 let component;
+let listComponent;
 export let height = '100%';
 export let listStyle = '';
 const dispatch = createEventDispatcher();
 let fetchingMore = false;
 let parentHeight;
+let listHeight;
 let spacer;
 let currentItems = [];
 let spacerHeight = 0;
 let loadedMoreBottom = false;
 $: if (!currentItems.length && component) {
-    const height = parentHeight + 125 - (component.scrollHeight - spacerHeight);
+    const height = parentHeight + 10 - listComponent.scrollHeight;
     if (height > 0) {
         spacer.style.height = `${height}px`;
         spacerHeight = height;
@@ -30,7 +32,7 @@ $: {
     if (component) {
         if (currentItems.length !== items.length) {
             tick().then(() => {
-                const height = parentHeight + 125 - (component.scrollHeight - spacerHeight);
+                const height = parentHeight + 10 - listComponent.scrollHeight;
                 if (height > 0) {
                     spacer.style.height = `${height}px`;
                     spacerHeight = height;
@@ -91,14 +93,14 @@ const fetchData = async (isFromTop) => {
 	bind:clientHeight={parentHeight}
 	bind:this={component}
 	style={`--height: ${height}; ${listStyle}`}
-	class="list"
+	class="pagination"
 	{id}
 >
 	<div class="load-wrap">
 		<svelte:component this={loaderComponent} />
 	</div>
 
-	<ul style={`height: ${parentHeight}px`} class="flex flex-col w-full">
+	<ul bind:this={listComponent} class="list">
 		{#each items as item, index}
 			<svelte:component this={itemComponent} {item} {index} {...itemProps} />
 		{/each}
@@ -156,7 +158,7 @@ const fetchData = async (isFromTop) => {
 		margin-bottom: 2rem;
 }
 
-	.list {
+	.pagination {
 		z-index: 10;
 		display: flex;
 		flex-wrap: wrap;
@@ -165,4 +167,11 @@ const fetchData = async (isFromTop) => {
 		align-content: start;
 		overflow-y: scroll;
 		height: var(--height);
+}
+
+	.list {
+		display: flex;
+		width: 100%;
+		flex-wrap: wrap;
+		justify-content: center;
 }</style>

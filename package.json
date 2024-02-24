@@ -1,6 +1,6 @@
 {
 	"name": "smoki",
-	"version": "0.0.22",
+	"version": "0.0.23",
 	"main": "src/lib/index.ts",
 	"type": "module",
 	"scripts": {

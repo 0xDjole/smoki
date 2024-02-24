@@ -1,7 +1,7 @@
 {
 	"name": "smoki",
 	"version": "0.0.22",
-	"main": "dist/index.js",
+	"main": "src/lib/index.ts",
 	"type": "module",
 	"scripts": {
 		"build": "svelte-package",
@@ -13,8 +13,8 @@
 	},
 	"exports": {
 		".": {
-			"types": "./dist/index.d.ts",
-			"svelte": "./dist/index.js"
+			"types": "./src/lib/index.d.ts",
+			"svelte": "./src/lib/index.ts"
 		}
 	},
 	"devDependencies": {
@@ -37,8 +37,7 @@
 		"typescript": "^5.3.3",
 		"vite": "^5.0.12",
 		"@sveltejs/package": "2.2.6",
-		"@lukeed/uuid": "^2.0.0",
-		"super-navigation": "0.0.18"
+		"@lukeed/uuid": "^2.0.0"
 	},
 	"peerDependencies": {
 		"tailwindcss": "^3.2.4"

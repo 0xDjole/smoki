@@ -4,8 +4,6 @@
 	import Loader from '../Loader.svelte';
 	import Header from '../Header/index.svelte';
 
-	import { navigation } from 'super-navigation';
-
 	export let headerTitle = '';
 
 	export let headerAction = null;
@@ -14,6 +12,7 @@
 
 	export let bottomActionName;
 	export let bottomAction;
+	export let goBack = () => {};
 
 	export let isLoading = false;
 
@@ -61,7 +60,7 @@
 		slot="left"
 		kind="back"
 		onClick={() => {
-			navigation.back();
+			goBack();
 		}}
 	/>
 	<span slot="middle" class="title">{headerTitle}</span>

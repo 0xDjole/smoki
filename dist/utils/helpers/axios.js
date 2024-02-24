@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { AUTH_SERVER_DOMAIN } from '../env';
 import { DateTime } from 'luxon';
-import { navigation } from 'super-navigation';
 import { authentication } from '../../stores/auth';
 
 import { get } from 'svelte/store';
@@ -35,12 +34,6 @@ axiosClient.interceptors.request.use(
 
 		if (!refreshToken || refreshToken === 'undefined') {
 			authentication.logout();
-
-			const { navigating } = get(navigation);
-
-			if (!navigating) {
-				navigation.navigate('/login');
-			}
 
 			return Promise.reject('Error');
 		}

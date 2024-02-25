@@ -8,7 +8,7 @@
 
 	export let onSelect;
 	export let selectedValues = [];
-	export let availableValues = [];
+	export let availableValues = null;
 	export let betweenValues = [];
 
 	export let month;
@@ -96,7 +96,7 @@
 			isSelectable = false;
 		}
 
-		if (isSelectable && availableValues.length > 0) {
+		if (isSelectable && Array.isArray(availableValues)) {
 			isSelectable = availableValues.some((value) => date.equals(value));
 		}
 

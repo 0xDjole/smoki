@@ -73,7 +73,7 @@
 
 <style type="text/postcss">
 	.primary {
-		@apply w-full p-1 bg-secondary text-primary rounded-lg  border-secondary  font-semibold text-lg md:text-xl outline-none text-opacity-80;
+		@apply w-full p-1 bg-secondary text-primary rounded-lg  font-semibold text-lg md:text-xl outline-none text-opacity-80;
 		transition: all 0.3s ease;
 	}
 

@@ -24,6 +24,14 @@
 		}
 
 		month += 1;
+
+		dateWithFirstDay = DateTime.fromObject({
+			year,
+			month,
+			day: 1
+		});
+
+		dispatch('changedDate', dateWithFirstDay);
 	};
 
 	const previousMonth = () => {
@@ -34,6 +42,14 @@
 		}
 
 		month -= 1;
+
+		dateWithFirstDay = DateTime.fromObject({
+			year,
+			month,
+			day: 1
+		});
+
+		dispatch('changedDate', dateWithFirstDay);
 	};
 
 	$: currentDate = DateTime.local().set({
@@ -45,17 +61,11 @@
 	$: month = month || currentDate.month;
 	$: year = year || currentDate.year;
 
-	$: dateWithFirstDay = DateTime.fromObject({
+	let dateWithFirstDay = DateTime.fromObject({
 		year,
 		month,
 		day: 1
 	});
-
-	$: if (dateWithFirstDay) {
-		setTimeout(() => {
-			dispatch('changedDate', dateWithFirstDay);
-		}, 1);
-	}
 
 	$: firstWeekDay = dateWithFirstDay.weekday.valueOf();
 
@@ -131,7 +141,7 @@
 
 <style type="text/postcss">
 	.wrapper {
-		@apply grid bg-primary border-primary rounded-xl;
+		@apply grid bg-primary rounded-xl;
 		width: 100%;
 		@screen md {
 			width: 600px;
@@ -143,22 +153,22 @@
 		width: 100px;
 	}
 	.days {
-		@apply grid text-primary gap-y-2;
+		@apply grid text-accent gap-y-2;
 		justify-items: center;
 		grid-template-columns: repeat(7, 1fr);
 		grid-template-rows: repeat(7, 1fr);
 	}
 
 	.control-date {
-		@apply grid cursor-pointer items-center;
+		@apply grid cursor-pointer items-center px-5;
 	}
 
 	.head {
-		@apply flex text-primary font-bold text-2xl gap-x-2 justify-center;
+		@apply flex text-primary font-bold text-xl gap-x-2 justify-center;
 	}
 
 	.date {
-		@apply text-center w-[200px];
+		@apply text-secondary text-center flex-1 text-2xl;
 	}
 
 	.weekdays {
@@ -166,6 +176,6 @@
 	}
 
 	.item {
-		@apply grid justify-center items-center;
+		@apply flex justify-center items-center m-2;
 	}
 </style>

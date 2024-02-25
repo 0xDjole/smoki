@@ -6,7 +6,7 @@ import Less from '../../utils/icons/less.svg?raw';
 import { createEventDispatcher } from 'svelte';
 export let onSelect;
 export let selectedValues = [];
-export let availableValues = [];
+export let availableValues = null;
 export let betweenValues = [];
 export let month;
 export let year;
@@ -74,7 +74,7 @@ $: viewDates = new Array(42).fill(null).map((item, index) => {
     if (date < currentDate) {
         isSelectable = false;
     }
-    if (isSelectable && availableValues.length > 0) {
+    if (isSelectable && Array.isArray(availableValues)) {
         isSelectable = availableValues.some((value) => date.equals(value));
     }
     const isSelected = selectedValues.some((selectedValue) => selectedValue.equals(date));

@@ -3,7 +3,7 @@ declare const __propDef: {
     props: {
         onSelect: any;
         selectedValues?: any[] | undefined;
-        availableValues?: any[] | undefined;
+        availableValues?: null | undefined;
         betweenValues?: any[] | undefined;
         month: any;
         year: any;

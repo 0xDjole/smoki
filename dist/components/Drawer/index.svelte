@@ -9,6 +9,7 @@
 	export let width = null;
 	export let left = null;
 	export let targetElement = null;
+	export let bindHeightToTarget = false;
 
 	let w = '100%';
 
@@ -25,7 +26,11 @@
 	$: if (height) {
 		h = height;
 	} else if (drawerTargetTop) {
-		h = `${targetElement.offsetHeight}px`;
+		if (bindHeightToTarget) {
+			h = `${targetElement.offsetHeight}px`;
+		} else {
+			h = `calc(100% - ${drawerTargetTop}px)`;
+		}
 	} else {
 		h = `100%`;
 	}

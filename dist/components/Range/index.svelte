@@ -164,7 +164,6 @@
 	// Update progressbar and thumb styles to represent value
 	$: if (progressBar && thumb) {
 		let percent = getPercent(value, min, max);
-		console.log('percent ', percent);
 		let offsetLeft = (container.clientWidth - 10) * (percent / 100) + 5;
 
 		// Update thumb position + active range track width

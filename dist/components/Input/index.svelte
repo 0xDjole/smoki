@@ -82,9 +82,6 @@ export let labelThumbnail;
 		--tw-text-opacity: 0.8;
 		outline: 2px solid transparent;
 		outline-offset: 2px;
-		border-color: var(--primary-border-color);
-		border-width: 1px;
-		border-style: solid;
 }
 @media (min-width: 768px) {
 		.primary {

@@ -25,7 +25,7 @@
 	$: if (height) {
 		h = height;
 	} else if (drawerTargetTop) {
-		h = `calc(100% - ${drawerTargetTop}px)`;
+		h = `${targetElement.offsetHeight}px`;
 	} else {
 		h = `100%`;
 	}

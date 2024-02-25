@@ -18,6 +18,12 @@ const nextMonth = () => {
         return null;
     }
     month += 1;
+    dateWithFirstDay = DateTime.fromObject({
+        year,
+        month,
+        day: 1
+    });
+    dispatch('changedDate', dateWithFirstDay);
 };
 const previousMonth = () => {
     if (month === 1) {
@@ -26,6 +32,12 @@ const previousMonth = () => {
         return null;
     }
     month -= 1;
+    dateWithFirstDay = DateTime.fromObject({
+        year,
+        month,
+        day: 1
+    });
+    dispatch('changedDate', dateWithFirstDay);
 };
 $: currentDate = DateTime.local().set({
     hour: 0,
@@ -35,16 +47,11 @@ $: currentDate = DateTime.local().set({
 });
 $: month = month || currentDate.month;
 $: year = year || currentDate.year;
-$: dateWithFirstDay = DateTime.fromObject({
+let dateWithFirstDay = DateTime.fromObject({
     year,
     month,
     day: 1
 });
-$: if (dateWithFirstDay) {
-    setTimeout(() => {
-        dispatch('changedDate', dateWithFirstDay);
-    }, 1);
-}
 $: firstWeekDay = dateWithFirstDay.weekday.valueOf();
 $: viewDates = new Array(42).fill(null).map((item, index) => {
     let date;
@@ -113,9 +120,6 @@ $: viewDates = new Array(42).fill(null).map((item, index) => {
 		display: grid;
 		border-radius: 0.75rem;
 		background-color: var(--primary-background-color);
-		border-color: var(--primary-border-color);
-		border-width: 1px;
-		border-style: solid;
 		width: 100%
 }
 		@media (min-width: 768px) {
@@ -137,7 +141,7 @@ $: viewDates = new Array(42).fill(null).map((item, index) => {
 	.days {
 		display: grid;
 		row-gap: 0.5rem;
-		color: var(--primary-text-color);
+		color: var(--accent-color);
 		justify-items: center;
 		grid-template-columns: repeat(7, 1fr);
 		grid-template-rows: repeat(7, 1fr)
@@ -146,7 +150,9 @@ $: viewDates = new Array(42).fill(null).map((item, index) => {
 	.control-date {
 		display: grid;
 		cursor: pointer;
-		align-items: center
+		align-items: center;
+		padding-left: 1.25rem;
+		padding-right: 1.25rem
 }
 
 	.head {
@@ -154,15 +160,18 @@ $: viewDates = new Array(42).fill(null).map((item, index) => {
 		justify-content: center;
 		-moz-column-gap: 0.5rem;
 		     column-gap: 0.5rem;
-		font-size: 1.5rem;
-		line-height: 2rem;
+		font-size: 1.25rem;
+		line-height: 1.75rem;
 		font-weight: 700;
 		color: var(--primary-text-color)
 }
 
 	.date {
-		width: 200px;
-		text-align: center
+		flex: 1 1 0%;
+		text-align: center;
+		font-size: 1.5rem;
+		line-height: 2rem;
+		color: var(--secondary-text-color)
 }
 
 	.weekdays {
@@ -172,7 +181,8 @@ $: viewDates = new Array(42).fill(null).map((item, index) => {
 }
 
 	.item {
-		display: grid;
+		margin: 0.5rem;
+		display: flex;
 		align-items: center;
 		justify-content: center
 }</style>

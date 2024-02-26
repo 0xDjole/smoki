@@ -115,9 +115,9 @@
 		};
 	});
 
-	$: months = formatter.getLocalizedMonths($locale);
+	$: months = $locale ? formatter.getLocalizedMonths($locale) : [];
 
-	$: days = formatter.getLocalizedShortWeekdays($locale);
+	$: days = $locale ? formatter.getLocalizedShortWeekdays($locale) : [];
 </script>
 
 <div>

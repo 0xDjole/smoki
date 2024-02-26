@@ -1,10 +1,14 @@
 <script lang="ts">
-	import { DateTime, Info } from 'luxon';
+	import { DateTime } from 'luxon';
 	import DayItem from './DayItem.svelte';
 	import SvgIcon from '../SvgIcon.svelte';
 	import Great from '../../utils/icons/great.svg?raw';
 	import Less from '../../utils/icons/less.svg?raw';
 	import { createEventDispatcher } from 'svelte';
+
+	import { locale } from 'svelte-i18n';
+
+	import formatter from '../../utils/helpers/formatter';
 
 	export let onSelect;
 	export let selectedValues = [];
@@ -110,6 +114,10 @@
 			isSelectable
 		};
 	});
+
+	$: months = formatter.getLocalizedMonths($locale);
+
+	$: days = formatter.getLocalizedShortWeekdays($locale);
 </script>
 
 <div>
@@ -118,20 +126,15 @@
 			<div class="control-date" on:click={() => previousMonth()}>
 				<SvgIcon data={Less} color={'white'} size={'20px'} />
 			</div>
-			<span class="date">{Info.months()[month - 1]}, {year}</span>
+			<span class="date">{months[month - 1]}, {year}</span>
 			<div class="control-date" on:click={() => nextMonth()}>
 				<SvgIcon data={Great} color={'white'} size={'20px'} />
 			</div>
 		</div>
 		<div class="days">
-			<div class="item weekdays">Sun</div>
-			<div class="item weekdays">Mon</div>
-			<div class="item weekdays">Tue</div>
-			<div class="item weekdays">Wed</div>
-			<div class="item weekdays">Thu</div>
-			<div class="item weekdays">Fri</div>
-			<div class="item weekdays">Sat</div>
-
+			{#each days as day}
+				<div class="item weekdays">{day}</div>
+			{/each}
 			{#each viewDates as viewDate}
 				<DayItem {onSelect} {viewDate} />
 			{/each}

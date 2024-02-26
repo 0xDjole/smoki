@@ -1,7 +1,7 @@
 <script>import { createEventDispatcher } from 'svelte';
 import Modal from '../Modal/index.svelte';
 import TimePicker from '../TimePicker/index.svelte';
-import formatDuration from '../../utils/helpers/formatDuration';
+import formatter from '../../utils/helpers/formatter';
 export let confirmText = 'Confirm';
 export let label = 'Add Duration';
 export let value;
@@ -38,7 +38,7 @@ const onTimePickerConfirm = () => {
     showModal = false;
     dispatch('confirm');
 };
-$: parsedValue = formatDuration(value);
+$: parsedValue = formatter.duration(value);
 </script>
 
 <button on:click={() => (showModal = true)}>{label} {parsedValue}</button>

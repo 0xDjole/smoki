@@ -41,86 +41,52 @@ $: console.log('show ', showModal);
 
 <style>
 	.select {
-
-    position: relative
+		position: relative;
+		z-index: 100
 }
 
 	.select-button {
-
-    display: flex;
-
-    width: 100%;
-
-    min-width: 80px;
-
-    cursor: pointer;
-
-    justify-content: space-between;
-
-    -moz-column-gap: 0.5rem;
-
-         column-gap: 0.5rem;
-
-    border-radius: 0.5rem;
-
-    background-color: var(--accent-background-color);
-
-    padding: 0.25rem;
-
-    font-size: 1.125rem;
-
-    line-height: 1.75rem;
-
-    font-weight: 600;
-
-    --tw-text-opacity: 1;
-
-    color: rgb(255 255 255 / var(--tw-text-opacity));
-
-    outline: 2px solid transparent;
-
-    outline-offset: 2px;
-
-    border-color: var(--primary-border-color);
-
-    border-width: 1px;
-
-    border-style: solid
+		display: flex;
+		width: 100%;
+		min-width: 80px;
+		cursor: pointer;
+		justify-content: space-between;
+		-moz-column-gap: 0.5rem;
+		     column-gap: 0.5rem;
+		border-radius: 0.5rem;
+		background-color: var(--accent-background-color);
+		padding: 0.25rem;
+		font-size: 1.125rem;
+		line-height: 1.75rem;
+		font-weight: 600;
+		--tw-text-opacity: 1;
+		color: rgb(255 255 255 / var(--tw-text-opacity));
+		outline: 2px solid transparent;
+		outline-offset: 2px;
+		border-color: var(--primary-border-color);
+		border-width: 1px;
+		border-style: solid
 }
 
 	.options {
-
-    position: absolute;
-
-    top: 2.5rem;
-
-    left: 0px;
-
-    display: flex;
-
-    width: 100%;
-
-    flex-direction: column;
-
-    border-radius: 0.375rem;
-
-    background-color: var(--secondary-background-color)
+		position: absolute;
+		top: 2.5rem;
+		left: 0px;
+		display: flex;
+		width: 100%;
+		flex-direction: column;
+		border-radius: 0.375rem;
+		background-color: var(--secondary-background-color)
 }
 
 	.item {
-
-    width: 100%;
-
-    cursor: pointer;
-
-    padding: 0.25rem
+		width: 100%;
+		cursor: pointer;
+		padding: 0.25rem
 }
 
 	.selected {
-
-    border-radius: 0.375rem;
-
-    background-color: var(--accent-background-color);
-
-    padding: 0.25rem
+		border-radius: 0.375rem;
+		background-color: var(--accent-background-color);
+		padding: 0.25rem
 }</style>

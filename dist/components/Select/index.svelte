@@ -1,18 +1,19 @@
-<script>import DropDownIcon from '../../utils/icons/dropdown.svg?raw';
-import { _ } from 'svelte-i18n';
-import SvgIcon from '../SvgIcon.svelte';
-export let value;
-export let defaultOption;
-export let options = [];
-export let label = '';
-export let labelThumbnail = null;
-export let errors = [];
-let showModal = false;
-const selectOption = (optionValue) => {
-    showModal = false;
-};
-$: selectedOption = options.find((option) => option.value === value);
-$: console.log('show ', showModal);
+<script>
+	import DropDownIcon from '../../utils/icons/dropdown.svg?raw';
+	import { _ } from 'svelte-i18n';
+	import SvgIcon from '../SvgIcon.svelte';
+	export let value;
+	export let defaultOption;
+	export let options = [];
+	export let label = '';
+	export let labelThumbnail = null;
+	export let errors = [];
+	let showModal = false;
+	const selectOption = (optionValue) => {
+		showModal = false;
+	};
+	$: selectedOption = options.find((option) => option.value === value);
+	$: console.log('show ', showModal);
 </script>
 
 <div class="select">
@@ -42,8 +43,8 @@ $: console.log('show ', showModal);
 <style>
 	.select {
 		position: relative;
-		z-index: 100
-}
+		z-index: 1;
+	}
 
 	.select-button {
 		display: flex;
@@ -52,7 +53,7 @@ $: console.log('show ', showModal);
 		cursor: pointer;
 		justify-content: space-between;
 		-moz-column-gap: 0.5rem;
-		     column-gap: 0.5rem;
+		column-gap: 0.5rem;
 		border-radius: 0.5rem;
 		background-color: var(--accent-background-color);
 		padding: 0.25rem;
@@ -65,8 +66,8 @@ $: console.log('show ', showModal);
 		outline-offset: 2px;
 		border-color: var(--primary-border-color);
 		border-width: 1px;
-		border-style: solid
-}
+		border-style: solid;
+	}
 
 	.options {
 		position: absolute;
@@ -76,17 +77,18 @@ $: console.log('show ', showModal);
 		width: 100%;
 		flex-direction: column;
 		border-radius: 0.375rem;
-		background-color: var(--secondary-background-color)
-}
+		background-color: var(--secondary-background-color);
+	}
 
 	.item {
 		width: 100%;
 		cursor: pointer;
-		padding: 0.25rem
-}
+		padding: 0.25rem;
+	}
 
 	.selected {
 		border-radius: 0.375rem;
 		background-color: var(--accent-background-color);
-		padding: 0.25rem
-}</style>
+		padding: 0.25rem;
+	}
+</style>

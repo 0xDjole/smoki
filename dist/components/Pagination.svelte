@@ -145,7 +145,6 @@ const fetchData = async (isFromTop) => {
 	}
 
 	.load-wrap {
-		z-index: 10;
 		margin-top: 0.5rem;
 		margin-bottom: 0.5rem;
 		display: flex;
@@ -159,7 +158,6 @@ const fetchData = async (isFromTop) => {
 }
 
 	.pagination {
-		z-index: 10;
 		display: flex;
 		flex-wrap: wrap;
 		scroll-behavior: smooth;

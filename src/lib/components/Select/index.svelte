@@ -48,6 +48,7 @@
 <style type="text/postcss">
 	.select {
 		@apply relative;
+		z-index: 100;
 	}
 
 	.select-button {

@@ -168,7 +168,7 @@
 	}
 
 	.load-wrap {
-		@apply flex justify-center z-10 w-full my-2;
+		@apply flex justify-center w-full my-2;
 		height: 30px;
 	}
 	.load-bottom {
@@ -176,7 +176,7 @@
 	}
 
 	.pagination {
-		@apply flex flex-wrap z-10 scroll-smooth;
+		@apply flex flex-wrap scroll-smooth;
 		justify-content: center;
 		align-content: start;
 		overflow-y: scroll;

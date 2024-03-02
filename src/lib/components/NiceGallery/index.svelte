@@ -1,42 +1,73 @@
 <script>
 	import { onMount } from 'svelte';
+	import Swiper from 'swiper';
+	import { Navigation, Pagination } from 'swiper/modules';
+	import 'swiper/swiper-bundle.css';
 	import PhotoSwipeLightbox from 'photoswipe/lightbox';
 	import 'photoswipe/style.css';
 	import { STORAGE_URL } from '../../utils/env';
 
-	// Accept items as a prop
 	export let items = [];
-	export let galleryID;
 
-	// Transform items to match PhotoSwipe's expected format
-	let galleryItems = items.map((item) => ({
+	let swiperInstance;
+	let lightbox;
+
+	// Prepare items for Swiper
+	let swiperItems = items.map((item) => ({
 		src: `${STORAGE_URL}/${item.url}`,
-		w: 600, // Default width, consider dynamically determining or passing these values
-		h: 400, // Default height, consider dynamically determining or passing these values
-		title: item.title || 'No title' // Use the title if available, or provide a default
+		title: item.title || 'No title'
 	}));
 
 	onMount(() => {
-		let lightbox = new PhotoSwipeLightbox({
-			gallery: '#' + galleryID,
+		swiperInstance = new Swiper('.swiper-container', {
+			modules: [Navigation, Pagination],
+			pagination: { el: '.swiper-pagination' },
+			navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
+		});
+
+		lightbox = new PhotoSwipeLightbox({
+			gallery: '.swiper-wrapper',
 			children: 'a',
-			showHideAnimationType: 'zoom',
 			pswpModule: () => import('photoswipe')
 		});
 		lightbox.init();
 	});
 </script>
 
-<div class="pswp-gallery" id={galleryID}>
-	{#each galleryItems as item}
-		<a
-			href={item.src}
-			data-pswp-width={item.width}
-			data-pswp-height={item.height}
-			target="_blank"
-			rel="noreferrer"
-		>
-			<img src={item.src} alt="" />
-		</a>
-	{/each}
+<div class="swiper-container">
+	<div class="swiper-wrapper">
+		{#each swiperItems as item, index}
+			<div class="swiper-slide">
+				<a
+					href={item.src}
+					data-pswp-width="600"
+					data-pswp-height="400"
+					target="_blank"
+					rel="noopener noreferrer"
+					class="link-image"
+				>
+					<img src={item.src} alt={item.title} style="width: 100%; height: auto;" />
+				</a>
+			</div>
+		{/each}
+	</div>
+	<!-- Add Swiper navigation buttons -->
+	<div class="swiper-pagination" />
+	<div class="swiper-button-prev" />
+	<div class="swiper-button-next" />
 </div>
+
+<style type="text/postcss">
+	.link-image {
+		@apply flex justify-center h-full;
+	}
+	.swiper-container {
+		@apply flex w-full h-full;
+	}
+	.swiper-slide {
+		/* Center slides */
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
+</style>

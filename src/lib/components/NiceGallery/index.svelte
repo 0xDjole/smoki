@@ -13,7 +13,6 @@
 	export let galleryID = 'gallery';
 
 	let swiperInstance;
-	let lightbox;
 
 	let swiperItems = items.map((item) => ({
 		src: `${STORAGE_URL}/${item.url}`,
@@ -37,7 +36,6 @@
 
 	// Proper cleanup to prevent memory leaks
 	onDestroy(() => {
-		if (lightbox) lightbox.destroy();
 		if (swiperInstance) swiperInstance.destroy(true, true);
 	});
 </script>

@@ -18,6 +18,7 @@ export { default as Switch } from './components/Switch/index.svelte';
 export { default as Thumbnail } from './components/Thumbnail/index.svelte';
 export { default as Input } from './components/Input/index.svelte';
 export { default as Gallery } from './components/Gallery/index.svelte';
+export { default as NiceGallery } from './components/NiceGallery/index.svelte';
 export { default as Duration } from './components/Duration/index.svelte';
 export { default as Header } from './components/Header/index.svelte';
 export { default as Fields } from './components/Fields/index.svelte';

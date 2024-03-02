@@ -31,6 +31,11 @@
 			pswpModule: () => import('photoswipe')
 		});
 		lightbox.init();
+
+		lightbox.on('close', () => {
+			lightbox.pswp.close();
+			// Perform any additional actions on close, if needed
+		});
 	});
 </script>
 

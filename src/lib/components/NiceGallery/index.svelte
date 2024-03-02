@@ -1,41 +1,44 @@
 <script>
-	import { onMount } from 'svelte';
+	import { onMount, onDestroy } from 'svelte';
 	import Swiper from 'swiper';
 	import { Navigation, Pagination } from 'swiper/modules';
 	import 'swiper/swiper-bundle.css';
-	import PhotoSwipeLightbox from 'photoswipe/lightbox';
-	import 'photoswipe/style.css';
+
 	import { STORAGE_URL } from '../../utils/env';
 
+	// Access Fancybox from the imported module
+	import '@fancyapps/ui/dist/fancybox/fancybox.css';
+
 	export let items = [];
+	export let galleryID = 'gallery';
 
 	let swiperInstance;
 	let lightbox;
 
-	// Prepare items for Swiper
 	let swiperItems = items.map((item) => ({
 		src: `${STORAGE_URL}/${item.url}`,
 		title: item.title || 'No title'
 	}));
 
-	onMount(() => {
+	let Fancybox;
+
+	onMount(async () => {
 		swiperInstance = new Swiper('.swiper-container', {
 			modules: [Navigation, Pagination],
 			pagination: { el: '.swiper-pagination' },
-			navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' }
+			navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+			lazy: true // Enable lazy loading
 		});
 
-		lightbox = new PhotoSwipeLightbox({
-			gallery: '.swiper-wrapper',
-			children: 'a',
-			pswpModule: () => import('photoswipe')
-		});
-		lightbox.init();
+		const module = await import('@fancyapps/ui');
+		Fancybox = module.Fancybox;
+		Fancybox.bind('.link-image img', {});
+	});
 
-		lightbox.on('close', () => {
-			lightbox.pswp.close();
-			// Perform any additional actions on close, if needed
-		});
+	// Proper cleanup to prevent memory leaks
+	onDestroy(() => {
+		if (lightbox) lightbox.destroy();
+		if (swiperInstance) swiperInstance.destroy(true, true);
 	});
 </script>
 
@@ -51,7 +54,13 @@
 					rel="noopener noreferrer"
 					class="link-image"
 				>
-					<img src={item.src} alt={item.title} style="width: 100%; height: auto;" />
+					<img
+						data-fancybox="gallery"
+						src={item.src}
+						alt={item.title}
+						loading="lazy"
+						style="width: 100%; height: auto;"
+					/>
 				</a>
 			</div>
 		{/each}
@@ -68,6 +77,7 @@
 	}
 	.swiper-container {
 		@apply flex w-full h-full;
+		z-index: 1000;
 	}
 	.swiper-slide {
 		/* Center slides */

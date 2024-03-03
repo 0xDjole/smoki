@@ -75,7 +75,6 @@
 	}
 	.swiper-container {
 		@apply flex w-full h-full;
-		z-index: 1000;
 	}
 	.swiper-slide {
 		/* Center slides */

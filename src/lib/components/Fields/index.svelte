@@ -42,14 +42,14 @@
 
 		return true;
 	}) as field, index}
-		<div class="field">
+		<div class="field" on:click={() => Array.isArray(field.value) && viewMultipleValues(field)}>
 			<div class="key">{field.key}</div>
 
 			<div class="value">
 				{#if typeof field.value === 'boolean'}
 					<Button kind={field.value ? 'success' : 'close'} />
 				{:else if Array.isArray(field.value)}
-					<div class="view-button" on:click={() => viewMultipleValues(field)}>
+					<div class="view-button">
 						{field.value[0]}...
 					</div>
 				{:else}

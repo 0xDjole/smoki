@@ -70,7 +70,7 @@
 	}
 
 	.field {
-		@apply flex text-white items-center text-xl gap-x-2 font-bold bg-secondary rounded-2xl justify-between h-[30px] md:h-[50px];
+		@apply flex cursor-pointer text-white items-center text-xl gap-x-2 font-bold bg-secondary rounded-2xl justify-between h-[30px] md:h-[50px];
 	}
 
 	.value {

@@ -31,7 +31,9 @@
 
 		const module = await import('@fancyapps/ui');
 		Fancybox = module.Fancybox;
-		Fancybox.bind('.link-image img', {});
+		Fancybox.bind('.link-image img', {
+			Hash: false
+		});
 	});
 
 	// Proper cleanup to prevent memory leaks

@@ -72,6 +72,10 @@
 </div>
 
 <style type="text/postcss">
+	.swiper-pagination {
+		z-index: 1;
+	}
+
 	.link-image {
 		@apply flex justify-center h-full;
 	}

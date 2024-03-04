@@ -80,7 +80,7 @@
 		@apply flex justify-center h-full;
 	}
 	.swiper-container {
-		@apply flex w-full h-full;
+		@apply flex w-full h-full overflow-hidden;
 	}
 	.swiper-slide {
 		/* Center slides */

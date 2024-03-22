@@ -43,7 +43,7 @@
 		@apply justify-center bg-[#000] bg-opacity-80 fixed top-0 left-0 w-full h-full z-40;
 	}
 	.content {
-		@apply flex w-full flex-grow overflow-y-scroll justify-center;
+		@apply flex flex-col w-full flex-grow overflow-y-scroll justify-center;
 	}
 
 	.modal {

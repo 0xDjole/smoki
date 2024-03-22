@@ -50,31 +50,33 @@ $: parsedValue = formatter.duration(value);
 	onCancel={() => (showModal = false)}
 	confirm={() => onTimePickerConfirm()}
 >
-	<div class="time-range">
-		<TimePicker
-			selectedValue={day}
-			onChange={(value) => onTimePickerSelect(value.value, 'day')}
-			options={{ source: days, count: 20, sensitivity: 3 }}
-		/>
-		<div class="time-separator">/</div>
+	<div class="flex flex-col w-full">
+		<div class="time-range">
+			<TimePicker
+				selectedValue={day}
+				onChange={(value) => onTimePickerSelect(value.value, 'day')}
+				options={{ source: days, count: 20, sensitivity: 3 }}
+			/>
+			<div class="time-separator">/</div>
 
-		<TimePicker
-			selectedValue={hour}
-			onChange={(value) => onTimePickerSelect(value.value, 'hour')}
-			options={{ source: hours, count: 20, sensitivity: 3 }}
-		/>
+			<TimePicker
+				selectedValue={hour}
+				onChange={(value) => onTimePickerSelect(value.value, 'hour')}
+				options={{ source: hours, count: 20, sensitivity: 3 }}
+			/>
 
-		<div class="time-separator">/</div>
+			<div class="time-separator">/</div>
 
-		<TimePicker
-			selectedValue={minute}
-			onChange={(value) => onTimePickerSelect(value.value, 'minute')}
-			options={{ source: minutes, count: 20, sensitivity: 3 }}
-		/>
-	</div>
+			<TimePicker
+				selectedValue={minute}
+				onChange={(value) => onTimePickerSelect(value.value, 'minute')}
+				options={{ source: minutes, count: 20, sensitivity: 3 }}
+			/>
+		</div>
 
-	<div class="p-3">
-		<slot />
+		<div class="p-3">
+			<slot />
+		</div>
 	</div>
 </Modal>
 

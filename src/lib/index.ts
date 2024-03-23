@@ -33,4 +33,5 @@ export { default as Back } from './components/Back.svelte';
 export { default as Label } from './components/Label.svelte';
 export { default as Calendar } from './components/Calendar/index.svelte';
 export { default as formatter } from './utils/helpers/formatter';
+export { default as translateLabel } from './utils/helpers/translateLabel';
 export * as Layouts from './components/Layouts';

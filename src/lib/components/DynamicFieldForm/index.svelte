@@ -5,7 +5,7 @@
 	import DropDown from '../DropDown/index.svelte';
 	import Select from '../NiceSelect/index.svelte';
 	import Thumbnail from '../Thumbnail/index.svelte';
-	import translateLabel from '../../utils/helpers/transalteLabel';
+	import translateLabel from '../../utils/helpers/translateLabel';
 
 	import { locale } from 'svelte-i18n';
 

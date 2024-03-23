@@ -55,7 +55,6 @@
 		width: 100%;
 		flex-grow: 1;
 		flex-direction: column;
-		justify-content: center;
 		overflow-y: scroll
 }
 	.modal {

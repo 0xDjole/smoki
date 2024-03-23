@@ -1,6 +1,6 @@
 {
 	"name": "smoki",
-	"version": "0.0.51",
+	"version": "0.0.50",
 	"main": "dist/index.js",
 	"type": "module",
 	"scripts": {
@@ -14,7 +14,7 @@
 	"exports": {
 		".": {
 			"types": "./dist/types/index.d.ts",
-			"svelte": "./src/lib/index.ts"
+			"svelte": "./dist/index.js"
 		}
 	},
 	"devDependencies": {

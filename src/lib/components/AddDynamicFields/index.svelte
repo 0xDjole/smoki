@@ -10,6 +10,7 @@
 	import DropDown from '../DropDown/index.svelte';
 	import Properties from './Properties.svelte';
 	import FieldsTable from './FieldsTable.svelte';
+	import LocalizedLabels from '../LocalizedLabels/index.svelte';
 	import Label from '../Label.svelte';
 
 	export let label = 'Custom fields';
@@ -67,6 +68,10 @@
 		key: {
 			errors: []
 		},
+		label: {
+			errors: []
+		},
+
 		ui: {
 			errors: []
 		},
@@ -123,6 +128,11 @@
 			placeholder="Please enter key"
 		/>
 
+		<LocalizedLabels
+			label="Labels"
+			bind:errors={fieldStatus.label.errors}
+			bind:labels={field.label}
+		/>
 		<NiceSelect label="Is requird" bind:value={field.isRequired} options={isRequiredOptions} />
 
 		<NiceSelect label="Is filter" bind:value={field.isFilter} options={isFilterOptions} />
@@ -163,10 +173,6 @@
 </Modal>
 
 <div>
-	<div class="field-body">
-		<Label {label} errors={[]} />
-	</div>
-
 	<FieldsTable bind:isAddModalOpen bind:fields bind:autofillOptions />
 </div>
 

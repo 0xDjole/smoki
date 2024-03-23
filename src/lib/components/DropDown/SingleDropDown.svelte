@@ -33,7 +33,7 @@
 	</div>
 </div>
 
-<Modal height={'60%'} title={`${$_('choose')}`} {showModal} onCancel={() => (showModal = false)}>
+<Modal height={'60%'} title={`Choose`} {showModal} onCancel={() => (showModal = false)}>
 	<div class="px-3">
 		{#each options as option}
 			<div

@@ -50,7 +50,7 @@
 					<Button kind={field.value ? 'success' : 'close'} />
 				{:else if Array.isArray(field.value)}
 					<div class="view-button">
-						{field.value[0]}...
+						{field.value.join(', ')}
 					</div>
 				{:else}
 					<span>{field.value}</span>
@@ -77,8 +77,8 @@
 		@apply flex bg-accent rounded-xl px-3 w-[150px] md:w-[250px] h-full text-ellipsis overflow-hidden text-nowrap items-center justify-end rounded-l-none;
 	}
 
-	.view-butotn {
-		@apply w-full text-end cursor-pointer;
+	.view-button {
+		@apply w-full text-end cursor-pointer text-ellipsis overflow-hidden;
 	}
 
 	.modal-body {

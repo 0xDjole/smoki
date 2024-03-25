@@ -10,6 +10,7 @@
 	export let labelThumbnail;
 	export let errors = [];
 	export let allowTag = true;
+	export let zoom = 14;
 
 	onMount(async () => {
 		L = await import('leaflet');
@@ -19,7 +20,7 @@
 		const lat = 44.772182;
 		const lon = 17.191;
 
-		map = L.map('map').setView([lat, lon], 13);
+		map = L.map('map').setView([lat, lon], zoom);
 		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 			attribution: '© OpenStreetMap contributors'
 		}).addTo(map);

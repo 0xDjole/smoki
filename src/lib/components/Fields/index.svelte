@@ -20,6 +20,7 @@
 	showModal={values.length}
 	confirmText="Close"
 	title={key}
+	zIndex={1000}
 	confirm={() => {
 		values = [];
 		key = '';

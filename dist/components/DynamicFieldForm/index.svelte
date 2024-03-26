@@ -5,7 +5,6 @@ import DropDown from '../DropDown/index.svelte';
 import Select from '../NiceSelect/index.svelte';
 import translateLabel from '../../utils/helpers/translateLabel';
 import { locale } from 'svelte-i18n';
-$: console.log('locale ', $locale);
 export let label = 'Custom fields';
 export let fieldConfigs = [];
 export let fields = [];
@@ -30,7 +29,7 @@ const parseLabel = (label) => {
 							ui={field?.ui}
 							isMultiSelect={field?.properties.isMultiSelect}
 							position="horizontal"
-							label={translateLabel(field.label, $locale)}
+							label={translateLabel(field.label, $locale, field.key)}
 							labelThumbnail={field.thumbnail}
 							bind:value={fields[index].value}
 							options={field.properties.options.map((option) => ({
@@ -53,7 +52,8 @@ const parseLabel = (label) => {
 
 				{#if field?.properties?.isCustomInputAllowed}
 					<Input
-						label={!field?.properties?.options?.length && translateLabel(field.label, $locale)}
+						label={!field?.properties?.options?.length &&
+							translateLabel(field.label, $locale, field.key)}
 						labelThumbnail={field.thumbnail}
 						bind:errors={field.errors}
 						bind:value={fields[index].value}
@@ -68,7 +68,7 @@ const parseLabel = (label) => {
 						<Range
 							label={field?.properties?.isCustomInputAllowed
 								? null
-								: translateLabel(field.label, $locale)}
+								: translateLabel(field.label, $locale, field.key)}
 							bind:value={fields[index].value}
 							max={+field.properties.range.max}
 							min={+field.properties.range.min}
@@ -79,7 +79,7 @@ const parseLabel = (label) => {
 
 				{#if field.type === 'boolean'}
 					<Switch
-						label={translateLabel(field.label, $locale)}
+						label={translateLabel(field.label, $locale, field.key)}
 						labelThumbnail={field.thumbnail}
 						bind:value={fields[index].value}
 					/>

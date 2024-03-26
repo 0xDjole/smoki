@@ -1,4 +1,4 @@
-export default (labels, lang) => {
+export default (labels, lang, fallback) => {
 	let parsedLang = 'en';
 
 	if (lang === 'sr-Latn-BA') {
@@ -7,7 +7,7 @@ export default (labels, lang) => {
 
 	const label = labels[parsedLang];
 	if (!label) {
-		return label['en'];
+		return label['en'] || fallback;
 	}
 
 	return label;

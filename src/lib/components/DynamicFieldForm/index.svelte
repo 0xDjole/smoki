@@ -9,7 +9,6 @@
 
 	import { locale } from 'svelte-i18n';
 
-	$: console.log('locale ', $locale);
 	export let label = 'Custom fields';
 	export let fieldConfigs = [];
 	export let fields = [];
@@ -37,7 +36,7 @@
 							ui={field?.ui}
 							isMultiSelect={field?.properties.isMultiSelect}
 							position="horizontal"
-							label={translateLabel(field.label, $locale)}
+							label={translateLabel(field.label, $locale, field.key)}
 							labelThumbnail={field.thumbnail}
 							bind:value={fields[index].value}
 							options={field.properties.options.map((option) => ({
@@ -60,7 +59,8 @@
 
 				{#if field?.properties?.isCustomInputAllowed}
 					<Input
-						label={!field?.properties?.options?.length && translateLabel(field.label, $locale)}
+						label={!field?.properties?.options?.length &&
+							translateLabel(field.label, $locale, field.key)}
 						labelThumbnail={field.thumbnail}
 						bind:errors={field.errors}
 						bind:value={fields[index].value}
@@ -75,7 +75,7 @@
 						<Range
 							label={field?.properties?.isCustomInputAllowed
 								? null
-								: translateLabel(field.label, $locale)}
+								: translateLabel(field.label, $locale, field.key)}
 							bind:value={fields[index].value}
 							max={+field.properties.range.max}
 							min={+field.properties.range.min}
@@ -86,7 +86,7 @@
 
 				{#if field.type === 'boolean'}
 					<Switch
-						label={translateLabel(field.label, $locale)}
+						label={translateLabel(field.label, $locale, field.key)}
 						labelThumbnail={field.thumbnail}
 						bind:value={fields[index].value}
 					/>

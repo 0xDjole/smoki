@@ -71,7 +71,6 @@
 		day: 1
 	});
 
-	$: console.log(dateWithFirstDay);
 	$: firstWeekDay = (dateWithFirstDay.weekday.valueOf() % 7) - 1;
 
 	$: viewDates = new Array(42).fill(null).map((item, index) => {
@@ -79,7 +78,6 @@
 		let isSelectable = true;
 
 		let currentDayView = index;
-		console.log('firstWeekDay ', firstWeekDay);
 		let firstDayPostion = firstWeekDay === 7 ? 2 : firstWeekDay + 1;
 
 		if (currentDayView === firstDayPostion) {

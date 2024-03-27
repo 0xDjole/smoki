@@ -49,6 +49,20 @@ export const getLocalizedShortWeekdays = (locale) => {
 	return days;
 };
 
+export const getLocalizedShortWeekdaysSunday = (locale) => {
+	const formatter = new Intl.DateTimeFormat(locale, { weekday: 'short' });
+	const days = [];
+
+	// Start from an arbitrary Monday (e.g., August 2, 2021)
+	for (let day = 0; day < 7; day++) {
+		const date = new Date(Date.UTC(2021, 7, 1 + day));
+		const formattedDay = formatter.format(date);
+		days.push(formattedDay.charAt(0).toUpperCase() + formattedDay.slice(1));
+	}
+
+	return days;
+};
+
 export const duration = (totalMinutes) => {
 	const days = Math.floor(totalMinutes / 1440);
 	const hours = Math.floor((totalMinutes % 1440) / 60);
@@ -75,6 +89,7 @@ export default {
 	hour,
 	getLocalizedMonths,
 	getLocalizedShortWeekdays,
+	getLocalizedShortWeekdaysSunday,
 	duration,
 	date
 };

@@ -71,14 +71,16 @@
 		day: 1
 	});
 
-	$: firstWeekDay = dateWithFirstDay.weekday.valueOf();
+	$: console.log(dateWithFirstDay);
+	$: firstWeekDay = (dateWithFirstDay.weekday.valueOf() % 7) - 1;
 
 	$: viewDates = new Array(42).fill(null).map((item, index) => {
 		let date: DateTime;
 		let isSelectable = true;
 
-		let currentDayView = index + 1;
-		let firstDayPostion = firstWeekDay === 7 ? 1 : firstWeekDay + 1;
+		let currentDayView = index;
+		console.log('firstWeekDay ', firstWeekDay);
+		let firstDayPostion = firstWeekDay === 7 ? 2 : firstWeekDay + 1;
 
 		if (currentDayView === firstDayPostion) {
 			date = dateWithFirstDay;
@@ -117,7 +119,7 @@
 
 	$: months = $locale ? formatter.getLocalizedMonths($locale) : [];
 
-	$: days = $locale ? formatter.getLocalizedShortWeekdays($locale) : [];
+	$: days = $locale ? formatter.getLocalizedShortWeekdaysSunday($locale) : [];
 </script>
 
 <div>

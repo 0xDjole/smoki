@@ -55,11 +55,11 @@
 					class="link-image"
 				>
 					<img
+						class="slide-img"
 						data-fancybox="gallery"
 						src={item.src}
 						alt={item.title}
 						loading="lazy"
-						style="width: 100%; height: auto;"
 					/>
 				</a>
 			</div>
@@ -72,6 +72,10 @@
 </div>
 
 <style type="text/postcss">
+	.slide-img {
+		@apply w-full object-cover;
+	}
+
 	.swiper-pagination {
 		z-index: 1;
 	}

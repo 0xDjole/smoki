@@ -1,6 +1,9 @@
 <script>
 	import { onMount } from 'svelte';
 	import Label from '../Label.svelte';
+
+	import Location from '../../utils/icons/location.svg?raw';
+
 	let L;
 	let map;
 	let marker;
@@ -51,13 +54,8 @@
 				marker.setLatLng(position);
 			} else {
 				const redIcon = L.icon({
-					iconUrl:
-						'data:image/svg+xml;base64,' +
-						btoa(`
-                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="-20 -20 40 40">
-                    <circle r="10" cx="0" cy="0" fill="red" />
-                    </svg>`),
-					iconSize: [25, 25],
+					iconUrl: `data:image/svg+xml;base64,${btoa(Location)}`,
+					iconSize: [50, 50],
 					iconAnchor: [12.5, 12.5]
 				});
 				marker = L.marker(position, { icon: redIcon }).addTo(map);

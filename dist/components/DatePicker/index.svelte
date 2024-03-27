@@ -54,12 +54,12 @@ let dateWithFirstDay = DateTime.fromObject({
     month,
     day: 1
 });
-$: firstWeekDay = dateWithFirstDay.weekday.valueOf();
+$: firstWeekDay = (dateWithFirstDay.weekday.valueOf() % 7) - 1;
 $: viewDates = new Array(42).fill(null).map((item, index) => {
     let date;
     let isSelectable = true;
-    let currentDayView = index + 1;
-    let firstDayPostion = firstWeekDay === 7 ? 1 : firstWeekDay + 1;
+    let currentDayView = index;
+    let firstDayPostion = firstWeekDay === 7 ? 2 : firstWeekDay + 1;
     if (currentDayView === firstDayPostion) {
         date = dateWithFirstDay;
     }
@@ -89,7 +89,7 @@ $: viewDates = new Array(42).fill(null).map((item, index) => {
     };
 });
 $: months = $locale ? formatter.getLocalizedMonths($locale) : [];
-$: days = $locale ? formatter.getLocalizedShortWeekdays($locale) : [];
+$: days = $locale ? formatter.getLocalizedShortWeekdaysSunday($locale) : [];
 </script>
 
 <div>

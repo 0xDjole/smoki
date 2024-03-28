@@ -50,9 +50,8 @@
 		headerActionModalOpen = false;
 	}}
 	confirm={confirmHeader}
-	><div class="flex justify-center items-end h-full">
-		<h2 class="text-primary font-bold text-2xl text-center">{confirmHeaderMessage}</h2>
-	</div>
+	confirmText={confirmHeaderMessage}
+	><div />
 </Modal>
 
 <Header>

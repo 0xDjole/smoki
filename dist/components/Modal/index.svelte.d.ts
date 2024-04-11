@@ -8,6 +8,7 @@ export default class Index extends SvelteComponentTyped<{
     top?: string | undefined;
     zIndex?: number | undefined;
     title?: string | undefined;
+    disabled?: boolean | undefined;
     confirm?: (() => void) | undefined;
     confirmText?: null | undefined;
 }, {
@@ -28,6 +29,7 @@ declare const __propDef: {
         top?: string | undefined;
         zIndex?: number | undefined;
         title?: string | undefined;
+        disabled?: boolean | undefined;
         confirm?: (() => void) | undefined;
         confirmText?: null | undefined;
     };

@@ -11,6 +11,7 @@
 	export let confirmText = null;
 
 	export let confirm = () => {};
+	export let disabled = false;
 	export let onCancel;
 </script>
 
@@ -31,7 +32,7 @@
 			</div>
 			{#if confirmText}
 				<div class="options">
-					<Button size={'large'} onClick={() => confirm()}>{confirmText}</Button>
+					<Button {disabled} size={'large'} onClick={() => confirm()}>{confirmText}</Button>
 				</div>
 			{/if}
 		</div>

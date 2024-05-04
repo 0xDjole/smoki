@@ -9,6 +9,7 @@
 	export let top = '10%';
 	export let zIndex = 1;
 	export let confirmText = null;
+	export let modalStyle = '';
 
 	export let confirm = () => {};
 	export let disabled = false;
@@ -17,7 +18,7 @@
 
 {#if showModal}
 	<div class="wrapper" style={`z-index: ${zIndex};`}>
-		<div class="modal" style={`height: ${height}; top: ${top};`}>
+		<div class="modal" style={`height: ${height}; top: ${top}; ${modalStyle}`}>
 			<div class="top-bar">
 				{#if title}
 					<div class="header-title">{title}</div>
@@ -49,10 +50,6 @@
 
 	.modal {
 		@apply flex flex-col relative rounded-md inset-0 z-40 bg-primary text-white border-2 border-secondary border-solid mx-auto;
-		width: 95%;
-		@screen lg {
-			width: 75%;
-		}
 	}
 
 	.options {

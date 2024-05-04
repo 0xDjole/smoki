@@ -21,11 +21,11 @@
 	}
 
 	.header-item {
-		@apply flex justify-center items-center overflow-hidden h-full;
+		@apply flex justify-center items-center h-full;
 	}
 
 	.header {
-		@apply top-0 bg-primary text-primary text-2xl font-bold flex gap-x-2 justify-start items-center w-full;
+		@apply top-0 bg-primary text-primary text-2xl font-bold flex gap-x-2 justify-start items-center w-full z-10;
 		height: 60px;
 
 		& .left,

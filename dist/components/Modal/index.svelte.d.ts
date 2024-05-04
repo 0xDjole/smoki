@@ -11,6 +11,7 @@ export default class Index extends SvelteComponentTyped<{
     disabled?: boolean | undefined;
     confirm?: (() => void) | undefined;
     confirmText?: null | undefined;
+    modalStyle?: string | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
 }, {
@@ -32,6 +33,7 @@ declare const __propDef: {
         disabled?: boolean | undefined;
         confirm?: (() => void) | undefined;
         confirmText?: null | undefined;
+        modalStyle?: string | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

@@ -9,6 +9,7 @@
 	export let top = '10%';
 	export let zIndex = 1;
 	export let confirmText = null;
+	export let modalStyle = '';
 
 	export let confirm = () => {};
 	export let disabled = false;
@@ -17,7 +18,7 @@
 
 {#if showModal}
 	<div class="wrapper" style={`z-index: ${zIndex};`}>
-		<div class="modal" style={`height: ${height}; top: ${top};`}>
+		<div class="modal" style={`height: ${height}; top: ${top}; ${modalStyle}`}>
 			<div class="top-bar">
 				{#if title}
 					<div class="header-title">{title}</div>
@@ -72,14 +73,8 @@
 		color: rgb(255 255 255 / var(--tw-text-opacity));
 		border-color: var(--primary-border-color);
 		border-width: 1px;
-		border-style: solid;
-		width: 95%
+		border-style: solid
 }
-	@media (min-width: 1024px) {
-	.modal {
-			width: 75%
-	}
-		}
 	.options {
 		margin-left: 1.25rem;
 		margin-right: 1.25rem;

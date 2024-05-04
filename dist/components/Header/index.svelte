@@ -26,12 +26,12 @@
 		display: flex;
 		height: 100%;
 		align-items: center;
-		justify-content: center;
-		overflow: hidden
+		justify-content: center
 }
 
 	.header {
 		top: 0px;
+		z-index: 10;
 		display: flex;
 		width: 100%;
 		align-items: center;

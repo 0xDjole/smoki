@@ -54,7 +54,7 @@
 		@apply flex flex-col w-full absolute top-10 left-0 rounded-md bg-secondary;
 	}
 	.item {
-		@apply cursor-pointer p-1 w-full;
+		@apply cursor-pointer p-1 w-full text-lg;
 	}
 	.selected {
 		@apply bg-accent p-1 rounded-md;

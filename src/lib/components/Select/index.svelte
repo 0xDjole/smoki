@@ -13,12 +13,7 @@
 
 	let showModal = false;
 
-	const selectOption = (optionValue) => {
-		showModal = false;
-	};
-
 	$: selectedOption = options.find((option) => option.value === value);
-	$: console.log('show ', showModal);
 </script>
 
 <div class="select">

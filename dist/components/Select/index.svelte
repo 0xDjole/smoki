@@ -78,7 +78,9 @@ $: selectedOption = options.find((option) => option.value === value);
 	.item {
 		width: 100%;
 		cursor: pointer;
-		padding: 0.25rem
+		padding: 0.25rem;
+		font-size: 1.125rem;
+		line-height: 1.75rem
 }
 
 	.selected {

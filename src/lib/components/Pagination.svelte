@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { createEventDispatcher, onDestroy, onMount, tick } from 'svelte';
+	import { _ } from 'svelte-i18n';
 
 	import InfiniteScroll from './InfiniteScroll.svelte';
 	import Loader from './Loader.svelte';
@@ -130,7 +131,7 @@
 	</ul>
 
 	{#if !fetchingMore && !items.length}
-		<div class="py-5"><span class="text-2xl text-primary font-bold">{notFoundText}</span></div>
+		<div class="py-5"><span class="text-2xl text-primary font-bold">{$_(notFoundText)}</span></div>
 	{/if}
 
 	<div class="spacer" bind:this={spacer} />

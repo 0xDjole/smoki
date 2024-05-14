@@ -7,7 +7,7 @@ export default (labels, lang, fallback) => {
 
 	const label = labels[parsedLang];
 	if (!label) {
-		return label['en'] || fallback;
+		return fallback;
 	}
 
 	return label;

@@ -26,7 +26,7 @@
 <div>
 	<Label {errors} {label} {labelThumbnail} />
 	<div
-		on:click={() => (showModal = true)}
+		on:click|preventDefault={() => (showModal = true)}
 		class="flex justify-between option bg-secondary border-primary selected"
 	>
 		<span>{values.length ? values.join(', ') : $_('choose')}</span>
@@ -46,7 +46,7 @@
 	<div class="px-3">
 		{#each options as option}
 			<div
-				on:click={() => selectOption(option.value)}
+				on:click|preventDefault={() => selectOption(option.value)}
 				class="option bg-secondary border-primary {values?.includes(option.value)
 					? 'selected'
 					: ''}"

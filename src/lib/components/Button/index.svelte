@@ -47,7 +47,7 @@
 		class={`base ${parseSize(size)} ${parseKind(kind)} ${disabled ? 'disabled' : ''} ${className}`}
 		{style}
 		title={disabled ? 'Choose an item and date' : ''}
-		on:click={(e) => {
+		on:click|preventDefault={(e) => {
 			e.preventDefault();
 			if (onClick) {
 				onClick();

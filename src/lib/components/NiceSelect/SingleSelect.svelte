@@ -29,7 +29,7 @@
 	>
 		{#each options as option}
 			<div
-				on:click={() => selectOption(option.value)}
+				on:click|preventDefault={() => selectOption(option.value)}
 				class="option bg-secondary border-primary {value === option.value ? 'selected' : ''}"
 			>
 				{option.label}

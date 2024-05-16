@@ -47,7 +47,10 @@
 
 		return true;
 	}) as field, index}
-		<div class="field" on:click={() => Array.isArray(field.value) && viewMultipleValues(field)}>
+		<div
+			class="field"
+			on:click|preventDefault={() => Array.isArray(field.value) && viewMultipleValues(field)}
+		>
 			<div class="key">{translateLabel(field.label, $locale, field.key)}</div>
 
 			<div class="value">

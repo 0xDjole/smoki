@@ -38,7 +38,7 @@
 
 	<DropDown options={operations} bind:value={condition} />
 
-	<button on:click={add} class="add-options">Add options</button>
+	<button on:click|preventDefault={add} class="add-options">Add options</button>
 </div>
 
 <div class="list">
@@ -46,7 +46,7 @@
 		<div class="item">
 			<span>{option}</span>
 
-			<div on:click={() => removeOption(index)}>
+			<div on:click|preventDefault={() => removeOption(index)}>
 				<SvgIcon data={Close} size={'30px'} color={'white'} />
 			</div>
 		</div>

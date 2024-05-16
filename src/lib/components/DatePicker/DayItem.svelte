@@ -16,7 +16,7 @@
 
 <button
 	disabled={!viewDate.isSelectable}
-	on:click={onClick}
+	on:click|preventDefault={onClick}
 	on:mouseleave={onMouseLeave}
 	on:mouseenter={onMouseEnter}
 	class="item day-of-month {dynamicClass}"

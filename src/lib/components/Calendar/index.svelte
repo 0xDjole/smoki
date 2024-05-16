@@ -264,7 +264,7 @@
 	<div class="head">
 		<div
 			class="head-item"
-			on:click={() => {
+			on:click|preventDefault={() => {
 				centricDate = centricDate.minus({
 					days: viewDays
 				});
@@ -288,7 +288,7 @@
 
 		<div
 			class="head-item"
-			on:click={() => {
+			on:click|preventDefault={() => {
 				centricDate = centricDate.plus({
 					days: viewDays
 				});
@@ -321,7 +321,7 @@
 							{viewDate.date.day}
 							{viewDate.date.weekdayShort}, {viewDate.date.monthShort}
 						</div>
-						<div on:click={() => selectDate(viewDate.date)} class="mr-5">
+						<div on:click|preventDefault={() => selectDate(viewDate.date)} class="mr-5">
 							<SvgIcon data={Plus} color={'white'} size={'25px'} />
 						</div>
 					</div>
@@ -347,7 +347,7 @@
 			{#each displayItems as item, index}
 				<div
 					on:keyup={() => handleItemClick(item, index)}
-					on:click={() => handleItemClick(item, index)}
+					on:click|preventDefault={() => handleItemClick(item, index)}
 					style={getItemStyle(item, index)}
 					class="calendar-item"
 				>
@@ -368,7 +368,11 @@
 			{#each viewDates as _}
 				<div class="day-hour">
 					{#each new Array(24).fill(null) as _}
-						<div class="hour" on:keyup={handleEmptyClick} on:click={handleEmptyClick} />
+						<div
+							class="hour"
+							on:keyup={handleEmptyClick}
+							on:click|preventDefault={handleEmptyClick}
+						/>
 					{/each}
 				</div>
 			{/each}

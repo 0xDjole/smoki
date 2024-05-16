@@ -21,7 +21,7 @@
 	<div class="field-body">
 		<Label {label} errors={[]} />
 
-		<button on:click={addField} class="add-field-button">Add field</button>
+		<button on:click|preventDefault={addField} class="add-field-button">Add field</button>
 	</div>
 	<div class="custom-field-body">
 		<div class="field-header">
@@ -41,7 +41,7 @@
 						<div class="field">{field.isRequired}</div>
 						<div class="field last-item">
 							{field.isFilter}
-							<div class="remove-button" on:click={() => removeField(index)}>
+							<div class="remove-button" on:click|preventDefault={() => removeField(index)}>
 								<SvgIcon data={Close} size={'30px'} color={'white'} />
 							</div>
 						</div>

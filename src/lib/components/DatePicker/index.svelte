@@ -123,11 +123,11 @@
 <div>
 	<div class="wrapper">
 		<div class="head">
-			<div class="control-date" on:click={() => previousMonth()}>
+			<div class="control-date" on:click|preventDefault={() => previousMonth()}>
 				<SvgIcon data={Less} color={'white'} size={'20px'} />
 			</div>
 			<span class="date">{months[month - 1]}, {year}</span>
-			<div class="control-date" on:click={() => nextMonth()}>
+			<div class="control-date" on:click|preventDefault={() => nextMonth()}>
 				<SvgIcon data={Great} color={'white'} size={'20px'} />
 			</div>
 		</div>

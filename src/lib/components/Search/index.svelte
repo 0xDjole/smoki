@@ -9,7 +9,7 @@
 	export let placeholder;
 </script>
 
-<div class="search-name" on:click={() => {}}>
+<div class="search-name" on:click|preventDefault={() => {}}>
 	<div class="search-button">
 		<SvgIcon data={Search} color={'white'} />
 	</div>
@@ -60,4 +60,3 @@
 		}
 	}
 </style>
-

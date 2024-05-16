@@ -53,7 +53,7 @@
 	$: parsedValue = formatter.duration(value);
 </script>
 
-<button on:click={() => (showModal = true)}>{label} {parsedValue}</button>
+<button on:click|preventDefault={() => (showModal = true)}>{label} {parsedValue}</button>
 
 <Modal
 	title={`Pick duration`}

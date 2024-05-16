@@ -23,7 +23,7 @@
 				{#if title}
 					<div class="header-title">{title}</div>
 				{/if}
-				<div class="close" on:click={() => onCancel()}>
+				<div class="close" on:click|preventDefault={() => onCancel()}>
 					<SvgIcon data={Close} width={'40px'} size={'40px'} color={'white'} />
 				</div>
 			</div>

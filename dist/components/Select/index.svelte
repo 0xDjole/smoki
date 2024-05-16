@@ -12,7 +12,7 @@ $: selectedOption = options.find((option) => option.value === value);
 </script>
 
 <div class="select">
-	<div class="select-button" on:click={() => (showModal = !showModal)}>
+	<div class="select-button" on:click|preventDefault={() => (showModal = !showModal)}>
 		<span>{selectedOption?.label || $_('choose')}</span>
 
 		<SvgIcon data={DropDownIcon} width={'25px'} size={'25px'} color={'white'} />
@@ -23,7 +23,7 @@ $: selectedOption = options.find((option) => option.value === value);
 				<div
 					class="item"
 					class:selected={option.value === value}
-					on:click={() => {
+					on:click|preventDefault={() => {
 						showModal = false;
 						value = option.value;
 					}}

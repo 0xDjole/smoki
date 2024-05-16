@@ -7,7 +7,7 @@ export let bottomName = '';
 <div class="item">
 	<div
 		class="card-body"
-		on:click={() => {
+		on:click|preventDefault={() => {
 			onConfirm();
 		}}
 	>

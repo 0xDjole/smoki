@@ -1,10 +1,10 @@
-<script>import SvgIcon from "./SvgIcon.svelte";
-import UploadSvg from "../utils/icons/upload.svg?raw";
-import Loader from "./Loader.svelte";
-import Label from "./Label.svelte";
+<script>import SvgIcon from './SvgIcon.svelte';
+import UploadSvg from '../utils/icons/upload.svg?raw';
+import Loader from './Loader.svelte';
+import Label from './Label.svelte';
 export let image = null;
 export let label = null;
-export let alt = "Alt";
+export let alt = 'Alt';
 let fileInput;
 let avatar;
 let loading = false;
@@ -19,8 +19,7 @@ $: if (image) {
 const onFileSelected = (e) => {
     loading = true;
     const imageFile = e.target.files[0];
-    if (!imageFile ||
-        !["image/jpg", "image/jpeg", "image/png"].includes(imageFile.type)) {
+    if (!imageFile || !['image/jpg', 'image/jpeg', 'image/png'].includes(imageFile.type)) {
         loading = false;
         return;
     }
@@ -31,38 +30,38 @@ const onFileSelected = (e) => {
 <Label {label} errors={[]} />
 
 <div
-  class="avatar-uploader"
-  on:click={() => fileInput.click()}
-  aria-role="button"
-  aria-label="Image uploader"
+	class="avatar-uploader"
+	on:click|preventDefault={() => fileInput.click()}
+	aria-role="button"
+	aria-label="Image uploader"
 >
-  {#if loading}
-    <Loader />
-  {:else if avatar}
-    <img class="avatar" src={avatar} {alt} />
-  {:else}
-    <SvgIcon data={UploadSvg} size={"200px"} fill="white" />
-  {/if}
+	{#if loading}
+		<Loader />
+	{:else if avatar}
+		<img class="avatar" src={avatar} {alt} />
+	{:else}
+		<SvgIcon data={UploadSvg} size={'200px'} fill="white" />
+	{/if}
 </div>
 
 <input
-  id="image-uploader"
-  style="display:none"
-  type="file"
-  accept=".jpg, .jpeg, .png"
-  on:change={onFileSelected}
-  bind:this={fileInput}
-  aria-label="File input"
+	id="image-uploader"
+	style="display:none"
+	type="file"
+	accept=".jpg, .jpeg, .png"
+	on:change={onFileSelected}
+	bind:this={fileInput}
+	aria-label="File input"
 />
 
 <style>
-  .avatar-uploader {
-    cursor: pointer
+	.avatar-uploader {
+		cursor: pointer
 }
 
-  .avatar {
-    border-radius: 0.375rem;
-    display: flex;
-    height: 250px;
-    width: 250px
+	.avatar {
+		border-radius: 0.375rem;
+		display: flex;
+		height: 250px;
+		width: 250px
 }</style>

@@ -72,10 +72,14 @@
 
 <div class="map-wrapper">
 	<Label {label} {errors} {labelThumbnail} />
-	<div id="map" style="height: 200px;" />
+	<div id="map" class="map" />
 </div>
 
 <style type="text/postcss">
+	.map {
+		@apply h-[200px] md:h-[300px];
+	}
+
 	.map-wrapper {
 		@apply w-full relative;
 	}

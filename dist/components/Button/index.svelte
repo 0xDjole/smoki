@@ -61,7 +61,7 @@ const svgKinds = ['delete', 'add', 'back', 'search', 'user', 'success', 'close']
 
     background-color: var(--accent-background-color);
 
-    padding: 0.5rem;
+    padding: 0.25rem;
 
     font-size: 1.125rem;
 
@@ -98,9 +98,9 @@ const svgKinds = ['delete', 'add', 'back', 'search', 'user', 'success', 'close']
 
     width: 100%;
 
-    font-size: 1.5rem;
+    font-size: 1.25rem;
 
-    line-height: 2rem
+    line-height: 1.75rem
 }
 
 	.full {
@@ -109,9 +109,9 @@ const svgKinds = ['delete', 'add', 'back', 'search', 'user', 'success', 'close']
 
     border-radius: 0px;
 
-    font-size: 1.5rem;
+    font-size: 1.25rem;
 
-    line-height: 2rem
+    line-height: 1.75rem
 }
 
 	.boring {

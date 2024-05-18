@@ -26,8 +26,8 @@ $: dynamicClass = `${hovering && viewDate.isSelectable ? ' hoverSuccess ' : ''}
 <style>
 	.day-of-month {
 		display: grid;
-		height: 3rem;
-		width: 3rem;
+		height: 2.5rem;
+		width: 2.5rem;
 		cursor: pointer;
 		border-radius: 9999px;
 		text-align: center;
@@ -36,7 +36,7 @@ $: dynamicClass = `${hovering && viewDate.isSelectable ? ' hoverSuccess ' : ''}
 		box-sizing: border-box;
 		align-items: center;
 		justify-items: center;
-		font-size: 25px;
+		font-size: 20px;
 }
 		@media (min-width: 768px) {
 	.day-of-month {

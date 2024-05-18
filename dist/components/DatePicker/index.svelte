@@ -127,16 +127,6 @@ $: days = $locale ? formatter.getLocalizedShortWeekdaysSunday($locale) : [];
 	}
 		}
 
-	.date-item {
-		display: grid;
-		align-items: center;
-		justify-content: center;
-		text-align: center;
-		font-size: 1.5rem;
-		line-height: 2rem;
-		width: 100px
-}
-
 	.days {
 		display: grid;
 		row-gap: 0.5rem;
@@ -168,8 +158,8 @@ $: days = $locale ? formatter.getLocalizedShortWeekdaysSunday($locale) : [];
 	.date {
 		flex: 1 1 0%;
 		text-align: center;
-		font-size: 1.5rem;
-		line-height: 2rem;
+		font-size: 1.25rem;
+		line-height: 1.75rem;
 		color: var(--secondary-text-color)
 }
 

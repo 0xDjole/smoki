@@ -35,9 +35,7 @@
 		display: flex;
 		width: 100%;
 		align-items: center;
-		justify-content: flex-start;
-		-moz-column-gap: 0.5rem;
-		     column-gap: 0.5rem;
+		justify-content: space-between;
 		background-color: var(--primary-background-color);
 		font-size: 1.5rem;
 		line-height: 2rem;
@@ -46,38 +44,28 @@
 		height: 60px
 }
 
-	.header .left,
-		.header .right {
-		flex: none;
-			width: 20%;
-			min-width: 50px
+	.left,
+	.right {
+		display: flex;
+		flex: 1 1 0%;
+		overflow: hidden
 }
 
-	.header .middle {
-		flex-grow: 1
+	.left {
+		justify-content: flex-start
 }
 
-	@media (min-width: 768px) {
-
-	.header {
-			height: 80px;
-			font-size: 3rem;
-			line-height: 1
-	}
-
-			.header .left,
-			.header .right {
-				flex: none;
-				width: 20%
-		}
-		}
+	.right {
+		justify-content: flex-end
+}
 
 	.header-sticky {
 		position: sticky
 }
 
 	:global([slot='middle']) {
+		overflow: hidden; /* Prevents overflow from altering flex distribution */
 		align-items: center;
 		text-overflow: ellipsis;
-		white-space: nowrap;
-	}</style>
+		white-space: nowrap
+}</style>

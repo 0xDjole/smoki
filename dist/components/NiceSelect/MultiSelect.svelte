@@ -74,7 +74,7 @@ const selectOption = (optionValue) => {
 
     background-color: var(--secondary-background-color);
 
-    padding: 0.375rem;
+    padding: 0.125rem;
 
     font-size: 1rem;
 
@@ -100,6 +100,8 @@ const selectOption = (optionValue) => {
 	@media (min-width: 768px) {
 
     .option {
+
+        padding: 0.375rem;
 
         font-size: 1.125rem;
 

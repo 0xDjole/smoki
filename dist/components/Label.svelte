@@ -30,10 +30,6 @@ export let errors = [];
 
 	.label {
 
-    font-size: 1.125rem;
-
-    line-height: 1.75rem;
-
     font-weight: 700;
 
     --tw-text-opacity: 1;
@@ -45,9 +41,9 @@ export let errors = [];
 
     .label {
 
-        font-size: 1.5rem;
+        font-size: 1.25rem;
 
-        line-height: 2rem
+        line-height: 1.75rem
     }
 }
 

@@ -76,8 +76,6 @@ export let labelThumbnail;
 		border-radius: 0.5rem;
 		background-color: var(--secondary-background-color);
 		padding: 0.25rem;
-		font-size: 1.125rem;
-		line-height: 1.75rem;
 		font-weight: 600;
 		color: var(--primary-text-color);
 		--tw-text-opacity: 0.8;

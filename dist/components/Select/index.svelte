@@ -12,11 +12,11 @@ $: selectedOption = options.find((option) => option.value === value);
 </script>
 
 <div class="select">
-	<div class="select-button" on:click|preventDefault={() => (showModal = !showModal)}>
+	<button class="select-button" on:click|preventDefault={() => (showModal = !showModal)}>
 		<span>{selectedOption?.label || $_('choose')}</span>
 
-		<SvgIcon data={DropDownIcon} width={'25px'} size={'25px'} color={'white'} />
-	</div>
+		<SvgIcon data={DropDownIcon} width={'20px'} size={'20px'} color={'white'} />
+	</button>
 	{#if showModal === true}
 		<div class="options">
 			{#each options as option}
@@ -38,22 +38,22 @@ $: selectedOption = options.find((option) => option.value === value);
 <style>
 	.select {
 		position: relative;
+		display: flex;
 		z-index: 1
 }
 
 	.select-button {
 		display: flex;
 		width: 100%;
-		min-width: 80px;
-		cursor: pointer;
+		align-items: center;
 		justify-content: space-between;
 		-moz-column-gap: 0.5rem;
 		     column-gap: 0.5rem;
 		border-radius: 0.5rem;
 		background-color: var(--accent-background-color);
 		padding: 0.25rem;
-		font-size: 1.125rem;
-		line-height: 1.75rem;
+		font-size: 1rem;
+		line-height: 1.5rem;
 		font-weight: 600;
 		--tw-text-opacity: 1;
 		color: rgb(255 255 255 / var(--tw-text-opacity));
@@ -62,6 +62,14 @@ $: selectedOption = options.find((option) => option.value === value);
 		border-color: var(--primary-border-color);
 		border-width: 1px;
 		border-style: solid
+}
+
+	@media (min-width: 768px) {
+
+		.select-button {
+				font-size: 1.125rem;
+				line-height: 1.75rem
+		}
 }
 
 	.options {
@@ -79,8 +87,8 @@ $: selectedOption = options.find((option) => option.value === value);
 		width: 100%;
 		cursor: pointer;
 		padding: 0.25rem;
-		font-size: 1.125rem;
-		line-height: 1.75rem
+		font-size: 1rem;
+		line-height: 1.5rem
 }
 
 	.selected {

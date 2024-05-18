@@ -108,7 +108,7 @@ const fetchData = async (isFromTop) => {
 	</ul>
 
 	{#if !fetchingMore && !items.length}
-		<div class="py-5"><span class="text-2xl text-primary font-bold">{$_(notFoundText)}</span></div>
+		<span class="text-lg md:text-xl text-primary font-bold m-2">{$_(notFoundText)}</span>
 	{/if}
 
 	<div class="spacer" bind:this={spacer} />

@@ -250,7 +250,7 @@
 	.range__wrapper {
 		width: 100%;
 		position: relative;
-		padding: 0.5rem;
+		padding: 0.3rem;
 		box-sizing: border-box;
 		outline: none;
 	}

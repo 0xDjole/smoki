@@ -17,11 +17,11 @@
 </script>
 
 <div class="select">
-	<div class="select-button" on:click|preventDefault={() => (showModal = !showModal)}>
+	<button class="select-button" on:click|preventDefault={() => (showModal = !showModal)}>
 		<span>{selectedOption?.label || $_('choose')}</span>
 
 		<SvgIcon data={DropDownIcon} width={'20px'} size={'20px'} color={'white'} />
-	</div>
+	</button>
 	{#if showModal === true}
 		<div class="options">
 			{#each options as option}
@@ -42,19 +42,19 @@
 
 <style type="text/postcss">
 	.select {
-		@apply relative;
+		@apply flex relative;
 		z-index: 1;
 	}
 
 	.select-button {
-		@apply cursor-pointer flex w-full min-w-[80px] p-1 bg-accent text-white rounded-lg border-2 border-secondary border-solid font-semibold md:text-lg outline-none gap-x-2 justify-between;
+		@apply text-base flex w-full p-1 bg-accent text-white rounded-lg border-2 border-secondary border-solid font-semibold md:text-lg outline-none gap-x-2 justify-between items-center;
 	}
 
 	.options {
 		@apply flex flex-col w-full absolute top-10 left-0 rounded-md bg-secondary;
 	}
 	.item {
-		@apply cursor-pointer p-1 w-full md:text-lg;
+		@apply cursor-pointer p-1 w-full text-base;
 	}
 	.selected {
 		@apply bg-accent p-1 rounded-md;

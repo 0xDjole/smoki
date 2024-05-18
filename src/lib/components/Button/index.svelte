@@ -58,8 +58,7 @@
 
 <style type="text/postcss">
 	.base {
-		@apply bg-accent text-primary rounded-lg  font-semibold cursor-pointer hover:opacity-80 whitespace-nowrap
-		p-2 m-0 h-full text-lg;
+		@apply bg-accent text-primary rounded-lg  font-semibold cursor-pointer hover:opacity-80 whitespace-nowrap m-0 h-full text-lg p-1;
 	}
 
 	.success {

@@ -25,30 +25,21 @@
 	}
 
 	.header {
-		@apply top-0 bg-primary text-primary text-2xl font-bold flex gap-x-2 justify-start items-center w-full z-10;
+		@apply top-0 bg-primary text-primary text-2xl font-bold flex justify-between items-center w-full z-10;
 		height: 60px;
+	}
 
-		& .left,
-		& .right {
-			@apply flex-none;
-			width: 20%;
-			min-width: 50px;
-		}
+	.left,
+	.right {
+		@apply flex flex-1 overflow-hidden;
+	}
 
-		& .middle {
-			@apply flex-grow;
-		}
+	.left {
+		@apply justify-start;
+	}
 
-		@screen md {
-			height: 80px;
-			@apply text-5xl;
-
-			& .left,
-			& .right {
-				@apply flex-none;
-				width: 20%;
-			}
-		}
+	.right {
+		@apply justify-end;
 	}
 
 	.header-sticky {
@@ -56,6 +47,7 @@
 	}
 
 	:global([slot='middle']) {
+		@apply overflow-hidden; /* Prevents overflow from altering flex distribution */
 		align-items: center;
 		text-overflow: ellipsis;
 		white-space: nowrap;

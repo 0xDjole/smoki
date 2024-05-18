@@ -53,7 +53,7 @@
 	}
 
 	.option {
-		@apply flex justify-center items-center cursor-pointer p-1.5 m-1 rounded-xl font-bold text-base md:text-lg transition-all duration-200 ease-in-out shadow-sm text-secondary min-w-[100px] bg-secondary;
+		@apply flex justify-center items-center cursor-pointer p-0.5 md:p-1.5 m-1 rounded-xl font-bold text-base md:text-lg transition-all duration-200 ease-in-out shadow-sm text-secondary min-w-[100px] bg-secondary;
 	}
 
 	.selected {

@@ -23,7 +23,7 @@
 	}
 
 	.label {
-		@apply text-white text-lg font-bold md:text-2xl;
+		@apply text-white font-bold md:text-xl;
 	}
 
 	.thumbnail-container {

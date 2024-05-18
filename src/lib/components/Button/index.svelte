@@ -75,11 +75,11 @@
 	}
 
 	.large {
-		@apply w-full text-2xl;
+		@apply w-full text-xl;
 	}
 
 	.full {
-		@apply w-full rounded-none text-2xl;
+		@apply w-full rounded-none text-xl;
 	}
 
 	.boring {

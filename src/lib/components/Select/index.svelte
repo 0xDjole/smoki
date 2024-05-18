@@ -20,7 +20,7 @@
 	<div class="select-button" on:click|preventDefault={() => (showModal = !showModal)}>
 		<span>{selectedOption?.label || $_('choose')}</span>
 
-		<SvgIcon data={DropDownIcon} width={'25px'} size={'25px'} color={'white'} />
+		<SvgIcon data={DropDownIcon} width={'20px'} size={'20px'} color={'white'} />
 	</div>
 	{#if showModal === true}
 		<div class="options">
@@ -47,14 +47,14 @@
 	}
 
 	.select-button {
-		@apply cursor-pointer flex w-full min-w-[80px] p-1 bg-accent text-white rounded-lg border-2 border-secondary border-solid font-semibold text-lg outline-none gap-x-2 justify-between;
+		@apply cursor-pointer flex w-full min-w-[80px] p-1 bg-accent text-white rounded-lg border-2 border-secondary border-solid font-semibold md:text-lg outline-none gap-x-2 justify-between;
 	}
 
 	.options {
 		@apply flex flex-col w-full absolute top-10 left-0 rounded-md bg-secondary;
 	}
 	.item {
-		@apply cursor-pointer p-1 w-full text-lg;
+		@apply cursor-pointer p-1 w-full md:text-lg;
 	}
 	.selected {
 		@apply bg-accent p-1 rounded-md;

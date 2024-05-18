@@ -151,10 +151,6 @@
 		}
 	}
 
-	.date-item {
-		@apply grid justify-center items-center text-2xl text-center;
-		width: 100px;
-	}
 	.days {
 		@apply grid text-accent gap-y-2;
 		justify-items: center;
@@ -171,7 +167,7 @@
 	}
 
 	.date {
-		@apply text-secondary text-center flex-1 text-2xl;
+		@apply text-secondary text-center flex-1 text-xl;
 	}
 
 	.weekdays {

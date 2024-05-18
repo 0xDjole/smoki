@@ -28,6 +28,12 @@
 			attribution: '© OpenStreetMap contributors'
 		}).addTo(map);
 
+		map.dragging.disable();
+		map.touchZoom.disable();
+		map.doubleClickZoom.disable();
+		map.scrollWheelZoom.disable();
+		map.keyboard.disable();
+
 		updateMarker(lat, lon, false);
 
 		// Update marker on map click
@@ -66,7 +72,7 @@
 
 <div class="map-wrapper">
 	<Label {label} {errors} {labelThumbnail} />
-	<div id="map" style="height: 400px;" />
+	<div id="map" style="height: 200px;" />
 </div>
 
 <style type="text/postcss">

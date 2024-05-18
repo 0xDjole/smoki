@@ -28,11 +28,11 @@
 
 <style type="text/postcss">
 	.day-of-month {
-		@apply grid text-primary rounded-full w-12 h-12 cursor-pointer font-bold text-center;
+		@apply grid text-primary rounded-full w-10 h-10 cursor-pointer font-bold text-center;
 		box-sizing: border-box;
 		align-items: center;
 		justify-items: center;
-		font-size: 25px;
+		font-size: 20px;
 		@screen md {
 			@apply w-16 h-16;
 		}

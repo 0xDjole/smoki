@@ -31,7 +31,7 @@
 
 	.left,
 	.right {
-		@apply flex flex-1 overflow-hidden;
+		@apply flex flex-1;
 	}
 
 	.left {

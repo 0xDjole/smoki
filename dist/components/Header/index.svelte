@@ -47,8 +47,7 @@
 	.left,
 	.right {
 		display: flex;
-		flex: 1 1 0%;
-		overflow: hidden
+		flex: 1 1 0%
 }
 
 	.left {

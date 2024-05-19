@@ -25,7 +25,7 @@
 	}
 
 	.header {
-		@apply top-0 bg-primary text-primary text-2xl font-bold flex justify-between items-center w-full z-10;
+		@apply top-0 bg-primary text-primary text-2xl font-bold flex justify-between items-center w-full z-100;
 		height: 60px;
 	}
 

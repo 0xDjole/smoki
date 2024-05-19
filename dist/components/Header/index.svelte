@@ -31,7 +31,6 @@
 
 	.header {
 		top: 0px;
-		z-index: 10;
 		display: flex;
 		width: 100%;
 		align-items: center;
@@ -41,7 +40,8 @@
 		line-height: 2rem;
 		font-weight: 700;
 		color: var(--primary-text-color);
-		height: 60px
+		height: 60px;
+		z-index: 100
 }
 
 	.left,

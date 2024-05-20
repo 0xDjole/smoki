@@ -101,7 +101,7 @@
 	}
 
 	.form-wrap {
-		@apply main-content h-[calc(100vh-55px-60px-50px)] md:h-[calc(100vh-55px-80px-50px)];
+		@apply main-content h-full;
 	}
 
 	.loader {

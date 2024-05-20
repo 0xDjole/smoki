@@ -44,6 +44,7 @@
 	<SvgButton svgName={kind} {onClick} />
 {:else}
 	<button
+		{disabled}
 		class={`base ${parseSize(size)} ${parseKind(kind)} ${disabled ? 'disabled' : ''} ${className}`}
 		{style}
 		title={disabled ? 'Choose an item and date' : ''}

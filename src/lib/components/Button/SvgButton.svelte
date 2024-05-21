@@ -5,6 +5,7 @@
 	import User from '../../utils/icons/user.svg?raw';
 	import Search from '../../utils/icons/search.svg?raw';
 	import Success from '../../utils/icons/checkmark.svg?raw';
+	import Preview from '../../utils/icons/preview.svg?raw';
 	import SvgIcon from '../SvgIcon.svelte';
 
 	export let svgName = '';
@@ -47,6 +48,10 @@
 
 		if (svgName === 'success') {
 			return Success;
+		}
+
+		if (svgName === 'preview') {
+			return Preview;
 		}
 	};
 </script>

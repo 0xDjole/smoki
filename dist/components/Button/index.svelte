@@ -31,7 +31,7 @@ const svgKinds = ['delete', 'add', 'back', 'search', 'user', 'success', 'close',
 </script>
 
 {#if svgKinds.includes(kind)}
-	<SvgButton svgName={kind} {onClick} />
+	<SvgButton {size} svgName={kind} {onClick} />
 {:else}
 	<button
 		{disabled}

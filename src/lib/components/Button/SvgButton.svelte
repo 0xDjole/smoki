@@ -10,6 +10,7 @@
 
 	export let svgName = '';
 	export let position = '';
+	export let size = 'small';
 
 	export let onClick = () => {};
 
@@ -54,10 +55,22 @@
 			return Preview;
 		}
 	};
+
+	const parseSize = (size) => {
+		if (size === 'large') {
+			return '100px';
+		}
+
+		if (size === 'medium') {
+			return '50px';
+		}
+
+		return '30px';
+	};
 </script>
 
 <span class={`remove ${parsePosition(position)}`} on:click|preventDefault={onClick}>
-	<SvgIcon data={parseSvgName(svgName)} size={'30px'} color={'white'} />
+	<SvgIcon data={parseSvgName(svgName)} size={parseSize(size)} color={'white'} />
 </span>
 
 <style type="text/postcss">

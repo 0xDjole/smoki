@@ -41,7 +41,7 @@
 </script>
 
 {#if svgKinds.includes(kind)}
-	<SvgButton svgName={kind} {onClick} />
+	<SvgButton {size} svgName={kind} {onClick} />
 {:else}
 	<button
 		{disabled}

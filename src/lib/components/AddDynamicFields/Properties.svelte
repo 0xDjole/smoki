@@ -100,6 +100,9 @@
 			>
 
 			{#if value?.properties?.ids?.length}
+				{#each value?.properties?.ids as id}
+					<div class="entity">{id}</div>
+				{/each}
 				<Switch label="Is multiselect" bind:value={value.properties.isMultiSelect} />
 			{/if}
 		{/if}
@@ -120,5 +123,8 @@
 <style type="text/postcss">
 	.properties {
 		@apply flex flex-col gap-y-2 p-3;
+	}
+	.entity {
+		@apply text-white font-bold;
 	}
 </style>

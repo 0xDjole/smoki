@@ -8,7 +8,11 @@ declare const __propDef: {
     events: {
         [evt: string]: CustomEvent<any>;
     };
-    slots: {};
+    slots: {
+        items: {
+            field: any;
+        };
+    };
 };
 export type IndexProps = typeof __propDef.props;
 export type IndexEvents = typeof __propDef.events;

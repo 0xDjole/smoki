@@ -17,6 +17,7 @@ const parseLabel = (label) => {
     }
     return label;
 };
+$: console.log(fieldConfigs);
 </script>
 
 <div class="custom-field-body">
@@ -83,6 +84,10 @@ const parseLabel = (label) => {
 						labelThumbnail={field.thumbnail}
 						bind:value={fields[index].value}
 					/>
+				{/if}
+
+				{#if field.type === 'items'}
+					<slot name="items" {field} />
 				{/if}
 			</div>
 		</div>

@@ -71,7 +71,9 @@
 
 	console.log(value);
 	$: if (!value) {
-		value = {};
+		value = {
+			properties: {}
+		};
 	}
 </script>
 
@@ -81,13 +83,13 @@
 		{#if propertyTypes[fieldType].operations.length}
 			<DropDown
 				label="Operation"
-				bind:value={value.operation}
+				bind:value={value.properties.operation}
 				options={propertyTypes[fieldType].operations}
 			/>
 		{/if}
 
 		{#if propertyTypes[fieldType].isCustomInputAllowed}
-			<Switch label="Is custom input allowed" bind:value={value.isCustomInputAllowed} />
+			<Switch label="Is custom input allowed" bind:value={value.properties.isCustomInputAllowed} />
 		{/if}
 
 		{#if fieldType === 'items'}
@@ -97,20 +99,20 @@
 				}}>Add item</Button
 			>
 
-			{#if value?.ids?.length}
-				<Switch label="Is multiselect" bind:value={value.isMultiSelect} />
+			{#if value?.properties?.ids?.length}
+				<Switch label="Is multiselect" bind:value={value.properties.isMultiSelect} />
 			{/if}
 		{/if}
 		{#if propertyTypes[fieldType].isOption}
-			<Options label="Options" type={fieldType} bind:options={value.options} />
+			<Options label="Options" type={fieldType} bind:options={value.properties.options} />
 
-			{#if value?.options?.length}
-				<Switch label="Is multiselect" bind:value={value.isMultiSelect} />
+			{#if value?.properties?.options?.length}
+				<Switch label="Is multiselect" bind:value={value.properties.isMultiSelect} />
 			{/if}
 		{/if}
 
 		{#if propertyTypes[fieldType].isRange}
-			<Range label="Range" bind:range={value.range} />
+			<Range label="Range" bind:range={value.properties.range} />
 		{/if}
 	</div>
 {/if}

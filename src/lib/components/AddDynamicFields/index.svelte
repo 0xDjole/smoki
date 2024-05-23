@@ -65,7 +65,7 @@
 		autofillIds: []
 	};
 
-	let field = defaultField;
+	export let field = defaultField;
 
 	let fieldStatus = {
 		key: {
@@ -157,7 +157,7 @@
 		<Properties
 			label="Properties"
 			fieldType={field.type}
-			bind:value={field.properties}
+			bind:value={field}
 			bind:errors={fieldStatus.properties.errors}
 			{addEntity}
 		/>

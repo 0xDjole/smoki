@@ -4,11 +4,13 @@
 	import Range from './Range.svelte';
 	import DropDown from '../DropDown/index.svelte';
 	import Label from '../Label.svelte';
+	import Button from '../Button/index.svelte';
 
 	export let label = 'Custom fields';
 	export let value;
 	export let errors = [];
 	export let fieldType;
+	export let addEntity = () => {};
 
 	const propertyTypes = {
 		text: {
@@ -88,6 +90,17 @@
 			<Switch label="Is custom input allowed" bind:value={value.isCustomInputAllowed} />
 		{/if}
 
+		{#if fieldType === 'items'}
+			<Button
+				onClick={() => {
+					addEntity(value);
+				}}>Add item</Button
+			>
+
+			{#if value?.ids?.length}
+				<Switch label="Is multiselect" bind:value={value.isMultiSelect} />
+			{/if}
+		{/if}
 		{#if propertyTypes[fieldType].isOption}
 			<Options label="Options" type={fieldType} bind:options={value.options} />
 
@@ -105,21 +118,5 @@
 <style type="text/postcss">
 	.properties {
 		@apply flex flex-col gap-y-2 p-3;
-	}
-
-	.custom-field-body {
-		@apply flex flex-col   border-secondary rounded-md p-2 gap-y-2;
-	}
-
-	.add-field-body {
-		@apply p-3 h-[600px] overflow-y-scroll;
-	}
-
-	.field-item {
-		@apply flex text-primary font-bold justify-between;
-	}
-
-	.fields {
-		@apply flex text-primary font-bold gap-2;
 	}
 </style>

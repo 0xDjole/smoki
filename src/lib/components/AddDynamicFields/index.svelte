@@ -16,6 +16,7 @@
 	export let label = 'Custom fields';
 	export let fields;
 	export let autofillOptions = [];
+	export let addEntity = () => {};
 
 	const types = [
 		{ label: 'Text', value: 'text' },
@@ -97,10 +98,6 @@
 		}
 	};
 
-	const addField = () => {
-		isAddModalOpen = true;
-	};
-
 	const confirmFieldAdd = () => {
 		fields = [...fields, field];
 
@@ -162,6 +159,7 @@
 			fieldType={field.type}
 			bind:value={field.properties}
 			bind:errors={fieldStatus.properties.errors}
+			{addEntity}
 		/>
 
 		<DropDown

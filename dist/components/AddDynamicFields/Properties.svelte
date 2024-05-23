@@ -3,108 +3,128 @@ import Options from './Options.svelte';
 import Range from './Range.svelte';
 import DropDown from '../DropDown/index.svelte';
 import Label from '../Label.svelte';
+import Button from '../Button/index.svelte';
 export let label = 'Custom fields';
 export let value;
 export let errors = [];
 export let fieldType;
-const rangeFieldTypes = ['number', 'date'];
-const optionFieldTypes = ['text', 'number', 'date'];
-const propertyTypes = ['text', 'number', 'date'];
-const operationOptions = [
-    { label: 'Greater than', value: 'plus' },
-    { label: 'Less than', value: 'minus' },
-    { label: 'Less than or equal', value: 'less_than_or_equal' },
-    { label: 'Greater than or equal', value: 'greater_than_or_equal' },
-    { label: 'Equals', value: 'equals' },
-    { label: 'Greater than', value: 'greater_than' },
-    { label: 'Less than', value: 'less_than' },
-    { label: 'Contains', value: 'contains' },
-    { label: 'Range', value: 'range' }
-];
-$: if (propertyTypes.includes(fieldType) && !value) {
-    value = {};
+export let addEntity = () => { };
+const propertyTypes = {
+    text: {
+        operations: [
+            { label: 'Greater than', value: 'plus' },
+            { label: 'Less than', value: 'minus' },
+            { label: 'Less than or equal', value: 'less_than_or_equal' },
+            { label: 'Greater than or equal', value: 'greater_than_or_equal' },
+            { label: 'Equals', value: 'equals' },
+            { label: 'Greater than', value: 'greater_than' },
+            { label: 'Less than', value: 'less_than' },
+            { label: 'Contains', value: 'contains' },
+            { label: 'Range', value: 'range' }
+        ],
+        isCustomInputAllowed: true,
+        isOption: true,
+        isRange: false
+    },
+    number: {
+        operations: [
+            { label: 'Greater than', value: 'plus' },
+            { label: 'Less than', value: 'minus' },
+            { label: 'Less than or equal', value: 'less_than_or_equal' },
+            { label: 'Greater than or equal', value: 'greater_than_or_equal' },
+            { label: 'Equals', value: 'equals' },
+            { label: 'Greater than', value: 'greater_than' },
+            { label: 'Less than', value: 'less_than' },
+            { label: 'Contains', value: 'contains' },
+            { label: 'Range', value: 'range' }
+        ],
+        isCustomInputAllowed: true,
+        isOption: true,
+        isRange: true
+    },
+    date: {
+        operations: [
+            { label: 'Greater than', value: 'plus' },
+            { label: 'Less than', value: 'minus' },
+            { label: 'Less than or equal', value: 'less_than_or_equal' },
+            { label: 'Greater than or equal', value: 'greater_than_or_equal' },
+            { label: 'Equals', value: 'equals' },
+            { label: 'Greater than', value: 'greater_than' },
+            { label: 'Less than', value: 'less_than' },
+            { label: 'Contains', value: 'contains' },
+            { label: 'Range', value: 'range' }
+        ],
+        isCustomInputAllowed: true,
+        isOptionFieldType: true,
+        isRange: true
+    },
+    items: {
+        operations: [],
+        isCustomInputAllowed: false,
+        isOptionFieldType: false,
+        isRange: false
+    }
+};
+console.log(value);
+$: if (!value) {
+    value = {
+        properties: {}
+    };
 }
 </script>
 
-{#if propertyTypes.includes(fieldType)}
+{#if propertyTypes[fieldType]}
 	<Label {label} {errors} />
 	<div class="properties">
-		<DropDown label="Operation" bind:value={value.operation} options={operationOptions} />
+		{#if propertyTypes[fieldType].operations.length}
+			<DropDown
+				label="Operation"
+				bind:value={value.properties.operation}
+				options={propertyTypes[fieldType].operations}
+			/>
+		{/if}
 
-		<Switch label="Is custom input allowed" bind:value={value.isCustomInputAllowed} />
+		{#if propertyTypes[fieldType].isCustomInputAllowed}
+			<Switch label="Is custom input allowed" bind:value={value.properties.isCustomInputAllowed} />
+		{/if}
 
-		{#if optionFieldTypes.includes(fieldType)}
-			<Options label="Options" type={fieldType} bind:options={value.options} />
+		{#if fieldType === 'items'}
+			<Button
+				onClick={() => {
+					addEntity(value);
+				}}>Add item</Button
+			>
 
-			{#if value?.options?.length}
-				<Switch label="Is multiselect" bind:value={value.isMultiSelect} />
+			{#if value?.properties?.ids?.length}
+				{#each value?.properties?.ids as id}
+					<div class="entity">{id}</div>
+				{/each}
+				<Switch label="Is multiselect" bind:value={value.properties.isMultiSelect} />
+			{/if}
+		{/if}
+		{#if propertyTypes[fieldType].isOption}
+			<Options label="Options" type={fieldType} bind:options={value.properties.options} />
+
+			{#if value?.properties?.options?.length}
+				<Switch label="Is multiselect" bind:value={value.properties.isMultiSelect} />
 			{/if}
 		{/if}
 
-		{#if rangeFieldTypes.includes(fieldType)}
-			<Range label="Range" bind:range={value.range} />
+		{#if propertyTypes[fieldType].isRange}
+			<Range label="Range" bind:range={value.properties.range} />
 		{/if}
 	</div>
 {/if}
 
 <style>
 	.properties {
-
     display: flex;
-
     flex-direction: column;
-
     row-gap: 0.5rem;
-
     padding: 0.75rem
 }
-
-	.custom-field-body {
-
-    display: flex;
-
-    flex-direction: column;
-
-    row-gap: 0.5rem;
-
-    border-radius: 0.375rem;
-
-    padding: 0.5rem;
-
-    border-color: var(--primary-border-color);
-
-    border-width: 1px;
-
-    border-style: solid
-}
-
-	.add-field-body {
-
-    height: 600px;
-
-    overflow-y: scroll;
-
-    padding: 0.75rem
-}
-
-	.field-item {
-
-    display: flex;
-
-    justify-content: space-between;
-
+	.entity {
     font-weight: 700;
-
-    color: var(--primary-text-color)
-}
-
-	.fields {
-
-    display: flex;
-
-    gap: 0.5rem;
-
-    font-weight: 700;
-
-    color: var(--primary-text-color)
+    --tw-text-opacity: 1;
+    color: rgb(255 255 255 / var(--tw-text-opacity))
 }</style>

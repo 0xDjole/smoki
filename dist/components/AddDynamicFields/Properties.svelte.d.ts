@@ -5,6 +5,7 @@ declare const __propDef: {
         value: any;
         errors?: any[] | undefined;
         fieldType: any;
+        addEntity?: (() => void) | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

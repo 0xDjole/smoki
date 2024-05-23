@@ -4,6 +4,18 @@ declare const __propDef: {
         label?: string | undefined;
         fields: any;
         autofillOptions?: any[] | undefined;
+        addEntity?: (() => void) | undefined;
+        field?: {
+            id: string;
+            key: string;
+            type: string;
+            ui: string;
+            operation: string;
+            isRequired: boolean;
+            isFilter: boolean;
+            properties: null;
+            autofillIds: never[];
+        } | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

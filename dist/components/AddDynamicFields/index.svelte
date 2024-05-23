@@ -10,11 +10,13 @@ import LocalizedLabels from '../LocalizedLabels/index.svelte';
 export let label = 'Custom fields';
 export let fields;
 export let autofillOptions = [];
+export let addEntity = () => { };
 const types = [
     { label: 'Text', value: 'text' },
     { label: 'Number', value: 'number' },
     { label: 'Boolean', value: 'boolean' },
-    { label: 'Date', value: 'date' }
+    { label: 'Date', value: 'date' },
+    { label: 'Items', value: 'items' }
 ];
 const isRequiredOptions = [
     { label: 'Is required', value: true },
@@ -37,7 +39,8 @@ const uiOptions = {
         { label: 'Default', value: 'default' },
         { label: 'Nice select', value: 'nice_select' }
     ],
-    boolean: [{ label: 'Default', value: 'default' }]
+    boolean: [{ label: 'Default', value: 'default' }],
+    items: [{ label: 'Default', value: 'default' }]
 };
 const defaultField = {
     id: v4(),
@@ -50,7 +53,7 @@ const defaultField = {
     properties: null,
     autofillIds: []
 };
-let field = defaultField;
+export let field = defaultField;
 let fieldStatus = {
     key: {
         errors: []
@@ -79,9 +82,6 @@ let fieldStatus = {
     properties: {
         errors: []
     }
-};
-const addField = () => {
-    isAddModalOpen = true;
 };
 const confirmFieldAdd = () => {
     fields = [...fields, field];
@@ -140,8 +140,9 @@ let isAddModalOpen = false;
 		<Properties
 			label="Properties"
 			fieldType={field.type}
-			bind:value={field.properties}
+			bind:value={field}
 			bind:errors={fieldStatus.properties.errors}
+			{addEntity}
 		/>
 
 		<DropDown

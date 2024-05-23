@@ -14,7 +14,7 @@
 	"exports": {
 		".": {
 			"types": "./dist/types/index.d.ts",
-			"svelte": "./src/lib/index.ts"
+			"svelte": "./dist/index.js"
 		}
 	},
 	"devDependencies": {

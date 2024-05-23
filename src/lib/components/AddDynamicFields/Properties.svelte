@@ -10,35 +10,85 @@
 	export let errors = [];
 	export let fieldType;
 
-	const rangeFieldTypes = ['number', 'date'];
-	const optionFieldTypes = ['text', 'number', 'date'];
-	const propertyTypes = ['text', 'number', 'date'];
+	const propertyTypes = {
+		text: {
+			operations: [
+				{ label: 'Greater than', value: 'plus' },
+				{ label: 'Less than', value: 'minus' },
+				{ label: 'Less than or equal', value: 'less_than_or_equal' },
+				{ label: 'Greater than or equal', value: 'greater_than_or_equal' },
+				{ label: 'Equals', value: 'equals' },
+				{ label: 'Greater than', value: 'greater_than' },
+				{ label: 'Less than', value: 'less_than' },
+				{ label: 'Contains', value: 'contains' },
+				{ label: 'Range', value: 'range' }
+			],
+			isCustomInputAllowed: true,
+			isOption: true,
+			isRange: false
+		},
+		number: {
+			operations: [
+				{ label: 'Greater than', value: 'plus' },
+				{ label: 'Less than', value: 'minus' },
+				{ label: 'Less than or equal', value: 'less_than_or_equal' },
+				{ label: 'Greater than or equal', value: 'greater_than_or_equal' },
+				{ label: 'Equals', value: 'equals' },
+				{ label: 'Greater than', value: 'greater_than' },
+				{ label: 'Less than', value: 'less_than' },
+				{ label: 'Contains', value: 'contains' },
+				{ label: 'Range', value: 'range' }
+			],
+			isCustomInputAllowed: true,
+			isOption: true,
+			isRange: true
+		},
+		date: {
+			operations: [
+				{ label: 'Greater than', value: 'plus' },
+				{ label: 'Less than', value: 'minus' },
+				{ label: 'Less than or equal', value: 'less_than_or_equal' },
+				{ label: 'Greater than or equal', value: 'greater_than_or_equal' },
+				{ label: 'Equals', value: 'equals' },
+				{ label: 'Greater than', value: 'greater_than' },
+				{ label: 'Less than', value: 'less_than' },
+				{ label: 'Contains', value: 'contains' },
+				{ label: 'Range', value: 'range' }
+			],
+			isCustomInputAllowed: true,
+			isOptionFieldType: true,
+			isRange: true
+		},
+		items: {
+			operations: [],
+			isCustomInputAllowed: false,
+			isOptionFieldType: false,
+			isRange: false
+		}
+	};
 
-	const operationOptions = [
-		{ label: 'Greater than', value: 'plus' },
-		{ label: 'Less than', value: 'minus' },
-		{ label: 'Less than or equal', value: 'less_than_or_equal' },
-		{ label: 'Greater than or equal', value: 'greater_than_or_equal' },
-		{ label: 'Equals', value: 'equals' },
-		{ label: 'Greater than', value: 'greater_than' },
-		{ label: 'Less than', value: 'less_than' },
-		{ label: 'Contains', value: 'contains' },
-		{ label: 'Range', value: 'range' }
-	];
-
-	$: if (propertyTypes.includes(fieldType) && !value) {
+	console.log(value);
+	$: if (!value) {
 		value = {};
 	}
 </script>
 
-{#if propertyTypes.includes(fieldType)}
+{#if propertyTypes[fieldType]}
 	<Label {label} {errors} />
 	<div class="properties">
-		<DropDown label="Operation" bind:value={value.operation} options={operationOptions} />
+		{#if propertyTypes[fieldType].operations.length}
+			<DropDown
+				label="Operation"
+				bind:value={value.operation}
+				options={propertyTypes[fieldType].operations}
+			/>
+		{/if}
 
-		<Switch label="Is custom input allowed" bind:value={value.isCustomInputAllowed} />
+		{#if propertyTypes[fieldType].isCustomInputAllowed}
+			<Switch label="Is custom input allowed" bind:value={value.isCustomInputAllowed} />
+		{/if}
 
-		{#if optionFieldTypes.includes(fieldType)}
+		{#if propertyTypes[fieldType].isOption}
 			<Options label="Options" type={fieldType} bind:options={value.options} />
 
 			{#if value?.options?.length}
@@ -46,7 +96,7 @@
 			{/if}
 		{/if}
 
-		{#if rangeFieldTypes.includes(fieldType)}
+		{#if propertyTypes[fieldType].isRange}
 			<Range label="Range" bind:range={value.range} />
 		{/if}
 	</div>

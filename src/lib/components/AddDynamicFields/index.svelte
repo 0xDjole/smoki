@@ -21,7 +21,8 @@
 		{ label: 'Text', value: 'text' },
 		{ label: 'Number', value: 'number' },
 		{ label: 'Boolean', value: 'boolean' },
-		{ label: 'Date', value: 'date' }
+		{ label: 'Date', value: 'date' },
+		{ label: 'Items', value: 'items' }
 	];
 
 	const isRequiredOptions = [
@@ -47,7 +48,8 @@
 			{ label: 'Default', value: 'default' },
 			{ label: 'Nice select', value: 'nice_select' }
 		],
-		boolean: [{ label: 'Default', value: 'default' }]
+		boolean: [{ label: 'Default', value: 'default' }],
+		items: [{ label: 'Default', value: 'default' }]
 	};
 
 	const defaultField = {

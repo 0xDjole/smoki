@@ -93,8 +93,8 @@
 					/>
 				{/if}
 
-				{#if field.type === 'items'}
-					<slot name="items" {field} />
+				{#if field.type === 'entities'}
+					<slot name="entities" {field} />
 				{/if}
 			</div>
 		</div>

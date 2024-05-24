@@ -94,7 +94,7 @@
 				{/if}
 
 				{#if fieldConfig.type === 'entities'}
-					<slot name="entities" idx={index} value={fields[index]} {fieldConfig} />
+					<slot name="entities" idx={index} value={fields[index].value} {fieldConfig} />
 				{/if}
 			</div>
 		</div>

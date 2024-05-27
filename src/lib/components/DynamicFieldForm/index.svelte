@@ -29,7 +29,7 @@
 <div class="custom-field-config-body">
 	{#each fieldConfigs as fieldConfig, index}
 		<div class="flex gap-x-2">
-			<div class="md:p-1 md:px-6 w-full box-border">
+			<div class="md:p-1 md:px-3 w-full box-border">
 				{#if fieldConfig?.properties?.options?.length}
 					{#if fieldConfig?.ui === 'nice_select'}
 						<Select
@@ -39,6 +39,7 @@
 							label={translateLabel(fieldConfig.label, $locale, fieldConfig.key)}
 							labelThumbnail={fieldConfig.thumbnail}
 							bind:value={fields[index].value}
+							bind:errors={fields[index].errors}
 							options={fieldConfig.properties.options.map((option) => ({
 								label: parseLabel(option),
 								value: option
@@ -49,6 +50,7 @@
 							label={fieldConfig.key}
 							isMultiSelect={fieldConfig?.properties.isMultiSelect}
 							bind:value={fields[index].value}
+							bind:errors={fields[index].errors}
 							options={fieldConfig.properties.options.map((option) => ({
 								label: parseLabel(option),
 								value: option
@@ -62,11 +64,11 @@
 						label={!fieldConfig?.properties?.options?.length &&
 							translateLabel(fieldConfig.label, $locale, fieldConfig.key)}
 						labelThumbnail={fieldConfig.thumbnail}
-						bind:errors={fieldConfig.errors}
 						bind:value={fields[index].value}
+						bind:errors={fields[index].errors}
 						type={fieldConfig.type}
 						kind="primary"
-						placeholder="Please enter"
+						placeholder="please_enter"
 					/>
 				{/if}
 
@@ -89,6 +91,7 @@
 						label={translateLabel(fieldConfig.label, $locale, fieldConfig.key)}
 						labelThumbnail={fieldConfig.thumbnail}
 						bind:value={fields[index].value}
+						bind:errors={fields[index].errors}
 					/>
 				{/if}
 

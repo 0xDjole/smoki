@@ -9,8 +9,10 @@ declare const __propDef: {
         [evt: string]: CustomEvent<any>;
     };
     slots: {
-        items: {
-            field: any;
+        entities: {
+            idx: any;
+            value: any;
+            fieldConfig: any;
         };
     };
 };

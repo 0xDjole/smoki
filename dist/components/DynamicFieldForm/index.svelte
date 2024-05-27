@@ -5,7 +5,7 @@ import DropDown from '../DropDown/index.svelte';
 import Select from '../NiceSelect/index.svelte';
 import translateLabel from '../../utils/helpers/translateLabel';
 import { locale } from 'svelte-i18n';
-export let label = 'Custom fields';
+export let label = 'Custom fieldConfigs';
 export let fieldConfigs = [];
 export let fields = [];
 const parseLabel = (label) => {
@@ -17,33 +17,34 @@ const parseLabel = (label) => {
     }
     return label;
 };
-$: console.log(fieldConfigs);
 </script>
 
-<div class="custom-field-body">
-	{#each fieldConfigs as field, index}
+<div class="custom-field-config-body">
+	{#each fieldConfigs as fieldConfig, index}
 		<div class="flex gap-x-2">
-			<div class="md:p-1 md:px-6 w-full box-border">
-				{#if field?.properties?.options?.length}
-					{#if field?.ui === 'nice_select'}
+			<div class="md:p-1 md:px-3 w-full box-border">
+				{#if fieldConfig?.properties?.options?.length}
+					{#if fieldConfig?.ui === 'nice_select'}
 						<Select
-							ui={field?.ui}
-							isMultiSelect={field?.properties.isMultiSelect}
+							ui={fieldConfig?.ui}
+							isMultiSelect={fieldConfig?.properties.isMultiSelect}
 							position="horizontal"
-							label={translateLabel(field.label, $locale, field.key)}
-							labelThumbnail={field.thumbnail}
+							label={translateLabel(fieldConfig.label, $locale, fieldConfig.key)}
+							labelThumbnail={fieldConfig.thumbnail}
 							bind:value={fields[index].value}
-							options={field.properties.options.map((option) => ({
+							bind:errors={fields[index].errors}
+							options={fieldConfig.properties.options.map((option) => ({
 								label: parseLabel(option),
 								value: option
 							}))}
 						/>
 					{:else}
 						<DropDown
-							label={field.key}
-							isMultiSelect={field?.properties.isMultiSelect}
+							label={fieldConfig.key}
+							isMultiSelect={fieldConfig?.properties.isMultiSelect}
 							bind:value={fields[index].value}
-							options={field.properties.options.map((option) => ({
+							bind:errors={fields[index].errors}
+							options={fieldConfig.properties.options.map((option) => ({
 								label: parseLabel(option),
 								value: option
 							}))}
@@ -51,43 +52,44 @@ $: console.log(fieldConfigs);
 					{/if}
 				{/if}
 
-				{#if field?.properties?.isCustomInputAllowed}
+				{#if fieldConfig?.properties?.isCustomInputAllowed}
 					<Input
-						label={!field?.properties?.options?.length &&
-							translateLabel(field.label, $locale, field.key)}
-						labelThumbnail={field.thumbnail}
-						bind:errors={field.errors}
+						label={!fieldConfig?.properties?.options?.length &&
+							translateLabel(fieldConfig.label, $locale, fieldConfig.key)}
+						labelThumbnail={fieldConfig.thumbnail}
 						bind:value={fields[index].value}
-						type={field.type}
+						bind:errors={fields[index].errors}
+						type={fieldConfig.type}
 						kind="primary"
-						placeholder="Please enter"
+						placeholder="please_enter"
 					/>
 				{/if}
 
-				{#if field?.properties?.range}
-					<div class={`${field?.properties?.isCustomInputAllowed ? 'mt-3' : ''}`}>
+				{#if fieldConfig?.properties?.range}
+					<div class={`${fieldConfig?.properties?.isCustomInputAllowed ? 'mt-3' : ''}`}>
 						<Range
-							label={field?.properties?.isCustomInputAllowed
+							label={fieldConfig?.properties?.isCustomInputAllowed
 								? null
-								: translateLabel(field.label, $locale, field.key)}
+								: translateLabel(fieldConfig.label, $locale, fieldConfig.key)}
 							bind:value={fields[index].value}
-							max={+field.properties.range.max}
-							min={+field.properties.range.min}
+							max={+fieldConfig.properties.range.max}
+							min={+fieldConfig.properties.range.min}
 							id="basic-slider"
 						/>
 					</div>
 				{/if}
 
-				{#if field.type === 'boolean'}
+				{#if fieldConfig.type === 'boolean'}
 					<Switch
-						label={translateLabel(field.label, $locale, field.key)}
-						labelThumbnail={field.thumbnail}
+						label={translateLabel(fieldConfig.label, $locale, fieldConfig.key)}
+						labelThumbnail={fieldConfig.thumbnail}
 						bind:value={fields[index].value}
+						bind:errors={fields[index].errors}
 					/>
 				{/if}
 
-				{#if field.type === 'items'}
-					<slot name="items" {field} />
+				{#if fieldConfig.type === 'entities'}
+					<slot name="entities" idx={index} value={fields[index].value} {fieldConfig} />
 				{/if}
 			</div>
 		</div>
@@ -95,7 +97,7 @@ $: console.log(fieldConfigs);
 </div>
 
 <style>
-	.custom-field-body {
+	.custom-field-config-body {
     display: flex;
     height: 100%;
     width: 100%;

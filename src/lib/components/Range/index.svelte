@@ -172,6 +172,8 @@
 	}
 </script>
 
+<Label {label} {labelThumbnail} {errors} />
+
 <svelte:window
 	on:touchmove|nonpassive={updateValueOnEvent}
 	on:touchcancel={onDragEnd}

@@ -24,6 +24,7 @@
 
 		return label;
 	};
+	$: console.log('field congs ', fieldConfigs);
 </script>
 
 <div class="custom-field-config-body">

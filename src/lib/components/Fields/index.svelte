@@ -7,6 +7,7 @@
 	import { locale } from 'svelte-i18n';
 
 	export let fields = [];
+	export let fieldConfigs = [];
 
 	let values = [];
 	let key = '';
@@ -36,22 +37,24 @@
 >
 
 <ul class="custom-field-body">
-	{#each fields.filter((field) => {
-		if (field.value === null) {
-			return false;
-		}
+	{#each fields
+		.filter((field) => {
+			if (field.value === null) {
+				return false;
+			}
 
-		if (Array.isArray(field.value) && !field.value.length) {
-			return false;
-		}
+			if (Array.isArray(field.value) && !field.value.length) {
+				return false;
+			}
 
-		return true;
-	}) as field, index}
+			return true;
+		})
+		.map( (field) => ({ field, fieldConfig: fieldConfigs.find((fieldConfig) => fieldConfig.id === field.fieldConfigId) }) ) as { field, fieldConfig }, index}
 		<div
 			class="field"
 			on:click|preventDefault={() => Array.isArray(field.value) && viewMultipleValues(field)}
 		>
-			<div class="key">{translateLabel(field.label, $locale, field.key)}</div>
+			<div class="key">{translateLabel(fieldConfig.label, $locale, fieldConfig.key)}</div>
 
 			<div class="value">
 				{#if typeof field.value === 'boolean'}

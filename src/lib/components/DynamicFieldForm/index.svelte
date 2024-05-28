@@ -98,6 +98,10 @@
 				{#if fieldConfig.type === 'entities'}
 					<slot name="entities" idx={index} value={fields[index].value} {fieldConfig} />
 				{/if}
+
+				{#if fieldConfig.type === 'custom'}
+					<slot name="custom" idx={index} value={fields[index].value} {fieldConfig} />
+				{/if}
 			</div>
 		</div>
 	{/each}
@@ -105,6 +109,6 @@
 
 <style type="text/postcss">
 	.custom-field-config-body {
-		@apply flex flex-col rounded-md p-2 gap-y-2 w-full h-full;
+		@apply flex flex-col rounded-md p-2 gap-y-2 w-full h-min;
 	}
 </style>

@@ -81,6 +81,7 @@
 									? null
 									: translateLabel(fieldConfig.label, $locale, fieldConfig.key)}
 								bind:value={fields[index].value}
+								bind:errors={fields[index].errors}
 								max={+fieldConfig.properties.range.max}
 								min={+fieldConfig.properties.range.min}
 								id="basic-slider"
@@ -102,7 +103,13 @@
 					{/if}
 
 					{#if fieldConfig.type === 'custom'}
-						<slot name="custom" idx={index} value={fields[index].value} {fieldConfig} />
+						<slot
+							name="custom"
+							idx={index}
+							errors={fields[index].errors}
+							value={fields[index].value}
+							{fieldConfig}
+						/>
 					{/if}
 				{/if}
 			</div>

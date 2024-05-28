@@ -14,6 +14,12 @@ declare const __propDef: {
             value: any;
             fieldConfig: any;
         };
+        custom: {
+            idx: any;
+            errors: any;
+            value: any;
+            fieldConfig: any;
+        };
     };
 };
 export type IndexProps = typeof __propDef.props;

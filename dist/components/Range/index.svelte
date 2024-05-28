@@ -3,6 +3,7 @@
 	import { fly, fade } from 'svelte/transition';
 
 	import Label from '../Label.svelte';
+	import ErrorMessage from '../ErrorMessage.svelte';
 
 	// Props
 	export let min = 0;
@@ -49,6 +50,7 @@
 	// Allows both bind:value and on:change for parent value retrieval
 	function setValue(val) {
 		value = val;
+		errors = [];
 		dispatch('change', { value });
 	}
 
@@ -172,6 +174,8 @@
 	}
 </script>
 
+<Label {label} {labelThumbnail} {errors} />
+
 <svelte:window
 	on:touchmove|nonpassive={updateValueOnEvent}
 	on:touchcancel={onDragEnd}
@@ -217,6 +221,8 @@
 
 	<div class="side">{max}</div>
 </div>
+
+<ErrorMessage {errors} />
 
 <svelte:head>
 	<style>

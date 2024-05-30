@@ -2,7 +2,7 @@
 	import Button from '../Button/index.svelte';
 	import NiceSelect from '../NiceSelect/index.svelte';
 	import Modal from '../Modal/index.svelte';
-	import translateLabel from '../../utils/helpers/translateLabel';
+	import translate from '../../utils/helpers/translate';
 
 	import { locale } from 'svelte-i18n';
 
@@ -54,7 +54,7 @@
 			class="field"
 			on:click|preventDefault={() => Array.isArray(field.value) && viewMultipleValues(field)}
 		>
-			<div class="key">{translateLabel(fieldConfig.label, $locale, fieldConfig.key)}</div>
+			<div class="key">{translate(fieldConfig.label, $locale, fieldConfig.key)}</div>
 
 			<div class="value">
 				{#if typeof field.value === 'boolean'}

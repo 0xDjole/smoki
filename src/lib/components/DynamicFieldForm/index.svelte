@@ -38,7 +38,7 @@
 								ui={fieldConfig?.ui}
 								isMultiSelect={fieldConfig?.properties.isMultiSelect}
 								position="horizontal"
-								label={translate(fieldConfig.label, $locale, fieldConfig.key)}
+								label={translate(fieldConfig.translations, $locale, fieldConfig.key)}
 								labelThumbnail={fieldConfig.thumbnail}
 								bind:value={fields[index].value}
 								bind:errors={fields[index].errors}
@@ -64,7 +64,7 @@
 					{#if fieldConfig?.properties?.isCustomInputAllowed}
 						<Input
 							label={!fieldConfig?.properties?.options?.length &&
-								translate(fieldConfig.label, $locale, fieldConfig.key)}
+								translate(fieldConfig.translations, $locale, fieldConfig.key)}
 							labelThumbnail={fieldConfig.thumbnail}
 							bind:value={fields[index].value}
 							bind:errors={fields[index].errors}
@@ -79,7 +79,7 @@
 							<Range
 								label={fieldConfig?.properties?.isCustomInputAllowed
 									? null
-									: translate(fieldConfig.label, $locale, fieldConfig.key)}
+									: translate(fieldConfig.translations, $locale, fieldConfig.key)}
 								bind:value={fields[index].value}
 								bind:errors={fields[index].errors}
 								max={+fieldConfig.properties.range.max}
@@ -91,7 +91,7 @@
 
 					{#if fieldConfig.type === 'boolean'}
 						<Switch
-							label={translate(fieldConfig.label, $locale, fieldConfig.key)}
+							label={translate(fieldConfig.translations, $locale, fieldConfig.key)}
 							labelThumbnail={fieldConfig.thumbnail}
 							bind:value={fields[index].value}
 							bind:errors={fields[index].errors}

@@ -54,7 +54,7 @@
 			class="field"
 			on:click|preventDefault={() => Array.isArray(field.value) && viewMultipleValues(field)}
 		>
-			<div class="key">{translate(fieldConfig.label, $locale, fieldConfig.key)}</div>
+			<div class="key">{translate(fieldConfig.translations, $locale, fieldConfig.key)}</div>
 
 			<div class="value">
 				{#if typeof field.value === 'boolean'}

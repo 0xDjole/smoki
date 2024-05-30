@@ -35,5 +35,5 @@ export { default as Label } from './components/Label.svelte';
 export { default as LocalizedLabels } from './components/LocalizedLabels/index.svelte';
 export { default as Calendar } from './components/Calendar/index.svelte';
 export { default as formatter } from './utils/helpers/formatter';
-export { default as translateLabel } from './utils/helpers/translateLabel';
+export { default as translate } from './utils/helpers/translate';
 export * as Layouts from './components/Layouts';

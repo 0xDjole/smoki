@@ -3,7 +3,7 @@ import Switch from '../Switch/index.svelte';
 import Range from '../Range/index.svelte';
 import DropDown from '../DropDown/index.svelte';
 import Select from '../NiceSelect/index.svelte';
-import translateLabel from '../../utils/helpers/translateLabel';
+import translate from '../../utils/helpers/translate';
 import { locale } from 'svelte-i18n';
 export let label = 'Custom fieldConfigs';
 export let fieldConfigs = [];
@@ -32,7 +32,7 @@ $: console.log('field', fields);
 								ui={fieldConfig?.ui}
 								isMultiSelect={fieldConfig?.properties.isMultiSelect}
 								position="horizontal"
-								label={translateLabel(fieldConfig.label, $locale, fieldConfig.key)}
+								label={translate(fieldConfig.label, $locale, fieldConfig.key)}
 								labelThumbnail={fieldConfig.thumbnail}
 								bind:value={fields[index].value}
 								bind:errors={fields[index].errors}
@@ -58,7 +58,7 @@ $: console.log('field', fields);
 					{#if fieldConfig?.properties?.isCustomInputAllowed}
 						<Input
 							label={!fieldConfig?.properties?.options?.length &&
-								translateLabel(fieldConfig.label, $locale, fieldConfig.key)}
+								translate(fieldConfig.label, $locale, fieldConfig.key)}
 							labelThumbnail={fieldConfig.thumbnail}
 							bind:value={fields[index].value}
 							bind:errors={fields[index].errors}
@@ -73,7 +73,7 @@ $: console.log('field', fields);
 							<Range
 								label={fieldConfig?.properties?.isCustomInputAllowed
 									? null
-									: translateLabel(fieldConfig.label, $locale, fieldConfig.key)}
+									: translate(fieldConfig.label, $locale, fieldConfig.key)}
 								bind:value={fields[index].value}
 								bind:errors={fields[index].errors}
 								max={+fieldConfig.properties.range.max}
@@ -85,7 +85,7 @@ $: console.log('field', fields);
 
 					{#if fieldConfig.type === 'boolean'}
 						<Switch
-							label={translateLabel(fieldConfig.label, $locale, fieldConfig.key)}
+							label={translate(fieldConfig.label, $locale, fieldConfig.key)}
 							labelThumbnail={fieldConfig.thumbnail}
 							bind:value={fields[index].value}
 							bind:errors={fields[index].errors}

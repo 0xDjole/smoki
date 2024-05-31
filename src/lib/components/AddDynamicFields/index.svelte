@@ -161,7 +161,11 @@
 			bind:value={field}
 			bind:errors={fieldStatus.properties.errors}
 			{addEntity}
-		/>
+		>
+			<div slot="prop-entities">
+				<slot name="entities" />
+			</div>
+		</Properties>
 
 		<DropDown
 			label="Autofill"

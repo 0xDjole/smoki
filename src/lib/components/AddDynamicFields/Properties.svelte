@@ -101,7 +101,7 @@
 			>
 
 			{#if value?.properties?.source}
-				<slot name="entities" idx={index} value={value.properties} {fieldConfig} />
+				<slot name="prop-entities" value={value.properties} />
 
 				{#if value?.properties?.entities?.length}
 					<Switch label="Is multiselect" bind:value={value.properties.isMultiSelect} />

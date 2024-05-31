@@ -12,6 +12,7 @@
 	import FieldsTable from './FieldsTable.svelte';
 	import LocalizedLabels from '../LocalizedLabels/index.svelte';
 	import Label from '../Label.svelte';
+	import { add } from 'lodash';
 
 	export let label = 'Custom fields';
 	export let fields;
@@ -23,7 +24,7 @@
 		{ label: 'Number', value: 'number' },
 		{ label: 'Boolean', value: 'boolean' },
 		{ label: 'Date', value: 'date' },
-		{ label: 'Items', value: 'items' }
+		{ label: 'Entities', value: 'entities' }
 	];
 
 	const isRequiredOptions = [
@@ -50,7 +51,7 @@
 			{ label: 'Nice select', value: 'nice_select' }
 		],
 		boolean: [{ label: 'Default', value: 'default' }],
-		items: [{ label: 'Default', value: 'default' }]
+		entities: [{ label: 'Default', value: 'default' }]
 	};
 
 	const defaultField = {

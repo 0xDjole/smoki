@@ -10,7 +10,7 @@
 	export let value;
 	export let errors = [];
 	export let fieldType;
-	export let addEntity = () => {};
+	export let addEntity;
 
 	const propertyTypes = {
 		text: {
@@ -61,7 +61,7 @@
 			isOptionFieldType: true,
 			isRange: true
 		},
-		items: {
+		entities: {
 			operations: [],
 			isCustomInputAllowed: false,
 			isOptionFieldType: false,
@@ -92,11 +92,11 @@
 			<Switch label="Is custom input allowed" bind:value={value.properties.isCustomInputAllowed} />
 		{/if}
 
-		{#if fieldType === 'items'}
+		{#if fieldType === 'entities'}
 			<Button
 				onClick={() => {
 					addEntity(value);
-				}}>Add item</Button
+				}}>Add entity</Button
 			>
 
 			{#if value?.properties?.ids?.length}

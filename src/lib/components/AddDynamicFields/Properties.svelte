@@ -70,7 +70,6 @@
 		}
 	};
 
-	console.log(value);
 	$: if (!value) {
 		value = {
 			properties: {}
@@ -101,7 +100,7 @@
 			>
 
 			{#if value?.properties?.source}
-				<slot name="prop-entities" value={value.properties} />
+				<slot name="entities" value={value.properties} />
 
 				{#if value?.properties?.entities?.length}
 					<Switch label="Is multiselect" bind:value={value.properties.isMultiSelect} />

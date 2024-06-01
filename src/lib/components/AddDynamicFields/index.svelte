@@ -162,8 +162,8 @@
 			bind:errors={fieldStatus.properties.errors}
 			{addEntity}
 		>
-			<div slot="prop-entities">
-				<slot name="entities" />
+			<div slot="entities" let:value>
+				<slot name="entities" {value} />
 			</div>
 		</Properties>
 

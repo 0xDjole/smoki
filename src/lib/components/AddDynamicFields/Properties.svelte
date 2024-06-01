@@ -28,7 +28,8 @@
 			],
 			isCustomInputAllowed: true,
 			isOption: true,
-			isRange: false
+			isRange: false,
+			defaultProperties: {}
 		},
 		number: {
 			operations: [
@@ -44,7 +45,8 @@
 			],
 			isCustomInputAllowed: true,
 			isOption: true,
-			isRange: true
+			isRange: true,
+			defaultProperties: {}
 		},
 		date: {
 			operations: [
@@ -60,20 +62,20 @@
 			],
 			isCustomInputAllowed: true,
 			isOptionFieldType: true,
-			isRange: true
+			isRange: true,
+			defaultProperties: {}
 		},
 		entities: {
 			operations: [],
 			isCustomInputAllowed: false,
 			isOptionFieldType: false,
-			isRange: false
+			isRange: false,
+			defaultProperties: {}
 		}
 	};
 
-	$: if (!value) {
-		value = {
-			properties: {}
-		};
+	$: if (!value.properties) {
+		value.properties = {};
 	}
 </script>
 

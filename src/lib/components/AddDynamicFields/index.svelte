@@ -54,19 +54,8 @@
 		entities: [{ label: 'Default', value: 'default' }]
 	};
 
-	const defaultField = {
-		id: v4(),
-		key: '',
-		type: '',
-		ui: 'default',
-		operation: 'equals',
-		isRequired: true,
-		isFilter: true,
-		properties: null,
-		autofillIds: []
-	};
-
-	export let field = defaultField;
+	export let field;
+	export let defaultField;
 
 	let fieldStatus = {
 		key: {
@@ -107,79 +96,85 @@
 	};
 
 	let isAddModalOpen = false;
+
+	$: if (!field) {
+		field = defaultField;
+	}
 </script>
 
-<Modal
-	showModal={isAddModalOpen}
-	confirmText="Add"
-	title="Create a field"
-	confirm={confirmFieldAdd}
-	onCancel={() => {
-		isAddModalOpen = false;
-	}}
->
-	<div class="add-field-body">
-		<Input
-			label="Key"
-			bind:errors={fieldStatus.key.errors}
-			bind:value={field.key}
-			type="text"
-			kind="primary"
-			placeholder="Please enter key"
-		/>
-
-		<LocalizedLabels
-			label="Labels"
-			bind:errors={fieldStatus.label.errors}
-			bind:labels={field.label}
-		/>
-		<NiceSelect label="Is requird" bind:value={field.isRequired} options={isRequiredOptions} />
-
-		<NiceSelect label="Is filter" bind:value={field.isFilter} options={isFilterOptions} />
-
-		<Upload label="Thumbnail" bind:image={field.thumbnail} />
-
-		<DropDown
-			label="Type"
-			options={types}
-			bind:errors={fieldStatus.type.errors}
-			bind:value={field.type}
-		/>
-
-		{#if field.type}
-			<DropDown
-				label="UI"
-				options={uiOptions[field.type]}
-				bind:errors={fieldStatus.ui.errors}
-				bind:value={field.ui}
+{#if field}
+	<Modal
+		showModal={isAddModalOpen}
+		confirmText="Add"
+		title="Create a field"
+		confirm={confirmFieldAdd}
+		onCancel={() => {
+			isAddModalOpen = false;
+		}}
+	>
+		<div class="add-field-body">
+			<Input
+				label="Key"
+				bind:errors={fieldStatus.key.errors}
+				bind:value={field.key}
+				type="text"
+				kind="primary"
+				placeholder="Please enter key"
 			/>
-		{/if}
 
-		<Properties
-			label="Properties"
-			fieldType={field.type}
-			bind:value={field}
-			bind:errors={fieldStatus.properties.errors}
-			{addEntity}
-		>
-			<div slot="entities" let:value>
-				<slot name="entities" {value} />
-			</div>
-		</Properties>
+			<LocalizedLabels
+				label="Labels"
+				bind:errors={fieldStatus.label.errors}
+				bind:labels={field.label}
+			/>
+			<NiceSelect label="Is requird" bind:value={field.isRequired} options={isRequiredOptions} />
 
-		<DropDown
-			label="Autofill"
-			isMultiSelect={true}
-			options={autofillOptions}
-			bind:errors={fieldStatus.type.errors}
-			bind:value={field.autofillIds}
-		/>
+			<NiceSelect label="Is filter" bind:value={field.isFilter} options={isFilterOptions} />
+
+			<Upload label="Thumbnail" bind:image={field.thumbnail} />
+
+			<DropDown
+				label="Type"
+				options={types}
+				bind:errors={fieldStatus.type.errors}
+				bind:value={field.type}
+			/>
+
+			{#if field.type}
+				<DropDown
+					label="UI"
+					options={uiOptions[field.type]}
+					bind:errors={fieldStatus.ui.errors}
+					bind:value={field.ui}
+				/>
+			{/if}
+
+			<Properties
+				label="Properties"
+				fieldType={field.type}
+				bind:value={field}
+				bind:errors={fieldStatus.properties.errors}
+				{addEntity}
+			>
+				<div slot="entities" let:value>
+					<slot name="entities" {value} />
+				</div>
+			</Properties>
+
+			<DropDown
+				label="Autofill"
+				isMultiSelect={true}
+				options={autofillOptions}
+				bind:errors={fieldStatus.type.errors}
+				bind:value={field.autofillIds}
+			/>
+		</div>
+	</Modal>
+
+	<div>
+		<FieldsTable bind:isAddModalOpen bind:fields bind:autofillOptions />
 	</div>
-</Modal>
-
-<div>
-	<FieldsTable bind:isAddModalOpen bind:fields bind:autofillOptions />
-</div>
+{/if}
 
 <style type="text/postcss">
 	.add-field-body {

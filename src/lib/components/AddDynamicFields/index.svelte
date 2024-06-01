@@ -88,8 +88,14 @@
 		}
 	};
 
-	const confirmFieldAdd = () => {
-		fields = [...fields, field];
+	const confirmField = () => {
+		const fieldIdx = fields.findIndex((existingFields) => existingFields.id === field.id);
+
+		if (fieldIdx !== -1) {
+			fields[fieldIdx] = field;
+		} else {
+			fields = [...fields, field];
+		}
 
 		field = defaultField;
 		isAddModalOpen = false;
@@ -107,7 +113,7 @@
 		showModal={isAddModalOpen}
 		confirmText="Add"
 		title="Create a field"
-		confirm={confirmFieldAdd}
+		confirm={confirmField}
 		onCancel={() => {
 			isAddModalOpen = false;
 		}}
@@ -123,9 +129,9 @@
 			/>
 
 			<LocalizedLabels
-				label="Labels"
+				label="Translations"
 				bind:errors={fieldStatus.label.errors}
-				bind:labels={field.label}
+				bind:labels={field.translations}
 			/>
 			<NiceSelect label="Is requird" bind:value={field.isRequired} options={isRequiredOptions} />
 
@@ -172,7 +178,7 @@
 	</Modal>
 
 	<div>
-		<FieldsTable bind:isAddModalOpen bind:fields bind:autofillOptions />
+		<FieldsTable bind:isAddModalOpen bind:field bind:fields bind:autofillOptions />
 	</div>
 {/if}
 

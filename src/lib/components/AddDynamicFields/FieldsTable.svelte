@@ -5,6 +5,7 @@
 
 	export let label = 'Custom fields';
 	export let fields;
+	export let field;
 	export let autofillOptions = [];
 	export let isAddModalOpen = false;
 
@@ -14,6 +15,11 @@
 
 	const removeField = (index) => {
 		fields = fields.filter((_, i) => i !== index);
+	};
+
+	const editField = (index) => {
+		field = fields.find((_, i) => i === index);
+		isAddModalOpen = true;
 	};
 </script>
 
@@ -41,6 +47,8 @@
 						<div class="field">{field.isRequired}</div>
 						<div class="field last-item">
 							{field.isFilter}
+							<div class="remove-button" on:click|preventDefault={() => editField(index)}>Edit</div>
+
 							<div class="remove-button" on:click|preventDefault={() => removeField(index)}>
 								<SvgIcon data={Close} size={'30px'} color={'white'} />
 							</div>

@@ -5,12 +5,16 @@ declare const __propDef: {
         value: any;
         errors?: any[] | undefined;
         fieldType: any;
-        addEntity?: (() => void) | undefined;
+        addEntity: any;
     };
     events: {
         [evt: string]: CustomEvent<any>;
     };
-    slots: {};
+    slots: {
+        entities: {
+            value: any;
+        };
+    };
 };
 export type PropertiesProps = typeof __propDef.props;
 export type PropertiesEvents = typeof __propDef.events;

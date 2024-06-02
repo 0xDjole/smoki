@@ -2,13 +2,14 @@
 import Options from './Options.svelte';
 import Range from './Range.svelte';
 import DropDown from '../DropDown/index.svelte';
+import Input from '../Input/index.svelte';
 import Label from '../Label.svelte';
 import Button from '../Button/index.svelte';
 export let label = 'Custom fields';
 export let value;
 export let errors = [];
 export let fieldType;
-export let addEntity = () => { };
+export let addEntity;
 const propertyTypes = {
     text: {
         operations: [
@@ -24,7 +25,8 @@ const propertyTypes = {
         ],
         isCustomInputAllowed: true,
         isOption: true,
-        isRange: false
+        isRange: false,
+        defaultProperties: {}
     },
     number: {
         operations: [
@@ -40,7 +42,8 @@ const propertyTypes = {
         ],
         isCustomInputAllowed: true,
         isOption: true,
-        isRange: true
+        isRange: true,
+        defaultProperties: {}
     },
     date: {
         operations: [
@@ -56,20 +59,19 @@ const propertyTypes = {
         ],
         isCustomInputAllowed: true,
         isOptionFieldType: true,
-        isRange: true
+        isRange: true,
+        defaultProperties: {}
     },
-    items: {
+    entities: {
         operations: [],
         isCustomInputAllowed: false,
         isOptionFieldType: false,
-        isRange: false
+        isRange: false,
+        defaultProperties: {}
     }
 };
-console.log(value);
-$: if (!value) {
-    value = {
-        properties: {}
-    };
+$: if (!value.properties) {
+    value.properties = {};
 }
 </script>
 
@@ -88,18 +90,35 @@ $: if (!value) {
 			<Switch label="Is custom input allowed" bind:value={value.properties.isCustomInputAllowed} />
 		{/if}
 
-		{#if fieldType === 'items'}
+		{#if fieldType === 'entities'}
 			<Button
 				onClick={() => {
 					addEntity(value);
-				}}>Add item</Button
+				}}>Add entity</Button
 			>
 
-			{#if value?.properties?.ids?.length}
-				{#each value?.properties?.ids as id}
-					<div class="entity">{id}</div>
-				{/each}
-				<Switch label="Is multiselect" bind:value={value.properties.isMultiSelect} />
+			{#if value?.properties?.source}
+				<slot name="entities" value={value.properties} />
+
+				{#if value?.properties?.entities?.length}
+					<Switch label="Is multiselect" bind:value={value.properties.isMultiSelect} />
+				{/if}
+
+				<Input
+					label="Min select"
+					bind:value={value.properties.minSelect}
+					type="number"
+					kind="primary"
+					placeholder="Please enter min select"
+				/>
+
+				<Input
+					label="Max select"
+					bind:value={value.properties.maxSelect}
+					type="number"
+					kind="primary"
+					placeholder="Please enter max select"
+				/>
 			{/if}
 		{/if}
 		{#if propertyTypes[fieldType].isOption}

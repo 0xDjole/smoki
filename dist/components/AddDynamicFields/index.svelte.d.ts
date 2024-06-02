@@ -5,22 +5,17 @@ declare const __propDef: {
         fields: any;
         autofillOptions?: any[] | undefined;
         addEntity?: (() => void) | undefined;
-        field?: {
-            id: string;
-            key: string;
-            type: string;
-            ui: string;
-            operation: string;
-            isRequired: boolean;
-            isFilter: boolean;
-            properties: null;
-            autofillIds: never[];
-        } | undefined;
+        field: any;
+        defaultField: any;
     };
     events: {
         [evt: string]: CustomEvent<any>;
     };
-    slots: {};
+    slots: {
+        entities: {
+            value: any;
+        };
+    };
 };
 export type IndexProps = typeof __propDef.props;
 export type IndexEvents = typeof __propDef.events;

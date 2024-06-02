@@ -19,6 +19,7 @@
 
 	const editField = (index) => {
 		field = fields.find((_, i) => i === index);
+		console.log('field ', field);
 		isAddModalOpen = true;
 	};
 </script>

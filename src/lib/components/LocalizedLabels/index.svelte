@@ -57,7 +57,17 @@
 	{#each Object.entries(labels) as [key, value]}
 		<li class="label">
 			<div class="label-key">{key}</div>
-			<div class="label-value">{value}</div>
+			<div class="label-value">
+				<span> {value}</span>
+
+				<Button
+					onClick={() => {
+						const { [key]: _, ...newLabels } = labels;
+						labels = newLabels;
+					}}
+					kind="close"
+				/>
+			</div>
 		</li>
 	{/each}
 </div>
@@ -80,7 +90,7 @@
 	}
 
 	.label-value {
-		@apply bg-accent flex-1 p-2;
+		@apply bg-accent flex-1 p-2 flex items-center justify-between;
 	}
 	.add-btn {
 		@apply flex-1;

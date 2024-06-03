@@ -34,7 +34,6 @@
 		<div class="field-header">
 			<div class="header-item">Key</div>
 			<div class="header-item">Type</div>
-			<div class="header-item">Operation</div>
 			<div class="header-item">Is required</div>
 			<div class="header-item">Is filter</div>
 		</div>
@@ -44,7 +43,6 @@
 					<div class="field-item">
 						<div class="field">{field.key}</div>
 						<div class="field">{field.type}</div>
-						<div class="field">{field.operation}</div>
 						<div class="field">{field.isRequired}</div>
 						<div class="field last-item">
 							{field.isFilter}

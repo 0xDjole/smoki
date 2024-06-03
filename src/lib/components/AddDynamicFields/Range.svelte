@@ -5,7 +5,11 @@
 	export let label = '';
 	export let errors = [];
 
-	export let range = { min: '', max: '' };
+	export let range = { min: 0, max: 5 };
+
+	$: if (!range) {
+		range = { min: 0, max: 5 };
+	}
 </script>
 
 <Label {label} {errors} />

@@ -55,7 +55,6 @@
 	};
 
 	export let field;
-
 	export let defaultField;
 
 	let fieldStatus = {

@@ -7,6 +7,7 @@
 	export let fields;
 	export let field;
 	export let autofillOptions = [];
+	export let defaultField;
 	export let isAddModalOpen = false;
 
 	const addField = () => {

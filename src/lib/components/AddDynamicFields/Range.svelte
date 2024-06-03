@@ -5,18 +5,18 @@
 	export let label = '';
 	export let errors = [];
 
-	export let range = { min: 0, max: 5 };
+	export let range = { min: '', max: '' };
 
 	$: if (!range) {
-		range = { min: 0, max: 5 };
+		range = { min: '', max: '' };
 	}
 </script>
 
 <Label {label} {errors} />
 
 <div class="range">
-	<Input bind:value={range.min} type="number" kind="primary" placeholder="Min" />
-	<Input bind:value={range.max} type="number" kind="primary" placeholder="Max" />
+	<Input bind:value={range.min} type="text" kind="primary" placeholder="Min" />
+	<Input bind:value={range.max} type="text" kind="primary" placeholder="Max" />
 </div>
 
 <style type="text/postcss">

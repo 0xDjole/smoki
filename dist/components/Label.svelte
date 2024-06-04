@@ -1,5 +1,4 @@
-<script>import { _ } from 'svelte-i18n';
-import Thumbnail from './Thumbnail/index.svelte';
+<script>import Thumbnail from './Thumbnail/index.svelte';
 export let label = '';
 export let labelThumbnail = null;
 export let errors = [];
@@ -12,7 +11,7 @@ export let errors = [];
 				<Thumbnail size="sm" url={labelThumbnail.url} alt="Category thumbnail" />
 			</div>
 		{/if}
-		<div class:label-error={errors.length} for={label} class="label">{$_(label)}</div>
+		<div class:label-error={errors.length} for={label} class="label">{label}</div>
 	</div>
 {/if}
 

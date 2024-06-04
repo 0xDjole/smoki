@@ -4,6 +4,7 @@ declare const __propDef: {
         label?: string | undefined;
         fieldConfigs?: any[] | undefined;
         fields?: any[] | undefined;
+        locale?: string | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

@@ -1,5 +1,4 @@
-<script>import { _ } from 'svelte-i18n';
-import ErrorMessage from '../ErrorMessage.svelte';
+<script>import ErrorMessage from '../ErrorMessage.svelte';
 import Label from '../Label.svelte';
 export let kind;
 export let onChange = (value) => { };
@@ -40,7 +39,7 @@ export let labelThumbnail;
 			class:primary={kind === 'primary'}
 			class:error-input={errors.length}
 			{style}
-			placeholder={$_(placeholder)}
+			{placeholder}
 			{accept}
 			on:input={(e) => {
 				e.preventDefault();
@@ -57,7 +56,7 @@ export let labelThumbnail;
 			class:primary={kind === 'primary'}
 			class:error-input={errors.length}
 			{style}
-			placeholder={$_(placeholder)}
+			{placeholder}
 			{accept}
 			on:input={(e) => {
 				e.preventDefault();

@@ -5,6 +5,7 @@ declare const __propDef: {
         selectedValues?: any[] | undefined;
         availableValues?: null | undefined;
         betweenValues?: any[] | undefined;
+        locale?: string | undefined;
         month: any;
         year: any;
     };

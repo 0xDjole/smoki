@@ -1,5 +1,4 @@
 <script>import { createEventDispatcher, onDestroy, onMount, tick } from 'svelte';
-import { _ } from 'svelte-i18n';
 import InfiniteScroll from './InfiniteScroll.svelte';
 import Loader from './Loader.svelte';
 export let items = [];
@@ -108,7 +107,7 @@ const fetchData = async (isFromTop) => {
 	</ul>
 
 	{#if !fetchingMore && !items.length}
-		<span class="text-lg md:text-xl text-primary font-bold m-2">{$_(notFoundText)}</span>
+		<span class="text-lg md:text-xl text-primary font-bold m-2">{notFoundText}</span>
 	{/if}
 
 	<div class="spacer" bind:this={spacer} />

@@ -4,10 +4,10 @@ import Range from '../Range/index.svelte';
 import DropDown from '../DropDown/index.svelte';
 import Select from '../NiceSelect/index.svelte';
 import translate from '../../utils/helpers/translate';
-import { locale } from 'svelte-i18n';
 export let label = 'Custom fieldConfigs';
 export let fieldConfigs = [];
 export let fields = [];
+export let locale = 'en';
 const parseLabel = (label) => {
     if (label.startsWith('+')) {
         return label.slice(1) + '+';
@@ -58,7 +58,7 @@ $: console.log('field', fields);
 					{#if fieldConfig?.properties?.isCustomInputAllowed}
 						<Input
 							label={!fieldConfig?.properties?.options?.length &&
-								translate(fieldConfig.translations, $locale, fieldConfig.key)}
+								translate(fieldConfig.translations, locale, fieldConfig.key)}
 							labelThumbnail={fieldConfig.thumbnail}
 							bind:value={fields[index].value}
 							bind:errors={fields[index].errors}

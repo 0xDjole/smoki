@@ -1,5 +1,4 @@
 <script>import DropDownIcon from '../../utils/icons/dropdown.svg?raw';
-import { _ } from 'svelte-i18n';
 import SvgIcon from '../SvgIcon.svelte';
 export let value;
 export let defaultOption;
@@ -13,7 +12,7 @@ $: selectedOption = options.find((option) => option.value === value);
 
 <div class="select">
 	<button class="select-button" on:click|preventDefault={() => (showModal = !showModal)}>
-		<span>{selectedOption?.label || $_('choose')}</span>
+		<span>{selectedOption?.label || 'Choose'}</span>
 
 		<SvgIcon data={DropDownIcon} width={'20px'} size={'20px'} color={'white'} />
 	</button>

@@ -92,6 +92,7 @@ $: if (!field) {
 {#if field}
 	<Modal
 		showModal={isAddModalOpen}
+		modalStyle="width: 95%; max-width: 800px;"
 		confirmText="Add"
 		title="Create a field"
 		confirm={confirmField}

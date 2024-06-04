@@ -3,7 +3,10 @@ declare const __propDef: {
     props: {
         label?: string | undefined;
         errors?: any[] | undefined;
-        range: any;
+        range?: {
+            min: string;
+            max: string;
+        } | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

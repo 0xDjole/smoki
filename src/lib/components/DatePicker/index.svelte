@@ -6,14 +6,13 @@
 	import Less from '../../utils/icons/less.svg?raw';
 	import { createEventDispatcher } from 'svelte';
 
-	import { locale } from 'svelte-i18n';
-
 	import formatter from '../../utils/helpers/formatter';
 
 	export let onSelect;
 	export let selectedValues = [];
 	export let availableValues = null;
 	export let betweenValues = [];
+	export let locale = 'en';
 
 	export let month;
 	export let year;
@@ -115,9 +114,9 @@
 		};
 	});
 
-	$: months = $locale ? formatter.getLocalizedMonths($locale) : [];
+	$: months = locale ? formatter.getLocalizedMonths(locale) : [];
 
-	$: days = $locale ? formatter.getLocalizedShortWeekdaysSunday($locale) : [];
+	$: days = locale ? formatter.getLocalizedShortWeekdaysSunday(locale) : [];
 </script>
 
 <div>

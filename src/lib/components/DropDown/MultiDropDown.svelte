@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { _ } from 'svelte-i18n';
 	import Modal from '../Modal/index.svelte';
 
 	import SvgIcon from '../SvgIcon.svelte';
@@ -37,9 +36,9 @@
 
 <Modal
 	confirm={() => (showModal = false)}
-	confirmText={`${$_('choose')}`}
+	confirmText={'Choose'}
 	height={'60%'}
-	title={`${$_('choose')}`}
+	title={'Choose'}
 	{showModal}
 	onCancel={() => (showModal = false)}
 >

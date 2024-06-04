@@ -4,10 +4,9 @@
 	import Modal from '../Modal/index.svelte';
 	import translate from '../../utils/helpers/translate';
 
-	import { locale } from 'svelte-i18n';
-
 	export let fields = [];
 	export let fieldConfigs = [];
+	export let locale = 'en';
 
 	let values = [];
 	let key = '';
@@ -54,7 +53,7 @@
 			class="field"
 			on:click|preventDefault={() => Array.isArray(field.value) && viewMultipleValues(field)}
 		>
-			<div class="key">{translate(fieldConfig.translations, $locale, fieldConfig.key)}</div>
+			<div class="key">{translate(fieldConfig.translations, locale, fieldConfig.key)}</div>
 
 			<div class="value">
 				{#if typeof field.value === 'boolean'}

@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { _ } from 'svelte-i18n';
 	import Modal from '../Modal/index.svelte';
 
 	import SvgIcon from '../SvgIcon.svelte';
@@ -27,7 +26,7 @@
 		on:click|preventDefault={() => (showModal = true)}
 		class="flex justify-between option bg-secondary border-primary selected"
 	>
-		<span>{selectedOption?.label || $_('choose')}</span>
+		<span>{selectedOption?.label || 'Choose'}</span>
 
 		<SvgIcon data={DropDownIcon} width={'25px'} size={'25px'} color={'white'} />
 	</div>

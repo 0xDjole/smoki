@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { _ } from 'svelte-i18n';
 	import ErrorMessage from '../ErrorMessage.svelte';
 	import Label from '../Label.svelte';
 
@@ -42,7 +41,7 @@
 			class:primary={kind === 'primary'}
 			class:error-input={errors.length}
 			{style}
-			placeholder={$_(placeholder)}
+			{placeholder}
 			{accept}
 			on:input={(e) => {
 				e.preventDefault();
@@ -59,7 +58,7 @@
 			class:primary={kind === 'primary'}
 			class:error-input={errors.length}
 			{style}
-			placeholder={$_(placeholder)}
+			{placeholder}
 			{accept}
 			on:input={(e) => {
 				e.preventDefault();

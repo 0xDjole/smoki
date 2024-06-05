@@ -28,7 +28,7 @@
 		on:click|preventDefault={() => (showModal = true)}
 		class="flex justify-between option bg-secondary border-primary selected"
 	>
-		<span>{values.length ? values.join(', ') : $_('choose')}</span>
+		<span>{values.length ? values.join(', ') : 'Choose'}</span>
 
 		<SvgIcon data={DropDownIcon} width={'25px'} size={'25px'} color={'white'} />
 	</div>

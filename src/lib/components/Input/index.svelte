@@ -24,7 +24,7 @@
 			class:primary={kind === 'primary'}
 			class:error-input={errors.length}
 			{style}
-			placeholder={$_(placeholder)}
+			{placeholder}
 			{accept}
 			on:input={(e) => {
 				e.preventDefault();

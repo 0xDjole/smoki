@@ -14,7 +14,7 @@
 
 	let swiperInstance;
 
-	let swiperItems = items.map((item) => ({
+	$: swiperItems = items.map((item) => ({
 		src: `${STORAGE_URL}/${item.url}`,
 		title: item.title || 'No title'
 	}));

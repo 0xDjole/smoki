@@ -1,5 +1,5 @@
 <script>
-	import { AsYouType, isValidPhoneNumber } from 'libphonenumber-js';
+	import { AsYouType, PhoneNumberMatcher, isValidPhoneNumber } from 'libphonenumber-js';
 	import { countries } from 'countries-list';
 	import Button from '../Button/index.svelte';
 
@@ -23,14 +23,7 @@
 
 	function handleInput(event) {
 		let final = formatInput(selectedCountry.dialCode + event.target.value);
-		console.log(final);
 		value = final;
-	}
-
-	function handleCountryChange(event) {
-		selectedCountry = countryData.find((c) => c.code === event.target.value);
-		phoneNumber = new AsYouType(selectedCountry.code);
-		value = formatInput(value.replace(/\D+/g, ''));
 	}
 
 	const selectCountry = (country) => {
@@ -109,7 +102,7 @@
 			type="tel"
 			value={phoneNumber.getNumber()}
 			on:input={handleInput}
-			{placeholder}
+			placeholder={phoneNumber.getCallingCode()}
 		/>
 	</div>
 {/if}
@@ -123,20 +116,12 @@
 		@apply border-2 border-solid border-red-500;
 	}
 
-	.phone {
-		@apply text-black;
-	}
-
 	.code-container {
 		@apply max-w-[120px] text-black p-2 rounded-md;
 	}
 
 	.phone-input-container {
 		@apply flex w-full gap-x-2;
-	}
-
-	input {
-		@apply flex-1;
 	}
 
 	.phone-number-input {
@@ -149,11 +134,6 @@
 		border: 1px solid #ccc;
 		border-right: none; /* visually connects the dial code to the input */
 		border-radius: 4px 0 0 4px;
-	}
-
-	input {
-		flex-grow: 1;
-		border-radius: 0 4px 4px 0; /* rounds only the right corners */
 	}
 
 	.flag-icon {
@@ -195,10 +175,6 @@
 	.city {
 		@apply cursor-pointer text-white font-bold min-w-[100px] h-[50px] rounded-full border-primary flex items-center justify-center p-2;
 		text-align: center;
-	}
-
-	.city-input {
-		@apply flex-1 text-white font-bold w-full rounded-full border-2 border-solid border-primary;
 	}
 
 	.selected {

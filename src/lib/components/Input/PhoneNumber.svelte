@@ -1,7 +1,8 @@
 <script>
-	import { AsYouType, PhoneNumberMatcher, isValidPhoneNumber } from 'libphonenumber-js';
+	import { AsYouType, isValidPhoneNumber } from 'libphonenumber-js';
 	import { countries } from 'countries-list';
 	import Button from '../Button/index.svelte';
+	import * as Icon from 'svelte-flags';
 
 	export let value = '';
 	export let placeholder = 'Enter phone number';
@@ -10,6 +11,7 @@
 	let countryData = Object.entries(countries).map(([code, country]) => ({
 		name: country.name,
 		code,
+		codeCapital: code.charAt(0).toUpperCase() + code.slice(1).toLowerCase(),
 		dialCode: `+${country.phone}`
 	}));
 
@@ -45,9 +47,12 @@
 				showCountryDropdown = true;
 			}}
 		>
+			<svelte:component this={Icon[selectedCountry.codeCapital]} size="30" />
+
 			<span class="city-name">
 				{#if selectedCountry}
-					{selectedCountry.dialCode} {selectedCountry.code}
+					{selectedCountry.dialCode}
+					{selectedCountry.code}
 				{:else}
 					{'Country'}
 				{/if}
@@ -89,6 +94,11 @@
 							class:selected={country.code === selectedCountry?.code}
 							on:click={() => selectCountry(country)}
 						>
+							<div>
+								<svelte:component this={Icon[country.codeCapital]} size="30" />
+							</div>
+							{country.dialCode}
+
 							{country.name}
 						</div>
 					{/each}
@@ -108,36 +118,12 @@
 {/if}
 
 <style type="text/postcss">
-	.select-country {
-		@apply border-primary rounded-lg p-2;
-	}
-
 	.error {
 		@apply border-2 border-solid border-red-500;
 	}
 
-	.code-container {
-		@apply max-w-[120px] text-black p-2 rounded-md;
-	}
-
 	.phone-input-container {
 		@apply flex w-full gap-x-2;
-	}
-
-	.phone-number-input {
-		@apply flex;
-	}
-
-	.dial-code {
-		padding: 8px;
-		background-color: #f2f2f2;
-		border: 1px solid #ccc;
-		border-right: none; /* visually connects the dial code to the input */
-		border-radius: 4px 0 0 4px;
-	}
-
-	.flag-icon {
-		margin-right: 8px;
 	}
 
 	.dropdown-content {
@@ -169,11 +155,11 @@
 	}
 
 	.city-text {
-		@apply p-2 cursor-pointer;
+		@apply p-2 cursor-pointer flex items-center gap-2;
 	}
 
 	.city {
-		@apply cursor-pointer text-white font-bold min-w-[100px] h-[50px] rounded-full border-primary flex items-center justify-center p-2;
+		@apply cursor-pointer text-white font-bold min-w-[125px] h-[50px] rounded-full border-primary flex items-center justify-center;
 		text-align: center;
 	}
 
@@ -183,5 +169,14 @@
 
 	input {
 		@apply outline-none bg-primary rounded-full w-full p-3 text-white font-bold;
+	}
+
+	.flag-icon {
+		width: 1.5rem;
+		height: 1rem;
+		display: inline-block;
+		margin-right: 0.5rem;
+		background-size: contain;
+		background-repeat: no-repeat;
 	}
 </style>

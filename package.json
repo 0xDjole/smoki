@@ -45,13 +45,11 @@
 	"dependencies": {
 		"@fancyapps/ui": "^5.0.33",
 		"countries-list": "^3.1.0",
-		"country-list": "^2.3.0",
-		"flag-icons": "^7.2.3",
 		"leaflet": "^1.9.4",
 		"libphonenumber-js": "^1.11.3",
 		"luxon": "^3.4.4",
 		"svelte": "^3.59.2",
-		"svelte-tel-input": "^3.3.9",
+		"svelte-flags": "^1.0.3",
 		"swiper": "^11.0.7"
 	}
 }

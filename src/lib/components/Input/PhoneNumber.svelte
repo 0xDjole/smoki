@@ -103,9 +103,6 @@
 							class:selected={country.code === selectedCountry?.code}
 							on:click={() => selectCountry(country)}
 						>
-							<div>
-								<svelte:component this={Icon[country.codeCapital]} size="30" />
-							</div>
 							{country.dialCode}
 
 							{country.name}

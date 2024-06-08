@@ -17,8 +17,6 @@ const parseLabel = (label) => {
     }
     return label;
 };
-$: console.log('field congs ', fieldConfigs);
-$: console.log('field', fields);
 </script>
 
 <div class="custom-field-config-body">

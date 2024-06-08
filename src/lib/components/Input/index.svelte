@@ -1,4 +1,5 @@
 <script lang="ts">
+	import PhoneNumber from './PhoneNumber.svelte';
 	import ErrorMessage from '../ErrorMessage.svelte';
 	import Label from '../Label.svelte';
 
@@ -16,6 +17,10 @@
 
 <div class="w-full">
 	<Label {label} {errors} {labelThumbnail} />
+
+	{#if type === 'phoneNumber'}
+		<PhoneNumber bind:value />
+	{/if}
 
 	{#if type === 'password'}
 		<input

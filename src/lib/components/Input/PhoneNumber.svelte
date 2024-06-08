@@ -1,5 +1,7 @@
 <script>
-	import { AsYouType, isValidPhoneNumber } from 'libphonenumber-js';
+	import { AsYouType, isValidPhoneNumber, getExampleNumber } from 'libphonenumber-js';
+	import examples from 'libphonenumber-js/mobile/examples';
+
 	import { countries } from 'countries-list';
 	import Button from '../Button/index.svelte';
 	import * as Icon from 'svelte-flags';
@@ -17,6 +19,13 @@
 
 	$: selectedCountry = countryData.find((c) => c.code === 'US');
 	$: phoneNumber = new AsYouType(selectedCountry.code);
+
+	$: if (selectedCountry) {
+		const exampleNumber = getExampleNumber(selectedCountry.code, examples);
+		console.log(exampleNumber.formatInternational());
+
+		placeholder = exampleNumber ? exampleNumber.formatNational() : 'Enter phone number';
+	}
 
 	function formatInput(inputValue) {
 		phoneNumber.reset();
@@ -110,9 +119,9 @@
 			class="phone"
 			class:error={!valid}
 			type="tel"
-			value={phoneNumber.getNumber()}
+			value={phoneNumber.getNumber() || null}
 			on:input={handleInput}
-			placeholder={phoneNumber.getCallingCode()}
+			{placeholder}
 		/>
 	</div>
 {/if}

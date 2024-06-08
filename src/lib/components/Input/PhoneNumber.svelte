@@ -1,7 +1,7 @@
 <script>
+	import { onMount } from 'svelte';
 	import { AsYouType, isValidPhoneNumber, getExampleNumber } from 'libphonenumber-js';
 	import examples from 'libphonenumber-js/mobile/examples';
-
 	import { countries } from 'countries-list';
 	import Button from '../Button/index.svelte';
 	import * as Icon from 'svelte-flags';
@@ -17,13 +17,19 @@
 		dialCode: `+${country.phone}`
 	}));
 
-	$: selectedCountry = countryData.find((c) => c.code === 'US');
-	$: phoneNumber = new AsYouType(selectedCountry.code);
+	let selectedCountry;
+	let phoneNumber = new AsYouType();
 
-	$: if (selectedCountry) {
+	onMount(async () => {
+		const res = await fetch('https://ipapi.co/json/');
+		const data = await res.json();
+		selectedCountry = countryData.find((c) => c.code === data.country);
+		phoneNumber = new AsYouType(selectedCountry.code);
+		updatePlaceholder();
+	});
+
+	function updatePlaceholder() {
 		const exampleNumber = getExampleNumber(selectedCountry.code, examples);
-		console.log(exampleNumber.formatInternational());
-
 		placeholder = exampleNumber ? exampleNumber.formatNational() : 'Enter phone number';
 	}
 
@@ -39,6 +45,8 @@
 
 	const selectCountry = (country) => {
 		selectedCountry = country;
+		phoneNumber = new AsYouType(selectedCountry.code);
+		updatePlaceholder();
 		showCountryDropdown = false;
 	};
 
@@ -115,8 +123,8 @@
 		<input
 			class="phone"
 			class:error={!valid}
+			class:success={valid}
 			type="tel"
-			value={phoneNumber.getNumber() || null}
 			on:input={handleInput}
 			{placeholder}
 		/>
@@ -125,7 +133,10 @@
 
 <style type="text/postcss">
 	.error {
-		@apply border-2 border-solid border-red-500;
+		@apply border-error;
+	}
+	.success {
+		@apply border-success;
 	}
 
 	.phone-input-container {

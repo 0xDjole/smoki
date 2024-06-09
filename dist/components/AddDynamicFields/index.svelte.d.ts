@@ -5,6 +5,7 @@ declare const __propDef: {
         fields: any;
         autofillOptions?: any[] | undefined;
         addEntity?: (() => void) | undefined;
+        t: any;
         field: any;
         defaultField: any;
     };

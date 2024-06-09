@@ -10,6 +10,7 @@ export let label = 'Custom fields';
 export let fields;
 export let autofillOptions = [];
 export let addEntity = () => { };
+export let t;
 const types = [
     { label: 'Text', value: 'text' },
     { label: 'Number', value: 'number' },
@@ -102,6 +103,7 @@ $: if (!field) {
 	>
 		<div class="add-field-body">
 			<Input
+				{t}
 				label="Key"
 				bind:errors={fieldStatus.key.errors}
 				bind:value={field.key}
@@ -111,6 +113,7 @@ $: if (!field) {
 			/>
 
 			<LocalizedLabels
+				{t}
 				label="Translations"
 				bind:errors={fieldStatus.label.errors}
 				bind:labels={field.translations}
@@ -127,6 +130,7 @@ $: if (!field) {
 			<Upload {t} label="Thumbnail" bind:image={field.thumbnail} />
 
 			<DropDown
+				{t}
 				label="Type"
 				options={types}
 				bind:errors={fieldStatus.type.errors}
@@ -135,6 +139,7 @@ $: if (!field) {
 
 			{#if field.type}
 				<DropDown
+					{t}
 					label="UI"
 					options={uiOptions[field.type]}
 					bind:errors={fieldStatus.ui.errors}
@@ -143,6 +148,7 @@ $: if (!field) {
 			{/if}
 
 			<Properties
+				{t}
 				label="Properties"
 				fieldType={field.type}
 				bind:value={field}
@@ -155,6 +161,7 @@ $: if (!field) {
 			</Properties>
 
 			<DropDown
+				{t}
 				label="Autofill"
 				isMultiSelect={true}
 				options={autofillOptions}

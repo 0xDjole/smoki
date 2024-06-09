@@ -7,6 +7,7 @@ declare const __propDef: {
         labelThumbnail?: null | undefined;
         errors?: any[] | undefined;
         isMultiSelect?: boolean | undefined;
+        t: any;
     };
     events: {
         [evt: string]: CustomEvent<any>;

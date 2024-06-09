@@ -7,6 +7,7 @@ declare const __propDef: {
             min: string;
             max: string;
         } | undefined;
+        t: any;
     };
     events: {
         [evt: string]: CustomEvent<any>;

@@ -9,10 +9,12 @@ export let errors = [];
 export let position = 'vertical';
 export let ui = 'default';
 export let isMultiSelect = false;
+export let t;
 </script>
 
 {#if isMultiSelect}
 	<MultiSelect
+		{t}
 		{disabled}
 		bind:values={value}
 		{options}
@@ -22,5 +24,5 @@ export let isMultiSelect = false;
 		{labelThumbnail}
 	/>
 {:else}
-	<SingleSelect {disabled} bind:value {options} {position} {errors} {label} {labelThumbnail} />
+	<SingleSelect {t} {disabled} bind:value {options} {position} {errors} {label} {labelThumbnail} />
 {/if}

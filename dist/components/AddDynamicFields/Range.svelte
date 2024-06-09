@@ -3,16 +3,17 @@ import Label from '../Label.svelte';
 export let label = '';
 export let errors = [];
 export let range = { min: '', max: '' };
+export let t;
 $: if (!range) {
     range = { min: '', max: '' };
 }
 </script>
 
-<Label {label} {errors} />
+<Label {t} {label} {errors} />
 
 <div class="range">
-	<Input bind:value={range.min} type="text" kind="primary" placeholder="Min" />
-	<Input bind:value={range.max} type="text" kind="primary" placeholder="Max" />
+	<Input {t} bind:value={range.min} type="text" kind="primary" placeholder="Min" />
+	<Input {t} bind:value={range.max} type="text" kind="primary" placeholder="Max" />
 </div>
 
 <style>

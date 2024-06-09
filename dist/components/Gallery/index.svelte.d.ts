@@ -3,6 +3,7 @@ declare const __propDef: {
     props: {
         images: any;
         label: any;
+        t: any;
     };
     events: {
         [evt: string]: CustomEvent<any>;

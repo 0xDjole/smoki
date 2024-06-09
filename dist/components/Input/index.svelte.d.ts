@@ -11,6 +11,7 @@ declare const __propDef: {
         errors?: any[] | undefined;
         label?: string | undefined;
         labelThumbnail: any;
+        t: any;
     };
     events: {
         [evt: string]: CustomEvent<any>;

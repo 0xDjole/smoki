@@ -1,5 +1,6 @@
 <script>import { fly, fade } from 'svelte/transition';
 export let errors = [];
+export let t;
 </script>
 
 {#if errors.length}
@@ -8,7 +9,7 @@ export let errors = [];
 		out:fade={{ delay: 0, duration: 100 }}
 		in:fly={{ y: -50, duration: 100 }}
 	>
-		{errors.map((error) => error).join(',')}
+		{errors.map((error) => $t(error)).join(',')}
 	</p>
 {/if}
 

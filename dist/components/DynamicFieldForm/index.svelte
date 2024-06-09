@@ -8,6 +8,7 @@ export let label = 'Custom fieldConfigs';
 export let fieldConfigs = [];
 export let fields = [];
 export let locale = 'en';
+export let t;
 const parseLabel = (label) => {
     if (label.startsWith('+')) {
         return label.slice(1) + '+';
@@ -27,6 +28,7 @@ const parseLabel = (label) => {
 					{#if fieldConfig?.properties?.options?.length}
 						{#if fieldConfig?.ui === 'nice_select'}
 							<Select
+								{t}
 								ui={fieldConfig?.ui}
 								isMultiSelect={fieldConfig?.properties.isMultiSelect}
 								position="horizontal"
@@ -41,6 +43,7 @@ const parseLabel = (label) => {
 							/>
 						{:else}
 							<DropDown
+								{t}
 								label={fieldConfig.key}
 								isMultiSelect={fieldConfig?.properties.isMultiSelect}
 								bind:value={fields[index].value}
@@ -55,6 +58,7 @@ const parseLabel = (label) => {
 
 					{#if fieldConfig?.properties?.isCustomInputAllowed}
 						<Input
+							{t}
 							label={!fieldConfig?.properties?.options?.length &&
 								translate(fieldConfig.translations, locale, fieldConfig.key)}
 							labelThumbnail={fieldConfig.thumbnail}
@@ -69,6 +73,7 @@ const parseLabel = (label) => {
 					{#if fieldConfig?.properties?.range}
 						<div class={`${fieldConfig?.properties?.isCustomInputAllowed ? 'mt-3' : ''}`}>
 							<Range
+								{t}
 								label={fieldConfig?.properties?.isCustomInputAllowed
 									? null
 									: translate(fieldConfig.translations, locale, fieldConfig.key)}
@@ -83,6 +88,7 @@ const parseLabel = (label) => {
 
 					{#if fieldConfig.type === 'boolean'}
 						<Switch
+							{t}
 							label={translate(fieldConfig.translations, locale, fieldConfig.key)}
 							labelThumbnail={fieldConfig.thumbnail}
 							bind:value={fields[index].value}

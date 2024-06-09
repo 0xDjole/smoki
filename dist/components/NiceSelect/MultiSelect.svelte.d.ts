@@ -8,6 +8,7 @@ declare const __propDef: {
         labelThumbnail?: null | undefined;
         errors?: any[] | undefined;
         position?: string | undefined;
+        t: any;
     };
     events: {
         [evt: string]: CustomEvent<any>;

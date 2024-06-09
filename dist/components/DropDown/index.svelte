@@ -6,10 +6,11 @@ export let label = '';
 export let labelThumbnail = null;
 export let errors = [];
 export let isMultiSelect = false;
+export let t;
 </script>
 
 {#if isMultiSelect}
-	<MultiDropDown bind:values={value} {options} {errors} {label} {labelThumbnail} />
+	<MultiDropDown bind:values={value} {options} {errors} {label} {labelThumbnail} {t} />
 {:else}
-	<SingleDropDown bind:value {options} {errors} {label} {labelThumbnail} />
+	<SingleDropDown bind:value {options} {errors} {label} {labelThumbnail} {t} />
 {/if}

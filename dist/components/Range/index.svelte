@@ -15,6 +15,7 @@
 	export let label = '';
 	export let labelThumbnail;
 
+	export let t;
 	export let errors = [];
 
 	// Node Bindings
@@ -174,7 +175,7 @@
 	}
 </script>
 
-<Label {label} {labelThumbnail} {errors} />
+<Label {t} {label} {labelThumbnail} {errors} />
 
 <svelte:window
 	on:touchmove|nonpassive={updateValueOnEvent}
@@ -222,7 +223,7 @@
 	<div class="side">{max}</div>
 </div>
 
-<ErrorMessage {errors} />
+<ErrorMessage {t} {errors} />
 
 <svelte:head>
 	<style>

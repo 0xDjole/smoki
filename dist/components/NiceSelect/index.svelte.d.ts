@@ -10,6 +10,7 @@ declare const __propDef: {
         position?: string | undefined;
         ui?: string | undefined;
         isMultiSelect?: boolean | undefined;
+        t: any;
     };
     events: {
         [evt: string]: CustomEvent<any>;

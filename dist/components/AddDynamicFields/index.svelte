@@ -115,11 +115,16 @@ $: if (!field) {
 				bind:errors={fieldStatus.label.errors}
 				bind:labels={field.translations}
 			/>
-			<NiceSelect label="Is requird" bind:value={field.isRequired} options={isRequiredOptions} />
+			<NiceSelect
+				{t}
+				label="Is requird"
+				bind:value={field.isRequired}
+				options={isRequiredOptions}
+			/>
 
-			<NiceSelect label="Is filter" bind:value={field.isFilter} options={isFilterOptions} />
+			<NiceSelect {t} label="Is filter" bind:value={field.isFilter} options={isFilterOptions} />
 
-			<Upload label="Thumbnail" bind:image={field.thumbnail} />
+			<Upload {t} label="Thumbnail" bind:image={field.thumbnail} />
 
 			<DropDown
 				label="Type"

@@ -5,6 +5,7 @@ import Label from './Label.svelte';
 export let image = null;
 export let label = null;
 export let alt = 'Alt';
+export let t;
 let fileInput;
 let avatar;
 let loading = false;
@@ -27,7 +28,7 @@ const onFileSelected = (e) => {
 };
 </script>
 
-<Label {label} errors={[]} />
+<Label {t} {label} errors={[]} />
 
 <div
 	class="avatar-uploader"

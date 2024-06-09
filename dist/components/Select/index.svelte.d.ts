@@ -9,6 +9,8 @@ declare const __propDef: {
         errors?: any[] | undefined;
     };
     events: {
+        change: CustomEvent<any>;
+    } & {
         [evt: string]: CustomEvent<any>;
     };
     slots: {};

@@ -4,6 +4,7 @@ declare const __propDef: {
         image?: null | undefined;
         label?: null | undefined;
         alt?: string | undefined;
+        t: any;
     };
     events: {
         [evt: string]: CustomEvent<any>;

@@ -13,10 +13,11 @@
 	export let errors = [];
 	export let label = '';
 	export let labelThumbnail;
+	export let t;
 </script>
 
 <div class="w-full">
-	<Label {label} {errors} {labelThumbnail} />
+	<Label {t} {label} {errors} {labelThumbnail} />
 
 	{#if type === 'phoneNumber'}
 		<PhoneNumber bind:value />
@@ -29,7 +30,7 @@
 			class:primary={kind === 'primary'}
 			class:error-input={errors.length}
 			{style}
-			{placeholder}
+			placeholder={$t(placeholder)}
 			{accept}
 			on:input={(e) => {
 				e.preventDefault();
@@ -46,7 +47,7 @@
 			class:primary={kind === 'primary'}
 			class:error-input={errors.length}
 			{style}
-			{placeholder}
+			placeholder={$t(placeholder)}
 			{accept}
 			on:input={(e) => {
 				e.preventDefault();
@@ -63,7 +64,7 @@
 			class:primary={kind === 'primary'}
 			class:error-input={errors.length}
 			{style}
-			{placeholder}
+			placeholder={$t(placeholder)}
 			{accept}
 			on:input={(e) => {
 				e.preventDefault();
@@ -73,7 +74,7 @@
 		/>
 	{/if}
 
-	<ErrorMessage {errors} />
+	<ErrorMessage {t} {errors} />
 </div>
 
 <style type="text/postcss">

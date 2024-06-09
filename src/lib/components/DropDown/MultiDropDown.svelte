@@ -10,6 +10,8 @@
 	export let label = '';
 	export let labelThumbnail = null;
 	export let errors = [];
+	export let t;
+
 	let showModal = false;
 
 	const selectOption = (optionValue) => {
@@ -23,7 +25,7 @@
 </script>
 
 <div>
-	<Label {errors} {label} {labelThumbnail} />
+	<Label {t} {errors} {label} {labelThumbnail} />
 	<div
 		on:click|preventDefault={() => (showModal = true)}
 		class="flex justify-between option bg-secondary border-primary selected"

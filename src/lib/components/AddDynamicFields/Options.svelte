@@ -9,6 +9,7 @@
 	export let options = [];
 	export let errors = [];
 	export let type = 'text';
+	export let t;
 
 	let value;
 	let condition;
@@ -31,12 +32,12 @@
 	};
 </script>
 
-<Label {label} {errors} />
+<Label {t} {label} {errors} />
 
 <div class="input">
-	<Input bind:value {type} kind="primary" placeholder="Please enter value" />
+	<Input {t} bind:value {type} kind="primary" placeholder="Please enter value" />
 
-	<DropDown options={operations} bind:value={condition} />
+	<DropDown {t} options={operations} bind:value={condition} />
 
 	<button on:click|preventDefault={add} class="add-options">Add options</button>
 </div>

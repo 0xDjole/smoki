@@ -7,6 +7,7 @@
 	export let labelThumbnail = null;
 	export let errors = [];
 	export let position = 'vertical';
+	export let t;
 
 	const selectOption = (optionValue) => {
 		if (!disabled) {
@@ -21,7 +22,7 @@
 </script>
 
 <div>
-	<Label {label} {labelThumbnail} {errors} />
+	<Label {t} {label} {labelThumbnail} {errors} />
 
 	<div
 		class="list"

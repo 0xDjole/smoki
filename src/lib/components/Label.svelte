@@ -3,6 +3,7 @@
 	export let label = '';
 	export let labelThumbnail = null;
 	export let errors = [];
+	export let t;
 </script>
 
 {#if label}
@@ -12,7 +13,7 @@
 				<Thumbnail size="sm" url={labelThumbnail.url} alt="Category thumbnail" />
 			</div>
 		{/if}
-		<div class:label-error={errors.length} for={label} class="label">{label}</div>
+		<div class:label-error={errors.length} for={label} class="label">{t ? $t(label) : label}</div>
 	</div>
 {/if}
 

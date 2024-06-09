@@ -6,9 +6,10 @@
 
 	export let images;
 	export let label;
+	export let t;
 </script>
 
-<Label {label} errors={[]} />
+<Label {t} {label} errors={[]} />
 
 <button
 	class="add-new"
@@ -20,7 +21,7 @@
 <div class="gallery">
 	{#each images as image}
 		<div class="gallery-item">
-			<Upload bind:image />
+			<Upload {t} bind:image />
 
 			<button class="remove"
 				><SvgIcon data={Close} width={'50px'} size={'50px'} color={'white'} /></button

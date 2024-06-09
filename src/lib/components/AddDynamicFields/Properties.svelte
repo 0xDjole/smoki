@@ -12,6 +12,7 @@
 	export let errors = [];
 	export let fieldType;
 	export let addEntity;
+	export let t;
 
 	const propertyTypes = {
 		text: {
@@ -80,7 +81,7 @@
 </script>
 
 {#if propertyTypes[fieldType]}
-	<Label {label} {errors} />
+	<Label {t} {label} {errors} />
 	<div class="properties">
 		{#if propertyTypes[fieldType].operations.length}
 			<DropDown
@@ -91,7 +92,11 @@
 		{/if}
 
 		{#if propertyTypes[fieldType].isCustomInputAllowed}
-			<Switch label="Is custom input allowed" bind:value={value.properties.isCustomInputAllowed} />
+			<Switch
+				{t}
+				label="Is custom input allowed"
+				bind:value={value.properties.isCustomInputAllowed}
+			/>
 		{/if}
 
 		{#if fieldType === 'entities'}
@@ -105,10 +110,11 @@
 				<slot name="entities" value={value.properties} />
 
 				{#if value?.properties?.entities?.length}
-					<Switch label="Is multiselect" bind:value={value.properties.isMultiSelect} />
+					<Switch {t} label="Is multiselect" bind:value={value.properties.isMultiSelect} />
 				{/if}
 
 				<Input
+					{t}
 					label="Min select"
 					bind:value={value.properties.minSelect}
 					type="number"
@@ -117,6 +123,7 @@
 				/>
 
 				<Input
+					{t}
 					label="Max select"
 					bind:value={value.properties.maxSelect}
 					type="number"
@@ -126,15 +133,15 @@
 			{/if}
 		{/if}
 		{#if propertyTypes[fieldType].isOption}
-			<Options label="Options" type={fieldType} bind:options={value.properties.options} />
+			<Options {t} label="Options" type={fieldType} bind:options={value.properties.options} />
 
 			{#if value?.properties?.options?.length}
-				<Switch label="Is multiselect" bind:value={value.properties.isMultiSelect} />
+				<Switch {t} label="Is multiselect" bind:value={value.properties.isMultiSelect} />
 			{/if}
 		{/if}
 
 		{#if propertyTypes[fieldType].isRange}
-			<Range label="Range" bind:range={value.properties.range} />
+			<Range {t} label="Range" bind:range={value.properties.range} />
 		{/if}
 	</div>
 {/if}

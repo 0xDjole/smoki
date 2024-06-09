@@ -7,6 +7,7 @@
 	export let image = null;
 	export let label = null;
 	export let alt = 'Alt';
+	export let t;
 
 	let fileInput;
 	let avatar;
@@ -35,7 +36,7 @@
 	};
 </script>
 
-<Label {label} errors={[]} />
+<Label {t} {label} errors={[]} />
 
 <div
 	class="avatar-uploader"

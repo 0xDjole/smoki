@@ -12,10 +12,11 @@
 	export let errors = [];
 	export let label = '';
 	export let labelThumbnail;
+	export let t;
 </script>
 
 <div class="w-full">
-	<Label {label} {errors} {labelThumbnail} />
+	<Label {t} {label} {errors} {labelThumbnail} />
 
 	<textarea
 		bind:value
@@ -31,7 +32,7 @@
 		}}
 	/>
 
-	<ErrorMessage {errors} />
+	<ErrorMessage {t} {errors} />
 </div>
 
 <style type="text/postcss">

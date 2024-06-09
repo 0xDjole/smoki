@@ -6,10 +6,11 @@
 	export let label = '';
 	export let labelThumbnail = null;
 	export let errors = [];
+	export let t;
 </script>
 
 <div class="switch-container">
-	<Label {errors} {label} {labelThumbnail} />
+	<Label {t} {errors} {label} {labelThumbnail} />
 
 	<label class="switch">
 		<input type="checkbox" bind:checked={value} />

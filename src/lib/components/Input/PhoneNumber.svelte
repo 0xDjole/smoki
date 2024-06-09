@@ -9,6 +9,7 @@
 	export let value = '';
 	export let errors = [];
 	export let placeholder = 'Enter phone number';
+	export let t;
 
 	let showCountryDropdown = false;
 	let countryData = Object.entries(countries).map(([code, country]) => ({
@@ -70,7 +71,7 @@
 				{selectedCountry.dialCode}
 				{selectedCountry.code}
 			{:else}
-				{'Country'}
+				{$t('country')}
 			{/if}
 		</span>
 	</div>

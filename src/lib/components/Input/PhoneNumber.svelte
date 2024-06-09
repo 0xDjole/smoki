@@ -21,9 +21,6 @@
 	let phoneNumber = new AsYouType();
 
 	onMount(async () => {
-		const res = await fetch('https://ipapi.co/json/');
-		const data = await res.json();
-		selectedCountry = countryData.find((c) => c.code === data.country);
 		phoneNumber = new AsYouType(selectedCountry.code);
 		updatePlaceholder();
 	});

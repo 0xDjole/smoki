@@ -7,6 +7,7 @@
 	import * as Icon from 'svelte-flags';
 
 	export let value = '';
+	export let errors = [];
 	export let placeholder = 'Enter phone number';
 
 	let showCountryDropdown = false;
@@ -19,11 +20,6 @@
 
 	let selectedCountry;
 	let phoneNumber = new AsYouType();
-
-	onMount(async () => {
-		phoneNumber = new AsYouType(selectedCountry.code);
-		updatePlaceholder();
-	});
 
 	function updatePlaceholder() {
 		const exampleNumber = getExampleNumber(selectedCountry.code, examples);
@@ -47,76 +43,39 @@
 		showCountryDropdown = false;
 	};
 
-	$: valid = isValidPhoneNumber(value);
+	$: valid = isValid(value);
+
+	const isValid = (value) => {
+		if (isValidPhoneNumber(value)) {
+			errors = [];
+			return true;
+		}
+		return false;
+	};
 
 	let countrySearchTerm = '';
 </script>
 
-{#if selectedCountry}
-	<div class="phone-input-container">
-		<div
-			class="city"
-			id="dropdown-content"
-			on:click={() => {
-				showCountryDropdown = true;
-			}}
-		>
-			<svelte:component this={Icon[selectedCountry.codeCapital]} size="30" />
+<div class="phone-input-container">
+	<div
+		class="city"
+		id="dropdown-content"
+		on:click={() => {
+			showCountryDropdown = true;
+		}}
+	>
+		<span class="city-name">
+			{#if selectedCountry}
+				<svelte:component this={Icon[selectedCountry.codeCapital]} size="30" />
+				{selectedCountry.dialCode}
+				{selectedCountry.code}
+			{:else}
+				{'Country'}
+			{/if}
+		</span>
+	</div>
 
-			<span class="city-name">
-				{#if selectedCountry}
-					{selectedCountry.dialCode}
-					{selectedCountry.code}
-				{:else}
-					{'Country'}
-				{/if}
-			</span>
-		</div>
-
-		{#if showCountryDropdown && countryData.length > 0}
-			<div id="dropdown-content" class="dropdown-content">
-				<div class="absolute right-3 top-3">
-					<Button
-						onClick={() => {
-							showCountryDropdown = false;
-						}}
-						kind="delete"
-					/>
-				</div>
-				<div class="dropdown-city">
-					<div class="search-input">
-						<input
-							class="city-input"
-							placeholder={'Enter country'}
-							bind:value={countrySearchTerm}
-						/>
-
-						<div class="search-button">
-							<Button kind="search" />
-						</div>
-					</div>
-				</div>
-
-				<div class="city-list">
-					{#each countryData.filter((country) => {
-						return !countrySearchTerm || country.name
-								.toLowerCase()
-								.includes(countrySearchTerm.toLowerCase());
-					}) as country}
-						<div
-							class="city-text"
-							class:selected={country.code === selectedCountry?.code}
-							on:click={() => selectCountry(country)}
-						>
-							{country.dialCode}
-
-							{country.name}
-						</div>
-					{/each}
-				</div>
-			</div>
-		{/if}
-
+	{#if selectedCountry}
 		<input
 			class="phone"
 			class:error={!valid}
@@ -125,8 +84,48 @@
 			on:input={handleInput}
 			{placeholder}
 		/>
-	</div>
-{/if}
+	{/if}
+
+	{#if showCountryDropdown && countryData.length > 0}
+		<div id="dropdown-content" class="dropdown-content">
+			<div class="absolute right-3 top-3">
+				<Button
+					onClick={() => {
+						showCountryDropdown = false;
+					}}
+					kind="delete"
+				/>
+			</div>
+			<div class="dropdown-city">
+				<div class="search-input">
+					<input class="city-input" placeholder={'Enter country'} bind:value={countrySearchTerm} />
+
+					<div class="search-button">
+						<Button kind="search" />
+					</div>
+				</div>
+			</div>
+
+			<div class="city-list">
+				{#each countryData.filter((country) => {
+					return !countrySearchTerm || country.name
+							.toLowerCase()
+							.includes(countrySearchTerm.toLowerCase());
+				}) as country}
+					<div
+						class="city-text"
+						class:selected={country.code === selectedCountry?.code}
+						on:click={() => selectCountry(country)}
+					>
+						{country.dialCode}
+
+						{country.name}
+					</div>
+				{/each}
+			</div>
+		</div>
+	{/if}
+</div>
 
 <style type="text/postcss">
 	.error {
@@ -165,7 +164,7 @@
 	}
 
 	.city-name {
-		@apply text-ellipsis overflow-hidden text-nowrap;
+		@apply flex items-center text-ellipsis overflow-hidden text-nowrap;
 	}
 
 	.city-text {

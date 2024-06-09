@@ -20,7 +20,7 @@
 	<Label {t} {label} {errors} {labelThumbnail} />
 
 	{#if type === 'phoneNumber'}
-		<PhoneNumber bind:value />
+		<PhoneNumber bind:errors bind:value />
 	{/if}
 
 	{#if type === 'password'}

@@ -9,6 +9,7 @@
 	export let label = '';
 	export let labels = {};
 	export let errors = [];
+	export let t;
 
 	let value = '';
 	let language = 'en';
@@ -35,6 +36,7 @@
 <div class="add-label">
 	<div>
 		<Input
+			{t}
 			{label}
 			bind:errors
 			bind:value
@@ -45,7 +47,7 @@
 	</div>
 
 	<div>
-		<DropDown options={languages} errors={[]} bind:value={language} />
+		<DropDown {t} options={languages} errors={[]} bind:value={language} />
 	</div>
 
 	<div class="add-btn">

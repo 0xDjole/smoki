@@ -4,20 +4,17 @@
 	import Input from '../Input/index.svelte';
 	import Upload from '../Upload.svelte';
 	import Modal from '../Modal/index.svelte';
-	import Close from '../../utils/icons/close.svg?raw';
-	import SvgIcon from '../SvgIcon.svelte';
 	import NiceSelect from '../NiceSelect/index.svelte';
 	import DropDown from '../DropDown/index.svelte';
 	import Properties from './Properties.svelte';
 	import FieldsTable from './FieldsTable.svelte';
 	import LocalizedLabels from '../LocalizedLabels/index.svelte';
-	import Label from '../Label.svelte';
-	import { add } from 'lodash';
 
 	export let label = 'Custom fields';
 	export let fields;
 	export let autofillOptions = [];
 	export let addEntity = () => {};
+	export let t;
 
 	const types = [
 		{ label: 'Text', value: 'text' },
@@ -121,6 +118,7 @@
 	>
 		<div class="add-field-body">
 			<Input
+				{t}
 				label="Key"
 				bind:errors={fieldStatus.key.errors}
 				bind:value={field.key}
@@ -130,6 +128,7 @@
 			/>
 
 			<LocalizedLabels
+				{t}
 				label="Translations"
 				bind:errors={fieldStatus.label.errors}
 				bind:labels={field.translations}
@@ -146,6 +145,7 @@
 			<Upload {t} label="Thumbnail" bind:image={field.thumbnail} />
 
 			<DropDown
+				{t}
 				label="Type"
 				options={types}
 				bind:errors={fieldStatus.type.errors}
@@ -154,6 +154,7 @@
 
 			{#if field.type}
 				<DropDown
+					{t}
 					label="UI"
 					options={uiOptions[field.type]}
 					bind:errors={fieldStatus.ui.errors}
@@ -162,6 +163,7 @@
 			{/if}
 
 			<Properties
+				{t}
 				label="Properties"
 				fieldType={field.type}
 				bind:value={field}
@@ -174,6 +176,7 @@
 			</Properties>
 
 			<DropDown
+				{t}
 				label="Autofill"
 				isMultiSelect={true}
 				options={autofillOptions}

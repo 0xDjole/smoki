@@ -7,10 +7,11 @@
 	export let labelThumbnail = null;
 	export let errors = [];
 	export let t;
+	export let isRequired = false;
 </script>
 
 <div class="switch-container">
-	<Label {t} {errors} {label} {labelThumbnail} />
+	<Label {isRequired} {t} {errors} {label} {labelThumbnail} />
 
 	<label class="switch">
 		<input type="checkbox" bind:checked={value} />

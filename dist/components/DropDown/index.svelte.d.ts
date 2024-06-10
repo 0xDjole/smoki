@@ -8,6 +8,7 @@ declare const __propDef: {
         errors?: any[] | undefined;
         isMultiSelect?: boolean | undefined;
         t: any;
+        isRequired?: boolean | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

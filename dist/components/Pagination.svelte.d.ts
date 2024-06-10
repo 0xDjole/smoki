@@ -10,6 +10,7 @@ declare const __propDef: {
         itemProps: any;
         id: any;
         notFoundText: any;
+        t?: null | undefined;
         height?: string | undefined;
         listStyle?: string | undefined;
     };

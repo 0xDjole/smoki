@@ -5,6 +5,7 @@ declare const __propDef: {
         label?: null | undefined;
         alt?: string | undefined;
         t: any;
+        isRequired?: boolean | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

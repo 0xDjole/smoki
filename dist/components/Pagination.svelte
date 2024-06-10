@@ -9,6 +9,7 @@ export let fetchOnMount = true;
 export let itemProps;
 export let id;
 export let notFoundText;
+export let t = null;
 let component;
 let listComponent;
 export let height = '100%';

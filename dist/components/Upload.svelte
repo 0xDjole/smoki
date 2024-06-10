@@ -6,6 +6,7 @@ export let image = null;
 export let label = null;
 export let alt = 'Alt';
 export let t;
+export let isRequired = false;
 let fileInput;
 let avatar;
 let loading = false;
@@ -28,7 +29,7 @@ const onFileSelected = (e) => {
 };
 </script>
 
-<Label {t} {label} errors={[]} />
+<Label {isRequired} {t} {label} errors={[]} />
 
 <div
 	class="avatar-uploader"

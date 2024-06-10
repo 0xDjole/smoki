@@ -3,6 +3,7 @@ declare const __propDef: {
     props: {
         label?: string | undefined;
         labelThumbnail?: null | undefined;
+        isRequired: any;
         errors?: any[] | undefined;
         t: any;
     };

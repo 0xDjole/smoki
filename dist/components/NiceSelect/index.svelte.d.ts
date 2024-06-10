@@ -11,6 +11,7 @@ declare const __propDef: {
         ui?: string | undefined;
         isMultiSelect?: boolean | undefined;
         t: any;
+        isRequired?: boolean | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

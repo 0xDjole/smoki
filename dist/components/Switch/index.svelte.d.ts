@@ -6,6 +6,7 @@ export default class Index extends SvelteComponentTyped<{
     color?: string | undefined;
     value?: boolean | undefined;
     label?: string | undefined;
+    isRequired?: boolean | undefined;
     errors?: any[] | undefined;
     labelThumbnail?: null | undefined;
 }, {
@@ -22,6 +23,7 @@ declare const __propDef: {
         color?: string | undefined;
         value?: boolean | undefined;
         label?: string | undefined;
+        isRequired?: boolean | undefined;
         errors?: any[] | undefined;
         labelThumbnail?: null | undefined;
     };

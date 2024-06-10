@@ -12,10 +12,11 @@ export let errors = [];
 export let label = '';
 export let labelThumbnail;
 export let t;
+export let isRequired;
 </script>
 
 <div class="w-full">
-	<Label {t} {label} {errors} {labelThumbnail} />
+	<Label {isRequired} {t} {label} {errors} {labelThumbnail} />
 
 	{#if type === 'phoneNumber'}
 		<PhoneNumber {t} bind:errors bind:value />

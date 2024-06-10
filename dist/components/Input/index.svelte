@@ -1,5 +1,4 @@
-<script>import PhoneNumber from './PhoneNumber.svelte';
-import ErrorMessage from '../ErrorMessage.svelte';
+<script>import ErrorMessage from '../ErrorMessage.svelte';
 import Label from '../Label.svelte';
 export let kind;
 export let onChange = (value) => { };
@@ -17,10 +16,6 @@ export let isRequired;
 
 <div class="w-full">
 	<Label {isRequired} {t} {label} {errors} {labelThumbnail} />
-
-	{#if type === 'phoneNumber'}
-		<PhoneNumber {t} bind:errors bind:value />
-	{/if}
 
 	{#if type === 'password'}
 		<input

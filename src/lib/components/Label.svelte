@@ -2,6 +2,7 @@
 	import Thumbnail from './Thumbnail/index.svelte';
 	export let label = '';
 	export let labelThumbnail = null;
+	export let isRequired;
 	export let errors = [];
 	export let t;
 </script>
@@ -14,10 +15,17 @@
 			</div>
 		{/if}
 		<div class:label-error={errors.length} for={label} class="label">{t ? $t(label) : label}</div>
+		{#if isRequired}
+			<span class="required">*</span>
+		{/if}
 	</div>
 {/if}
 
 <style type="text/postcss">
+	.required {
+		@apply text-error relative top-[-0.5em] align-top inline-block;
+	}
+
 	.thumbnail-wrapper {
 		@apply flex items-end gap-x-2;
 	}

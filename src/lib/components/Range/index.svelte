@@ -17,6 +17,7 @@
 
 	export let t;
 	export let errors = [];
+	export let isRequired = false;
 
 	// Node Bindings
 	let container = null;
@@ -175,7 +176,7 @@
 	}
 </script>
 
-<Label {t} {label} {labelThumbnail} {errors} />
+<Label {isRequired} {t} {label} {labelThumbnail} {errors} />
 
 <svelte:window
 	on:touchmove|nonpassive={updateValueOnEvent}

@@ -12,6 +12,7 @@
 	export let itemProps;
 	export let id;
 	export let notFoundText;
+	export let t = null;
 	let component;
 	let listComponent;
 

@@ -11,6 +11,7 @@
 	export let labelThumbnail = null;
 	export let errors = [];
 	export let t;
+	export let isRequired;
 
 	let showModal = false;
 
@@ -23,7 +24,7 @@
 </script>
 
 <div>
-	<Label {t} {errors} {label} {labelThumbnail} />
+	<Label {isRequired} {t} {errors} {label} {labelThumbnail} />
 	<div
 		on:click|preventDefault={() => (showModal = true)}
 		class="flex justify-between option bg-secondary border-primary selected"

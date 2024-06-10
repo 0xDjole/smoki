@@ -13,10 +13,11 @@
 	export let label = '';
 	export let labelThumbnail;
 	export let t;
+	export let isRequired = false;
 </script>
 
 <div class="w-full">
-	<Label {t} {label} {errors} {labelThumbnail} />
+	<Label {isRequired} {t} {label} {errors} {labelThumbnail} />
 
 	<textarea
 		bind:value

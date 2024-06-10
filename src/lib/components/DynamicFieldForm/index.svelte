@@ -33,6 +33,7 @@
 					{#if fieldConfig?.properties?.options?.length}
 						{#if fieldConfig?.ui === 'nice_select'}
 							<Select
+								isRequired={fieldConfig.isRequired}
 								{t}
 								ui={fieldConfig?.ui}
 								isMultiSelect={fieldConfig?.properties.isMultiSelect}
@@ -48,6 +49,7 @@
 							/>
 						{:else}
 							<DropDown
+								isRequired={fieldConfig.isRequired}
 								{t}
 								label={fieldConfig.key}
 								isMultiSelect={fieldConfig?.properties.isMultiSelect}
@@ -63,6 +65,7 @@
 
 					{#if fieldConfig?.properties?.isCustomInputAllowed}
 						<Input
+							isRequired={fieldConfig.isRequired}
 							{t}
 							label={!fieldConfig?.properties?.options?.length &&
 								translate(fieldConfig.translations, locale, fieldConfig.key)}
@@ -78,6 +81,7 @@
 					{#if fieldConfig?.properties?.range}
 						<div class={`${fieldConfig?.properties?.isCustomInputAllowed ? 'mt-3' : ''}`}>
 							<Range
+								isRequired={fieldConfig.isRequired}
 								{t}
 								label={fieldConfig?.properties?.isCustomInputAllowed
 									? null
@@ -93,6 +97,7 @@
 
 					{#if fieldConfig.type === 'boolean'}
 						<Switch
+							isRequired={fieldConfig.isRequired}
 							{t}
 							label={translate(fieldConfig.translations, locale, fieldConfig.key)}
 							labelThumbnail={fieldConfig.thumbnail}

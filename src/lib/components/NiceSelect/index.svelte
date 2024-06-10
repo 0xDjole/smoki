@@ -12,10 +12,12 @@
 	export let ui = 'default';
 	export let isMultiSelect = false;
 	export let t;
+	export let isRequired = false;
 </script>
 
 {#if isMultiSelect}
 	<MultiSelect
+		{isRequired}
 		{t}
 		{disabled}
 		bind:values={value}
@@ -26,5 +28,15 @@
 		{labelThumbnail}
 	/>
 {:else}
-	<SingleSelect {t} {disabled} bind:value {options} {position} {errors} {label} {labelThumbnail} />
+	<SingleSelect
+		{isRequired}
+		{t}
+		{disabled}
+		bind:value
+		{options}
+		{position}
+		{errors}
+		{label}
+		{labelThumbnail}
+	/>
 {/if}

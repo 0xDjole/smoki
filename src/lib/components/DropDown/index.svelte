@@ -9,10 +9,11 @@
 	export let errors = [];
 	export let isMultiSelect = false;
 	export let t;
+	export let isRequired = false;
 </script>
 
 {#if isMultiSelect}
-	<MultiDropDown bind:values={value} {options} {errors} {label} {labelThumbnail} {t} />
+	<MultiDropDown {isRequired} bind:values={value} {options} {errors} {label} {labelThumbnail} {t} />
 {:else}
-	<SingleDropDown bind:value {options} {errors} {label} {labelThumbnail} {t} />
+	<SingleDropDown {isRequired} bind:value {options} {errors} {label} {labelThumbnail} {t} />
 {/if}

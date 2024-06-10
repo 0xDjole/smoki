@@ -20,10 +20,6 @@
 <div class="w-full">
 	<Label {isRequired} {t} {label} {errors} {labelThumbnail} />
 
-	{#if type === 'phoneNumber'}
-		<PhoneNumber {t} bind:errors bind:value />
-	{/if}
-
 	{#if type === 'password'}
 		<input
 			bind:value

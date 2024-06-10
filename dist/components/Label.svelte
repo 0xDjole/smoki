@@ -26,6 +26,9 @@ export let t;
 		top: -0.5em;
 		display: inline-block;
 		vertical-align: top;
+		font-size: 1.25rem;
+		line-height: 1.75rem;
+		font-weight: 700;
 		color: var(--error-background-color);
 }
 

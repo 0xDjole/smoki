@@ -19,6 +19,17 @@
 		dialCode: `+${country.phone}`
 	}));
 
+	onMount(async () => {
+		const country = localStorage.getItem('country');
+		if (country) {
+			selectedCountry = countryData.find((c) => c.code === country);
+			if (selectedCountry) {
+				phoneNumber = new AsYouType(selectedCountry.code);
+				updatePlaceholder();
+			}
+		}
+	});
+
 	let selectedCountry;
 	let phoneNumber = new AsYouType();
 

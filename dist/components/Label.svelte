@@ -23,7 +23,6 @@ export let t;
 <style>
 	.required {
 		position: relative;
-		top: -0.5em;
 		display: inline-block;
 		vertical-align: top;
 		font-size: 1.25rem;

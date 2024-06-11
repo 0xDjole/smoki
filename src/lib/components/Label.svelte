@@ -23,7 +23,7 @@
 
 <style type="text/postcss">
 	.required {
-		@apply text-xl font-bold text-error relative top-[-0.5em] align-top inline-block;
+		@apply text-xl font-bold text-error relative align-top inline-block;
 	}
 
 	.thumbnail-wrapper {

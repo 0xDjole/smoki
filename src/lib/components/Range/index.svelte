@@ -33,15 +33,6 @@
 	// Dispatch 'change' events
 	const dispatch = createEventDispatcher();
 
-	// Mouse shield used onMouseDown to prevent any mouse events penetrating other elements,
-	// ie. hover events on other elements while dragging. Especially for Safari
-	const mouseEventShield = document.createElement('div');
-	mouseEventShield.setAttribute('class', 'mouse-over-shield');
-	mouseEventShield.addEventListener('mouseover', (e) => {
-		e.preventDefault();
-		e.stopPropagation();
-	});
-
 	function resizeWindow() {
 		elementX = element.getBoundingClientRect().left;
 	}
@@ -61,14 +52,12 @@
 
 	function onDragStart(e) {
 		// If mouse event add a pointer events shield
-		if (e.type === 'mousedown') document.body.append(mouseEventShield);
 		currentThumb = thumb;
 	}
 
 	function onDragEnd(e) {
 		// If using mouse - remove pointer event shield
 		if (e.type === 'mouseup') {
-			if (document.body.contains(mouseEventShield)) document.body.removeChild(mouseEventShield);
 			// Needed to check whether thumb and mouse overlap after shield removed
 		}
 		currentThumb = null;
@@ -170,41 +159,38 @@
 />
 <div class="range" class:range_active={value}>
 	<div class:passive={!value} class="side side-left">{min}</div>
-	<div
-		class="range__wrapper"
-		tabindex="0"
-		on:keydown={onKeyPress}
-		bind:this={element}
-		role="slider"
-		aria-valuemin={min}
-		aria-valuemax={max}
-		aria-valuenow={value}
-		{id}
-		on:mousedown={onTrackEvent}
-		on:touchstart={onTrackEvent}
-	>
-		<div class:passive={!value} class="range__track" bind:this={container}>
+	<div class="range__wrapper" bind:this={element} {id}>
+		<div
+			on:mousedown={onTrackEvent}
+			on:touchstart={onTrackEvent}
+			on:keydown={onKeyPress}
+			class:passive={!value}
+			class="range__track"
+			bind:this={container}
+		>
 			<div class="range__track--highlighted" bind:this={progressBar} />
-			<div
-				class="range__thumb"
-				bind:this={thumb}
-				on:touchstart={onDragStart}
-				on:mousedown={onDragStart}
-			>
+		</div>
+
+		<div bind:this={thumb} class="range_thumb_container">
+			<div class="range__thumb" on:touchstart={onDragStart} on:mousedown={onDragStart}>
 				{#if value}
 					<div class="range__tooltip">
 						<div>{value}</div>
 					</div>
-
-					<div
-						class="close-range"
-						on:touchstart={() => setValue(null)}
-						on:click|preventDefault={() => setValue(null)}
-					>
-						<span>x</span>
-					</div>
 				{/if}
 			</div>
+
+			{#if value}
+				<button
+					class="close-range"
+					on:touchstart={() => setValue(null)}
+					on:click|preventDefault={() => {
+						setValue(null);
+					}}
+				>
+					<span>x</span>
+				</button>
+			{/if}
 		</div>
 	</div>
 
@@ -214,27 +200,16 @@
 <ErrorMessage {t} {errors} />
 
 <style type="text/postcss">
-	.mouse-over-shield {
-		position: fixed;
-		top: 0px;
-		left: 0px;
-		height: 100%;
-		width: 100%;
-		background-color: rgba(255, 0, 0, 0);
-		z-index: 10000;
-		cursor: grabbing;
-	}
-
 	.side {
 		@apply font-bold text-white text-lg;
 	}
 
 	.side-left {
-		@apply pr-5;
+		@apply pr-3;
 	}
 
 	.side-right {
-		@apply pl-5;
+		@apply pl-3;
 	}
 
 	.range {
@@ -247,18 +222,14 @@
 
 	.range__wrapper {
 		width: 100%;
-		position: relative;
 		padding: 0.3rem;
 		box-sizing: border-box;
+		position: relative;
 		outline: none;
 	}
 
-	.range__wrapper:focus-visible > .range__track {
-		box-shadow: 0 0 0 2px white, 0 0 0 3px var(--track-focus, #6185ff);
-	}
-
 	.range__track {
-		height: 7px;
+		height: 8px;
 		background-color: var(--track-bgcolor, #d0d0d0);
 		border-radius: 999px;
 	}
@@ -275,8 +246,11 @@
 		);
 		width: 0;
 		height: 7px;
-		position: absolute;
 		border-radius: 999px;
+	}
+
+	.range_thumb_container {
+		position: absolute;
 	}
 
 	.range__thumb {
@@ -289,7 +263,7 @@
 		background-color: var(--thumb-bgcolor, white);
 		cursor: pointer;
 		border-radius: 999px;
-		margin-top: -8px;
+		margin-top: -14px;
 		transition: box-shadow 100ms;
 		user-select: none;
 		box-shadow: var(
@@ -300,8 +274,8 @@
 	}
 
 	.range__tooltip {
-		@apply flex items-center justify-between absolute pointer-events-none text-primary text-xl rounded-full px-2 py-0.5 font-bold min-w-[70px];
-		top: -45px;
+		@apply flex items-center justify-between absolute text-primary text-xl rounded-full px-2 py-0.5 font-bold min-w-[50px];
+		top: -42px;
 		text-align: center;
 		background: linear-gradient(
 			45deg,
@@ -329,6 +303,6 @@
 	}
 
 	.close-range {
-		@apply flex items-center text-accent font-bold text-xl -mt-1;
+		@apply flex items-center justify-center text-accent font-bold text-xl -mt-14 ml-10 rounded-full bg-white w-8 h-8;
 	}
 </style>

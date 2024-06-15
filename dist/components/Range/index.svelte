@@ -328,7 +328,6 @@
 	.range__tooltip {
 		position: absolute;
 		display: flex;
-		min-width: 50px;
 		align-items: center;
 		justify-content: space-between;
 		border-radius: 9999px;
@@ -340,6 +339,8 @@
 		line-height: 1.75rem;
 		font-weight: 700;
 		color: var(--primary-text-color);
+		transition-property: none;
+		transition-duration: 150ms;
 		top: -42px;
 		text-align: center;
 		background: linear-gradient(

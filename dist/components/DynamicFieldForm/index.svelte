@@ -1,5 +1,4 @@
-<script>import Input from '../Input/index.svelte';
-import Switch from '../Switch/index.svelte';
+<script>import Switch from '../Switch/index.svelte';
 import Range from '../Range/index.svelte';
 import DropDown from '../DropDown/index.svelte';
 import Select from '../NiceSelect/index.svelte';
@@ -58,29 +57,12 @@ const parseLabel = (label) => {
 						{/if}
 					{/if}
 
-					{#if fieldConfig?.properties?.isCustomInputAllowed}
-						<Input
-							isRequired={fieldConfig.isRequired}
-							{t}
-							label={!fieldConfig?.properties?.options?.length &&
-								translate(fieldConfig.translations, locale, fieldConfig.key)}
-							labelThumbnail={fieldConfig.thumbnail}
-							bind:value={fields[index].value}
-							bind:errors={fields[index].errors}
-							type={fieldConfig.type}
-							kind="primary"
-							placeholder="please_enter"
-						/>
-					{/if}
-
 					{#if fieldConfig?.properties?.range}
 						<div class={`${fieldConfig?.properties?.isCustomInputAllowed ? 'mt-3' : ''}`}>
 							<Range
 								isRequired={fieldConfig.isRequired}
 								{t}
-								label={fieldConfig?.properties?.isCustomInputAllowed
-									? null
-									: translate(fieldConfig.translations, locale, fieldConfig.key)}
+								label={translate(fieldConfig.translations, locale, fieldConfig.key)}
 								bind:value={fields[index].value}
 								bind:errors={fields[index].errors}
 								max={+fieldConfig.properties.range.max}

@@ -1,6 +1,5 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-	import { fly, fade } from 'svelte/transition';
 
 	import Label from '../Label.svelte';
 	import ErrorMessage from '../ErrorMessage.svelte';
@@ -28,32 +27,33 @@
 	// Internal State
 	let elementX = null;
 	let currentThumb = null;
-	let holding = false;
-	let thumbHover = false;
 	let keydownAcceleration = 0;
 	let accelerationTimer = null;
 
 	// Dispatch 'change' events
 	const dispatch = createEventDispatcher();
 
-	// Mouse shield used onMouseDown to prevent any mouse events penetrating other elements,
-	// ie. hover events on other elements while dragging. Especially for Safari
-	const mouseEventShield = document.createElement('div');
-	mouseEventShield.setAttribute('class', 'mouse-over-shield');
-	mouseEventShield.addEventListener('mouseover', (e) => {
-		e.preventDefault();
-		e.stopPropagation();
-	});
-
 	function resizeWindow() {
 		elementX = element.getBoundingClientRect().left;
 	}
 
 	// Allows both bind:value and on:change for parent value retrieval
+
+	let blockChange = false;
 	function setValue(val) {
-		value = val;
-		errors = [];
-		dispatch('change', { value });
+		if (!blockChange) {
+			if (!val) {
+				blockChange = true;
+
+				setTimeout(() => {
+					blockChange = false;
+				}, 100);
+			}
+
+			value = val;
+			errors = [];
+			dispatch('change', { value });
+		}
 	}
 
 	function onTrackEvent(e) {
@@ -62,33 +62,17 @@
 		onDragStart(e);
 	}
 
-	function onHover(e) {
-		thumbHover = thumbHover ? false : true;
-	}
-
 	function onDragStart(e) {
 		// If mouse event add a pointer events shield
-		if (e.type === 'mousedown') document.body.append(mouseEventShield);
 		currentThumb = thumb;
 	}
 
 	function onDragEnd(e) {
 		// If using mouse - remove pointer event shield
 		if (e.type === 'mouseup') {
-			if (document.body.contains(mouseEventShield)) document.body.removeChild(mouseEventShield);
 			// Needed to check whether thumb and mouse overlap after shield removed
-			if (isMouseInElement(e, thumb)) thumbHover = true;
 		}
 		currentThumb = null;
-	}
-
-	// Check if mouse event cords overlay with an element's area
-	function isMouseInElement(event, element) {
-		let rect = element.getBoundingClientRect();
-		let { clientX: x, clientY: y } = event;
-		if (x < rect.left || x >= rect.right) return false;
-		if (y < rect.top || y >= rect.bottom) return false;
-		return true;
 	}
 
 	// Accessible keypress handling
@@ -151,7 +135,6 @@
 	$: if (element) elementX = element.getBoundingClientRect().left;
 
 	// Set a class based on if dragging
-	$: holding = Boolean(currentThumb);
 
 	const getPercent = (value, min, max) => {
 		if (value <= min) {
@@ -174,6 +157,23 @@
 		thumb.style.left = `${offsetLeft}px`;
 		progressBar.style.width = `${offsetLeft}px`;
 	}
+
+	function clampValue(val) {
+		let numericValue = parseInt(val, 10);
+		if (isNaN(numericValue)) {
+			return '';
+		}
+
+		console.log(numericValue, min, max);
+		if (numericValue < min) {
+			return min;
+		}
+		if (numericValue > max) {
+			console.log('here');
+			return max;
+		}
+		return numericValue;
+	}
 </script>
 
 <Label {isRequired} {t} {label} {labelThumbnail} {errors} />
@@ -186,59 +186,59 @@
 	on:mouseup={onDragEnd}
 	on:resize={resizeWindow}
 />
-<div class="range">
-	<div class="side">{min}</div>
-	<div
-		class="range__wrapper"
-		tabindex="0"
-		on:keydown={onKeyPress}
-		bind:this={element}
-		role="slider"
-		aria-valuemin={min}
-		aria-valuemax={max}
-		aria-valuenow={value}
-		{id}
-		on:mousedown={onTrackEvent}
-		on:touchstart={onTrackEvent}
-	>
-		<div class="range__track" bind:this={container}>
+<div class="range" class:range_active={value}>
+	<div class:passive={!value} class="side side-left">{min}</div>
+	<div class="range__wrapper" bind:this={element} {id}>
+		<div
+			on:mousedown={onTrackEvent}
+			on:touchstart={onTrackEvent}
+			on:keydown={onKeyPress}
+			class:passive={!value}
+			class="range__track"
+			bind:this={container}
+		>
 			<div class="range__track--highlighted" bind:this={progressBar} />
-			<div
-				class="range__thumb"
-				class:range__thumb--holding={holding}
-				bind:this={thumb}
-				on:touchstart={onDragStart}
-				on:mousedown={onDragStart}
-				on:mouseover={() => (thumbHover = true)}
-				on:mouseout={() => (thumbHover = false)}
-			>
-				{#if holding || thumbHover}
-					<div class="range__tooltip" in:fly={{ y: 7, duration: 200 }} out:fade={{ duration: 100 }}>
-						{value}
+		</div>
+
+		<div bind:this={thumb} class="range_thumb_container">
+			<div class="range__thumb" on:touchstart={onDragStart} on:mousedown={onDragStart}>
+				{#if value}
+					<div class="range__tooltip">
+						<input
+							type="number"
+							{min}
+							{max}
+							bind:value
+							on:input={(e) => {
+								value = clampValue(e.target.value);
+							}}
+							on:change={(e) => {
+								value = clampValue(e.target.value);
+							}}
+							class="tool-input"
+						/>
 					</div>
 				{/if}
 			</div>
+
+			{#if value}
+				<button
+					class="close-range"
+					on:touchstart={() => setValue(null)}
+					on:click|preventDefault|stopPropagation={() => {
+						setValue(null);
+					}}
+				>
+					<span>x</span>
+				</button>
+			{/if}
 		</div>
 	</div>
 
-	<div class="side">{max}</div>
+	<div class:passive={!value} class="side side-right">{max}</div>
 </div>
 
 <ErrorMessage {t} {errors} />
-
-<svelte:head>
-	<style>
-		.mouse-over-shield {
-			position: fixed;
-			top: 0px;
-			left: 0px;
-			height: 100%;
-			width: 100%;
-			background-color: rgba(255, 0, 0, 0);
-			z-index: 10000;
-			cursor: grabbing;
-		}</style>
-</svelte:head>
 
 <style>
 	.side {
@@ -249,29 +249,44 @@
 		color: rgb(255 255 255 / var(--tw-text-opacity));
 }
 
+	.side-left {
+		padding-right: 0.75rem;
+}
+
+	.side-right {
+		padding-left: 0.75rem;
+}
+
 	.range {
 		position: relative;
 		display: flex;
 		align-items: center;
+		transition-property: all;
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+		transition-duration: 150ms;
+}
+
+	.range_active {
+		margin-top: 3rem;
 }
 
 	.range__wrapper {
 		width: 100%;
-		position: relative;
 		padding: 0.3rem;
 		box-sizing: border-box;
+		position: relative;
 		outline: none;
 	}
 
-	.range__wrapper:focus-visible > .range__track {
-		box-shadow: 0 0 0 2px white, 0 0 0 3px var(--track-focus, #6185ff);
-	}
-
 	.range__track {
-		height: 7px;
+		height: 8px;
 		background-color: var(--track-bgcolor, #d0d0d0);
 		border-radius: 999px;
 	}
+
+	.passive {
+		opacity: 0.4;
+}
 
 	.range__track--highlighted {
 		background: linear-gradient(
@@ -281,8 +296,11 @@
 		);
 		width: 0;
 		height: 7px;
-		position: absolute;
 		border-radius: 999px;
+	}
+
+	.range_thumb_container {
+		position: absolute;
 	}
 
 	.range__thumb {
@@ -295,7 +313,7 @@
 		background-color: var(--thumb-bgcolor, white);
 		cursor: pointer;
 		border-radius: 999px;
-		margin-top: -8px;
+		margin-top: -14px;
 		transition: box-shadow 100ms;
 		-webkit-user-select: none;
 		   -moz-user-select: none;
@@ -307,21 +325,22 @@
 		);
 	}
 
-	.range__thumb--holding {
-		box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 2px 1px rgba(0, 0, 0, 0.2),
-			0 0 0 6px var(--thumb-holding-outline, rgba(113, 119, 250, 0.3));
-	}
-
 	.range__tooltip {
-		pointer-events: none;
 		position: absolute;
-		border-radius: 0.375rem;
-		padding-left: 1rem;
-		padding-right: 1rem;
-		padding-top: 0.5rem;
-		padding-bottom: 0.5rem;
+		display: flex;
+		min-width: 50px;
+		align-items: center;
+		justify-content: space-between;
+		border-radius: 9999px;
+		padding-left: 0.5rem;
+		padding-right: 0.5rem;
+		padding-top: 0.125rem;
+		padding-bottom: 0.125rem;
+		font-size: 1.25rem;
+		line-height: 1.75rem;
+		font-weight: 700;
 		color: var(--primary-text-color);
-		top: -45px;
+		top: -42px;
 		text-align: center;
 		background: linear-gradient(
 			45deg,
@@ -336,11 +355,40 @@
 		position: absolute;
 		height: 7px;
 		width: 7px;
-		background-color: var(--tooltip-bgcolor, #6185ff);
+		background: linear-gradient(
+			90deg,
+			var(--accent-background-color),
+			var(--error-background-color)
+		);
 		bottom: -3px;
 		left: calc(50% - 3px);
 		-webkit-clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
 		        clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
 		transform: rotate(-45deg);
 		border-radius: 0 0 0 3px;
-	}</style>
+	}
+
+	.close-range {
+		margin-top: -3.5rem;
+		margin-left: 2.5rem;
+		display: flex;
+		height: 2rem;
+		width: 2rem;
+		align-items: center;
+		justify-content: center;
+		border-radius: 9999px;
+		--tw-bg-opacity: 1;
+		background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+		font-size: 1.25rem;
+		line-height: 1.75rem;
+		font-weight: 700;
+		color: var(--accent-color);
+}
+
+	.tool-input {
+		width: 100%;
+		border-style: none;
+		background-color: transparent;
+		outline: 2px solid transparent;
+		outline-offset: 2px;
+}</style>

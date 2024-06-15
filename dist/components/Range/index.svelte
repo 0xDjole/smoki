@@ -1,5 +1,5 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, tick } from 'svelte';
 
 	import Label from '../Label.svelte';
 	import ErrorMessage from '../ErrorMessage.svelte';
@@ -30,6 +30,8 @@
 	let keydownAcceleration = 0;
 	let accelerationTimer = null;
 
+	let input = null;
+
 	// Dispatch 'change' events
 	const dispatch = createEventDispatcher();
 
@@ -48,6 +50,16 @@
 				setTimeout(() => {
 					blockChange = false;
 				}, 100);
+			}
+
+			if (input && val) {
+				if (val.toString().length === 1) {
+					input.style.width = `50px`;
+				} else if (val.toString().length === 2) {
+					input.style.width = `60px`;
+				} else {
+					input.style.width = `70px`;
+				}
 			}
 
 			value = val;
@@ -164,12 +176,10 @@
 			return '';
 		}
 
-		console.log(numericValue, min, max);
 		if (numericValue < min) {
 			return min;
 		}
 		if (numericValue > max) {
-			console.log('here');
 			return max;
 		}
 		return numericValue;
@@ -203,7 +213,7 @@
 		<div bind:this={thumb} class="range_thumb_container">
 			<div class="range__thumb" on:touchstart={onDragStart} on:mousedown={onDragStart}>
 				{#if value}
-					<div class="range__tooltip">
+					<div class="range__tooltip" bind:this={input}>
 						<input
 							type="number"
 							{min}
@@ -242,6 +252,8 @@
 
 <style>
 	.side {
+		min-width: 30px;
+		text-align: center;
 		font-size: 1.125rem;
 		line-height: 1.75rem;
 		font-weight: 700;
@@ -250,11 +262,11 @@
 }
 
 	.side-left {
-		padding-right: 0.75rem;
+		padding-right: 0.25rem;
 }
 
 	.side-right {
-		padding-left: 0.75rem;
+		padding-left: 0.25rem;
 }
 
 	.range {
@@ -328,19 +340,22 @@
 	.range__tooltip {
 		position: absolute;
 		display: flex;
+		width: 100%;
+		min-width: 50px;
 		align-items: center;
-		justify-content: space-between;
+		justify-content: center;
 		border-radius: 9999px;
-		padding-left: 0.5rem;
-		padding-right: 0.5rem;
+		padding-left: 0.25rem;
+		padding-right: 0.25rem;
 		padding-top: 0.125rem;
 		padding-bottom: 0.125rem;
 		font-size: 1.25rem;
 		line-height: 1.75rem;
 		font-weight: 700;
 		color: var(--primary-text-color);
-		transition-property: none;
-		transition-duration: 150ms;
+		transition-property: all;
+		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+		transition-duration: 500ms;
 		top: -42px;
 		text-align: center;
 		background: linear-gradient(
@@ -387,9 +402,11 @@
 }
 
 	.tool-input {
+		display: block;
 		width: 100%;
 		border-style: none;
 		background-color: transparent;
+		text-align: center;
 		outline: 2px solid transparent;
 		outline-offset: 2px;
 }</style>

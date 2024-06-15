@@ -157,6 +157,23 @@
 		thumb.style.left = `${offsetLeft}px`;
 		progressBar.style.width = `${offsetLeft}px`;
 	}
+
+	function clampValue(val) {
+		let numericValue = parseInt(val, 10);
+		if (isNaN(numericValue)) {
+			return '';
+		}
+
+		console.log(numericValue, min, max);
+		if (numericValue < min) {
+			return min;
+		}
+		if (numericValue > max) {
+			console.log('here');
+			return max;
+		}
+		return numericValue;
+	}
 </script>
 
 <Label {isRequired} {t} {label} {labelThumbnail} {errors} />
@@ -187,7 +204,19 @@
 			<div class="range__thumb" on:touchstart={onDragStart} on:mousedown={onDragStart}>
 				{#if value}
 					<div class="range__tooltip">
-						<div>{value}</div>
+						<input
+							type="number"
+							{min}
+							{max}
+							bind:value
+							on:input={(e) => {
+								value = clampValue(e.target.value);
+							}}
+							on:change={(e) => {
+								value = clampValue(e.target.value);
+							}}
+							class="tool-input"
+						/>
 					</div>
 				{/if}
 			</div>
@@ -316,5 +345,9 @@
 
 	.close-range {
 		@apply flex items-center justify-center text-accent font-bold text-xl -mt-14 ml-10 rounded-full bg-white w-8 h-8;
+	}
+
+	.tool-input {
+		@apply border-none bg-transparent outline-none w-full;
 	}
 </style>

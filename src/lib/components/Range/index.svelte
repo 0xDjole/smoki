@@ -315,7 +315,7 @@
 	}
 
 	.range__tooltip {
-		@apply flex items-center justify-between absolute text-primary text-xl rounded-full px-2 py-0.5 font-bold min-w-[50px];
+		@apply flex items-center justify-between absolute text-primary text-xl rounded-full px-2 py-0.5 font-bold transition-none duration-150;
 		top: -42px;
 		text-align: center;
 		background: linear-gradient(

@@ -28,8 +28,6 @@
 	// Internal State
 	let elementX = null;
 	let currentThumb = null;
-	let holding = false;
-	let thumbHover = false;
 	let keydownAcceleration = 0;
 	let accelerationTimer = null;
 
@@ -51,6 +49,7 @@
 
 	// Allows both bind:value and on:change for parent value retrieval
 	function setValue(val) {
+		console.log('valll');
 		value = val;
 		errors = [];
 		dispatch('change', { value });
@@ -60,10 +59,6 @@
 		// Update value immediately before beginning drag
 		updateValueOnEvent(e);
 		onDragStart(e);
-	}
-
-	function onHover(e) {
-		thumbHover = thumbHover ? false : true;
 	}
 
 	function onDragStart(e) {
@@ -77,18 +72,8 @@
 		if (e.type === 'mouseup') {
 			if (document.body.contains(mouseEventShield)) document.body.removeChild(mouseEventShield);
 			// Needed to check whether thumb and mouse overlap after shield removed
-			if (isMouseInElement(e, thumb)) thumbHover = true;
 		}
 		currentThumb = null;
-	}
-
-	// Check if mouse event cords overlay with an element's area
-	function isMouseInElement(event, element) {
-		let rect = element.getBoundingClientRect();
-		let { clientX: x, clientY: y } = event;
-		if (x < rect.left || x >= rect.right) return false;
-		if (y < rect.top || y >= rect.bottom) return false;
-		return true;
 	}
 
 	// Accessible keypress handling
@@ -151,7 +136,6 @@
 	$: if (element) elementX = element.getBoundingClientRect().left;
 
 	// Set a class based on if dragging
-	$: holding = Boolean(currentThumb);
 
 	const getPercent = (value, min, max) => {
 		if (value <= min) {
@@ -186,8 +170,8 @@
 	on:mouseup={onDragEnd}
 	on:resize={resizeWindow}
 />
-<div class="range">
-	<div class="side">{min}</div>
+<div class="range" class:range_active={value}>
+	<div class:passive={!value} class="side side-left">{min}</div>
 	<div
 		class="range__wrapper"
 		tabindex="0"
@@ -201,53 +185,62 @@
 		on:mousedown={onTrackEvent}
 		on:touchstart={onTrackEvent}
 	>
-		<div class="range__track" bind:this={container}>
+		<div class:passive={!value} class="range__track" bind:this={container}>
 			<div class="range__track--highlighted" bind:this={progressBar} />
 			<div
 				class="range__thumb"
-				class:range__thumb--holding={holding}
 				bind:this={thumb}
 				on:touchstart={onDragStart}
 				on:mousedown={onDragStart}
-				on:mouseover={() => (thumbHover = true)}
-				on:mouseout={() => (thumbHover = false)}
 			>
-				{#if holding || thumbHover}
-					<div class="range__tooltip" in:fly={{ y: 7, duration: 200 }} out:fade={{ duration: 100 }}>
-						{value}
+				{#if value}
+					<div class="range__tooltip">
+						<div>{value}</div>
 					</div>
+
+					<button class="close-range" on:click|preventDefault={() => setValue(null)}
+						><span>x</span></button
+					>
 				{/if}
 			</div>
 		</div>
 	</div>
 
-	<div class="side">{max}</div>
+	<div class:passive={!value} class="side side-right">{max}</div>
 </div>
 
 <ErrorMessage {t} {errors} />
 
-<svelte:head>
-	<style>
-		.mouse-over-shield {
-			position: fixed;
-			top: 0px;
-			left: 0px;
-			height: 100%;
-			width: 100%;
-			background-color: rgba(255, 0, 0, 0);
-			z-index: 10000;
-			cursor: grabbing;
-		}
-	</style>
-</svelte:head>
-
 <style type="text/postcss">
+	.mouse-over-shield {
+		position: fixed;
+		top: 0px;
+		left: 0px;
+		height: 100%;
+		width: 100%;
+		background-color: rgba(255, 0, 0, 0);
+		z-index: 10000;
+		cursor: grabbing;
+	}
+
 	.side {
 		@apply font-bold text-white text-lg;
 	}
 
+	.side-left {
+		@apply pr-5;
+	}
+
+	.side-right {
+		@apply pl-5;
+	}
+
 	.range {
-		@apply flex items-center relative;
+		@apply flex items-center relative transition-all duration-150;
+	}
+
+	.range_active {
+		@apply mt-12;
 	}
 
 	.range__wrapper {
@@ -266,6 +259,10 @@
 		height: 7px;
 		background-color: var(--track-bgcolor, #d0d0d0);
 		border-radius: 999px;
+	}
+
+	.passive {
+		@apply opacity-40;
 	}
 
 	.range__track--highlighted {
@@ -300,13 +297,8 @@
 		);
 	}
 
-	.range__thumb--holding {
-		box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 1px 2px 1px rgba(0, 0, 0, 0.2),
-			0 0 0 6px var(--thumb-holding-outline, rgba(113, 119, 250, 0.3));
-	}
-
 	.range__tooltip {
-		@apply absolute pointer-events-none text-primary rounded-md px-4 py-2;
+		@apply flex items-center justify-between absolute pointer-events-none text-primary text-xl rounded-full px-2 py-0.5 font-bold min-w-[70px];
 		top: -45px;
 		text-align: center;
 		background: linear-gradient(
@@ -322,11 +314,19 @@
 		position: absolute;
 		height: 7px;
 		width: 7px;
-		background-color: var(--tooltip-bgcolor, #6185ff);
+		background: linear-gradient(
+			90deg,
+			var(--accent-background-color),
+			var(--error-background-color)
+		);
 		bottom: -3px;
 		left: calc(50% - 3px);
 		clip-path: polygon(0% 0%, 100% 100%, 0% 100%);
 		transform: rotate(-45deg);
 		border-radius: 0 0 0 3px;
+	}
+
+	.close-range {
+		@apply flex items-center text-accent font-bold text-xl -mt-1;
 	}
 </style>

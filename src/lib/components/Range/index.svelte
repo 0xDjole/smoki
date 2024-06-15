@@ -1,6 +1,5 @@
 <script>
 	import { createEventDispatcher } from 'svelte';
-	import { fly, fade } from 'svelte/transition';
 
 	import Label from '../Label.svelte';
 	import ErrorMessage from '../ErrorMessage.svelte';
@@ -49,7 +48,6 @@
 
 	// Allows both bind:value and on:change for parent value retrieval
 	function setValue(val) {
-		console.log('valll');
 		value = val;
 		errors = [];
 		dispatch('change', { value });
@@ -198,9 +196,13 @@
 						<div>{value}</div>
 					</div>
 
-					<button class="close-range" on:click|preventDefault={() => setValue(null)}
-						><span>x</span></button
+					<div
+						class="close-range"
+						on:touchstart={() => setValue(null)}
+						on:click|preventDefault={() => setValue(null)}
 					>
+						<span>x</span>
+					</div>
 				{/if}
 			</div>
 		</div>

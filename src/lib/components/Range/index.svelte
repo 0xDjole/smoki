@@ -38,10 +38,22 @@
 	}
 
 	// Allows both bind:value and on:change for parent value retrieval
+
+	let blockChange = false;
 	function setValue(val) {
-		value = val;
-		errors = [];
-		dispatch('change', { value });
+		if (!blockChange) {
+			if (!val) {
+				blockChange = true;
+
+				setTimeout(() => {
+					blockChange = false;
+				}, 100);
+			}
+
+			value = val;
+			errors = [];
+			dispatch('change', { value });
+		}
 	}
 
 	function onTrackEvent(e) {
@@ -184,7 +196,7 @@
 				<button
 					class="close-range"
 					on:touchstart={() => setValue(null)}
-					on:click|preventDefault={() => {
+					on:click|preventDefault|stopPropagation={() => {
 						setValue(null);
 					}}
 				>

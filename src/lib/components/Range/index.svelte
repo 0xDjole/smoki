@@ -1,5 +1,5 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, tick } from 'svelte';
 
 	import Label from '../Label.svelte';
 	import ErrorMessage from '../ErrorMessage.svelte';
@@ -30,6 +30,8 @@
 	let keydownAcceleration = 0;
 	let accelerationTimer = null;
 
+	let input = null;
+
 	// Dispatch 'change' events
 	const dispatch = createEventDispatcher();
 
@@ -48,6 +50,16 @@
 				setTimeout(() => {
 					blockChange = false;
 				}, 100);
+			}
+
+			if (input && val) {
+				if (val.toString().length === 1) {
+					input.style.width = `50px`;
+				} else if (val.toString().length === 2) {
+					input.style.width = `60px`;
+				} else {
+					input.style.width = `70px`;
+				}
 			}
 
 			value = val;
@@ -164,12 +176,10 @@
 			return '';
 		}
 
-		console.log(numericValue, min, max);
 		if (numericValue < min) {
 			return min;
 		}
 		if (numericValue > max) {
-			console.log('here');
 			return max;
 		}
 		return numericValue;
@@ -203,7 +213,7 @@
 		<div bind:this={thumb} class="range_thumb_container">
 			<div class="range__thumb" on:touchstart={onDragStart} on:mousedown={onDragStart}>
 				{#if value}
-					<div class="range__tooltip">
+					<div class="range__tooltip" bind:this={input}>
 						<input
 							type="number"
 							{min}
@@ -242,15 +252,15 @@
 
 <style type="text/postcss">
 	.side {
-		@apply font-bold text-white text-lg;
+		@apply font-bold text-white text-lg min-w-[30px] text-center;
 	}
 
 	.side-left {
-		@apply pr-3;
+		@apply pr-1;
 	}
 
 	.side-right {
-		@apply pl-3;
+		@apply pl-1;
 	}
 
 	.range {
@@ -315,7 +325,7 @@
 	}
 
 	.range__tooltip {
-		@apply flex items-center justify-between absolute text-primary text-xl rounded-full px-2 py-0.5 font-bold transition-none duration-150;
+		@apply flex items-center justify-center absolute text-primary text-xl rounded-full px-1 py-0.5 font-bold w-full transition-all duration-500 min-w-[50px];
 		top: -42px;
 		text-align: center;
 		background: linear-gradient(
@@ -348,6 +358,6 @@
 	}
 
 	.tool-input {
-		@apply border-none bg-transparent outline-none w-full;
+		@apply block border-none bg-transparent outline-none w-full text-center;
 	}
 </style>

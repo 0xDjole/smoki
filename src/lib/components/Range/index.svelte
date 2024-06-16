@@ -1,10 +1,9 @@
 <script>
-	import { createEventDispatcher, tick } from 'svelte';
+	import { tick, createEventDispatcher } from 'svelte';
 
 	import Label from '../Label.svelte';
 	import ErrorMessage from '../ErrorMessage.svelte';
 
-	// Props
 	export let min = 0;
 	export let max = 100;
 	export let initialValue = 0;
@@ -18,13 +17,11 @@
 	export let errors = [];
 	export let isRequired = false;
 
-	// Node Bindings
 	let container = null;
 	let thumb = null;
 	let progressBar = null;
 	let element = null;
 
-	// Internal State
 	let elementX = null;
 	let currentThumb = null;
 	let keydownAcceleration = 0;
@@ -32,14 +29,11 @@
 
 	let input = null;
 
-	// Dispatch 'change' events
 	const dispatch = createEventDispatcher();
 
 	function resizeWindow() {
 		elementX = element.getBoundingClientRect().left;
 	}
-
-	// Allows both bind:value and on:change for parent value retrieval
 
 	let blockChange = false;
 	function setValue(val) {
@@ -168,6 +162,12 @@
 		// Update thumb position + active range track width
 		thumb.style.left = `${offsetLeft}px`;
 		progressBar.style.width = `${offsetLeft}px`;
+	}
+
+	$: if (value && element) {
+		tick().then(() => {
+			element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+		});
 	}
 
 	function clampValue(val) {
@@ -367,16 +367,14 @@
 		margin: 0;
 	}
 
-	/* Firefox */
 	input[type='number'] {
 		-moz-appearance: textfield;
 	}
 
-	/* Disable selection */
 	input[type='number'] {
-		-webkit-user-select: none; /* Safari */
-		-moz-user-select: none; /* Firefox */
-		-ms-user-select: none; /* IE10+/Edge */
-		user-select: none; /* Standard */
+		-webkit-user-select: none;
+		-moz-user-select: none;
+		-ms-user-select: none;
+		user-select: none;
 	}
 </style>

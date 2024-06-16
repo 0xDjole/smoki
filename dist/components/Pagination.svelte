@@ -9,7 +9,7 @@ export let fetchOnMount = true;
 export let itemProps;
 export let id;
 export let notFoundText;
-export let t = null;
+export let t;
 let component;
 let listComponent;
 export let height = '100%';
@@ -108,7 +108,7 @@ const fetchData = async (isFromTop) => {
 	</ul>
 
 	{#if !fetchingMore && !items.length}
-		<span class="text-lg md:text-xl text-primary font-bold m-2">{notFoundText}</span>
+		<span class="text-lg md:text-xl text-primary font-bold m-2">{$t(notFoundText)}</span>
 	{/if}
 
 	<div class="spacer" bind:this={spacer} />

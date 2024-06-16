@@ -27,7 +27,6 @@
 				{ label: 'Contains', value: 'contains' },
 				{ label: 'Range', value: 'range' }
 			],
-			isCustomInputAllowed: true,
 			isOption: true,
 			isRange: false,
 			defaultProperties: {}
@@ -44,7 +43,6 @@
 				{ label: 'Contains', value: 'contains' },
 				{ label: 'Range', value: 'range' }
 			],
-			isCustomInputAllowed: true,
 			isOption: true,
 			isRange: true,
 			defaultProperties: {}
@@ -61,14 +59,12 @@
 				{ label: 'Contains', value: 'contains' },
 				{ label: 'Range', value: 'range' }
 			],
-			isCustomInputAllowed: true,
 			isOptionFieldType: true,
 			isRange: true,
 			defaultProperties: {}
 		},
 		entities: {
 			operations: [],
-			isCustomInputAllowed: false,
 			isOptionFieldType: false,
 			isRange: false,
 			defaultProperties: {}
@@ -88,14 +84,6 @@
 				label="Operation"
 				bind:value={value.properties.operation}
 				options={propertyTypes[fieldType].operations}
-			/>
-		{/if}
-
-		{#if propertyTypes[fieldType].isCustomInputAllowed}
-			<Switch
-				{t}
-				label="Is custom input allowed"
-				bind:value={value.properties.isCustomInputAllowed}
 			/>
 		{/if}
 

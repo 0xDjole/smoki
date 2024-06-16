@@ -64,18 +64,16 @@
 					{/if}
 
 					{#if fieldConfig?.properties?.range}
-						<div class={`${fieldConfig?.properties?.isCustomInputAllowed ? 'mt-3' : ''}`}>
-							<Range
-								isRequired={fieldConfig.isRequired}
-								{t}
-								label={translate(fieldConfig.translations, locale, fieldConfig.key)}
-								bind:value={fields[index].value}
-								bind:errors={fields[index].errors}
-								max={+fieldConfig.properties.range.max}
-								min={+fieldConfig.properties.range.min}
-								id="basic-slider"
-							/>
-						</div>
+						<Range
+							isRequired={fieldConfig.isRequired}
+							{t}
+							label={translate(fieldConfig.translations, locale, fieldConfig.key)}
+							bind:value={fields[index].value}
+							bind:errors={fields[index].errors}
+							max={+fieldConfig.properties.range.max}
+							min={+fieldConfig.properties.range.min}
+							id="basic-slider"
+						/>
 					{/if}
 
 					{#if fieldConfig.type === 'boolean'}

@@ -166,7 +166,18 @@
 
 	$: if (value && element) {
 		tick().then(() => {
-			element.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+			const elementRect = element.getBoundingClientRect();
+			const desiredOffset = 50;
+			const scrollTarget =
+				window.scrollY +
+				elementRect.top -
+				(window.innerHeight - elementRect.height) / 2 +
+				desiredOffset;
+
+			window.scrollTo({
+				top: scrollTarget,
+				behavior: 'smooth'
+			});
 		});
 	}
 

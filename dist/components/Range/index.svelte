@@ -409,4 +409,24 @@
 		text-align: center;
 		outline: 2px solid transparent;
 		outline-offset: 2px;
-}</style>
+}
+
+	input[type='number']::-webkit-inner-spin-button,
+	input[type='number']::-webkit-outer-spin-button {
+		-webkit-appearance: none;
+		margin: 0;
+	}
+
+	/* Firefox */
+
+	input[type='number'] {
+		-moz-appearance: textfield;
+	}
+
+	/* Disable selection */
+
+	input[type='number'] {
+		-webkit-user-select: none; /* Safari */
+		-moz-user-select: none; /* Firefox */ /* IE10+/Edge */
+		user-select: none; /* Standard */
+	}</style>

@@ -15,6 +15,7 @@
 	export let labelThumbnail;
 	export let t;
 	export let isRequired;
+	export let clearErrorsOnInput = true;
 </script>
 
 <div class="w-full">
@@ -31,7 +32,11 @@
 			{accept}
 			on:input={(e) => {
 				e.preventDefault();
-				errors = [];
+
+				if (clearErrorsOnInput) {
+					errors = [];
+				}
+
 				onChange(e.target.value);
 			}}
 		/>
@@ -48,7 +53,11 @@
 			{accept}
 			on:input={(e) => {
 				e.preventDefault();
-				errors = [];
+
+				if (clearErrorsOnInput) {
+					errors = [];
+				}
+
 				onChange(e.target.value);
 			}}
 		/>
@@ -65,7 +74,11 @@
 			{accept}
 			on:input={(e) => {
 				e.preventDefault();
-				errors = [];
+
+				if (clearErrorsOnInput) {
+					errors = [];
+				}
+
 				onChange(e.target.value);
 			}}
 		/>

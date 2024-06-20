@@ -49,28 +49,30 @@
 			return true;
 		})
 		.map( (field) => ({ field, fieldConfig: fieldConfigs.find((fieldConfig) => fieldConfig.id === field.fieldConfigId) }) ) as { field, fieldConfig }, index}
-		<div
-			class="field"
-			on:click|preventDefault={() => Array.isArray(field.value) && viewMultipleValues(field)}
-		>
-			<div class="key">{translate(fieldConfig.translations, locale, fieldConfig.key)}</div>
+		{#if fieldConfig.type === 'entities'}
+			<slot name="entities" idx={index} value={field.value} {fieldConfig} />
+		{:else if fieldConfig.type === 'custom'}
+			<slot name="custom" idx={index} errors={field.errors} value={field.value} {fieldConfig} />
+		{:else}
+			<div
+				class="field"
+				on:click|preventDefault={() => Array.isArray(field.value) && viewMultipleValues(field)}
+			>
+				<div class="key">{translate(fieldConfig.translations, locale, fieldConfig.key)}</div>
 
-			<div class="value">
-				{#if fieldConfig.type === 'entities'}
-					<slot name="entities" idx={index} value={field.value} {fieldConfig} />
-				{:else if fieldConfig.type === 'custom'}
-					<slot name="custom" idx={index} errors={field.errors} value={field.value} {fieldConfig} />
-				{:else if typeof field.value === 'boolean'}
-					<Button kind={field.value ? 'success' : 'close'} />
-				{:else if Array.isArray(field.value)}
-					<div class="view-button">
-						{field.value.join(', ')}
-					</div>
-				{:else}
-					<span>{field.value}</span>
-				{/if}
+				<div class="value">
+					{#if typeof field.value === 'boolean'}
+						<Button kind={field.value ? 'success' : 'close'} />
+					{:else if Array.isArray(field.value)}
+						<div class="view-button">
+							{field.value.join(', ')}
+						</div>
+					{:else}
+						<span>{field.value}</span>
+					{/if}
+				</div>
 			</div>
-		</div>
+		{/if}
 	{/each}
 </ul>
 

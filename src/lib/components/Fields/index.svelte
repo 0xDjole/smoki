@@ -56,7 +56,9 @@
 			<div class="key">{translate(fieldConfig.translations, locale, fieldConfig.key)}</div>
 
 			<div class="value">
-				{#if fieldConfig.type === 'custom'}
+				{#if fieldConfig.type === 'entities'}
+					<slot name="entities" idx={index} value={field.value} {fieldConfig} />
+				{:else if fieldConfig.type === 'custom'}
 					<slot name="custom" idx={index} errors={field.errors} value={field.value} {fieldConfig} />
 				{:else if typeof field.value === 'boolean'}
 					<Button kind={field.value ? 'success' : 'close'} />

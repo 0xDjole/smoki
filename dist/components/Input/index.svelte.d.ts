@@ -13,6 +13,7 @@ declare const __propDef: {
         labelThumbnail: any;
         t: any;
         isRequired: any;
+        clearErrorsOnInput?: boolean | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

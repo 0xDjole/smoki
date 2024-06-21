@@ -1,6 +1,6 @@
 {
 	"name": "smoki",
-	"version": "0.0.125",
+	"version": "0.0.126",
 	"main": "dist/index.js",
 	"type": "module",
 	"scripts": {

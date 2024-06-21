@@ -17,6 +17,8 @@
 	export let errors = [];
 	export let isRequired = false;
 
+	let thumbOpened = false;
+
 	let container = null;
 	let thumb = null;
 	let progressBar = null;
@@ -54,6 +56,10 @@
 				} else {
 					input.style.width = `70px`;
 				}
+			}
+
+			if (!val) {
+				thumbOpened = false;
 			}
 
 			value = val;
@@ -129,6 +135,8 @@
 
 		if (e.stopPropagation) e.stopPropagation();
 		if (e.preventDefault) e.preventDefault();
+
+		thumbOpened = true;
 
 		// Get client's x cord either touch or mouse
 		const clientX =
@@ -207,7 +215,7 @@
 	on:mouseup={onDragEnd}
 	on:resize={resizeWindow}
 />
-<div class="range" class:range_active={value}>
+<div class="range" class:range_active={thumbOpened}>
 	<div class:passive={!value} class="side side-left">{min}</div>
 	<div class="range__wrapper" bind:this={element} {id}>
 		<div
@@ -223,9 +231,14 @@
 
 		<div bind:this={thumb} class="range_thumb_container">
 			<div class="range__thumb" on:touchstart={onDragStart} on:mousedown={onDragStart}>
-				{#if value}
+				{#if thumbOpened}
 					<div class="range__tooltip" bind:this={input}>
 						<input
+							on:blur={() => {
+								if (!value) {
+									thumbOpened = false;
+								}
+							}}
 							type="number"
 							{min}
 							{max}

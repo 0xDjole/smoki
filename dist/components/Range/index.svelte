@@ -136,8 +136,6 @@
 		if (e.stopPropagation) e.stopPropagation();
 		if (e.preventDefault) e.preventDefault();
 
-		thumbOpened = true;
-
 		// Get client's x cord either touch or mouse
 		const clientX =
 			e.type === 'touchmove' || e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
@@ -202,6 +200,10 @@
 			return max;
 		}
 		return numericValue;
+	}
+
+	$: if (value) {
+		thumbOpened = true;
 	}
 </script>
 

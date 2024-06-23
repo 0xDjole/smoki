@@ -56,6 +56,7 @@
 		{:else if fieldConfig.type === 'text'}
 			<TextArea
 				{t}
+				style="height: min-content;"
 				label={translate(fieldConfig.translations, locale, fieldConfig.key)}
 				bind:value={field.value}
 				errors={[]}

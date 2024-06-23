@@ -76,9 +76,9 @@
 	}
 
 	.primary {
-		@apply w-full p-1 bg-secondary text-primary rounded-lg  font-semibold text-lg md:text-xl outline-none text-opacity-80;
+		@apply w-full p-1 bg-secondary text-primary rounded-lg  font-semibold text-lg md:text-xl outline-none text-opacity-80 resize-none;
 		transition: all 0.3s ease;
-		height: 250px;
+		min-height: 160px;
 	}
 
 	.error-input {

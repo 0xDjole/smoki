@@ -1,5 +1,4 @@
 <script lang="ts">
-	import Input from '../Input/index.svelte';
 	import Switch from '../Switch/index.svelte';
 	import Range from '../Range/index.svelte';
 	import DropDown from '../DropDown/index.svelte';
@@ -12,6 +11,14 @@
 	export let fields = [];
 	export let locale = 'en';
 	export let t;
+
+	$: if (fieldConfigs.length > fields.length) {
+		fields = fieldConfigs.map((config, index) => ({
+			fieldConfigId: config.id,
+			value: fields[index]?.value || '',
+			errors: fields[index]?.errors || []
+		}));
+	}
 
 	const parseLabel = (label) => {
 		if (label.startsWith('+')) {

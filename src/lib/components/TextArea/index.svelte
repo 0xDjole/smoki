@@ -21,7 +21,7 @@
 
 	<textarea
 		bind:value
-		class:primary={kind === 'primary'}
+		class="primary"
 		class:error-input={errors.length}
 		{style}
 		{placeholder}

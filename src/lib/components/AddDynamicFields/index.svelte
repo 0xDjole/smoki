@@ -18,6 +18,7 @@
 
 	const types = [
 		{ label: 'Text', value: 'text' },
+		{ label: 'Select', value: 'select' },
 		{ label: 'Number', value: 'number' },
 		{ label: 'Boolean', value: 'boolean' },
 		{ label: 'Date', value: 'date' },
@@ -35,7 +36,8 @@
 	];
 
 	const uiOptions = {
-		text: [
+		text: [{ label: 'Default', value: 'default' }],
+		select: [
 			{ label: 'Default', value: 'default' },
 			{ label: 'Nice select', value: 'nice_select' }
 		],

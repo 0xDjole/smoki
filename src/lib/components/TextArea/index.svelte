@@ -13,30 +13,68 @@
 	export let label = '';
 	export let labelThumbnail;
 	export let t;
-	export let isRequired = false;
+	export let minLength = 0;
+	export let maxLength = 2000;
+	export let isDisabled = false;
 </script>
 
 <div class="w-full">
-	<Label {isRequired} {t} {label} {errors} {labelThumbnail} />
+	<Label isRequired={minLength > 0} {t} {label} {errors} {labelThumbnail} />
 
-	<textarea
-		bind:value
-		class="primary"
-		class:error-input={errors.length}
-		{style}
-		{placeholder}
-		{accept}
-		on:input={(e) => {
-			e.preventDefault();
-			errors = [];
-			onChange(e.target.value);
-		}}
-	/>
+	<div class="text-area">
+		<textarea
+			bind:value
+			disabled={isDisabled}
+			minlength={minLength}
+			maxlength={maxLength}
+			class="primary"
+			class:error-input={errors.length}
+			{style}
+			{placeholder}
+			{accept}
+			on:input={(e) => {
+				e.preventDefault();
+				errors = [];
+				onChange(e.target.value);
+			}}
+		/>
 
+		<div
+			class="used"
+			class:error-text={value?.length < minLength}
+			class:success-text={value?.length >= minLength}
+		>
+			{#if minLength}
+				<div>
+					Min {minLength}
+				</div>
+			{/if}
+
+			<div>
+				{value?.length || 0} / {maxLength}
+			</div>
+		</div>
+	</div>
 	<ErrorMessage {t} {errors} />
 </div>
 
 <style type="text/postcss">
+	.error-text {
+		@apply text-error;
+	}
+
+	.success-text {
+		@apply text-success;
+	}
+
+	.used {
+		@apply flex gap-x-3 absolute bottom-5 right-5 font-bold;
+	}
+
+	.text-area {
+		@apply relative;
+	}
+
 	.primary {
 		@apply w-full p-1 bg-secondary text-primary rounded-lg  font-semibold text-lg md:text-xl outline-none text-opacity-80;
 		transition: all 0.3s ease;

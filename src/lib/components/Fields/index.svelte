@@ -3,10 +3,12 @@
 	import NiceSelect from '../NiceSelect/index.svelte';
 	import Modal from '../Modal/index.svelte';
 	import translate from '../../utils/helpers/translate';
+	import TextArea from '../TextArea/index.svelte';
 
 	export let fields = [];
 	export let fieldConfigs = [];
 	export let locale = 'en';
+	export let t;
 
 	let values = [];
 	let key = '';
@@ -51,6 +53,14 @@
 		.map( (field) => ({ field, fieldConfig: fieldConfigs.find((fieldConfig) => fieldConfig.id === field.fieldConfigId) }) ) as { field, fieldConfig }, index}
 		{#if fieldConfig.type === 'entities'}
 			<slot name="entities" idx={index} value={field.value} {fieldConfig} />
+		{:else if fieldConfig.type === 'text'}
+			<TextArea
+				{t}
+				label={translate(fieldConfig.translations, locale, fieldConfig.key)}
+				bind:value={field.value}
+				errors={[]}
+				isDisabled={true}
+			/>
 		{:else if fieldConfig.type === 'custom'}
 			<slot name="custom" idx={index} errors={field.errors} value={field.value} {fieldConfig} />
 		{:else}

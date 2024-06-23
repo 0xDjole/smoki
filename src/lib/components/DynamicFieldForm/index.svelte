@@ -33,12 +33,12 @@
 				{#if fields[index]}
 					{#if fieldConfig?.type === 'text'}
 						<TextArea
-							isRequired={fieldConfig.isRequired}
 							{t}
 							label={translate(fieldConfig.translations, locale, fieldConfig.key)}
 							bind:value={fields[index].value}
 							bind:errors={fields[index].errors}
-							id="basic-slider"
+							minLength={fieldConfig?.properties?.minLength}
+							maxLength={fieldConfig?.properties?.maxLength}
 						/>
 					{:else if fieldConfig?.properties?.options?.length}
 						{#if fieldConfig?.ui === 'nice_select'}

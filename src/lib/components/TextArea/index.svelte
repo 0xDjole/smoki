@@ -5,7 +5,6 @@
 	export let kind;
 	export let onChange = (value) => {};
 	export let placeholder;
-	export let accept = '';
 	export let value;
 	export let type = 'text';
 	export let style = '';
@@ -22,22 +21,25 @@
 	<Label isRequired={minLength > 0} {t} {label} {errors} {labelThumbnail} />
 
 	<div class="text-area">
-		<textarea
-			bind:value
-			disabled={isDisabled}
-			minlength={minLength}
-			maxlength={maxLength}
-			class="primary"
-			class:error-input={errors.length}
-			{style}
-			{placeholder}
-			{accept}
-			on:input={(e) => {
-				e.preventDefault();
-				errors = [];
-				onChange(e.target.value);
-			}}
-		/>
+		{#if t}
+			<textarea
+				bind:value
+				disabled={isDisabled}
+				minlength={minLength}
+				maxlength={maxLength}
+				class="primary"
+				class:error-input={errors.length}
+				{style}
+				placeholder={placeholder
+					? `${$t('placeholder')}`
+					: `${$t('enter')}  ${$t('between')} ${minLength} ${$t('and')} ${maxLength}`}
+				on:input={(e) => {
+					e.preventDefault();
+					errors = [];
+					onChange(e.target.value);
+				}}
+			/>
+		{/if}
 
 		<div
 			class="used"

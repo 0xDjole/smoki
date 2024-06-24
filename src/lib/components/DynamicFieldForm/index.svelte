@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { onMount } from 'svelte';
 	import Switch from '../Switch/index.svelte';
 	import Range from '../Range/index.svelte';
 	import DropDown from '../DropDown/index.svelte';
@@ -31,11 +32,20 @@
 
 		return label;
 	};
+
+	let elements = [];
+
+	$: {
+		const errorIndex = fields.findIndex((field) => field.errors && field.errors.length);
+		if (errorIndex !== -1 && elements[errorIndex]) {
+			elements[errorIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+		}
+	}
 </script>
 
 <div class="custom-field-config-body">
 	{#each fieldConfigs as fieldConfig, index (fieldConfig.id)}
-		<div class="flex gap-x-2">
+		<div class="flex gap-x-2" bind:this={elements[index]}>
 			<div class="md:p-1 md:px-3 w-full box-border">
 				{#if fields[index]}
 					{#if fieldConfig?.type === 'text'}

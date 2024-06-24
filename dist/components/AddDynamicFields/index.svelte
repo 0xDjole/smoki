@@ -13,6 +13,7 @@ export let addEntity = () => { };
 export let t;
 const types = [
     { label: 'Text', value: 'text' },
+    { label: 'Select', value: 'select' },
     { label: 'Number', value: 'number' },
     { label: 'Boolean', value: 'boolean' },
     { label: 'Date', value: 'date' },
@@ -27,7 +28,8 @@ const isFilterOptions = [
     { label: 'Is not filter', value: false }
 ];
 const uiOptions = {
-    text: [
+    text: [{ label: 'Default', value: 'default' }],
+    select: [
         { label: 'Default', value: 'default' },
         { label: 'Nice select', value: 'nice_select' }
     ],

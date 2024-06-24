@@ -2,12 +2,20 @@
 import Range from '../Range/index.svelte';
 import DropDown from '../DropDown/index.svelte';
 import Select from '../NiceSelect/index.svelte';
+import TextArea from '../TextArea/index.svelte';
 import translate from '../../utils/helpers/translate';
 export let label = 'Custom fieldConfigs';
 export let fieldConfigs = [];
 export let fields = [];
 export let locale = 'en';
 export let t;
+$: if (fieldConfigs.length > fields.length) {
+    fields = fieldConfigs.map((config, index) => ({
+        fieldConfigId: config.id,
+        value: fields[index]?.value || '',
+        errors: fields[index]?.errors || []
+    }));
+}
 const parseLabel = (label) => {
     if (label.startsWith('+')) {
         return label.slice(1) + '+';
@@ -24,7 +32,16 @@ const parseLabel = (label) => {
 		<div class="flex gap-x-2">
 			<div class="md:p-1 md:px-3 w-full box-border">
 				{#if fields[index]}
-					{#if fieldConfig?.properties?.options?.length}
+					{#if fieldConfig?.type === 'text'}
+						<TextArea
+							{t}
+							label={translate(fieldConfig.translations, locale, fieldConfig.key)}
+							bind:value={fields[index].value}
+							bind:errors={fields[index].errors}
+							minLength={fieldConfig?.properties?.minLength}
+							maxLength={fieldConfig?.properties?.maxLength}
+						/>
+					{:else if fieldConfig?.properties?.options?.length}
 						{#if fieldConfig?.ui === 'nice_select'}
 							<Select
 								isRequired={fieldConfig.isRequired}

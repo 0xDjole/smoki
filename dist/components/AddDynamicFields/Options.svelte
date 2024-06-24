@@ -10,6 +10,7 @@ export let type = 'text';
 export let t;
 let value;
 let condition;
+$: inputType = type === 'select' ? 'text' : type;
 const operations = [
     { label: 'Smaller than', value: '<' },
     { label: 'Greater than', value: '>' },
@@ -29,7 +30,7 @@ const removeOption = (index) => {
 <Label {t} {label} {errors} />
 
 <div class="input">
-	<Input {t} bind:value {type} kind="primary" placeholder="Please enter value" />
+	<Input {t} bind:value type={inputType} kind="primary" placeholder="Please enter value" />
 
 	<DropDown {t} options={operations} bind:value={condition} />
 

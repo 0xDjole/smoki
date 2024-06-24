@@ -13,6 +13,12 @@ export let addEntity;
 export let t;
 const propertyTypes = {
     text: {
+        operations: [],
+        defaultProperties: {},
+        isOption: false,
+        isRange: false
+    },
+    select: {
         operations: [
             { label: 'Greater than', value: 'plus' },
             { label: 'Less than', value: 'minus' },
@@ -80,6 +86,26 @@ $: if (!value.properties) {
 				label="Operation"
 				bind:value={value.properties.operation}
 				options={propertyTypes[fieldType].operations}
+			/>
+		{/if}
+
+		{#if fieldType === 'text'}
+			<Input
+				{t}
+				label="Min length"
+				bind:value={value.properties.minLength}
+				type="text"
+				kind="primary"
+				placeholder="Please enter min length"
+			/>
+
+			<Input
+				{t}
+				label="Max length"
+				bind:value={value.properties.maxLength}
+				type="text"
+				kind="primary"
+				placeholder="Please enter max length"
 			/>
 		{/if}
 

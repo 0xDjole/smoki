@@ -207,8 +207,6 @@
 	}
 </script>
 
-<Label {isRequired} {t} {label} {labelThumbnail} {errors} />
-
 <svelte:window
 	on:touchmove|nonpassive={updateValueOnEvent}
 	on:touchcancel={onDragEnd}
@@ -217,64 +215,68 @@
 	on:mouseup={onDragEnd}
 	on:resize={resizeWindow}
 />
-<div class="range" class:range_active={thumbOpened}>
-	<div class:passive={!value} class="side side-left">{min}</div>
-	<div class="range__wrapper" bind:this={element} {id}>
-		<div
-			on:mousedown={onTrackEvent}
-			on:touchstart={onTrackEvent}
-			on:keydown={onKeyPress}
-			class:passive={!value}
-			class="range__track"
-			bind:this={container}
-		>
-			<div class="range__track--highlighted" bind:this={progressBar} />
-		</div>
 
-		<div bind:this={thumb} class="range_thumb_container">
-			<div class="range__thumb" on:touchstart={onDragStart} on:mousedown={onDragStart}>
-				{#if thumbOpened}
-					<div class="range__tooltip" bind:this={input}>
-						<input
-							on:blur={() => {
-								if (!value) {
-									thumbOpened = false;
-								}
-							}}
-							type="number"
-							{min}
-							{max}
-							bind:value
-							on:input={(e) => {
-								value = clampValue(e.target.value);
-							}}
-							on:change={(e) => {
-								value = clampValue(e.target.value);
-							}}
-							class="tool-input"
-						/>
-					</div>
-				{/if}
+{#if t}
+	<Label {isRequired} {t} {label} {labelThumbnail} {errors} />
+
+	<div class="range" class:range_active={thumbOpened}>
+		<div class:passive={!value} class="side side-left">{min}</div>
+		<div class="range__wrapper" bind:this={element} {id}>
+			<div
+				on:mousedown={onTrackEvent}
+				on:touchstart={onTrackEvent}
+				on:keydown={onKeyPress}
+				class:passive={!value}
+				class="range__track"
+				bind:this={container}
+			>
+				<div class="range__track--highlighted" bind:this={progressBar} />
 			</div>
 
-			{#if value}
-				<button
-					class="close-range"
-					on:touchstart={() => setValue(null)}
-					on:click|preventDefault|stopPropagation={() => {
-						setValue(null);
-					}}
-				>
-					<span>x</span>
-				</button>
-			{/if}
+			<div bind:this={thumb} class="range_thumb_container">
+				<div class="range__thumb" on:touchstart={onDragStart} on:mousedown={onDragStart}>
+					{#if thumbOpened}
+						<div class="range__tooltip" bind:this={input}>
+							<input
+								on:blur={() => {
+									if (!value) {
+										thumbOpened = false;
+									}
+								}}
+								type="number"
+								{min}
+								{max}
+								bind:value
+								on:input={(e) => {
+									value = clampValue(e.target.value);
+								}}
+								on:change={(e) => {
+									value = clampValue(e.target.value);
+								}}
+								class="tool-input"
+							/>
+						</div>
+					{/if}
+				</div>
+
+				{#if value}
+					<button
+						class="close-range"
+						on:touchstart={() => setValue(null)}
+						on:click|preventDefault|stopPropagation={() => {
+							setValue(null);
+						}}
+					>
+						<span>x</span>
+					</button>
+				{/if}
+			</div>
 		</div>
+
+		<div class:passive={!value} class="side side-right">{max}</div>
 	</div>
-
-	<div class:passive={!value} class="side side-right">{max}</div>
-</div>
-
-<ErrorMessage {t} {errors} />
+	<ErrorMessage {t} {errors} />
+{/if}
 
 <style>
 	.side {

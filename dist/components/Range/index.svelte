@@ -170,6 +170,13 @@
 		progressBar.style.width = `${offsetLeft}px`;
 	}
 
+	const getLeft = (value) => {
+		let percent = getPercent(value, min, max);
+		let offsetLeft = (container.clientWidth - 10) * (percent / 100) + 10;
+
+		return offsetLeft;
+	};
+
 	$: if (value && element) {
 		tick().then(() => {
 			const elementRect = element.getBoundingClientRect();
@@ -186,6 +193,8 @@
 			});
 		});
 	}
+
+	let strips = max <= 30 ? Array.from({ length: max }, (_, i) => i + 1) : [];
 
 	function clampValue(val) {
 		let numericValue = parseInt(val, 10);
@@ -231,6 +240,13 @@
 				bind:this={container}
 			>
 				<div class="range__track--highlighted" bind:this={progressBar} />
+				<div class="strips">
+					{#each strips as strip, i}
+						{#if i > 1 && container}
+							<div style={`left: ${getLeft(i)}px`} class="strip" />
+						{/if}
+					{/each}
+				</div>
 			</div>
 
 			<div bind:this={thumb} class="range_thumb_container">
@@ -450,4 +466,17 @@
 		-webkit-user-select: none;
 		-moz-user-select: none;
 		user-select: none;
-	}</style>
+	}
+
+	.strips {
+		position: relative;
+		top: -17px;
+		width: 100%;
+}
+
+	.strip {
+		position: absolute;
+		height: 30px;
+		width: 1.5px;
+		background-color: var(--track-bgcolor, #d0d0d0);
+}</style>

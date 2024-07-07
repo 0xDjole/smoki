@@ -3,8 +3,8 @@
 	export let onSelect;
 	let hovering = false;
 
-	const onMouseEnter = () => (hovering = true);
-	const onMouseLeave = () => (hovering = false);
+	const onPointerEnter = () => (hovering = true);
+	const onPointerLeave = () => (hovering = false);
 	const onClick = () => onSelect(viewDate.date);
 
 	$: dynamicClass = `${hovering && viewDate.isSelectable ? ' hoverSuccess ' : ''}
@@ -17,8 +17,8 @@
 <button
 	disabled={!viewDate.isSelectable}
 	on:click|preventDefault={onClick}
-	on:mouseleave={onMouseLeave}
-	on:mouseenter={onMouseEnter}
+	on:pointerleave={onPointerLeave}
+	on:pointerenter={onPointerEnter}
 	class="item day-of-month {dynamicClass}"
 >
 	<span>

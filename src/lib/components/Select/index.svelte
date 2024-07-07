@@ -8,6 +8,7 @@
 	export let options = [];
 	export let label = '';
 	export let labelThumbnail = null;
+	export let t;
 
 	export let errors = [];
 
@@ -20,11 +21,12 @@
 
 <div class="select">
 	<button class="select-button" on:click|preventDefault={() => (showModal = !showModal)}>
-		<span>{selectedOption?.label || 'Choose'}</span>
-
-		<SvgIcon data={DropDownIcon} width={'20px'} size={'20px'} color={'white'} />
+		<span class="button-text">{$t(selectedOption?.label || 'choose')}</span>
+		<div class="dropdown-svg">
+			<SvgIcon data={DropDownIcon} width="20px" height="20px" color="white" />
+		</div>
 	</button>
-	{#if showModal === true}
+	{#if showModal}
 		<div class="options">
 			{#each options as option}
 				<div
@@ -50,7 +52,15 @@
 	}
 
 	.select-button {
-		@apply text-base flex w-full p-1 bg-accent text-white rounded-lg border-2 border-secondary border-solid font-semibold md:text-lg outline-none gap-x-2 justify-between items-center;
+		@apply text-base flex w-full p-1 bg-accent text-white rounded-lg border-2 border-secondary border-solid font-semibold md:text-lg outline-none gap-x-2 items-center justify-between;
+	}
+
+	.button-text {
+		@apply ml-3 flex-1 text-center;
+	}
+
+	.dropdown-svg {
+		flex-shrink: 0; /* Prevent the icon from shrinking */
 	}
 
 	.options {

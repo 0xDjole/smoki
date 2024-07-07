@@ -1,6 +1,9 @@
 import { DateTime } from 'luxon';
 
-const hour = (from: DateTime, to: DateTime) => {
+const hour = (from: DateTime, to: DateTime, timezone = 'local') => {
+	from = timezone === 'local' ? from.toLocal() : from.setZone(timezone);
+	to = timezone === 'local' ? to.toLocal() : to.setZone(timezone);
+
 	let fromFormat = from
 		? `${from.hour.toString().padStart(2, '0')}h:${from.minute.toString().padStart(2, '0')}m`
 		: null;
@@ -9,13 +12,11 @@ const hour = (from: DateTime, to: DateTime) => {
 		: null;
 
 	if (from && to && (from.day !== to.day || from.month !== to.month || from.year !== to.year)) {
-		const dayDifference = to.toLocal().diff(from.toLocal(), ['days']).days;
+		const dayDifference = to.diff(from, ['days']).days;
 		let nextDayIndicator = `next day`;
-
 		if (dayDifference > 1) {
 			nextDayIndicator = `in ${dayDifference} days`;
 		}
-
 		toFormat += ` (${nextDayIndicator})`;
 	}
 

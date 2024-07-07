@@ -16,6 +16,7 @@
 
 	export let month;
 	export let year;
+	0;
 
 	const dispatch = createEventDispatcher();
 
@@ -146,7 +147,7 @@
 		@apply grid bg-primary rounded-xl;
 		width: 100%;
 		@screen md {
-			width: 600px;
+			width: 500px;
 		}
 	}
 

@@ -54,10 +54,10 @@
 	}
 
 	.options {
-		@apply flex flex-col w-full absolute top-10 left-0 rounded-md bg-secondary;
+		@apply flex flex-col w-full absolute top-10 left-0 rounded-md bg-secondary max-h-[300px] overflow-scroll;
 	}
 	.item {
-		@apply cursor-pointer p-1 w-full text-base;
+		@apply cursor-pointer p-2 w-full text-base text-primary font-bold;
 	}
 	.selected {
 		@apply bg-accent p-1 rounded-md;

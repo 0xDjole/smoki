@@ -6,6 +6,7 @@ export let defaultOption;
 export let options = [];
 export let label = '';
 export let labelThumbnail = null;
+export let t;
 export let errors = [];
 const dispatch = createEventDispatcher();
 let showModal = false;
@@ -14,11 +15,12 @@ $: selectedOption = options.find((option) => option.value === value);
 
 <div class="select">
 	<button class="select-button" on:click|preventDefault={() => (showModal = !showModal)}>
-		<span>{selectedOption?.label || 'Choose'}</span>
-
-		<SvgIcon data={DropDownIcon} width={'20px'} size={'20px'} color={'white'} />
+		<span class="button-text">{$t(selectedOption?.label || 'choose')}</span>
+		<div class="dropdown-svg">
+			<SvgIcon data={DropDownIcon} width="20px" height="20px" color="white" />
+		</div>
 	</button>
-	{#if showModal === true}
+	{#if showModal}
 		<div class="options">
 			{#each options as option}
 				<div
@@ -74,13 +76,25 @@ $: selectedOption = options.find((option) => option.value === value);
 		}
 }
 
+	.button-text {
+		margin-left: 0.75rem;
+		flex: 1 1 0%;
+		text-align: center
+}
+
+	.dropdown-svg {
+		flex-shrink: 0; /* Prevent the icon from shrinking */
+	}
+
 	.options {
 		position: absolute;
 		top: 2.5rem;
 		left: 0px;
 		display: flex;
+		max-height: 300px;
 		width: 100%;
 		flex-direction: column;
+		overflow: scroll;
 		border-radius: 0.375rem;
 		background-color: var(--secondary-background-color)
 }
@@ -88,9 +102,11 @@ $: selectedOption = options.find((option) => option.value === value);
 	.item {
 		width: 100%;
 		cursor: pointer;
-		padding: 0.25rem;
+		padding: 0.5rem;
 		font-size: 1rem;
-		line-height: 1.5rem
+		line-height: 1.5rem;
+		font-weight: 700;
+		color: var(--primary-text-color)
 }
 
 	.selected {

@@ -6,6 +6,7 @@ declare const __propDef: {
         options?: any[] | undefined;
         label?: string | undefined;
         labelThumbnail?: null | undefined;
+        t: any;
         errors?: any[] | undefined;
     };
     events: {

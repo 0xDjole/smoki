@@ -1,5 +1,4 @@
-<script>import Input from '../Input/index.svelte';
-import Upload from '../Upload.svelte';
+<script>import Upload from '../Upload.svelte';
 import Modal from '../Modal/index.svelte';
 import NiceSelect from '../NiceSelect/index.svelte';
 import DropDown from '../DropDown/index.svelte';
@@ -48,9 +47,6 @@ export let field;
 export let defaultField;
 let fieldStatus = {
     key: {
-        errors: []
-    },
-    label: {
         errors: []
     },
     ui: {
@@ -104,21 +100,11 @@ $: if (!field) {
 		}}
 	>
 		<div class="add-field-body">
-			<Input
+			<LocalizedLabels
 				{t}
 				label="Key"
 				bind:errors={fieldStatus.key.errors}
-				bind:value={field.key}
-				type="text"
-				kind="primary"
-				placeholder="Please enter key"
-			/>
-
-			<LocalizedLabels
-				{t}
-				label="Translations"
-				bind:errors={fieldStatus.label.errors}
-				bind:labels={field.translations}
+				bind:labels={field.key}
 			/>
 			<NiceSelect
 				{t}

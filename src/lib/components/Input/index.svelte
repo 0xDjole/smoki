@@ -1,5 +1,4 @@
 <script lang="ts">
-	import PhoneNumber from './PhoneNumber.svelte';
 	import ErrorMessage from '../ErrorMessage.svelte';
 	import Label from '../Label.svelte';
 

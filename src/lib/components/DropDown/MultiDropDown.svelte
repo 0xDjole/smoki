@@ -61,7 +61,7 @@
 
 <style type="text/postcss">
 	.option {
-		@apply cursor-pointer p-1 md:p-3 my-2 rounded-md font-bold text-lg transition-all duration-200 ease-in-out shadow-sm text-secondary hover:opacity-60;
+		@apply cursor-pointer p-1 md:p-3 rounded-md font-bold text-lg transition-all duration-200 ease-in-out shadow-sm text-secondary hover:opacity-60;
 	}
 
 	.selected {

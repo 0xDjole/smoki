@@ -1,15 +1,17 @@
 <script lang="ts">
 	import Button from '../Button/index.svelte';
-	import NiceSelect from '../NiceSelect/index.svelte';
 	import DropDown from '../DropDown/index.svelte';
-	import Modal from '../Modal/index.svelte';
-
 	import Input from '../Input/index.svelte';
+	import Label from '../Label.svelte';
+	import TextArea from '../TextArea/index.svelte';
 
 	export let label = '';
+	export let type = 'text';
 	export let labels = {};
 	export let errors = [];
+	export let placeholder = 'Please enter label';
 	export let t;
+	export let isRequired = false;
 
 	let value = '';
 	let language = 'en';
@@ -34,33 +36,30 @@
 </script>
 
 <div class="add-label">
-	<div>
-		<Input
-			{t}
-			{label}
-			bind:errors
-			bind:value
-			type="text"
-			kind="primary"
-			placeholder="Please enter label"
-		/>
-	</div>
+	<Label {isRequired} {t} {label} errors={[]} />
+
+	<DropDown {t} options={languages} errors={[]} bind:value={language} />
 
 	<div>
-		<DropDown {t} options={languages} errors={[]} bind:value={language} />
+		{#if type === 'text'}
+			<Input {t} bind:errors bind:value type="text" kind="primary" {placeholder} />
+		{/if}
+
+		{#if type === 'text-area'}
+			<TextArea style="height: min-content;" {t} bind:errors bind:value {placeholder} />
+		{/if}
 	</div>
 
 	<div class="add-btn">
-		<Button onClick={addLabel}>Add</Button>
+		<Button size="large" kind="submit" onClick={addLabel}>Add</Button>
 	</div>
 </div>
 
 <div class="labels">
 	{#each Object.entries(labels) as [key, value]}
 		<li class="label">
-			<div class="label-key">{key}</div>
-			<div class="label-value">
-				<span> {value}</span>
+			<div class="label-key">
+				<span>{key}</span>
 
 				<Button
 					onClick={() => {
@@ -70,31 +69,32 @@
 					kind="close"
 				/>
 			</div>
+
+			<div class="label-value">
+				<span> {value}</span>
+			</div>
 		</li>
 	{/each}
 </div>
 
 <style lang="postcss">
 	.add-label {
-		@apply flex items-center gap-x-3;
+		@apply flex flex-col gap-y-3;
 	}
 
 	.label {
-		@apply flex text-xl;
+		@apply flex flex-col text-xl mb-2;
 	}
 
 	.labels {
-		@apply border-primary mt-3 rounded-md text-primary;
+		@apply mt-3 rounded-md text-primary;
 	}
 
 	.label-key {
-		@apply bg-secondary flex-1 p-2;
+		@apply bg-secondary flex-1 p-2 flex justify-between;
 	}
 
 	.label-value {
 		@apply bg-accent flex-1 p-2 flex items-center justify-between;
-	}
-	.add-btn {
-		@apply flex-1;
 	}
 </style>

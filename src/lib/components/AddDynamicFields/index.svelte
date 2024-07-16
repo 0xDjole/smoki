@@ -60,10 +60,6 @@
 		key: {
 			errors: []
 		},
-		label: {
-			errors: []
-		},
-
 		ui: {
 			errors: []
 		},
@@ -119,21 +115,11 @@
 		}}
 	>
 		<div class="add-field-body">
-			<Input
+			<LocalizedLabels
 				{t}
 				label="Key"
 				bind:errors={fieldStatus.key.errors}
-				bind:value={field.key}
-				type="text"
-				kind="primary"
-				placeholder="Please enter key"
-			/>
-
-			<LocalizedLabels
-				{t}
-				label="Translations"
-				bind:errors={fieldStatus.label.errors}
-				bind:labels={field.translations}
+				bind:labels={field.key}
 			/>
 			<NiceSelect
 				{t}

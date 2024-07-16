@@ -51,7 +51,7 @@
 					{#if fieldConfig?.type === 'text'}
 						<TextArea
 							{t}
-							label={translate(fieldConfig.translations, locale, fieldConfig.key)}
+							label={translate(fieldConfig.key, locale)}
 							bind:value={fields[index].value}
 							bind:errors={fields[index].errors}
 							minLength={fieldConfig?.properties?.minLength}
@@ -65,7 +65,7 @@
 								ui={fieldConfig?.ui}
 								isMultiSelect={fieldConfig?.properties.isMultiSelect}
 								position="horizontal"
-								label={translate(fieldConfig.translations, locale, fieldConfig.key)}
+								label={translate(fieldConfig.key, locale)}
 								labelThumbnail={fieldConfig.thumbnail}
 								bind:value={fields[index].value}
 								bind:errors={fields[index].errors}
@@ -78,7 +78,7 @@
 							<DropDown
 								isRequired={fieldConfig.isRequired}
 								{t}
-								label={fieldConfig.key}
+								label={translate(fieldConfig.key, locale)}
 								isMultiSelect={fieldConfig?.properties.isMultiSelect}
 								bind:value={fields[index].value}
 								bind:errors={fields[index].errors}
@@ -94,7 +94,7 @@
 						<Range
 							isRequired={fieldConfig.isRequired}
 							{t}
-							label={translate(fieldConfig.translations, locale, fieldConfig.key)}
+							label={translate(fieldConfig.key, locale)}
 							bind:value={fields[index].value}
 							bind:errors={fields[index].errors}
 							max={+fieldConfig.properties.range.max}
@@ -107,7 +107,7 @@
 						<Switch
 							isRequired={fieldConfig.isRequired}
 							{t}
-							label={translate(fieldConfig.translations, locale, fieldConfig.key)}
+							label={translate(fieldConfig.key, locale)}
 							labelThumbnail={fieldConfig.thumbnail}
 							bind:value={fields[index].value}
 							bind:errors={fields[index].errors}

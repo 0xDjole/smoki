@@ -57,7 +57,7 @@
 			<TextArea
 				{t}
 				style="height: min-content;"
-				label={translate(fieldConfig.translations, locale, fieldConfig.key)}
+				label={translate(fieldConfig.key, locale)}
 				bind:value={field.value}
 				errors={[]}
 				isDisabled={true}
@@ -69,7 +69,7 @@
 				class="field"
 				on:click|preventDefault={() => Array.isArray(field.value) && viewMultipleValues(field)}
 			>
-				<div class="key">{translate(fieldConfig.translations, locale, fieldConfig.key)}</div>
+				<div class="key">{translate(fieldConfig.key, locale)}</div>
 
 				<div class="value">
 					{#if typeof field.value === 'boolean'}

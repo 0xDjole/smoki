@@ -41,7 +41,7 @@
 			{#if fields.length}
 				{#each fields as field, index}
 					<div class="field-item">
-						<div class="field">{field.key}</div>
+						<div class="field">{field.key['en']}</div>
 						<div class="field">{field.type}</div>
 						<div class="field">{field.isRequired}</div>
 						<div class="field last-item">

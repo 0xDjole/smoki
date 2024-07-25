@@ -47,7 +47,7 @@
 
 <style type="text/postcss">
 	.select {
-		@apply flex relative;
+		@apply flex relative w-full;
 		z-index: 1;
 	}
 

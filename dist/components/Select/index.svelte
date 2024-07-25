@@ -43,6 +43,7 @@ $: selectedOption = options.find((option) => option.value === value);
 	.select {
 		position: relative;
 		display: flex;
+		width: 100%;
 		z-index: 1
 }
 

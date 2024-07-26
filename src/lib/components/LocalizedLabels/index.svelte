@@ -29,6 +29,7 @@
 
 	const addLabel = () => {
 		labels[language] = value;
+		console.log(labels, langauge, value);
 
 		value = '';
 		language = 'en';

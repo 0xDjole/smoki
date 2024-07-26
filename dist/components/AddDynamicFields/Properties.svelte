@@ -94,7 +94,7 @@ $: if (!value.properties) {
 				{t}
 				label="Min length"
 				bind:value={value.properties.minLength}
-				type="text"
+				type="number"
 				kind="primary"
 				placeholder="Please enter min length"
 			/>
@@ -103,7 +103,7 @@ $: if (!value.properties) {
 				{t}
 				label="Max length"
 				bind:value={value.properties.maxLength}
-				type="text"
+				type="number"
 				kind="primary"
 				placeholder="Please enter max length"
 			/>

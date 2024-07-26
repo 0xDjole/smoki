@@ -8,6 +8,7 @@
 	import DropDown from '../DropDown/index.svelte';
 	import Properties from './Properties.svelte';
 	import FieldsTable from './FieldsTable.svelte';
+	import FieldValue from '../FieldValue/index.svelte';
 	import LocalizedLabels from '../LocalizedLabels/index.svelte';
 
 	export let label = 'Custom fields';
@@ -171,6 +172,8 @@
 				bind:errors={fieldStatus.type.errors}
 				bind:value={field.autofillIds}
 			/>
+
+			<FieldValue {t} locale="en" fieldConfig={field} field={field.defaultValue} />
 		</div>
 	</Modal>
 

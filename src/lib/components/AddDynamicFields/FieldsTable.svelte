@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { dndzone } from 'svelte-dnd-action';
 	import Close from '../../utils/icons/close.svg?raw';
 	import SvgIcon from '../SvgIcon.svelte';
 	import Label from '../Label.svelte';
@@ -22,12 +23,19 @@
 		field = fields.find((_, i) => i === index);
 		isAddModalOpen = true;
 	};
+
+	const handleDndConsider = (e) => {
+		fields = e.detail.items;
+	};
+
+	const handleDndFinalize = (e) => {
+		fields = e.detail.items;
+	};
 </script>
 
 <div>
 	<div class="field-body">
 		<Label {label} errors={[]} />
-
 		<button on:click|preventDefault={addField} class="add-field-button">Add field</button>
 	</div>
 	<div class="custom-field-body">
@@ -37,9 +45,14 @@
 			<div class="header-item">Is required</div>
 			<div class="header-item">Is filter</div>
 		</div>
-		<div class="fields">
+		<div
+			class="fields"
+			use:dndzone={{ items: fields }}
+			on:consider={handleDndConsider}
+			on:finalize={handleDndFinalize}
+		>
 			{#if fields.length}
-				{#each fields as field, index}
+				{#each fields as field, index (field.id)}
 					<div class="field-item">
 						<div class="field">{field.key['en']}</div>
 						<div class="field">{field.type}</div>
@@ -47,7 +60,6 @@
 						<div class="field last-item">
 							{field.isFilter}
 							<div class="remove-button" on:click|preventDefault={() => editField(index)}>Edit</div>
-
 							<div class="remove-button" on:click|preventDefault={() => removeField(index)}>
 								<SvgIcon data={Close} size={'30px'} color={'white'} />
 							</div>
@@ -63,7 +75,11 @@
 
 <style type="text/postcss">
 	.field-item {
-		@apply flex w-full text-primary font-bold justify-between flex-1;
+		@apply flex w-full text-primary font-bold justify-between flex-1 p-3 bg-accent cursor-move;
+		transition: background-color 0.2s ease;
+	}
+	.field-item:hover {
+		@apply bg-secondary;
 	}
 
 	.field-body {
@@ -100,7 +116,7 @@
 	}
 
 	.fields {
-		@apply bg-accent rounded-b-xl;
+		@apply rounded-b-xl;
 	}
 
 	.field {

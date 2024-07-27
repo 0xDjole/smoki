@@ -49,6 +49,7 @@
 		"libphonenumber-js": "^1.11.3",
 		"luxon": "^3.4.4",
 		"svelte": "^3.59.2",
+		"svelte-dnd-action": "^0.9.49",
 		"svelte-flags": "^1.0.3",
 		"sveltekit-i18n": "^2.4.2",
 		"swiper": "^11.0.7"

@@ -4,7 +4,7 @@ import NiceSelect from '../NiceSelect/index.svelte';
 import DropDown from '../DropDown/index.svelte';
 import Properties from './Properties.svelte';
 import FieldsTable from './FieldsTable.svelte';
-import FieldValue from '../FieldValue/index.svelte';
+import FieldValue from './FieldValue.svelte';
 import LocalizedLabels from '../LocalizedLabels/index.svelte';
 export let label = 'Custom fields';
 export let fields;
@@ -13,6 +13,7 @@ export let addEntity = () => { };
 export let t;
 const types = [
     { label: 'Text', value: 'text' },
+    { label: 'Geo Location', value: 'geo_location' },
     { label: 'Select', value: 'select' },
     { label: 'Number', value: 'number' },
     { label: 'Boolean', value: 'boolean' },
@@ -40,6 +41,7 @@ const uiOptions = {
         { label: 'Default', value: 'default' },
         { label: 'Nice select', value: 'nice_select' }
     ],
+    geo_location: [{ label: 'Default', value: 'default' }],
     date: [
         { label: 'Default', value: 'default' },
         { label: 'Nice select', value: 'nice_select' }
@@ -161,7 +163,7 @@ $: if (!field) {
 				bind:value={field.autofillIds}
 			/>
 
-			<FieldValue {t} locale="en" fieldConfig={field} field={field.defaultValue} />
+			<FieldValue {t} locale="en" fieldConfig={field} bind:fieldValue={field.defaultValue} />
 		</div>
 	</Modal>
 

@@ -37,7 +37,10 @@
 	];
 
 	const uiOptions = {
-		text: [{ label: 'Default', value: 'default' }],
+		text: [
+			{ label: 'Default', value: 'default' },
+			{ label: 'Text area', value: 'text_area' }
+		],
 		select: [
 			{ label: 'Default', value: 'default' },
 			{ label: 'Nice select', value: 'nice_select' }

@@ -41,21 +41,23 @@
 			/>
 		{/if}
 
-		<div
-			class="used"
-			class:error-text={value?.length < minLength}
-			class:success-text={value?.length >= minLength}
-		>
-			{#if minLength}
-				<div>
-					Min {minLength}
-				</div>
-			{/if}
+		{#if !isDisabled}
+			<div
+				class="used"
+				class:error-text={value?.length < minLength}
+				class:success-text={value?.length >= minLength}
+			>
+				{#if minLength}
+					<div>
+						Min {minLength}
+					</div>
+				{/if}
 
-			<div>
-				{value?.length || 0} / {maxLength}
+				<div>
+					{value?.length || 0} / {maxLength}
+				</div>
 			</div>
-		</div>
+		{/if}
 	</div>
 	<ErrorMessage {t} {errors} />
 </div>
@@ -80,7 +82,7 @@
 	.primary {
 		@apply w-full p-1 bg-secondary text-primary rounded-lg  font-semibold text-lg md:text-xl outline-none text-opacity-80 resize-none;
 		transition: all 0.3s ease;
-		min-height: 160px;
+		min-height: 80px;
 	}
 
 	.error-input {

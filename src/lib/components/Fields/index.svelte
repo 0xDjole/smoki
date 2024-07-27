@@ -54,7 +54,7 @@
 		{#if fieldConfig}
 			{#if fieldConfig.type === 'entities'}
 				<slot name="entities" idx={index} value={field.value} {fieldConfig} />
-			{:else if fieldConfig.type === 'text'}
+			{:else if fieldConfig.type === 'text' && fieldConfig.ui === 'text-area'}
 				<TextArea
 					{t}
 					style="height: min-content;"

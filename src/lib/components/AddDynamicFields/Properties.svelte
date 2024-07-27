@@ -78,7 +78,7 @@
 	};
 
 	$: if (!value.properties) {
-		value.properties = {};
+		value.properties = null;
 	}
 </script>
 

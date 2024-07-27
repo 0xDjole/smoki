@@ -4,6 +4,7 @@
 	import Modal from '../Modal/index.svelte';
 	import translate from '../../utils/helpers/translate';
 	import TextArea from '../TextArea/index.svelte';
+	import Map from '../Map/index.svelte';
 
 	export let fields = [];
 	export let fieldConfigs = [];
@@ -54,6 +55,13 @@
 		{#if fieldConfig}
 			{#if fieldConfig.type === 'entities'}
 				<slot name="entities" idx={index} value={field.value} {fieldConfig} />
+			{:else if fieldConfig.type === 'geo_location'}
+				<Map
+					label={translate(fieldConfig.key, locale)}
+					zoom={17}
+					allowTag={false}
+					value={field.value}
+				/>
 			{:else if fieldConfig.type === 'text' && fieldConfig.ui === 'text-area'}
 				<TextArea
 					{t}

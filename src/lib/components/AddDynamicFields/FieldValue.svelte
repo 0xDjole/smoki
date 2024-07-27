@@ -1,20 +1,18 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import Switch from '../Switch/index.svelte';
 	import Range from '../Range/index.svelte';
 	import DropDown from '../DropDown/index.svelte';
 	import Select from '../NiceSelect/index.svelte';
 	import TextArea from '../TextArea/index.svelte';
+	import Map from '../Map/index.svelte';
 	import translate from '../../utils/helpers/translate';
 
 	export let label = 'Custom fieldConfigs';
 	export let fieldConfig = null;
-	export let field = null;
+	export let fieldValue = null;
 	export let locale = 'en';
 	export let index = 0;
 	export let t;
-
-	$: console.log('field ', field, fieldConfig);
 
 	const parseLabel = (label) => {
 		if (label.startsWith('+')) {
@@ -29,13 +27,13 @@
 	};
 </script>
 
-{#if field}
+{#if fieldConfig}
 	{#if fieldConfig?.type === 'text'}
 		<TextArea
 			{t}
 			label={translate(fieldConfig.key, locale)}
-			bind:value={field.value}
-			bind:errors={field.errors}
+			bind:value={fieldValue}
+			errors={[]}
 			minLength={fieldConfig?.properties?.minLength}
 			maxLength={fieldConfig?.properties?.maxLength}
 		/>
@@ -49,8 +47,8 @@
 				position="horizontal"
 				label={translate(fieldConfig.key, locale)}
 				labelThumbnail={fieldConfig.thumbnail}
-				bind:value={field.value}
-				bind:errors={field.errors}
+				bind:value={fieldValue}
+				errors={[]}
 				options={fieldConfig.properties.options.map((option) => ({
 					label: parseLabel(option),
 					value: option
@@ -62,8 +60,8 @@
 				{t}
 				label={translate(fieldConfig.key, locale)}
 				isMultiSelect={fieldConfig?.properties.isMultiSelect}
-				bind:value={field.value}
-				bind:errors={field.errors}
+				bind:value={fieldValue}
+				errors={[]}
 				options={fieldConfig.properties.options.map((option) => ({
 					label: parseLabel(option),
 					value: option
@@ -77,11 +75,10 @@
 			isRequired={fieldConfig.isRequired}
 			{t}
 			label={translate(fieldConfig.key, locale)}
-			bind:value={field.value}
-			bind:errors={field.errors}
+			bind:value={fieldValue}
+			errors={[]}
 			max={+fieldConfig.properties.range.max}
 			min={+fieldConfig.properties.range.min}
-			id="basic-slider"
 		/>
 	{/if}
 
@@ -91,16 +88,20 @@
 			{t}
 			label={translate(fieldConfig.key, locale)}
 			labelThumbnail={fieldConfig.thumbnail}
-			bind:value={field.value}
-			bind:errors={field.errors}
+			bind:value={fieldValue}
+			errors={[]}
 		/>
 	{/if}
 
+	{#if fieldConfig.type === 'geo_location'}
+		<Map label={translate(fieldConfig.key, locale)} bind:value={fieldValue} />
+	{/if}
+
 	{#if fieldConfig.type === 'entities'}
-		<slot name="entities" idx={index} value={field.value} {fieldConfig} />
+		<slot name="entities" idx={index} value={fieldValue} {fieldConfig} />
 	{/if}
 
 	{#if fieldConfig.type === 'custom'}
-		<slot name="custom" idx={index} errors={field.errors} value={field.value} {fieldConfig} />
+		<slot name="custom" idx={index} errors={[]} value={fieldValue} {fieldConfig} />
 	{/if}
 {/if}

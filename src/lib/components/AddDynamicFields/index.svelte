@@ -1,14 +1,11 @@
 <script lang="ts">
-	import { v4 } from '@lukeed/uuid';
-
-	import Input from '../Input/index.svelte';
 	import Upload from '../Upload.svelte';
 	import Modal from '../Modal/index.svelte';
 	import NiceSelect from '../NiceSelect/index.svelte';
 	import DropDown from '../DropDown/index.svelte';
 	import Properties from './Properties.svelte';
 	import FieldsTable from './FieldsTable.svelte';
-	import FieldValue from '../FieldValue/index.svelte';
+	import FieldValue from './FieldValue.svelte';
 	import LocalizedLabels from '../LocalizedLabels/index.svelte';
 
 	export let label = 'Custom fields';
@@ -19,6 +16,7 @@
 
 	const types = [
 		{ label: 'Text', value: 'text' },
+		{ label: 'Geo Location', value: 'geo_location' },
 		{ label: 'Select', value: 'select' },
 		{ label: 'Number', value: 'number' },
 		{ label: 'Boolean', value: 'boolean' },
@@ -49,6 +47,8 @@
 			{ label: 'Default', value: 'default' },
 			{ label: 'Nice select', value: 'nice_select' }
 		],
+		geo_location: [{ label: 'Default', value: 'default' }],
+
 		date: [
 			{ label: 'Default', value: 'default' },
 			{ label: 'Nice select', value: 'nice_select' }
@@ -176,7 +176,7 @@
 				bind:value={field.autofillIds}
 			/>
 
-			<FieldValue {t} locale="en" fieldConfig={field} field={field.defaultValue} />
+			<FieldValue {t} locale="en" fieldConfig={field} bind:fieldValue={field.defaultValue} />
 		</div>
 	</Modal>
 

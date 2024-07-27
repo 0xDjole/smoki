@@ -75,7 +75,7 @@
 
 <style type="text/postcss">
 	.field-item {
-		@apply flex w-full text-primary font-bold justify-between flex-1 p-3 bg-accent cursor-move;
+		@apply flex w-full text-primary font-bold justify-between flex-1 p-3 cursor-move border-primary rounded-md;
 		transition: background-color 0.2s ease;
 	}
 	.field-item:hover {
@@ -116,7 +116,7 @@
 	}
 
 	.fields {
-		@apply rounded-b-xl;
+		@apply mt-3 flex flex-col gap-y-2 rounded-b-xl;
 	}
 
 	.field {

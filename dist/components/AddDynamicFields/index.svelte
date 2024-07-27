@@ -168,7 +168,7 @@ $: if (!field) {
 	</Modal>
 
 	<div>
-		<FieldsTable bind:isAddModalOpen bind:field bind:fields bind:autofillOptions />
+		<FieldsTable {label} bind:isAddModalOpen bind:field bind:fields bind:autofillOptions />
 	</div>
 {/if}
 

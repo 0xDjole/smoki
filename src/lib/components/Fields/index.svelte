@@ -4,11 +4,13 @@
 	import Modal from '../Modal/index.svelte';
 	import translate from '../../utils/helpers/translate';
 	import TextArea from '../TextArea/index.svelte';
+	import Label from '../Label.svelte';
 	import Map from '../Map/index.svelte';
 
 	export let fields = [];
 	export let fieldConfigs = [];
 	export let locale = 'en';
+	export let label = null;
 	export let t;
 
 	let values = [];
@@ -37,6 +39,12 @@
 		key = '';
 	}}><div class="modal-body"><NiceSelect disabled={true} options={values} /></div></Modal
 >
+
+{#if label}
+	<div class="mb-5">
+		<Label {t} {label} />
+	</div>
+{/if}
 
 <ul class="custom-field-body">
 	{#each fields
@@ -99,7 +107,7 @@
 
 <style type="text/postcss">
 	.custom-field-body {
-		@apply flex flex-col rounded-md gap-y-2 h-full w-[95%] md:w-[80%];
+		@apply flex flex-col rounded-md gap-y-2 h-full w-full;
 	}
 
 	.key {

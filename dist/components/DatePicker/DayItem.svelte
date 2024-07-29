@@ -38,12 +38,6 @@ $: dynamicClass = `${hovering && viewDate.isSelectable ? ' hoverSuccess ' : ''}
 		justify-items: center;
 		font-size: 20px;
 }
-		@media (min-width: 768px) {
-	.day-of-month {
-				height: 4rem;
-				width: 4rem;
-		}
-		}
 
 	.day-color-faded {
 		opacity: 0.4;

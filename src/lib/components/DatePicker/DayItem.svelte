@@ -33,9 +33,6 @@
 		align-items: center;
 		justify-items: center;
 		font-size: 20px;
-		@screen md {
-			@apply w-16 h-16;
-		}
 	}
 
 	.day-color-faded {

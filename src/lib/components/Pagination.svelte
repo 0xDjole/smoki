@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { createEventDispatcher, onDestroy, onMount, tick } from 'svelte';
+	import { onDestroy, onMount, tick } from 'svelte';
 
 	import InfiniteScroll from './InfiniteScroll.svelte';
 	import Loader from './Loader.svelte';
@@ -19,8 +19,6 @@
 	export let height = '100%';
 
 	export let listStyle = '';
-
-	const dispatch = createEventDispatcher();
 
 	let fetchingMore = false;
 
@@ -78,7 +76,6 @@
 	onMount(async () => {
 		if (fetchOnMount) {
 			await fetchData(true);
-			dispatch('firstLoad');
 		}
 	});
 

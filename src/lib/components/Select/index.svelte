@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
 	import DropDownIcon from '../../utils/icons/dropdown.svg?raw';
 	import SvgIcon from '../SvgIcon.svelte';
 
@@ -11,8 +10,7 @@
 	export let t;
 
 	export let errors = [];
-
-	const dispatch = createEventDispatcher();
+	export let onChange = (value) => {};
 
 	let showModal = false;
 
@@ -35,7 +33,7 @@
 					on:click|preventDefault={() => {
 						showModal = false;
 						value = option.value;
-						dispatch('change', option.value);
+						onChange(option.value);
 					}}
 				>
 					{option.label}

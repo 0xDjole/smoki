@@ -1,15 +1,14 @@
 <script lang="ts">
-	import { createEventDispatcher } from 'svelte';
 	import { DateTime } from 'luxon';
 	import SvgIcon from '../SvgIcon.svelte';
 	import Plus from '../../utils/icons/plus.svg?raw';
 
-	const dispatch = createEventDispatcher();
 	export let items = [];
 	export let centricDate: DateTime;
 	export let selectDate;
 	export let manageModalOpened = false;
 	export let selectedItem = null;
+	export let onDateChange = (date) => {};
 
 	let clientWidth;
 	let currentTimeTop = null;
@@ -269,18 +268,14 @@
 					days: viewDays
 				});
 
-				dispatch('dateChange', {
-					date: centricDate
-				});
+				onDateChange(centricDate);
 			}}
 			on:keyup={() => {
 				centricDate = centricDate.minus({
 					days: viewDays
 				});
 
-				dispatch('dateChange', {
-					date: centricDate
-				});
+				onDateChange(centricDate);
 			}}
 		>
 			<span>Back</span>
@@ -293,18 +288,14 @@
 					days: viewDays
 				});
 
-				dispatch('dateChange', {
-					date: centricDate
-				});
+				onDateChange(centricDate);
 			}}
 			on:keyup={() => {
 				centricDate = centricDate.plus({
 					days: viewDays
 				});
 
-				dispatch('dateChange', {
-					date: centricDate
-				});
+				onDateChange(centricDate);
 			}}
 		>
 			<span>Next</span>

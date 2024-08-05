@@ -141,8 +141,8 @@
 	</div>
 
 	<InfiniteScroll
-		on:topScrollReset={async (e) => {
-			if (e.detail.fetchData) {
+		topScrollReset={async (fetchData) => {
+			if (fetchData) {
 				const responseItems = await fetchMore(true);
 				const showedOnTop = items.filter((item) => item.showTop === true);
 				items = [...showedOnTop, ...responseItems];
@@ -152,8 +152,8 @@
 		}}
 		hasMore={true}
 		threshold={0}
-		on:bottomScrollReset={async (e) => {
-			if (e.detail.fetchData) {
+		bottomScrollReset={async (fetchData) => {
+			if (fetchData) {
 				await fetchData(false);
 			} else {
 				component.scrollTo({ top: component.scrollHeight - component.clientHeight - 75 });

@@ -7,8 +7,7 @@
 	export let confirmText = 'Confirm';
 	export let label = 'Add Duration';
 	export let value;
-
-	let dispatch = createEventDispatcher();
+	export let onConfirm = () => {};
 
 	let showModal = false;
 	let hours = new Array(24).fill(null).map((item, index) => ({
@@ -47,7 +46,7 @@
 	const onTimePickerConfirm = () => {
 		value = day * 24 * 60 + hour * 60 + minute; // Include days in the calculation
 		showModal = false;
-		dispatch('confirm');
+		onConfirm();
 	};
 
 	$: parsedValue = formatter.duration(value);

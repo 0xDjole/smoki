@@ -1,5 +1,4 @@
-<script>import { createEventDispatcher } from 'svelte';
-import DropDownIcon from '../../utils/icons/dropdown.svg?raw';
+<script>import DropDownIcon from '../../utils/icons/dropdown.svg?raw';
 import SvgIcon from '../SvgIcon.svelte';
 export let value;
 export let defaultOption;
@@ -8,7 +7,7 @@ export let label = '';
 export let labelThumbnail = null;
 export let t;
 export let errors = [];
-const dispatch = createEventDispatcher();
+export let onChange = (value) => { };
 let showModal = false;
 $: selectedOption = options.find((option) => option.value === value);
 </script>
@@ -29,7 +28,7 @@ $: selectedOption = options.find((option) => option.value === value);
 					on:click|preventDefault={() => {
 						showModal = false;
 						value = option.value;
-						dispatch('change', option.value);
+						onChange(option.value);
 					}}
 				>
 					{option.label}

@@ -1,11 +1,11 @@
 <script>
-	import { onDestroy, createEventDispatcher } from 'svelte';
+	import { onDestroy } from 'svelte';
 
 	export let threshold = 0;
 	export let horizontal = false;
 	export let hasMore = true;
-
-	const dispatch = createEventDispatcher();
+	export let topScrollReset = () => {};
+	export let bottomScrollReset = () => {};
 
 	let component;
 	let clearTopTimeoutId;
@@ -30,20 +30,20 @@
 
 		if (e.target.scrollTop === 0) {
 			clearTopTimeoutId = setTimeout(() => {
-				dispatch('topScrollReset', { fetchData: true });
+				topScrollReset(true);
 			}, 300);
 		}
 
 		if (e.target.scrollTop > 0 && e.target.scrollTop < 50) {
 			clearTopTimeoutId = setTimeout(() => {
-				dispatch('topScrollReset', { fetchData: false });
+				topScrollReset(false);
 			}, 200);
 		}
 
 		if (offset <= threshold + 3) {
 			if (hasMore) {
 				clearBottomTimeoutId = setTimeout(() => {
-					dispatch('bottomScrollReset', { fetchData: true });
+					bottomScrollReset(true);
 				}, 200);
 				return null;
 			}
@@ -51,7 +51,7 @@
 
 		if (offset > threshold && offset < 75) {
 			clearBottomTimeoutId = setTimeout(() => {
-				dispatch('bottomScrollReset', { fetchData: false });
+				bottomScrollReset(false);
 			}, 100);
 		}
 	};

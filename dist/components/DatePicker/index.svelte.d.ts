@@ -6,12 +6,11 @@ declare const __propDef: {
         availableValues?: null | undefined;
         betweenValues?: any[] | undefined;
         locale?: string | undefined;
+        onChangeDate?: ((date: any) => void) | undefined;
         month: any;
         year: any;
     };
     events: {
-        changedDate: CustomEvent<any>;
-    } & {
         [evt: string]: CustomEvent<any>;
     };
     slots: {};

@@ -1,9 +1,8 @@
 <script>import SvgIcon from '../SvgIcon.svelte';
 import Search from '../../utils/icons/search.svg?raw';
-import { createEventDispatcher } from 'svelte';
-const dispatch = createEventDispatcher();
 export let value;
 export let placeholder;
+export let onSearch = (value) => { };
 </script>
 
 <div class="search-name" on:click|preventDefault={() => {}}>
@@ -15,7 +14,7 @@ export let placeholder;
 		on:input={(e) => {
 			const value = e.target.value;
 
-			dispatch('searching', { value });
+			onSearch(value);
 		}}
 		{placeholder}
 		bind:value

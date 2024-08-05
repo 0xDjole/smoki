@@ -3,10 +3,9 @@ declare const __propDef: {
     props: {
         value: any;
         placeholder: any;
+        onSearch?: ((value: any) => void) | undefined;
     };
     events: {
-        searching: CustomEvent<any>;
-    } & {
         [evt: string]: CustomEvent<any>;
     };
     slots: {};

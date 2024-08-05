@@ -4,10 +4,9 @@ declare const __propDef: {
         confirmText?: string | undefined;
         label?: string | undefined;
         value: any;
+        onConfirm?: (() => void) | undefined;
     };
     events: {
-        confirm: CustomEvent<any>;
-    } & {
         [evt: string]: CustomEvent<any>;
     };
     slots: {

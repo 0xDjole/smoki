@@ -3,17 +3,16 @@ import DayItem from './DayItem.svelte';
 import SvgIcon from '../SvgIcon.svelte';
 import Great from '../../utils/icons/great.svg?raw';
 import Less from '../../utils/icons/less.svg?raw';
-import { createEventDispatcher } from 'svelte';
 import formatter from '../../utils/helpers/formatter';
 export let onSelect;
 export let selectedValues = [];
 export let availableValues = null;
 export let betweenValues = [];
 export let locale = 'en';
+export let onChangeDate = (date) => { };
 export let month;
 export let year;
 0;
-const dispatch = createEventDispatcher();
 const nextMonth = () => {
     if (month === 12) {
         month = 1;
@@ -26,7 +25,7 @@ const nextMonth = () => {
         month,
         day: 1
     });
-    dispatch('changedDate', dateWithFirstDay);
+    onChangeDate(dateWithFirstDay);
 };
 const previousMonth = () => {
     if (month === 1) {
@@ -40,7 +39,7 @@ const previousMonth = () => {
         month,
         day: 1
     });
-    dispatch('changedDate', dateWithFirstDay);
+    onChangeDate(dateWithFirstDay);
 };
 $: currentDate = DateTime.local().set({
     hour: 0,

@@ -1,4 +1,4 @@
-<script>import { createEventDispatcher, onDestroy, onMount, tick } from 'svelte';
+<script>import { onDestroy, onMount, tick } from 'svelte';
 import InfiniteScroll from './InfiniteScroll.svelte';
 import Loader from './Loader.svelte';
 export let items = [];
@@ -14,7 +14,6 @@ let component;
 let listComponent;
 export let height = '100%';
 export let listStyle = '';
-const dispatch = createEventDispatcher();
 let fetchingMore = false;
 let parentHeight;
 let listHeight;
@@ -62,7 +61,6 @@ onDestroy(() => {
 onMount(async () => {
     if (fetchOnMount) {
         await fetchData(true);
-        dispatch('firstLoad');
     }
 });
 const fetchData = async (isFromTop) => {
@@ -118,8 +116,8 @@ const fetchData = async (isFromTop) => {
 	</div>
 
 	<InfiniteScroll
-		on:topScrollReset={async (e) => {
-			if (e.detail.fetchData) {
+		topScrollReset={async (fetchData) => {
+			if (fetchData) {
 				const responseItems = await fetchMore(true);
 				const showedOnTop = items.filter((item) => item.showTop === true);
 				items = [...showedOnTop, ...responseItems];
@@ -129,8 +127,8 @@ const fetchData = async (isFromTop) => {
 		}}
 		hasMore={true}
 		threshold={0}
-		on:bottomScrollReset={async (e) => {
-			if (e.detail.fetchData) {
+		bottomScrollReset={async (fetchData) => {
+			if (fetchData) {
 				await fetchData(false);
 			} else {
 				component.scrollTo({ top: component.scrollHeight - component.clientHeight - 75 });

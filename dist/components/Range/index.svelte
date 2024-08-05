@@ -1,5 +1,5 @@
 <script>
-	import { tick, createEventDispatcher } from 'svelte';
+	import { tick } from 'svelte';
 
 	import Label from '../Label.svelte';
 	import ErrorMessage from '../ErrorMessage.svelte';
@@ -17,6 +17,8 @@
 	export let errors = [];
 	export let isRequired = false;
 
+	export let onChange = (value) => {};
+
 	let thumbOpened = false;
 
 	let container = null;
@@ -30,8 +32,6 @@
 	let accelerationTimer = null;
 
 	let input = null;
-
-	const dispatch = createEventDispatcher();
 
 	function resizeWindow() {
 		elementX = element.getBoundingClientRect().left;
@@ -64,7 +64,8 @@
 
 			value = val;
 			errors = [];
-			dispatch('change', { value });
+
+			onChange(value);
 		}
 	}
 

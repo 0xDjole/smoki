@@ -15,8 +15,6 @@ declare const __propDef: {
         listStyle?: string | undefined;
     };
     events: {
-        firstLoad: CustomEvent<any>;
-    } & {
         [evt: string]: CustomEvent<any>;
     };
     slots: {};

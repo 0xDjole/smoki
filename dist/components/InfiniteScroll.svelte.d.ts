@@ -4,11 +4,10 @@
 export default class InfiniteScroll extends SvelteComponentTyped<{
     threshold?: number | undefined;
     hasMore?: boolean | undefined;
+    topScrollReset?: (() => void) | undefined;
+    bottomScrollReset?: (() => void) | undefined;
     horizontal?: boolean | undefined;
 }, {
-    topScrollReset: CustomEvent<any>;
-    bottomScrollReset: CustomEvent<any>;
-} & {
     [evt: string]: CustomEvent<any>;
 }, {}> {
 }
@@ -20,12 +19,11 @@ declare const __propDef: {
     props: {
         threshold?: number | undefined;
         hasMore?: boolean | undefined;
+        topScrollReset?: (() => void) | undefined;
+        bottomScrollReset?: (() => void) | undefined;
         horizontal?: boolean | undefined;
     };
     events: {
-        topScrollReset: CustomEvent<any>;
-        bottomScrollReset: CustomEvent<any>;
-    } & {
         [evt: string]: CustomEvent<any>;
     };
     slots: {};

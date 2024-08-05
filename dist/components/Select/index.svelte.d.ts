@@ -8,10 +8,9 @@ declare const __propDef: {
         labelThumbnail?: null | undefined;
         t: any;
         errors?: any[] | undefined;
+        onChange?: ((value: any) => void) | undefined;
     };
     events: {
-        change: CustomEvent<any>;
-    } & {
         [evt: string]: CustomEvent<any>;
     };
     slots: {};

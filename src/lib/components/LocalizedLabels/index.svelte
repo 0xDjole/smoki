@@ -4,6 +4,7 @@
 	import Input from '../Input/index.svelte';
 	import Label from '../Label.svelte';
 	import TextArea from '../TextArea/index.svelte';
+	import ErrorMessage from '../ErrorMessage.svelte';
 
 	export let label = '';
 	export let type = 'text';
@@ -13,26 +14,32 @@
 	export let t;
 	export let isRequired = false;
 
-	let value = '';
-	let language = 'en';
-
-	const languages = [
+	export const languages = [
 		{
 			label: 'English',
-			value: 'en'
+			value: 'en',
+			isRequired: true
 		},
 		{
 			label: 'Bih',
-			value: 'bih'
+			value: 'bih',
+			isRequired: false
 		}
 	];
 
+	let value = '';
+	let language = 'en';
+
 	const addLabel = () => {
+		errors = [];
 		labels[language] = value;
-		console.log(labels, langauge, value);
 
 		value = '';
 		language = 'en';
+	};
+
+	const onChange = () => {
+		errors = [];
 	};
 </script>
 
@@ -43,38 +50,50 @@
 
 	<div>
 		{#if type === 'text'}
-			<Input {t} bind:errors bind:value type="text" kind="primary" {placeholder} />
+			<Input {onChange} {t} bind:value type="text" kind="primary" {placeholder} />
 		{/if}
 
 		{#if type === 'text-area'}
-			<TextArea style="height: min-content;" {t} bind:errors bind:value {placeholder} />
+			<TextArea {onChange} style="height: min-content;" {t} bind:value {placeholder} />
 		{/if}
 	</div>
 
 	<div class="add-btn">
 		<Button size="large" kind="submit" onClick={addLabel}>Add</Button>
 	</div>
+
+	<ErrorMessage {errors} {t} />
 </div>
 
 <div class="labels">
-	{#each Object.entries(labels) as [key, value]}
-		<li class="label">
-			<div class="label-key">
-				<span>{key}</span>
+	{#each languages as language}
+		{#if labels[language.value] || language.isRequired}
+			<li class="label">
+				<div class="label-key">
+					<span>{language.label}</span>
 
-				<Button
-					onClick={() => {
-						const { [key]: _, ...newLabels } = labels;
-						labels = newLabels;
-					}}
-					kind="close"
-				/>
-			</div>
+					<div class="end-key">
+						{#if language.isRequired}
+							<span>Required</span>
+						{/if}
 
-			<div class="label-value">
-				<span> {value}</span>
-			</div>
-		</li>
+						<Button
+							onClick={() => {
+								const { [language.value]: _, ...newLabels } = labels;
+								labels = newLabels;
+							}}
+							kind="close"
+						/>
+					</div>
+				</div>
+
+				{#if labels[language.value]}
+					<div class="label-value">
+						<span>{labels[language.value]}</span>
+					</div>
+				{/if}
+			</li>
+		{/if}
 	{/each}
 </div>
 
@@ -97,5 +116,9 @@
 
 	.label-value {
 		@apply bg-accent flex-1 p-2 flex items-center justify-between;
+	}
+
+	.end-key {
+		@apply flex text-success font-bold;
 	}
 </style>

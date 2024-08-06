@@ -38,7 +38,7 @@ const svgKinds = ['delete', 'add', 'back', 'search', 'user', 'success', 'close',
 		class={`base ${parseSize(size)} ${parseKind(kind)} ${disabled ? 'disabled' : ''} ${className}`}
 		{style}
 		title={disabled ? 'Choose an item and date' : ''}
-		on:click|preventDefault={(e) => {
+		on:click|preventDefault|stopPropagation={(e) => {
 			e.preventDefault();
 			if (onClick) {
 				onClick();

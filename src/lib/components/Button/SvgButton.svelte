@@ -69,7 +69,7 @@
 	};
 </script>
 
-<span class={`remove ${parsePosition(position)}`} on:click|preventDefault={onClick}>
+<span class={`remove ${parsePosition(position)}`} on:click|preventDefault|stopPropagation={onClick}>
 	<SvgIcon data={parseSvgName(svgName)} size={parseSize(size)} color={'white'} />
 </span>
 

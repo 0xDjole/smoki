@@ -82,7 +82,7 @@
 	.primary {
 		@apply w-full p-1 bg-secondary text-primary rounded-lg  font-semibold text-lg md:text-xl outline-none text-opacity-80 resize-none;
 		transition: all 0.3s ease;
-		min-height: 80px;
+		min-height: 100px;
 	}
 
 	.error-input {

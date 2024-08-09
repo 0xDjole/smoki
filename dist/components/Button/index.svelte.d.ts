@@ -8,6 +8,7 @@ declare const __propDef: {
         style?: string | undefined;
         disabled?: boolean | undefined;
         className?: string | undefined;
+        stopPropagation?: boolean | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

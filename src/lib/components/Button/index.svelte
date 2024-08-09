@@ -8,6 +8,7 @@
 	export let style = '';
 	export let disabled = false;
 	export let className = '';
+	export let stopPropagation = true;
 
 	const parseSize = (size) => {
 		if (size === 'large') {
@@ -41,15 +42,20 @@
 </script>
 
 {#if svgKinds.includes(kind)}
-	<SvgButton {size} svgName={kind} {onClick} />
+	<SvgButton {stopPropagation} {size} svgName={kind} {onClick} />
 {:else}
 	<button
 		{disabled}
 		class={`base ${parseSize(size)} ${parseKind(kind)} ${disabled ? 'disabled' : ''} ${className}`}
 		{style}
 		title={disabled ? 'Choose an item and date' : ''}
-		on:click|preventDefault|stopPropagation={(e) => {
+		on:click={(e) => {
 			e.preventDefault();
+
+			if (stopPropagation) {
+				e.stopPropagation();
+			}
+
 			if (onClick) {
 				onClick();
 			}

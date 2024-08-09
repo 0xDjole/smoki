@@ -11,6 +11,7 @@
 	export let svgName = '';
 	export let position = '';
 	export let size = 'small';
+	export let stopPropagation;
 
 	export let onClick = () => {};
 
@@ -69,7 +70,16 @@
 	};
 </script>
 
-<span class={`remove ${parsePosition(position)}`} on:click|preventDefault|stopPropagation={onClick}>
+<span
+	class={`remove ${parsePosition(position)}`}
+	on:click={(e) => {
+		e.preventDefault();
+		if (stopPropagation) {
+			e.stopPropagation();
+		}
+		onClick();
+	}}
+>
 	<SvgIcon data={parseSvgName(svgName)} size={parseSize(size)} color={'white'} />
 </span>
 

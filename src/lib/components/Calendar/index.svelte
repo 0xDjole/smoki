@@ -373,7 +373,7 @@
 
 <style type="text/postcss">
 	.date-list {
-		@apply grid grid-flow-col border-secondary;
+		@apply grid grid-flow-col border-primary;
 	}
 
 	.date-buffer {
@@ -403,7 +403,7 @@
 	.hours {
 	}
 	.hour {
-		@apply w-full border-secondary font-bold text-xl p-3 pt-1;
+		@apply w-full border-primary font-bold text-xl p-3 pt-1;
 		height: 130px;
 		box-sizing: border-box;
 	}
@@ -421,7 +421,7 @@
 	}
 
 	.head-item:first-child {
-		@apply border-r-4  border-secondary;
+		@apply border-r-4  border-primary;
 	}
 
 	.days {

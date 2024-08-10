@@ -80,7 +80,11 @@
 		onClick();
 	}}
 >
-	<SvgIcon data={parseSvgName(svgName)} size={parseSize(size)} color={'white'} />
+	<SvgIcon
+		data={parseSvgName(svgName)}
+		size={parseSize(size)}
+		color={'var(--secondary-text-color)'}
+	/>
 </span>
 
 <style type="text/postcss">

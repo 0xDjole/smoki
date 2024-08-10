@@ -72,7 +72,7 @@
 	}
 
 	.custom-field-body {
-		@apply flex flex-col   border-secondary rounded-md p-2 gap-y-2;
+		@apply flex flex-col   border-primary rounded-md p-2 gap-y-2;
 	}
 
 	.add-field-body {

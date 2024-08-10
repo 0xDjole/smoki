@@ -24,7 +24,7 @@
 					<div class="header-title">{title}</div>
 				{/if}
 				<div class="close" on:click|preventDefault={() => onCancel()}>
-					<SvgIcon data={Close} width={'40px'} size={'40px'} color={'white'} />
+					<SvgIcon data={Close} width={'40px'} size={'40px'} color={'red'} />
 				</div>
 			</div>
 
@@ -49,7 +49,7 @@
 	}
 
 	.modal {
-		@apply flex flex-col relative rounded-md inset-0 z-40 bg-primary text-primary border-2 border-secondary border-solid mx-auto;
+		@apply flex flex-col relative rounded-md inset-0 z-40 bg-primary text-primary border-2 border-primary border-solid mx-auto;
 	}
 
 	.options {

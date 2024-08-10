@@ -36,7 +36,7 @@
 	}
 
 	.add-new {
-		@apply text-primary font-bold text-xl bg-primary border-secondary   p-5;
+		@apply text-primary font-bold text-xl bg-primary border-primary   p-5;
 	}
 
 	.gallery-item {

@@ -52,7 +52,7 @@
 	}
 
 	.item {
-		@apply grid h-full bg-primary   border-secondary rounded-xl text-primary font-bold cursor-default hover:border-success  transition-transform;
+		@apply grid h-full bg-primary   border-primary rounded-xl text-primary font-bold cursor-default hover:border-success  transition-transform;
 		grid-auto-rows: 5fr 1fr;
 		overflow: hidden;
 		width: 100%;
@@ -75,7 +75,7 @@
 	}
 
 	.bottom {
-		@apply grid bg-primary border-t-2  border-secondary z-0;
+		@apply grid bg-primary border-t-2  border-primary z-0;
 		grid-auto-flow: column;
 	}
 

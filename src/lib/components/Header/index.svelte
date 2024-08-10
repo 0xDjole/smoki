@@ -25,7 +25,10 @@
 	}
 
 	.header {
-		@apply top-0 bg-primary text-primary text-2xl font-bold flex justify-between items-center w-full;
+		@apply top-0 bg-primary text-primary text-2xl font-bold flex justify-between items-center w-full border-primary;
+		border-left: none;
+		border-right: none;
+		border-top: none;
 		height: 60px;
 		z-index: 100;
 	}

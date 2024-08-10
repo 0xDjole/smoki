@@ -28,11 +28,6 @@ module.exports = {
 					borderWidth: '1px',
 					borderStyle: 'solid'
 				},
-				'.border-secondary': {
-					borderColor: 'var(--primary-border-color)',
-					borderWidth: '1px',
-					borderStyle: 'solid'
-				},
 
 				'.border-accent': {
 					borderColor: 'var(--accent-border-color)',

@@ -38,7 +38,7 @@
 		@apply border-primary font-bold px-3 py-1 bg-secondary rounded-md min-w-[100px] text-center;
 	}
 	.custom-field-body {
-		@apply flex flex-col border-secondary rounded-md p-2 gap-y-2;
+		@apply flex flex-col border-primary rounded-md p-2 gap-y-2;
 	}
 	.add-field-body {
 		@apply p-3 h-[600px] overflow-y-scroll;

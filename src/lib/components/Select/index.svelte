@@ -50,7 +50,7 @@
 	}
 
 	.select-button {
-		@apply text-base flex w-full p-1 bg-accent text-white rounded-lg border-2 border-secondary border-solid font-semibold md:text-lg outline-none gap-x-2 items-center justify-between;
+		@apply text-base flex w-full p-1 bg-accent text-white rounded-lg font-semibold md:text-lg outline-none gap-x-2 items-center justify-between;
 	}
 
 	.button-text {

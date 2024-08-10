@@ -48,7 +48,7 @@
 	}
 
 	.selected {
-		@apply bg-success border-gray-300 border-[3px] border-solid;
+		@apply bg-success text-white border-primary border-[2px] border-solid;
 	}
 
 	.between {

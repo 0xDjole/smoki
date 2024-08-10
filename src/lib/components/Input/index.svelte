@@ -88,7 +88,7 @@
 
 <style type="text/postcss">
 	.primary {
-		@apply w-full p-1 bg-secondary text-primary rounded-lg  font-semibold md:text-xl outline-none text-opacity-80;
+		@apply w-full p-1 bg-secondary text-primary rounded-lg  font-semibold md:text-xl outline-none text-opacity-80 border-primary;
 		transition: all 0.3s ease;
 	}
 

@@ -23,8 +23,14 @@
 				{#if title}
 					<div class="header-title">{title}</div>
 				{/if}
-				<div class="close" on:click|preventDefault={() => onCancel()}>
-					<SvgIcon data={Close} width={'40px'} size={'40px'} color={'red'} />
+
+				<div class="close-bottom" on:touchstart|stopPropagation>
+					<Button
+						kind="close"
+						onClick={() => {
+							onCancel();
+						}}
+					/>
 				</div>
 			</div>
 
@@ -55,12 +61,9 @@
 	.options {
 		@apply mx-5 pb-5;
 	}
-	.header-title {
-		@apply w-full text-3xl font-bold text-center pt-2;
-	}
 
 	.header-title {
-		@apply w-full text-3xl font-bold text-center pt-2 truncate mx-auto;
+		@apply w-full text-2xl font-bold text-center pt-2 truncate mx-auto;
 		max-width: calc(100% - 50px);
 	}
 

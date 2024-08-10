@@ -49,7 +49,7 @@
 	}
 
 	.modal {
-		@apply flex flex-col relative rounded-md inset-0 z-40 bg-primary text-white border-2 border-secondary border-solid mx-auto;
+		@apply flex flex-col relative rounded-md inset-0 z-40 bg-primary text-primary border-2 border-secondary border-solid mx-auto;
 	}
 
 	.options {

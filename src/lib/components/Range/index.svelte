@@ -297,7 +297,7 @@
 
 <style type="text/postcss">
 	.side {
-		@apply font-bold text-white text-lg min-w-[30px] text-center;
+		@apply font-bold text-primary text-lg min-w-[30px] text-center;
 	}
 
 	.side-left {
@@ -399,7 +399,7 @@
 	}
 
 	.close-range {
-		@apply flex items-center justify-center text-accent font-bold text-xl -mt-14 ml-10 rounded-full bg-white w-8 h-8;
+		@apply flex items-center justify-center text-accent font-bold text-xl -mt-14 ml-10 rounded-full bg-secondary w-8 h-8;
 	}
 
 	.tool-input {

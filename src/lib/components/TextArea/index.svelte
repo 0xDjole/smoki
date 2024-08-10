@@ -72,7 +72,7 @@
 	}
 
 	.used {
-		@apply flex gap-x-3 absolute bottom-5 right-5 font-bold;
+		@apply flex gap-x-3 absolute bottom-5 right-5 font-bold text-primary;
 	}
 
 	.text-area {

@@ -115,11 +115,11 @@
 	}
 
 	.field {
-		@apply flex cursor-pointer text-white items-center gap-x-2 font-bold bg-secondary rounded-2xl justify-between h-[30px] md:h-[50px] md:text-lg;
+		@apply flex cursor-pointer text-primary items-center gap-x-2 font-bold bg-secondary rounded-2xl justify-between h-[30px] md:h-[50px] md:text-lg;
 	}
 
 	.value {
-		@apply flex bg-accent rounded-xl px-3 w-[150px] md:w-[250px] h-full text-ellipsis overflow-hidden text-nowrap items-center justify-end rounded-l-none;
+		@apply flex bg-accent rounded-xl px-3 w-[150px] md:w-[250px] h-full text-ellipsis overflow-hidden text-nowrap items-center justify-end rounded-l-none text-white;
 	}
 
 	.view-button {

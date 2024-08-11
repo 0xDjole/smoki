@@ -31,7 +31,7 @@
 	}
 
 	.label {
-		@apply text-primary font-bold md:text-xl;
+		@apply text-lg text-primary font-bold md:text-xl;
 	}
 
 	.thumbnail-container {

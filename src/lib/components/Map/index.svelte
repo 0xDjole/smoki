@@ -39,7 +39,6 @@
 		// Update marker on map click
 		if (allowTag) {
 			map.on('click', function (e) {
-				console.log(e);
 				updateMarker(e.latlng.lat, e.latlng.lng, true);
 				value = { lat: e.latlng.lat, lon: e.latlng.lng };
 			});

@@ -28,7 +28,6 @@
 					<Button
 						kind="close"
 						onClick={() => {
-							console.log('evo');
 							onCancel();
 						}}
 					/>

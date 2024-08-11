@@ -13,8 +13,6 @@ export default class Index extends SvelteComponentTyped<{
     confirmText?: null | undefined;
     modalStyle?: string | undefined;
 }, {
-    touchstart: TouchEvent;
-} & {
     [evt: string]: CustomEvent<any>;
 }, {
     default: {};
@@ -38,8 +36,6 @@ declare const __propDef: {
         modalStyle?: string | undefined;
     };
     events: {
-        touchstart: TouchEvent;
-    } & {
         [evt: string]: CustomEvent<any>;
     };
     slots: {

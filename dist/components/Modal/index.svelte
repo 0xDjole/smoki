@@ -24,10 +24,11 @@
 					<div class="header-title">{title}</div>
 				{/if}
 
-				<div class="close-bottom" on:touchstart|stopPropagation>
+				<div class="close-button">
 					<Button
 						kind="close"
 						onClick={() => {
+							console.log('evo');
 							onCancel();
 						}}
 					/>
@@ -99,14 +100,6 @@
 		font-weight: 700;
 		max-width: calc(100% - 50px)
 }
-	.close {
-		position: absolute;
-		top: 0px;
-		right: 0px;
-		margin-top: 1rem;
-		margin-right: 1rem;
-		cursor: pointer
-}
 	.top-bar {
 		display: flex;
 		align-items: center;
@@ -115,4 +108,10 @@
 		padding-right: 1rem;
 		padding-top: 0.5rem;
 		padding-bottom: 0.5rem
+}
+	.close-button {
+		position: absolute;
+		top: 1.25rem;
+		right: 1.25rem;
+		cursor: pointer
 }</style>

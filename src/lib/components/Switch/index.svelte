@@ -47,7 +47,7 @@
 	}
 
 	.slider:before {
-		@apply bg-white absolute w-[17px] h-[17px] md:w-[26px] md:h-[26px] rounded-full left-[4px] bottom-[3px];
+		@apply bg-white border-primary absolute w-[17px] h-[17px] md:w-[26px] md:h-[26px] rounded-full left-[4px] bottom-[3px];
 		content: '';
 		-webkit-transition: 0.4s;
 		transition: 0.4s;

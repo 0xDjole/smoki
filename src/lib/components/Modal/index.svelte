@@ -24,10 +24,11 @@
 					<div class="header-title">{title}</div>
 				{/if}
 
-				<div class="close-bottom" on:touchstart|stopPropagation>
+				<div class="close-button">
 					<Button
 						kind="close"
 						onClick={() => {
+							console.log('evo');
 							onCancel();
 						}}
 					/>
@@ -67,11 +68,11 @@
 		max-width: calc(100% - 50px);
 	}
 
-	.close {
-		@apply absolute top-0 right-0 mt-4 mr-4 cursor-pointer;
-	}
-
 	.top-bar {
 		@apply flex justify-between items-center px-4 py-2;
+	}
+
+	.close-button {
+		@apply absolute top-5 right-5 cursor-pointer;
 	}
 </style>

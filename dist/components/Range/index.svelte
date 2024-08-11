@@ -302,8 +302,7 @@
 		font-size: 1.125rem;
 		line-height: 1.75rem;
 		font-weight: 700;
-		--tw-text-opacity: 1;
-		color: rgb(255 255 255 / var(--tw-text-opacity));
+		color: var(--primary-text-color);
 }
 
 	.side-left {
@@ -397,7 +396,8 @@
 		font-size: 1.25rem;
 		line-height: 1.75rem;
 		font-weight: 700;
-		color: var(--primary-text-color);
+		--tw-text-opacity: 1;
+		color: rgb(255 255 255 / var(--tw-text-opacity));
 		transition-property: all;
 		transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 		transition-duration: 500ms;
@@ -438,8 +438,7 @@
 		align-items: center;
 		justify-content: center;
 		border-radius: 9999px;
-		--tw-bg-opacity: 1;
-		background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+		background-color: var(--secondary-background-color);
 		font-size: 1.25rem;
 		line-height: 1.75rem;
 		font-weight: 700;

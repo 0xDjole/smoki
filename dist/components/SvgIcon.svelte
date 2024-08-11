@@ -4,7 +4,7 @@
 
 	export let size = '25px';
 	export let width = size;
-	export let height = size;
+	export let height = 'min-height';
 	export let color = '';
 	export let stroke = '';
 	export let fill = color;

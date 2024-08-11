@@ -23,8 +23,14 @@
 				{#if title}
 					<div class="header-title">{title}</div>
 				{/if}
-				<div class="close" on:click|preventDefault={() => onCancel()}>
-					<SvgIcon data={Close} width={'40px'} size={'40px'} color={'white'} />
+
+				<div class="close-bottom" on:touchstart|stopPropagation>
+					<Button
+						kind="close"
+						onClick={() => {
+							onCancel();
+						}}
+					/>
 				</div>
 			</div>
 
@@ -69,8 +75,7 @@
 		flex-direction: column;
 		border-radius: 0.375rem;
 		background-color: var(--primary-background-color);
-		--tw-text-opacity: 1;
-		color: rgb(255 255 255 / var(--tw-text-opacity));
+		color: var(--primary-text-color);
 		border-color: var(--primary-border-color);
 		border-width: 1px;
 		border-style: solid
@@ -89,8 +94,8 @@
 		white-space: nowrap;
 		padding-top: 0.5rem;
 		text-align: center;
-		font-size: 1.875rem;
-		line-height: 2.25rem;
+		font-size: 1.5rem;
+		line-height: 2rem;
 		font-weight: 700;
 		max-width: calc(100% - 50px)
 }

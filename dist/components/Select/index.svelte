@@ -62,10 +62,7 @@ $: selectedOption = options.find((option) => option.value === value);
 		--tw-text-opacity: 1;
 		color: rgb(255 255 255 / var(--tw-text-opacity));
 		outline: 2px solid transparent;
-		outline-offset: 2px;
-		border-color: var(--primary-border-color);
-		border-width: 1px;
-		border-style: solid
+		outline-offset: 2px
 }
 
 	@media (min-width: 768px) {
@@ -96,7 +93,10 @@ $: selectedOption = options.find((option) => option.value === value);
 		flex-direction: column;
 		overflow: scroll;
 		border-radius: 0.375rem;
-		background-color: var(--secondary-background-color)
+		background-color: var(--secondary-background-color);
+		border-color: var(--primary-border-color);
+		border-width: 1px;
+		border-style: solid
 }
 
 	.item {
@@ -112,5 +112,7 @@ $: selectedOption = options.find((option) => option.value === value);
 	.selected {
 		border-radius: 0.375rem;
 		background-color: var(--accent-background-color);
-		padding: 0.25rem
+		padding: 0.25rem;
+		--tw-text-opacity: 1;
+		color: rgb(255 255 255 / var(--tw-text-opacity))
 }</style>

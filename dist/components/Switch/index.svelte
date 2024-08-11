@@ -72,6 +72,9 @@
 		border-radius: 9999px;
 		--tw-bg-opacity: 1;
 		background-color: rgb(255 255 255 / var(--tw-bg-opacity));
+		border-color: var(--primary-border-color);
+		border-width: 1px;
+		border-style: solid;
 }
 
 	@media (min-width: 768px) {

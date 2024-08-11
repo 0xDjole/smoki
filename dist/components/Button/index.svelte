@@ -76,7 +76,9 @@ const svgKinds = ['delete', 'add', 'back', 'search', 'user', 'success', 'close',
 
     font-weight: 600;
 
-    color: var(--primary-text-color)
+    --tw-text-opacity: 1;
+
+    color: rgb(255 255 255 / var(--tw-text-opacity))
 }
 
 .base:hover {

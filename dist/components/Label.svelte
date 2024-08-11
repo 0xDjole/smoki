@@ -39,9 +39,10 @@ export let t;
 }
 
 	.label {
+		font-size: 1.125rem;
+		line-height: 1.75rem;
 		font-weight: 700;
-		--tw-text-opacity: 1;
-		color: rgb(255 255 255 / var(--tw-text-opacity));
+		color: var(--primary-text-color);
 }
 
 	@media (min-width: 768px) {

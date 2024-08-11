@@ -40,6 +40,12 @@
 		line-height: 2rem;
 		font-weight: 700;
 		color: var(--primary-text-color);
+		border-color: var(--primary-border-color);
+		border-width: 1px;
+		border-style: solid;
+		border-left: none;
+		border-right: none;
+		border-top: none;
 		height: 60px;
 		z-index: 100
 }

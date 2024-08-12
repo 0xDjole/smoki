@@ -9,6 +9,7 @@
 	export let initialValue = 0;
 	export let id = null;
 	export let value = typeof initialValue === 'string' ? parseInt(initialValue) : initialValue;
+	export let theme = null;
 
 	export let label = '';
 	export let labelThumbnail;
@@ -238,9 +239,10 @@
 				on:keydown={onKeyPress}
 				class:passive={!value}
 				class="range__track"
+				class:light={theme === 'light'}
+				class:dark={theme === 'dark'}
 				bind:this={container}
 			>
-				<div class="range__track--highlighted" bind:this={progressBar} />
 				<div class="strips">
 					{#each strips as strip, i}
 						{#if i > 1 && container}
@@ -249,6 +251,8 @@
 					{/each}
 				</div>
 			</div>
+
+			<div class="range__track--highlighted" bind:this={progressBar} />
 
 			<div bind:this={thumb} class="range_thumb_container">
 				<div class="range__thumb" on:touchstart={onDragStart} on:mousedown={onDragStart}>
@@ -335,16 +339,21 @@
 	}
 
 	.range__track {
+		background-color: var(--secondary-background-color);
+		border-color: var(--primary-border-color);
+		border-width: 1px;
+		border-style: solid;
 		height: 8px;
-		background-color: var(--track-bgcolor, #d0d0d0);
 		border-radius: 999px;
-	}
+}
 
 	.passive {
-		opacity: 0.4;
+		opacity: 0.6;
 }
 
 	.range__track--highlighted {
+		position: absolute;
+		top: 0.375rem;
 		background: linear-gradient(
 			90deg,
 			var(--accent-background-color),
@@ -353,7 +362,7 @@
 		width: 0;
 		height: 7px;
 		border-radius: 999px;
-	}
+}
 
 	.range_thumb_container {
 		position: absolute;
@@ -443,6 +452,9 @@
 		line-height: 1.75rem;
 		font-weight: 700;
 		color: var(--accent-color);
+		border-color: var(--primary-border-color);
+		border-width: 1px;
+		border-style: solid;
 }
 
 	.tool-input {
@@ -478,5 +490,15 @@
 		position: absolute;
 		height: 30px;
 		width: 1.5px;
-		background-color: var(--track-bgcolor, #d0d0d0);
-}</style>
+		border-color: var(--primary-border-color);
+		border-width: 1px;
+		border-style: solid;
+}
+
+	.dark {
+		filter: brightness(150%);
+	}
+
+	.light {
+		filter: brightness(100%);
+	}</style>

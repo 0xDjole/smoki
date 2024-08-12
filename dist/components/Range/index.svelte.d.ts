@@ -12,6 +12,7 @@ export default class Index extends SvelteComponentTyped<{
     isRequired?: boolean | undefined;
     errors?: any[] | undefined;
     onChange?: ((value: any) => void) | undefined;
+    theme?: null | undefined;
     initialValue?: number | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
@@ -33,6 +34,7 @@ declare const __propDef: {
         isRequired?: boolean | undefined;
         errors?: any[] | undefined;
         onChange?: ((value: any) => void) | undefined;
+        theme?: null | undefined;
         initialValue?: number | undefined;
     };
     events: {

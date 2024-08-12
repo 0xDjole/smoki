@@ -9,6 +9,7 @@ export let fieldConfigs = [];
 export let fields = [];
 export let locale = 'en';
 export let t;
+export let theme = null;
 $: if (fieldConfigs.length > fields.length) {
     fields = fieldConfigs.map((config, index) => ({
         fieldConfigId: config.id,
@@ -83,6 +84,7 @@ $: {
 
 					{#if fieldConfig?.properties?.range}
 						<Range
+							{theme}
 							isRequired={fieldConfig.isRequired}
 							{t}
 							label={translate(fieldConfig.key, locale)}

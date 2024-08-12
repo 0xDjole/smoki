@@ -107,7 +107,7 @@
 	}
 
 	.labels {
-		@apply mt-3 rounded-md text-primary;
+		@apply mt-3 rounded-md text-white;
 	}
 
 	.label-key {

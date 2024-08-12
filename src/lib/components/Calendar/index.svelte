@@ -384,7 +384,7 @@
 	}
 
 	.calendar-item {
-		@apply absolute bg-accent font-bold text-primary border-white border-2 border-solid;
+		@apply absolute bg-accent font-bold text-white border-white border-2 border-solid;
 		width: 220px;
 	}
 	.days-date {

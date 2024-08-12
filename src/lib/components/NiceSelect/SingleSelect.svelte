@@ -58,6 +58,6 @@
 	}
 
 	.selected {
-		@apply bg-accent text-primary;
+		@apply bg-accent text-white;
 	}
 </style>

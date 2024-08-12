@@ -23,6 +23,8 @@
 			value
 		}));
 	};
+
+	$: console.log(fields, fieldConfigs);
 </script>
 
 <Modal
@@ -70,7 +72,7 @@
 					allowTag={false}
 					value={field.value}
 				/>
-			{:else if fieldConfig.type === 'text' && fieldConfig.ui === 'text-area'}
+			{:else if fieldConfig.type === 'text' && fieldConfig.ui === 'text_area'}
 				<TextArea
 					{t}
 					style="height: min-content;"

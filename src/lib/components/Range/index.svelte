@@ -429,7 +429,7 @@
 	}
 
 	.strips {
-		@apply relative w-full top-[-17px];
+		@apply relative w-full -top-[10px];
 	}
 
 	.strip {

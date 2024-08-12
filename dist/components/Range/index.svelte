@@ -482,7 +482,7 @@
 
 	.strips {
 		position: relative;
-		top: -17px;
+		top: -10px;
 		width: 100%;
 }
 

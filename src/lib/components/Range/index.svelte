@@ -9,6 +9,7 @@
 	export let initialValue = 0;
 	export let id = null;
 	export let value = typeof initialValue === 'string' ? parseInt(initialValue) : initialValue;
+	export let theme = null;
 
 	export let label = '';
 	export let labelThumbnail;
@@ -238,9 +239,10 @@
 				on:keydown={onKeyPress}
 				class:passive={!value}
 				class="range__track"
+				class:light={theme === 'light'}
+				class:dark={theme === 'dark'}
 				bind:this={container}
 			>
-				<div class="range__track--highlighted" bind:this={progressBar} />
 				<div class="strips">
 					{#each strips as strip, i}
 						{#if i > 1 && container}
@@ -249,6 +251,8 @@
 					{/each}
 				</div>
 			</div>
+
+			<div class="range__track--highlighted" bind:this={progressBar} />
 
 			<div bind:this={thumb} class="range_thumb_container">
 				<div class="range__thumb" on:touchstart={onDragStart} on:mousedown={onDragStart}>
@@ -325,16 +329,17 @@
 	}
 
 	.range__track {
+		@apply bg-secondary border-primary;
 		height: 8px;
-		background-color: var(--track-bgcolor, #d0d0d0);
 		border-radius: 999px;
 	}
 
 	.passive {
-		@apply opacity-40;
+		@apply opacity-60;
 	}
 
 	.range__track--highlighted {
+		@apply absolute top-1.5;
 		background: linear-gradient(
 			90deg,
 			var(--accent-background-color),
@@ -399,7 +404,7 @@
 	}
 
 	.close-range {
-		@apply flex items-center justify-center text-accent font-bold text-xl -mt-14 ml-10 rounded-full bg-secondary w-8 h-8;
+		@apply flex items-center justify-center text-accent font-bold text-xl -mt-14 ml-10 rounded-full bg-secondary w-8 h-8 border-primary;
 	}
 
 	.tool-input {
@@ -428,7 +433,14 @@
 	}
 
 	.strip {
-		@apply absolute h-[30px] w-[1.5px];
-		background-color: var(--track-bgcolor, #d0d0d0);
+		@apply absolute h-[30px] w-[1.5px] border-primary;
+	}
+
+	.dark {
+		filter: brightness(150%);
+	}
+
+	.light {
+		filter: brightness(100%);
 	}
 </style>

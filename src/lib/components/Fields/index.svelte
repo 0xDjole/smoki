@@ -23,8 +23,6 @@
 			value
 		}));
 	};
-
-	$: console.log(fields, fieldConfigs);
 </script>
 
 <Modal

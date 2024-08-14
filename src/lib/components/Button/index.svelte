@@ -57,7 +57,7 @@
 			}
 
 			if (onClick) {
-				onClick();
+				onClick(e);
 			}
 		}}><slot /></button
 	>

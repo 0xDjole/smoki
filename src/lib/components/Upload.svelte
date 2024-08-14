@@ -50,7 +50,7 @@
 	{:else if avatar}
 		<img class="avatar" src={avatar} {alt} />
 	{:else}
-		<SvgIcon data={UploadSvg} size={'200px'} fill="white" />
+		<SvgIcon data={UploadSvg} size={'200px'} fill={'text-primary'} />
 	{/if}
 </div>
 

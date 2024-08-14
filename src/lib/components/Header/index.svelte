@@ -39,11 +39,11 @@
 	}
 
 	.left {
-		@apply justify-start;
+		@apply justify-start pl-1;
 	}
 
 	.right {
-		@apply justify-end;
+		@apply justify-end pr-1;
 	}
 
 	.header-sticky {

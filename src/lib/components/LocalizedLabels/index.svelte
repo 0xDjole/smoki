@@ -111,7 +111,7 @@
 	}
 
 	.label-key {
-		@apply bg-secondary flex-1 p-2 flex justify-between;
+		@apply bg-secondary text-primary flex-1 p-2 flex justify-between;
 	}
 
 	.label-value {

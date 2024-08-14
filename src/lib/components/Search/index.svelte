@@ -9,7 +9,7 @@
 
 <div class="search-name" on:click|preventDefault={() => {}}>
 	<div class="search-button">
-		<SvgIcon data={Search} color={'white'} />
+		<SvgIcon data={Search} color={'text-primary'} />
 	</div>
 
 	<input

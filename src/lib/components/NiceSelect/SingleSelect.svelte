@@ -54,7 +54,7 @@
 	}
 
 	.option {
-		@apply flex justify-center items-center cursor-pointer p-2 my-2 rounded-xl font-bold text-lg transition-all duration-200 ease-in-out shadow-sm text-secondary hover:opacity-60 min-w-[60px];
+		@apply flex justify-center items-center cursor-pointer p-2 my-2 rounded-xl font-bold text-lg transition-all duration-200 ease-in-out shadow-sm text-secondary border-primary hover:opacity-60 min-w-[60px];
 	}
 
 	.selected {

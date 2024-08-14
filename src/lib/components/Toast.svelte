@@ -7,10 +7,10 @@
 		type === 'success'
 			? 'bg-green-500'
 			: type === 'error'
-				? 'bg-error'
-				: type === 'warning'
-					? 'bg-yellow-500'
-					: 'bg-blue-500';
+			? 'bg-error'
+			: type === 'warning'
+			? 'bg-yellow-500'
+			: 'bg-blue-500';
 </script>
 
 <div class="toast notificator {computedClass}">
@@ -30,7 +30,7 @@
 
 <style type="text/postcss">
 	.toast {
-		@apply rounded-md text-primary font-bold w-full p-1 bg-success;
+		@apply rounded-md text-white font-bold w-full p-1 bg-success;
 	}
 
 	.toast-content {

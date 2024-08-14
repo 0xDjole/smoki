@@ -47,7 +47,7 @@ const svgKinds = ['delete', 'add', 'back', 'search', 'user', 'success', 'close',
 			}
 
 			if (onClick) {
-				onClick();
+				onClick(e);
 			}
 		}}><slot /></button
 	>

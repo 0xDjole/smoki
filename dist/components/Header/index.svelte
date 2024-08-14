@@ -57,11 +57,13 @@
 }
 
 	.left {
-		justify-content: flex-start
+		justify-content: flex-start;
+		padding-left: 0.25rem
 }
 
 	.right {
-		justify-content: flex-end
+		justify-content: flex-end;
+		padding-right: 0.25rem
 }
 
 	.header-sticky {

@@ -96,7 +96,13 @@ const selectOption = (optionValue) => {
 
     transition-duration: 200ms;
 
-    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1)
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
+    border-color: var(--primary-border-color);
+
+    border-width: 1px;
+
+    border-style: solid
 }
 
 	@media (min-width: 768px) {

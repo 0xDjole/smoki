@@ -39,7 +39,9 @@ $: computedClass =
 
     font-weight: 700;
 
-    color: var(--primary-text-color)
+    --tw-text-opacity: 1;
+
+    color: rgb(255 255 255 / var(--tw-text-opacity))
 }
 
 	.toast-content {

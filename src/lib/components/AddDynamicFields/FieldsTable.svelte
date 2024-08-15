@@ -87,7 +87,7 @@
 	}
 
 	.add-field-button {
-		@apply text-primary font-bold p-2 px-5 rounded-xl bg-accent;
+		@apply text-white font-bold p-2 px-5 rounded-xl bg-accent;
 	}
 
 	.custom-field-body {
@@ -95,11 +95,7 @@
 	}
 
 	.field-header {
-		@apply flex items-center justify-between text-white font-bold text-2xl;
-	}
-
-	.field-header {
-		@apply flex items-center justify-between text-white font-bold text-xl;
+		@apply flex items-center justify-between text-primary font-bold text-xl;
 	}
 
 	.field-header {
@@ -120,11 +116,11 @@
 	}
 
 	.field {
-		@apply flex-1 h-[30px] items-center pl-2 border-r-2 border-solid border-gray-500 text-white font-bold;
+		@apply flex-1 h-[30px] items-center pl-2 border-r-2 border-solid border-gray-500 text-primary font-bold;
 	}
 
 	.no-field {
-		@apply flex-1 h-[30px] items-center text-white font-bold pt-1;
+		@apply flex-1 h-[30px] items-center text-primary font-bold pt-1;
 		text-align: center;
 	}
 

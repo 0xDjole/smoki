@@ -12,6 +12,7 @@
 	export let errors = [];
 	export let t;
 	export let isRequired = false;
+	export let onSelect = (values) => {};
 
 	let showModal = false;
 
@@ -22,6 +23,7 @@
 		} else {
 			values = [...values, optionValue];
 		}
+		onSelect(optionValue);
 	};
 </script>
 

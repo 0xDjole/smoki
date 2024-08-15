@@ -5,6 +5,7 @@
 	import Select from '../NiceSelect/index.svelte';
 	import TextArea from '../TextArea/index.svelte';
 	import Map from '../Map/index.svelte';
+	import Label from '../Label.svelte';
 	import translate from '../../utils/helpers/translate';
 
 	export let label = 'Custom fieldConfigs';
@@ -28,6 +29,8 @@
 </script>
 
 {#if fieldConfig}
+	<Label {t} label="Default value" />
+
 	{#if fieldConfig?.type === 'text'}
 		<TextArea
 			{t}

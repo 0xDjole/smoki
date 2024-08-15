@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { v4 } from '@lukeed/uuid';
+
 	import Upload from '../Upload.svelte';
 	import Modal from '../Modal/index.svelte';
 	import NiceSelect from '../NiceSelect/index.svelte';
@@ -7,6 +9,7 @@
 	import FieldsTable from './FieldsTable.svelte';
 	import FieldValue from './FieldValue.svelte';
 	import LocalizedLabels from '../LocalizedLabels/index.svelte';
+	import { stringify } from 'postcss';
 
 	export let label = 'Custom fields';
 	export let fields;
@@ -23,6 +26,82 @@
 		{ label: 'Date', value: 'date' },
 		{ label: 'Entities', value: 'entities' }
 	];
+
+	const propertyTypes = {
+		geo_location: {
+			operations: [],
+			defaultProperties: null,
+			isOption: false,
+			isRange: false,
+			defaultValue: {
+				lat: 50,
+				lon: 50
+			}
+		},
+
+		text: {
+			operations: [],
+			defaultProperties: {
+				minLength: 0,
+				maxLength: 1000
+			},
+			isOption: false,
+			isRange: false,
+			defaultValue: 'Text'
+		},
+		select: {
+			operations: [],
+			isOption: true,
+			isRange: false,
+			defaultProperties: null
+		},
+
+		boolean: {
+			operations: [],
+			isOption: true,
+			isRange: false,
+			defaultProperties: null
+		},
+
+		number: {
+			operations: [
+				{ label: 'Greater than', value: 'plus' },
+				{ label: 'Less than', value: 'minus' },
+				{ label: 'Less than or equal', value: 'less_than_or_equal' },
+				{ label: 'Greater than or equal', value: 'greater_than_or_equal' },
+				{ label: 'Equals', value: 'equals' },
+				{ label: 'Greater than', value: 'greater_than' },
+				{ label: 'Less than', value: 'less_than' },
+				{ label: 'Contains', value: 'contains' },
+				{ label: 'Range', value: 'range' }
+			],
+			isOption: true,
+			isRange: true,
+			defaultProperties: null
+		},
+		date: {
+			operations: [
+				{ label: 'Greater than', value: 'plus' },
+				{ label: 'Less than', value: 'minus' },
+				{ label: 'Less than or equal', value: 'less_than_or_equal' },
+				{ label: 'Greater than or equal', value: 'greater_than_or_equal' },
+				{ label: 'Equals', value: 'equals' },
+				{ label: 'Greater than', value: 'greater_than' },
+				{ label: 'Less than', value: 'less_than' },
+				{ label: 'Contains', value: 'contains' },
+				{ label: 'Range', value: 'range' }
+			],
+			isOptionFieldType: true,
+			isRange: true,
+			defaultProperties: null
+		},
+		entities: {
+			operations: [],
+			isOptionFieldType: false,
+			isRange: false,
+			defaultProperties: null
+		}
+	};
 
 	const isRequiredOptions = [
 		{ label: 'Is required', value: true },
@@ -58,7 +137,6 @@
 	};
 
 	export let field;
-	export let defaultField;
 
 	let fieldStatus = {
 		key: {
@@ -102,7 +180,22 @@
 
 	let isAddModalOpen = false;
 
+	const defaultField = {
+		id: v4(),
+		translations: {},
+		key: {},
+		type: '',
+		ui: 'default',
+		isRequired: true,
+		isFilter: true,
+		properties: null,
+		autofillIds: [],
+		entityIds: [],
+		defaultValue: null
+	};
+
 	$: if (!field) {
+		console.log('def f', defaultField);
 		field = defaultField;
 	}
 </script>
@@ -142,6 +235,9 @@
 				options={types}
 				bind:errors={fieldStatus.type.errors}
 				bind:value={field.type}
+				onSelect={(value) => {
+					field.properties = JSON.parse(JSON.stringify(propertyTypes[value]));
+				}}
 			/>
 
 			{#if field.type}
@@ -157,6 +253,7 @@
 			<Properties
 				{t}
 				label="Properties"
+				{propertyTypes}
 				fieldType={field.type}
 				bind:value={field}
 				bind:errors={fieldStatus.properties.errors}

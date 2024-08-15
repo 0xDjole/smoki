@@ -13,11 +13,14 @@
 	export let t;
 	export let isRequired;
 
+	export let onSelect = (values) => {};
+
 	let showModal = false;
 
 	const selectOption = (optionValue) => {
 		value = optionValue;
 		showModal = false;
+		onSelect(optionValue);
 	};
 
 	$: selectedOption = options.find((option) => option.value === value);

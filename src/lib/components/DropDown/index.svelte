@@ -10,10 +10,29 @@
 	export let isMultiSelect = false;
 	export let t;
 	export let isRequired = false;
+	export let onSelect = (value) => {};
 </script>
 
 {#if isMultiSelect}
-	<MultiDropDown {isRequired} bind:values={value} {options} {errors} {label} {labelThumbnail} {t} />
+	<MultiDropDown
+		{onSelect}
+		{isRequired}
+		bind:values={value}
+		{options}
+		{errors}
+		{label}
+		{labelThumbnail}
+		{t}
+	/>
 {:else}
-	<SingleDropDown {isRequired} bind:value {options} {errors} {label} {labelThumbnail} {t} />
+	<SingleDropDown
+		{onSelect}
+		{isRequired}
+		bind:value
+		{options}
+		{errors}
+		{label}
+		{labelThumbnail}
+		{t}
+	/>
 {/if}

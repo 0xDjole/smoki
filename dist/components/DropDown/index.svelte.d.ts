@@ -9,6 +9,7 @@ declare const __propDef: {
         isMultiSelect?: boolean | undefined;
         t: any;
         isRequired?: boolean | undefined;
+        onSelect?: ((value: any) => void) | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

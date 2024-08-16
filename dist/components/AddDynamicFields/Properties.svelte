@@ -11,74 +11,13 @@ export let errors = [];
 export let fieldType;
 export let addEntity;
 export let t;
-const propertyTypes = {
-    text: {
-        operations: [],
-        defaultProperties: {},
-        isOption: false,
-        isRange: false
-    },
-    select: {
-        operations: [
-            { label: 'Greater than', value: 'plus' },
-            { label: 'Less than', value: 'minus' },
-            { label: 'Less than or equal', value: 'less_than_or_equal' },
-            { label: 'Greater than or equal', value: 'greater_than_or_equal' },
-            { label: 'Equals', value: 'equals' },
-            { label: 'Greater than', value: 'greater_than' },
-            { label: 'Less than', value: 'less_than' },
-            { label: 'Contains', value: 'contains' },
-            { label: 'Range', value: 'range' }
-        ],
-        isOption: true,
-        isRange: false,
-        defaultProperties: {}
-    },
-    number: {
-        operations: [
-            { label: 'Greater than', value: 'plus' },
-            { label: 'Less than', value: 'minus' },
-            { label: 'Less than or equal', value: 'less_than_or_equal' },
-            { label: 'Greater than or equal', value: 'greater_than_or_equal' },
-            { label: 'Equals', value: 'equals' },
-            { label: 'Greater than', value: 'greater_than' },
-            { label: 'Less than', value: 'less_than' },
-            { label: 'Contains', value: 'contains' },
-            { label: 'Range', value: 'range' }
-        ],
-        isOption: true,
-        isRange: true,
-        defaultProperties: {}
-    },
-    date: {
-        operations: [
-            { label: 'Greater than', value: 'plus' },
-            { label: 'Less than', value: 'minus' },
-            { label: 'Less than or equal', value: 'less_than_or_equal' },
-            { label: 'Greater than or equal', value: 'greater_than_or_equal' },
-            { label: 'Equals', value: 'equals' },
-            { label: 'Greater than', value: 'greater_than' },
-            { label: 'Less than', value: 'less_than' },
-            { label: 'Contains', value: 'contains' },
-            { label: 'Range', value: 'range' }
-        ],
-        isOptionFieldType: true,
-        isRange: true,
-        defaultProperties: {}
-    },
-    entities: {
-        operations: [],
-        isOptionFieldType: false,
-        isRange: false,
-        defaultProperties: {}
-    }
-};
-$: if (!value.properties) {
-    value.properties = null;
+export let propertyTypes;
+$: if (!value.properties && fieldType) {
+    value.properties = propertyTypes[fieldType].defaultProperties;
 }
 </script>
 
-{#if propertyTypes[fieldType]}
+{#if propertyTypes[fieldType] && value.properties}
 	<Label {t} {label} {errors} />
 	<div class="properties">
 		{#if propertyTypes[fieldType].operations.length}

@@ -7,7 +7,6 @@ declare const __propDef: {
         addEntity?: (() => void) | undefined;
         t: any;
         field: any;
-        defaultField: any;
     };
     events: {
         [evt: string]: CustomEvent<any>;

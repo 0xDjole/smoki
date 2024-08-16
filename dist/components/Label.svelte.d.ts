@@ -6,6 +6,7 @@ declare const __propDef: {
         isRequired: any;
         errors?: any[] | undefined;
         t: any;
+        size?: string | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

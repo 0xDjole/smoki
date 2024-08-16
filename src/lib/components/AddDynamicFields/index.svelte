@@ -198,6 +198,8 @@
 	$: if (!field) {
 		field = defaultField;
 	}
+
+	$: console.log('field ', field, fields);
 </script>
 
 {#if field}
@@ -227,9 +229,7 @@
 
 			<NiceSelect {t} label="Is filter" bind:value={field.isFilter} options={isFilterOptions} />
 
-			{#if field.thumbnail}
-				<Upload {t} label="Thumbnail" bind:image={field.thumbnail} />
-			{/if}
+			<Upload {t} label="Thumbnail" bind:image={field.thumbnail} />
 
 			<DropDown
 				{t}

@@ -1,7 +1,8 @@
 <script lang="ts">
 	import { STORAGE_URL } from '../../utils/env';
 	import SvgIcon from '../SvgIcon.svelte';
-	import DefaultThumnail from '../../utils/icons/defaultThumbnail.svg?raw';
+
+	import UploadSvg from '../../utils/icons/upload.svg?raw';
 
 	import { onMount } from 'svelte';
 
@@ -30,7 +31,7 @@
 	{#if imageValid}
 		<img class="image" {alt} {src} on:error={handleImageError} />
 	{:else}
-		<SvgIcon data={DefaultThumnail} color={'white'} />
+		<SvgIcon data={UploadSvg} color={'var(--secondary-text-color)'} />
 	{/if}
 </div>
 

@@ -49,7 +49,7 @@
 			<span>{option}</span>
 
 			<div on:click|preventDefault={() => removeOption(index)}>
-				<SvgIcon data={Close} size={'30px'} color={'white'} />
+				<SvgIcon data={Close} size={'30px'} color={'var(--secondary-text-color)'} />
 			</div>
 		</div>
 	{/each}

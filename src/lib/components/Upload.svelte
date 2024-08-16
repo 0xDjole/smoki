@@ -16,11 +16,24 @@
 	let avatar;
 	let loading = false;
 
+	const generateAvatar = (image) => {
+		if (image && (image instanceof File || image instanceof Blob)) {
+			const reader = new FileReader();
+			reader.readAsDataURL(image);
+			reader.onload = (e) => {
+				avatar = e.target.result;
+				loading = false;
+			};
+			reader.onerror = (error) => {
+				loading = false;
+			};
+		}
+	};
+
 	const parseImageFromUrl = async (url) => {
 		if (url) {
 			const fullUrl = `${STORAGE_URL}/${url}`;
 			const imageResponse = await linkToFile(fullUrl);
-			console.log('image ', imageResponse);
 
 			image = imageResponse;
 		}
@@ -28,18 +41,7 @@
 
 	$: parseImageFromUrl(image?.url);
 
-	$: if (image && (image instanceof File || image instanceof Blob)) {
-		const reader = new FileReader();
-		reader.readAsDataURL(image);
-		reader.onload = (e) => {
-			avatar = e.target.result;
-			loading = false;
-		};
-		reader.onerror = (error) => {
-			console.error('Error reading file:', error);
-			loading = false;
-		};
-	}
+	$: generateAvatar(image);
 
 	const onFileSelected = (e) => {
 		loading = true;
@@ -51,6 +53,7 @@
 			return;
 		}
 
+		console.log(imageFile);
 		image = imageFile;
 	};
 </script>
@@ -68,7 +71,7 @@
 	{:else if avatar}
 		<img class="avatar" src={avatar} {alt} />
 	{:else}
-		<SvgIcon data={UploadSvg} size={'200px'} fill={'text-primary'} />
+		<SvgIcon data={UploadSvg} size={'200px'} color={'var(--secondary-text-color)'} />
 	{/if}
 </div>
 

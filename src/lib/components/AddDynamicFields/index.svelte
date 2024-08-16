@@ -1,6 +1,7 @@
 <script lang="ts">
 	import { v4 } from '@lukeed/uuid';
 
+	import { STORAGE_URL } from '../../utils/env';
 	import Upload from '../Upload.svelte';
 	import Modal from '../Modal/index.svelte';
 	import NiceSelect from '../NiceSelect/index.svelte';
@@ -195,7 +196,6 @@
 	};
 
 	$: if (!field) {
-		console.log('def f', defaultField);
 		field = defaultField;
 	}
 </script>
@@ -227,7 +227,9 @@
 
 			<NiceSelect {t} label="Is filter" bind:value={field.isFilter} options={isFilterOptions} />
 
-			<Upload {t} label="Thumbnail" bind:image={field.thumbnail} />
+			{#if field.thumbnail}
+				<Upload {t} label="Thumbnail" bind:image={field.thumbnail} />
+			{/if}
 
 			<DropDown
 				{t}

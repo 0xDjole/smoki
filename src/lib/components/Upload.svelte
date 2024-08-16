@@ -3,6 +3,8 @@
 	import UploadSvg from '../utils/icons/upload.svg?raw';
 	import Loader from './Loader.svelte';
 	import Label from './Label.svelte';
+	import linkToFile from '../utils/helpers/linkToFile';
+	import { STORAGE_URL } from '../utils/env';
 
 	export let image = null;
 	export let label = null;
@@ -14,11 +16,27 @@
 	let avatar;
 	let loading = false;
 
-	$: if (image) {
+	const parseImageFromUrl = async (url) => {
+		if (url) {
+			const fullUrl = `${STORAGE_URL}/${url}`;
+			const imageResponse = await linkToFile(fullUrl);
+			console.log('image ', imageResponse);
+
+			image = imageResponse;
+		}
+	};
+
+	$: parseImageFromUrl(image?.url);
+
+	$: if (image && (image instanceof File || image instanceof Blob)) {
 		const reader = new FileReader();
 		reader.readAsDataURL(image);
 		reader.onload = (e) => {
 			avatar = e.target.result;
+			loading = false;
+		};
+		reader.onerror = (error) => {
+			console.error('Error reading file:', error);
 			loading = false;
 		};
 	}

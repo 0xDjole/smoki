@@ -60,15 +60,11 @@
 	}
 
 	.thumbnail-wrapper {
-		@apply flex items-end gap-x-2;
+		@apply flex items-end gap-x-2 mb-1.5;
 	}
 
 	.label {
 		@apply text-lg text-primary font-bold md:text-xl;
-	}
-
-	.thumbnail-container {
-		@apply flex items-end;
 	}
 
 	@keyframes shake {
@@ -106,6 +102,6 @@
 	}
 
 	.thumbnail {
-		@apply rounded-full;
+		@apply rounded-full overflow-hidden;
 	}
 </style>

@@ -55,6 +55,7 @@ $: if (labelThumbnail && (labelThumbnail instanceof File || labelThumbnail insta
 }
 
 	.thumbnail-wrapper {
+		margin-bottom: 0.375rem;
 		display: flex;
 		align-items: flex-end;
 		-moz-column-gap: 0.5rem;
@@ -74,11 +75,6 @@ $: if (labelThumbnail && (labelThumbnail instanceof File || labelThumbnail insta
 				font-size: 1.25rem;
 				line-height: 1.75rem;
 		}
-}
-
-	.thumbnail-container {
-		display: flex;
-		align-items: flex-end;
 }
 
 	@keyframes shake {
@@ -135,5 +131,6 @@ $: if (labelThumbnail && (labelThumbnail instanceof File || labelThumbnail insta
 }
 
 	.thumbnail {
+		overflow: hidden;
 		border-radius: 9999px;
 }</style>

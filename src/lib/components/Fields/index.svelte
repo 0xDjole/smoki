@@ -103,24 +103,20 @@
 </ul>
 
 <style type="text/postcss">
-	.plain {
-		@apply text-primary font-bold text-xl;
-	}
-
 	.custom-field-body {
 		@apply flex flex-col rounded-md gap-y-2 h-full w-full;
 	}
 
 	.key {
-		@apply p-2;
+		@apply min-w-[130px] pl-2;
 	}
 
 	.field {
-		@apply flex cursor-pointer text-primary items-center gap-x-2 font-bold bg-secondary rounded-2xl justify-between h-auto md:h-[50px] md:text-lg;
+		@apply flex cursor-pointer text-primary items-center gap-x-2 font-bold bg-secondary rounded-2xl justify-between h-[30px] md:h-[50px] md:text-lg border-primary;
 	}
 
 	.value {
-		@apply flex bg-accent rounded-xl px-3 w-[150px] md:w-[250px] h-full items-center justify-end rounded-l-none text-white;
+		@apply flex bg-accent rounded-xl px-3 h-full items-center justify-end rounded-l-none text-white flex-1;
 		white-space: normal; /* Allows text wrapping */
 		overflow: auto; /* Keeps text inside the boundary if it's too long */
 	}
@@ -131,5 +127,9 @@
 
 	.modal-body {
 		@apply m-3;
+	}
+
+	.plain {
+		@apply text-primary font-bold text-base;
 	}
 </style>

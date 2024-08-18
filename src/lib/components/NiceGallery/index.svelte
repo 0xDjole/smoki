@@ -73,7 +73,7 @@
 
 <style type="text/postcss">
 	.slide-img {
-		@apply w-full object-cover;
+		@apply w-full object-cover md:w-[70%];
 	}
 
 	.swiper-pagination {
@@ -87,9 +87,6 @@
 		@apply flex w-full h-full overflow-hidden;
 	}
 	.swiper-slide {
-		/* Center slides */
-		display: flex;
-		justify-content: center;
-		align-items: center;
+		@apply flex justify-center;
 	}
 </style>

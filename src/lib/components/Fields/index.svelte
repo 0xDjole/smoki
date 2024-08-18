@@ -37,8 +37,12 @@
 	onCancel={() => {
 		values = [];
 		key = '';
-	}}><div class="modal-body"><NiceSelect disabled={true} options={values} /></div></Modal
+	}}
 >
+	<div class="modal-body">
+		<NiceSelect disabled={true} options={values} />
+	</div>
+</Modal>
 
 {#if label}
 	<div class="mb-5">
@@ -48,17 +52,7 @@
 
 <ul class="custom-field-body">
 	{#each fields
-		.filter((field) => {
-			if (field.value === null) {
-				return false;
-			}
-
-			if (Array.isArray(field.value) && !field.value.length) {
-				return false;
-			}
-
-			return true;
-		})
+		.filter((field) => field.value !== null && !(Array.isArray(field.value) && !field.value.length))
 		.map( (field) => ({ field, fieldConfig: fieldConfigs.find((fieldConfig) => fieldConfig.id === field.fieldConfigId) }) ) as { field, fieldConfig }, index}
 		{#if fieldConfig}
 			{#if fieldConfig.type === 'entities'}
@@ -70,6 +64,10 @@
 					allowTag={false}
 					value={field.value}
 				/>
+			{:else if fieldConfig.type === 'text' && fieldConfig.ui === 'plain_localized'}
+				<div class="plain">
+					{translate(fieldConfig.defaultValue, locale)}
+				</div>
 			{:else if fieldConfig.type === 'text' && fieldConfig.ui === 'text_area'}
 				<TextArea
 					{t}
@@ -87,7 +85,6 @@
 					on:click|preventDefault={() => Array.isArray(field.value) && viewMultipleValues(field)}
 				>
 					<div class="key">{translate(fieldConfig.key, locale)}</div>
-
 					<div class="value">
 						{#if typeof field.value === 'boolean'}
 							<Button kind={field.value ? 'success' : 'close'} />
@@ -106,6 +103,10 @@
 </ul>
 
 <style type="text/postcss">
+	.plain {
+		@apply text-primary font-bold text-xl;
+	}
+
 	.custom-field-body {
 		@apply flex flex-col rounded-md gap-y-2 h-full w-full;
 	}
@@ -115,15 +116,17 @@
 	}
 
 	.field {
-		@apply flex cursor-pointer text-primary items-center gap-x-2 font-bold bg-secondary rounded-2xl justify-between h-[30px] md:h-[50px] md:text-lg;
+		@apply flex cursor-pointer text-primary items-center gap-x-2 font-bold bg-secondary rounded-2xl justify-between h-auto md:h-[50px] md:text-lg;
 	}
 
 	.value {
-		@apply flex bg-accent rounded-xl px-3 w-[150px] md:w-[250px] h-full text-ellipsis overflow-hidden text-nowrap items-center justify-end rounded-l-none text-white;
+		@apply flex bg-accent rounded-xl px-3 w-[150px] md:w-[250px] h-full items-center justify-end rounded-l-none text-white;
+		white-space: normal; /* Allows text wrapping */
+		overflow: auto; /* Keeps text inside the boundary if it's too long */
 	}
 
 	.view-button {
-		@apply w-full text-end cursor-pointer text-ellipsis overflow-hidden;
+		@apply w-full text-end cursor-pointer;
 	}
 
 	.modal-body {

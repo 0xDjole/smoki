@@ -61,6 +61,10 @@ $: dynamicClass = `${hovering && viewDate.isSelectable ? ' hoverSuccess ' : ''}
 }
 
 	.between {
-		background: orange;
-		border: 3px solid white;
-	}</style>
+		background-color: var(--accent-background-color);
+		--tw-text-opacity: 1;
+		color: rgb(255 255 255 / var(--tw-text-opacity));
+		border-color: var(--primary-border-color);
+		border-width: 1px;
+		border-style: solid;
+}</style>

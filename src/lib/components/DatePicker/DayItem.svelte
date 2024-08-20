@@ -52,7 +52,6 @@
 	}
 
 	.between {
-		background: orange;
-		border: 3px solid white;
+		@apply bg-accent text-white border-primary;
 	}
 </style>

@@ -99,11 +99,11 @@
 		}
 
 		if (isSelectable && Array.isArray(availableValues)) {
-			isSelectable = availableValues.some((value) => date.equals(value));
+			isSelectable = availableValues.some((value) => date.hasSame(value, 'day'));
 		}
 
-		const isSelected = selectedValues.some((selectedValue) => selectedValue.equals(date));
-		const isBetween = betweenValues.some((selectedValue) => selectedValue.equals(date));
+		const isSelected = selectedValues.some((selectedValue) => selectedValue.hasSame(date, 'day'));
+		const isBetween = betweenValues.some((selectedValue) => selectedValue.hasSame(date, 'day'));
 
 		return {
 			date,
@@ -113,6 +113,8 @@
 		};
 	});
 
+	$: console.log(viewDates);
+
 	$: months = locale ? formatter.getLocalizedMonths(locale) : [];
 
 	$: days = locale ? formatter.getLocalizedShortWeekdaysSunday(locale) : [];
@@ -121,11 +123,11 @@
 <div class="wrapper">
 	<div class="head">
 		<div class="control-date" on:click|preventDefault={() => previousMonth()}>
-			<SvgIcon data={Less} color={'white'} size={'20px'} />
+			<SvgIcon data={Less} color={'var(--primary-text-color)'} size={'20px'} />
 		</div>
 		<span class="date">{months[month - 1]}, {year}</span>
 		<div class="control-date" on:click|preventDefault={() => nextMonth()}>
-			<SvgIcon data={Great} color={'white'} size={'20px'} />
+			<SvgIcon data={Great} color={'var(--primary-text-color)'} size={'20px'} />
 		</div>
 	</div>
 	<div class="days">

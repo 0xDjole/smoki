@@ -104,7 +104,8 @@ const isFilterOptions = [
 const uiOptions = {
     text: [
         { label: 'Default', value: 'default' },
-        { label: 'Text area', value: 'text_area' }
+        { label: 'Text area', value: 'text_area' },
+        { label: 'Plain localized', value: 'plain_localized' }
     ],
     select: [
         { label: 'Default', value: 'default' },

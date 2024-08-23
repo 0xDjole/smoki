@@ -75,7 +75,7 @@
 
 	onMount(async () => {
 		if (fetchOnMount) {
-			await fetchData(true);
+			await fetchData(true, true);
 		}
 	});
 

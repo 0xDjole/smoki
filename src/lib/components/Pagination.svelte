@@ -79,33 +79,47 @@
 		}
 	});
 
-	const fetchData = async (isFromTop: boolean) => {
+	const fetchData = async (isFromTop: boolean, shouldFetch: boolean) => {
 		if (fetchingMore || !component) {
 			return null;
 		}
 
-		fetchingMore = true;
-		let responseItems = await fetchMore(false);
+		let responseItems = [];
 
-		if (!responseItems || !responseItems.length) {
+		if (shouldFetch) {
+			fetchingMore = true;
+			responseItems = await fetchMore(isFromTop);
+
+			if (!responseItems || !responseItems.length) {
+				fetchingMore = false;
+
+				setTimeout(() => {
+					const byPixels = isFromTop ? 50 : -75;
+					component?.scrollBy({ top: byPixels });
+				}, 20);
+
+				return null;
+			}
+
+			if (isFromTop) {
+				items = [...responseItems];
+			} else {
+				items = [...items, ...responseItems];
+
+				loadedMoreBottom = true;
+			}
+
 			fetchingMore = false;
-
-			setTimeout(() => {
-				const byPixels = isFromTop ? 50 : -75;
-				component?.scrollBy({ top: byPixels });
-			}, 20);
-
-			return null;
 		}
-		items = [...items, ...responseItems];
-		loadedMoreBottom = true;
-
-		fetchingMore = false;
 
 		if (isFromTop) {
 			setTimeout(() => {
 				component.scrollBy({ top: 50 });
 			}, 20);
+		}
+
+		if (!isFromTop && !responseItems.length) {
+			component.scrollTo({ top: component.scrollHeight - component.clientHeight - 75 });
 		}
 	};
 </script>
@@ -138,23 +152,12 @@
 	</div>
 
 	<InfiniteScroll
-		topScrollReset={async (fetchData) => {
-			if (fetchData) {
-				const responseItems = await fetchMore(true);
-				const showedOnTop = items.filter((item) => item.showTop === true);
-				items = [...showedOnTop, ...responseItems];
-			}
-
-			component.scrollTo({ top: 50 });
+		fetchTop={async (shouldFetch) => {
+			await fetchData(true, shouldFetch);
 		}}
-		hasMore={true}
 		threshold={0}
-		bottomScrollReset={async (fetchData) => {
-			if (fetchData) {
-				await fetchData(false);
-			} else {
-				component.scrollTo({ top: component.scrollHeight - component.clientHeight - 75 });
-			}
+		fetchBottom={async (shouldFetch) => {
+			await fetchData(false, shouldFetch);
 		}}
 	/>
 </div>

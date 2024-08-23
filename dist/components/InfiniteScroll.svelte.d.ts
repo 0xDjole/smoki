@@ -3,9 +3,8 @@
 /** @typedef {typeof __propDef.slots}  InfiniteScrollSlots */
 export default class InfiniteScroll extends SvelteComponentTyped<{
     threshold?: number | undefined;
-    hasMore?: boolean | undefined;
-    topScrollReset?: (() => void) | undefined;
-    bottomScrollReset?: (() => void) | undefined;
+    fetchTop?: (() => void) | undefined;
+    fetchBottom?: (() => void) | undefined;
     horizontal?: boolean | undefined;
 }, {
     [evt: string]: CustomEvent<any>;
@@ -18,9 +17,8 @@ import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
         threshold?: number | undefined;
-        hasMore?: boolean | undefined;
-        topScrollReset?: (() => void) | undefined;
-        bottomScrollReset?: (() => void) | undefined;
+        fetchTop?: (() => void) | undefined;
+        fetchBottom?: (() => void) | undefined;
         horizontal?: boolean | undefined;
     };
     events: {

@@ -3,9 +3,8 @@
 
 	export let threshold = 0;
 	export let horizontal = false;
-	export let hasMore = true;
-	export let topScrollReset = () => {};
-	export let bottomScrollReset = () => {};
+	export let fetchTop = () => {};
+	export let fetchBottom = () => {};
 
 	let component;
 	let clearTopTimeoutId;
@@ -30,28 +29,26 @@
 
 		if (e.target.scrollTop === 0) {
 			clearTopTimeoutId = setTimeout(() => {
-				topScrollReset(true);
+				fetchTop(true);
 			}, 300);
 		}
 
 		if (e.target.scrollTop > 0 && e.target.scrollTop < 50) {
 			clearTopTimeoutId = setTimeout(() => {
-				topScrollReset(false);
+				fetchTop(false);
 			}, 200);
 		}
 
 		if (offset <= threshold + 3) {
-			if (hasMore) {
-				clearBottomTimeoutId = setTimeout(() => {
-					bottomScrollReset(true);
-				}, 200);
-				return null;
-			}
+			clearBottomTimeoutId = setTimeout(() => {
+				fetchBottom(true);
+			}, 200);
+			return null;
 		}
 
 		if (offset > threshold && offset < 75) {
 			clearBottomTimeoutId = setTimeout(() => {
-				bottomScrollReset(false);
+				fetchBottom(false);
 			}, 100);
 		}
 	};

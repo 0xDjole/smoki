@@ -1,6 +1,6 @@
 <script>import { STORAGE_URL } from '../../utils/env';
 import SvgIcon from '../SvgIcon.svelte';
-import UploadSvg from '../../utils/icons/upload.svg?raw';
+import NoImage from '../../utils/icons/no-image.svg?raw';
 import { onMount } from 'svelte';
 export let url = null;
 export let isPrefix = true;
@@ -23,7 +23,7 @@ onMount(() => {
 	{#if imageValid}
 		<img class="image" {alt} {src} on:error={handleImageError} />
 	{:else}
-		<SvgIcon data={UploadSvg} color={'var(--secondary-text-color)'} />
+		<SvgIcon data={NoImage} color={'var(--secondary-text-color)'} />
 	{/if}
 </div>
 

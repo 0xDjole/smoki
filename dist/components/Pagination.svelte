@@ -16,11 +16,9 @@ export let height = '100%';
 export let listStyle = '';
 let fetchingMore = false;
 let parentHeight;
-let listHeight;
 let spacer;
 let currentItems = [];
 let spacerHeight = 0;
-let loadedMoreBottom = false;
 $: if (!currentItems.length && component && listComponent) {
     const height = component.clientHeight + 10 - listComponent.scrollHeight;
     if (height > 0) {
@@ -36,21 +34,11 @@ $: {
                 if (height > 0) {
                     spacer.style.height = `${height}px`;
                     spacerHeight = height;
-                    if (!items.length) {
-                        component.style.scrollBehavior = 'auto';
-                        component.scrollTo({ top: 50 });
-                        component.style.scrollBehavior = 'smooth';
-                    }
-                    if (loadedMoreBottom) {
-                        component.scrollBy({ top: -75 });
-                    }
                 }
                 else {
                     spacer.style.height = `0px`;
                     spacerHeight = 0;
                 }
-                currentItems = items;
-                loadedMoreBottom = false;
             });
         }
     }
@@ -71,26 +59,17 @@ const fetchData = async (isFromTop, shouldFetch) => {
     if (shouldFetch) {
         fetchingMore = true;
         responseItems = await fetchMore(isFromTop);
-        if (!responseItems || !responseItems.length) {
-            fetchingMore = false;
-            setTimeout(() => {
-                const byPixels = isFromTop ? 50 : -75;
-                component?.scrollBy({ top: byPixels });
-            }, 20);
-            return null;
-        }
         if (isFromTop) {
             items = [...responseItems];
         }
         else {
             items = [...items, ...responseItems];
-            loadedMoreBottom = true;
         }
         fetchingMore = false;
     }
     if (isFromTop) {
         setTimeout(() => {
-            component.scrollBy({ top: 50 });
+            component.scrollTo({ top: 50 });
         }, 20);
     }
     if (!isFromTop && !responseItems.length) {

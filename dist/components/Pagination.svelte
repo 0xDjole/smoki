@@ -60,7 +60,7 @@ onDestroy(() => {
 });
 onMount(async () => {
     if (fetchOnMount) {
-        await fetchData(true);
+        await fetchData(true, true);
     }
 });
 const fetchData = async (isFromTop, shouldFetch) => {

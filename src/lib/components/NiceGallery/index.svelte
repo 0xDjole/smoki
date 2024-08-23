@@ -6,11 +6,11 @@
 
 	import { STORAGE_URL } from '../../utils/env';
 
-	// Access Fancybox from the imported module
 	import '@fancyapps/ui/dist/fancybox/fancybox.css';
 
 	export let items = [];
 	export let galleryID = 'gallery';
+	export let isOpened = false;
 
 	let swiperInstance;
 
@@ -32,14 +32,25 @@
 		const module = await import('@fancyapps/ui');
 		Fancybox = module.Fancybox;
 		Fancybox.bind('.link-image img', {
-			Hash: false
+			Hash: false,
+			on: {
+				reveal: () => {
+					isOpened = true;
+				},
+				close: () => {
+					isOpened = false;
+				}
+			}
 		});
 	});
 
-	// Proper cleanup to prevent memory leaks
 	onDestroy(() => {
 		if (swiperInstance) swiperInstance.destroy(true, true);
 	});
+
+	$: if (!isOpened && Fancybox) {
+		Fancybox.close(true);
+	}
 </script>
 
 <div class="swiper-container">

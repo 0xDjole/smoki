@@ -6,6 +6,7 @@
 
 	import { STORAGE_URL } from '../../utils/env';
 
+	// Access Fancybox from the imported module
 	import '@fancyapps/ui/dist/fancybox/fancybox.css';
 
 	export let items = [];
@@ -84,7 +85,7 @@
 
 <style type="text/postcss">
 	.slide-img {
-		@apply w-full object-cover md:w-[70%];
+		@apply w-full object-cover;
 	}
 
 	.swiper-pagination {
@@ -92,10 +93,10 @@
 	}
 
 	.link-image {
-		@apply flex justify-center h-full;
+		@apply flex justify-center w-full h-full;
 	}
 	.swiper-container {
-		@apply flex w-full h-full overflow-hidden;
+		@apply absolute top-0 left-0 flex w-full h-full overflow-hidden;
 	}
 	.swiper-slide {
 		@apply flex justify-center;

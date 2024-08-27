@@ -2,7 +2,7 @@
 	import SvgButton from './SvgButton.svelte';
 
 	export let kind = 'base';
-	export let size = 'small';
+	export let size = 'normal';
 	export let position = '';
 	export let onClick = null;
 	export let style = '';
@@ -19,7 +19,11 @@
 			return 'full';
 		}
 
-		return 'small';
+		if (size === 'small') {
+			return 'small';
+		}
+
+		return 'normal';
 	};
 
 	const parseKind = (kind) => {
@@ -76,8 +80,12 @@
 		@apply bg-error;
 	}
 
+	.normal {
+		@apply w-fit text-base;
+	}
+
 	.small {
-		@apply w-fit;
+		@apply w-fit text-sm;
 	}
 
 	.large {
@@ -89,7 +97,7 @@
 	}
 
 	.boring {
-		@apply bg-transparent;
+		@apply bg-transparent p-0 m-0 text-primary;
 	}
 
 	.disabled {

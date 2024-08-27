@@ -1,6 +1,6 @@
 <script>import SvgButton from './SvgButton.svelte';
 export let kind = 'base';
-export let size = 'small';
+export let size = 'normal';
 export let position = '';
 export let onClick = null;
 export let style = '';
@@ -14,7 +14,10 @@ const parseSize = (size) => {
     if (size === 'full') {
         return 'full';
     }
-    return 'small';
+    if (size === 'small') {
+        return 'small';
+    }
+    return 'normal';
 };
 const parseKind = (kind) => {
     if (kind === 'success') {
@@ -96,11 +99,26 @@ const svgKinds = ['delete', 'add', 'back', 'search', 'user', 'success', 'close',
     background-color: var(--error-background-color)
 }
 
+	.normal {
+
+    width: -moz-fit-content;
+
+    width: fit-content;
+
+    font-size: 1rem;
+
+    line-height: 1.5rem
+}
+
 	.small {
 
     width: -moz-fit-content;
 
-    width: fit-content
+    width: fit-content;
+
+    font-size: 0.875rem;
+
+    line-height: 1.25rem
 }
 
 	.large {
@@ -125,7 +143,13 @@ const svgKinds = ['delete', 'add', 'back', 'search', 'user', 'success', 'close',
 
 	.boring {
 
-    background-color: transparent
+    margin: 0px;
+
+    background-color: transparent;
+
+    padding: 0px;
+
+    color: var(--primary-text-color)
 }
 
 	.disabled {

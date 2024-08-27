@@ -26,13 +26,11 @@
 	let spacer;
 
 	let currentItems = [];
-	let spacerHeight = 0;
 
 	$: if (!currentItems.length && component && listComponent) {
-		const height = component.clientHeight + 10 - listComponent.scrollHeight;
+		const height = component.clientHeight + 30 - listComponent.scrollHeight;
 		if (height > 0) {
 			spacer.style.height = `${height}px`;
-			spacerHeight = height;
 		}
 	}
 
@@ -40,13 +38,11 @@
 		if (component) {
 			if (currentItems.length !== items.length) {
 				tick().then(() => {
-					const height = component.clientHeight + 10 - listComponent.scrollHeight;
+					const height = component.clientHeight + 30 - listComponent.scrollHeight;
 					if (height > 0) {
 						spacer.style.height = `${height}px`;
-						spacerHeight = height;
 					} else {
 						spacer.style.height = `0px`;
-						spacerHeight = 0;
 					}
 				});
 			}

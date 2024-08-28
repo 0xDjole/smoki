@@ -19,20 +19,20 @@
 {#if showModal}
 	<div class="wrapper" style={`z-index: ${zIndex};`}>
 		<div class="modal" style={`height: ${height}; top: ${top}; ${modalStyle}`}>
-			<div class="top-bar">
-				{#if title}
-					<div class="header-title">{title}</div>
-				{/if}
-
-				<div class="close-button">
-					<Button
-						kind="close"
-						onClick={() => {
-							onCancel();
-						}}
-					/>
-				</div>
+			<div class="close-button">
+				<Button
+					kind="close"
+					onClick={() => {
+						onCancel();
+					}}
+				/>
 			</div>
+
+			{#if title}
+				<div class="top-bar">
+					<div class="header-title">{title}</div>
+				</div>
+			{/if}
 
 			<div class="content">
 				<slot />
@@ -72,6 +72,6 @@
 	}
 
 	.close-button {
-		@apply absolute top-5 right-5 cursor-pointer;
+		@apply absolute top-3 right-3 md:top-5 md:right-5 cursor-pointer;
 	}
 </style>

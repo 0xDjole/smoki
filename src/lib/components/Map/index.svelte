@@ -80,6 +80,6 @@
 	}
 
 	.map-wrapper {
-		@apply w-full relative;
+		@apply w-full relative z-0;
 	}
 </style>

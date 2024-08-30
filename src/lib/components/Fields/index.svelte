@@ -63,7 +63,7 @@
 				{:else if fieldConfig.type === 'geo_location'}
 					<Map zoom={17} allowTag={false} value={field.value} />
 				{:else if fieldConfig.type === 'text' && fieldConfig.ui === 'plain_localized'}
-					<div class="plain">
+					<div class="plain-text">
 						{translate(fieldConfig.defaultValue, locale)}
 					</div>
 				{:else if fieldConfig.type === 'text' && fieldConfig.ui === 'text_area'}
@@ -132,7 +132,9 @@
 		@apply m-3;
 	}
 
-	.plain {
-		@apply text-primary font-bold text-base;
+	.plain-text {
+		@apply text-primary text-left font-bold text-base whitespace-pre-wrap;
+		line-height: 1.1rem;
+		text-align: left;
 	}
 </style>

@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Label from '../Label.svelte';
-
 	import Viber from '../../utils/icons/viber.svg?raw';
 	import PhoneNumber from '../../utils/icons/phone_number.svg?raw';
 	import WhatsApp from '../../utils/icons/whatsapp.svg?raw';
@@ -12,7 +11,29 @@
 	export let label = null;
 	export let t;
 
-	$: console.log('fields', fields, fieldConfigs);
+	function cleanNumber(number: string): string {
+		return number.replace(/[^0-9+]/g, '');
+	}
+
+	// Function to handle navigation for different apps
+	function handleNavigation(app: string, number: string) {
+		let cleanedNumber = cleanNumber(number); // Clean the number first
+		let url = '';
+		switch (app) {
+			case 'viber':
+				url = `viber://chat?number=${cleanedNumber}`;
+				break;
+			case 'whatsapp':
+				url = `https://wa.me/${
+					cleanedNumber.startsWith('+') ? cleanedNumber.substring(1) : cleanedNumber
+				}`;
+				break;
+			case 'phone_number':
+				url = `tel:${cleanedNumber}`;
+				break;
+		}
+		window.location.href = url;
+	}
 </script>
 
 {#if label}
@@ -26,17 +47,22 @@
 		.filter((fieldConfig) => fieldConfig.type === 'badge')
 		.map( (fieldConfig) => ({ fieldConfig, field: fields.find((field) => fieldConfig.id === field.fieldConfigId) }) ) as { field, fieldConfig }, index}
 		{#if fieldConfig}
-			<div class="flex justify-center items-center">
+			<div
+				on:click={() => {
+					handleNavigation(field.value.name, field.value.url);
+				}}
+				class="badge"
+			>
 				{#if field.value.name === 'viber'}
-					<SvgIcon data={Viber} size={'35px'} color={'var(--secondary-text-color)'} />
+					<SvgIcon data={Viber} size={'30px'} color={'var(--secondary-text-color)'} />
 				{/if}
 
 				{#if field.value.name === 'whatsapp'}
-					<SvgIcon data={WhatsApp} size={'40px'} color={'var(--secondary-text-color)'} />
+					<SvgIcon data={WhatsApp} size={'30px'} color={'var(--secondary-text-color)'} />
 				{/if}
 
 				{#if field.value.name === 'phone_number'}
-					<SvgIcon data={PhoneNumber} size={'40px'} color={'var(--secondary-text-color)'} />
+					<SvgIcon data={PhoneNumber} size={'30px'} color={'var(--secondary-text-color)'} />
 				{/if}
 			</div>
 		{/if}
@@ -45,9 +71,9 @@
 
 <style type="text/postcss">
 	.badge {
-		@apply z-10;
+		@apply flex justify-center items-center z-10 bg-primary border-primary rounded-full p-1 opacity-90;
 	}
 	.custom-field-body {
-		@apply flex rounded-md h-full w-full gap-x-3 py-2;
+		@apply flex rounded-md h-full w-full gap-x-2;
 	}
 </style>

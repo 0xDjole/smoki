@@ -62,9 +62,9 @@
 					<slot name="entities" idx={index} value={field.value} {fieldConfig} />
 				{:else if fieldConfig.type === 'geo_location'}
 					<Map zoom={17} allowTag={false} value={field.value} />
-				{:else if fieldConfig.type === 'text' && fieldConfig.ui === 'plain_localized'}
-					<div class="plain-text">
-						{translate(fieldConfig.defaultValue, locale)}
+				{:else if fieldConfig.type === 'text' && fieldConfig.ui === 'html'}
+					<div class="html-text">
+						{@html translate(fieldConfig.defaultValue, locale)}
 					</div>
 				{:else if fieldConfig.type === 'text' && fieldConfig.ui === 'text_area'}
 					<TextArea
@@ -77,7 +77,7 @@
 					/>
 				{:else if fieldConfig.type === 'custom'}
 					<slot name="custom" idx={index} errors={field.errors} value={field.value} {fieldConfig} />
-				{:else if fieldConfig.type === 'badge'}{:else}
+				{:else if fieldConfig.type === 'badge'}{:else if field.value}
 					<div
 						class="field"
 						on:click|preventDefault={() => Array.isArray(field.value) && viewMultipleValues(field)}
@@ -115,7 +115,7 @@
 	}
 
 	.field {
-		@apply flex cursor-pointer text-primary items-center gap-x-2 font-bold bg-secondary rounded-2xl justify-between h-[30px] md:h-[50px] md:text-lg border-primary;
+		@apply flex cursor-pointer text-primary items-center gap-x-2 font-bold bg-secondary rounded-2xl justify-between h-[30px] md:h-[40px] md:text-lg border-primary;
 	}
 
 	.value {
@@ -132,9 +132,63 @@
 		@apply m-3;
 	}
 
-	.plain-text {
-		@apply text-primary text-left font-bold text-base whitespace-pre-wrap;
-		line-height: 1.1rem;
-		text-align: left;
+	.html-text {
+		@apply font-bold text-primary;
+		line-height: 1.6; /* Improves readability */
+	}
+
+	:global(.html-text h1) {
+		@apply text-2xl font-bold mb-3;
+	}
+
+	:global(.html-text h2) {
+		@apply text-xl font-bold mb-2;
+	}
+
+	:global(.html-text h3) {
+		@apply text-base font-bold mb-1;
+	}
+
+	:global(.html-text p) {
+		@apply mb-2 text-base leading-relaxed;
+	}
+
+	:global(.html-text ul) {
+		@apply list-none list-inside;
+	}
+
+	:global(.html-text li) {
+		@apply mb-1;
+	}
+
+	:global(.html-text a) {
+		@apply text-blue-600 hover:text-blue-800 underline;
+	}
+
+	:global(.html-text strong) {
+		@apply font-bold;
+	}
+
+	:global(.html-text em) {
+		@apply italic;
+	}
+
+	/* Responsive styles */
+	@media (min-width: 768px) {
+		:global(.html-text h1) {
+			@apply text-3xl;
+		}
+
+		:global(.html-text h2) {
+			@apply text-2xl;
+		}
+
+		:global(.html-text h3) {
+			@apply text-xl;
+		}
+
+		:global(.html-text p, .html-text li) {
+			@apply text-lg;
+		}
 	}
 </style>

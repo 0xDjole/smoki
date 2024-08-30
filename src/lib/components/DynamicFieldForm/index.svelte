@@ -1,5 +1,4 @@
 <script lang="ts">
-	import { onMount } from 'svelte';
 	import Switch from '../Switch/index.svelte';
 	import Range from '../Range/index.svelte';
 	import DropDown from '../DropDown/index.svelte';

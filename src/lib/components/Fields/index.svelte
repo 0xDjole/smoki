@@ -6,12 +6,14 @@
 	import TextArea from '../TextArea/index.svelte';
 	import Label from '../Label.svelte';
 	import Map from '../Map/index.svelte';
+	import Badges from './Badges.svelte';
 
 	export let fields = [];
 	export let fieldConfigs = [];
 	export let locale = 'en';
 	export let label = null;
 	export let t;
+	export let type = 'regular';
 
 	let values = [];
 	let key = '';
@@ -25,82 +27,83 @@
 	};
 </script>
 
-<Modal
-	showModal={values.length}
-	confirmText="Close"
-	title={key}
-	zIndex={1000}
-	confirm={() => {
-		values = [];
-		key = '';
-	}}
-	onCancel={() => {
-		values = [];
-		key = '';
-	}}
->
-	<div class="modal-body">
-		<NiceSelect disabled={true} options={values} />
-	</div>
-</Modal>
+{#if type === 'regular'}
+	<Modal
+		showModal={values.length}
+		confirmText="Close"
+		title={key}
+		zIndex={1000}
+		confirm={() => {
+			values = [];
+			key = '';
+		}}
+		onCancel={() => {
+			values = [];
+			key = '';
+		}}
+	>
+		<div class="modal-body">
+			<NiceSelect disabled={true} options={values} />
+		</div>
+	</Modal>
 
-{#if label}
-	<div class="mb-5">
-		<Label {t} {label} />
-	</div>
+	{#if label}
+		<div class="mb-5">
+			<Label {t} {label} />
+		</div>
+	{/if}
+
+	<ul class="custom-field-body">
+		{#each fields
+			.filter((field) => field.value !== null && !(Array.isArray(field.value) && !field.value.length))
+			.map( (field) => ({ field, fieldConfig: fieldConfigs.find((fieldConfig) => fieldConfig.id === field.fieldConfigId) }) ) as { field, fieldConfig }, index}
+			{#if fieldConfig}
+				{#if fieldConfig.type === 'entities'}
+					<slot name="entities" idx={index} value={field.value} {fieldConfig} />
+				{:else if fieldConfig.type === 'geo_location'}
+					<Map zoom={17} allowTag={false} value={field.value} />
+				{:else if fieldConfig.type === 'text' && fieldConfig.ui === 'plain_localized'}
+					<div class="plain">
+						{translate(fieldConfig.defaultValue, locale)}
+					</div>
+				{:else if fieldConfig.type === 'text' && fieldConfig.ui === 'text_area'}
+					<TextArea
+						{t}
+						style="height: min-content;"
+						label={translate(fieldConfig.key, locale)}
+						bind:value={field.value}
+						errors={[]}
+						isDisabled={true}
+					/>
+				{:else if fieldConfig.type === 'custom'}
+					<slot name="custom" idx={index} errors={field.errors} value={field.value} {fieldConfig} />
+				{:else if fieldConfig.type === 'badge'}{:else}
+					<div
+						class="field"
+						on:click|preventDefault={() => Array.isArray(field.value) && viewMultipleValues(field)}
+					>
+						<div class="key">{translate(fieldConfig.key, locale)}</div>
+						<div class="value">
+							{#if typeof field.value === 'boolean'}
+								<Button kind={field.value ? 'success' : 'close'} />
+							{:else if Array.isArray(field.value)}
+								<div class="view-button">
+									{field.value.join(', ')}
+								</div>
+							{:else}
+								<span>{field.value}</span>
+							{/if}
+						</div>
+					</div>
+				{/if}
+			{/if}
+		{/each}
+	</ul>
 {/if}
 
-<ul class="custom-field-body">
-	{#each fields
-		.filter((field) => field.value !== null && !(Array.isArray(field.value) && !field.value.length))
-		.map( (field) => ({ field, fieldConfig: fieldConfigs.find((fieldConfig) => fieldConfig.id === field.fieldConfigId) }) ) as { field, fieldConfig }, index}
-		{#if fieldConfig}
-			{#if fieldConfig.type === 'entities'}
-				<slot name="entities" idx={index} value={field.value} {fieldConfig} />
-			{:else if fieldConfig.type === 'geo_location'}
-				<Map
-					label={translate(fieldConfig.key, locale)}
-					zoom={17}
-					allowTag={false}
-					value={field.value}
-				/>
-			{:else if fieldConfig.type === 'text' && fieldConfig.ui === 'plain_localized'}
-				<div class="plain">
-					{translate(fieldConfig.defaultValue, locale)}
-				</div>
-			{:else if fieldConfig.type === 'text' && fieldConfig.ui === 'text_area'}
-				<TextArea
-					{t}
-					style="height: min-content;"
-					label={translate(fieldConfig.key, locale)}
-					bind:value={field.value}
-					errors={[]}
-					isDisabled={true}
-				/>
-			{:else if fieldConfig.type === 'custom'}
-				<slot name="custom" idx={index} errors={field.errors} value={field.value} {fieldConfig} />
-			{:else}
-				<div
-					class="field"
-					on:click|preventDefault={() => Array.isArray(field.value) && viewMultipleValues(field)}
-				>
-					<div class="key">{translate(fieldConfig.key, locale)}</div>
-					<div class="value">
-						{#if typeof field.value === 'boolean'}
-							<Button kind={field.value ? 'success' : 'close'} />
-						{:else if Array.isArray(field.value)}
-							<div class="view-button">
-								{field.value.join(', ')}
-							</div>
-						{:else}
-							<span>{field.value}</span>
-						{/if}
-					</div>
-				</div>
-			{/if}
-		{/if}
-	{/each}
-</ul>
+{#if type === 'badges'}
+	<Badges {fieldConfigs} {fields} {t} {label} />
+{/if}
 
 <style type="text/postcss">
 	.custom-field-body {

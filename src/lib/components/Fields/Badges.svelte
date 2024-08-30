@@ -71,7 +71,7 @@
 
 <style type="text/postcss">
 	.badge {
-		@apply flex justify-center items-center z-10 bg-primary border-primary rounded-full p-1 opacity-90;
+		@apply flex justify-center items-center z-10 bg-primary border-primary rounded-full p-1;
 	}
 	.custom-field-body {
 		@apply flex rounded-md h-full w-full gap-x-2;

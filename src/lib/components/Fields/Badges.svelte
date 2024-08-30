@@ -17,16 +17,16 @@
 
 	// Function to handle navigation for different apps
 	function handleNavigation(app: string, number: string) {
-		let cleanedNumber = cleanNumber(number); // Clean the number first
+		const cleanedNumber = cleanNumber(number);
+		const noPlusNumber = cleanedNumber.startsWith('+') ? cleanedNumber.substring(1) : cleanedNumber;
+
 		let url = '';
 		switch (app) {
 			case 'viber':
-				url = `viber://chat?number=${cleanedNumber}`;
+				url = `viber://chat?number=${noPlusNumber}`;
 				break;
 			case 'whatsapp':
-				url = `https://wa.me/${
-					cleanedNumber.startsWith('+') ? cleanedNumber.substring(1) : cleanedNumber
-				}`;
+				url = `https://wa.me/${noPlusNumber}`;
 				break;
 			case 'phone_number':
 				url = `tel:${cleanedNumber}`;

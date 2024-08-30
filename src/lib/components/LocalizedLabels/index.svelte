@@ -4,6 +4,7 @@
 	import Input from '../Input/index.svelte';
 	import Label from '../Label.svelte';
 	import TextArea from '../TextArea/index.svelte';
+	import RichText from '../RichText/index.svelte';
 	import ErrorMessage from '../ErrorMessage.svelte';
 
 	export let label = '';
@@ -27,16 +28,17 @@
 		}
 	];
 
-	let value = '';
 	let language = 'en';
 
 	const addLabel = () => {
 		errors = [];
-		labels[language] = value;
 
-		value = '';
-		language = 'en';
+		if (!labels[language]) {
+			labels[language] = '';
+		}
 	};
+
+	$: console.log('labels ', labels);
 
 	const onChange = () => {
 		errors = [];
@@ -48,16 +50,6 @@
 
 	<DropDown {t} options={languages} errors={[]} bind:value={language} />
 
-	<div>
-		{#if type === 'text'}
-			<Input {onChange} {t} bind:value type="text" kind="primary" {placeholder} />
-		{/if}
-
-		{#if type === 'text-area'}
-			<TextArea {onChange} style="height: min-content;" {t} bind:value {placeholder} />
-		{/if}
-	</div>
-
 	<div class="add-btn">
 		<Button size="large" kind="submit" onClick={addLabel}>Add</Button>
 	</div>
@@ -67,7 +59,7 @@
 
 <div class="labels">
 	{#each languages as language}
-		{#if labels[language.value] || language.isRequired}
+		{#if labels.hasOwnProperty(language.value) || language.isRequired}
 			<li class="label">
 				<div class="label-key">
 					<span>{language.label}</span>
@@ -87,11 +79,28 @@
 					</div>
 				</div>
 
-				{#if labels[language.value]}
-					<div class="label-value">
-						<span>{labels[language.value]}</span>
-					</div>
-				{/if}
+				<div class="label-value">
+					{#if type === 'html'}
+						<RichText {onChange} {t} bind:value={labels[language.value]} {placeholder} />
+					{:else if type === 'text-area'}
+						<TextArea
+							{onChange}
+							style="height: min-content;"
+							{t}
+							bind:value={labels[language.value]}
+							{placeholder}
+						/>
+					{:else}
+						<Input
+							{onChange}
+							{t}
+							bind:value={labels[language.value]}
+							type="text"
+							kind="primary"
+							{placeholder}
+						/>
+					{/if}
+				</div>
 			</li>
 		{/if}
 	{/each}
@@ -115,7 +124,7 @@
 	}
 
 	.label-value {
-		@apply bg-accent flex-1 p-2 flex items-center justify-between;
+		@apply bg-primary flex-1 flex items-center justify-between;
 	}
 
 	.end-key {

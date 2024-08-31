@@ -31,12 +31,14 @@
 			clearTopTimeoutId = setTimeout(() => {
 				fetchTop(true);
 			}, 300);
+			return null;
 		}
 
-		if (e.target.scrollTop > 0 && e.target.scrollTop < 50) {
+		if (e.target.scrollTop > 0 && e.target.scrollTop <= 50) {
 			clearTopTimeoutId = setTimeout(() => {
 				fetchTop(false);
 			}, 200);
+			return null;
 		}
 
 		if (offset <= threshold + 3) {

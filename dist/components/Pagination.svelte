@@ -18,10 +18,10 @@ let fetchingMore = false;
 let parentHeight;
 let spacer;
 let currentItems = [];
-$: console.log(currentItems, items);
 $: if (component) {
     tick().then(() => {
         const height = component.clientHeight + 10 - listComponent.scrollHeight;
+        console.log('height', height);
         if (height > 0) {
             spacer.style.height = `${height}px`;
         }
@@ -53,12 +53,12 @@ const fetchData = async (isFromTop, shouldFetch) => {
         else {
             items = [...items, ...responseItems];
         }
+        await tick();
         fetchingMore = false;
     }
     if (isFromTop) {
-        setTimeout(() => {
-            component.scrollTo({ top: 50 });
-        }, 20);
+        component.scrollTo({ top: 50 });
+        return null;
     }
     if (!isFromTop && !responseItems.length) {
         component.scrollTo({ top: component.scrollHeight - component.clientHeight - 70 });

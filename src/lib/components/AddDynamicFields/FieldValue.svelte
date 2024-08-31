@@ -5,7 +5,7 @@
 	import Select from '../NiceSelect/index.svelte';
 	import TextArea from '../TextArea/index.svelte';
 	import Map from '../Map/index.svelte';
-	import RichText from '../RichText/index.svelte';
+	import Input from '../Input/index.svelte';
 	import Label from '../Label.svelte';
 	import translate from '../../utils/helpers/translate';
 	import { LocalizedText } from '../..';
@@ -106,6 +106,18 @@
 			bind:value={fieldValue}
 			errors={[]}
 		/>
+	{/if}
+
+	{#if fieldConfig.type === 'badge'}
+		<Input
+			kind="primary"
+			{t}
+			label="Name"
+			bind:value={fieldValue.name}
+			placeholder="'whatsapp', 'phone_number', 'viber' OR..."
+		/>
+
+		<Input kind="primary" {t} label="Url" bind:value={fieldValue.url} placeholder="Enter url" />
 	{/if}
 
 	{#if fieldConfig.type === 'geo_location'}

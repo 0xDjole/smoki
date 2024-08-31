@@ -27,26 +27,18 @@
 
 	let currentItems = [];
 
-	$: if (!currentItems.length && component && listComponent) {
-		const height = component.clientHeight + 30 - listComponent.scrollHeight;
-		if (height > 0) {
-			spacer.style.height = `${height}px`;
-		}
-	}
+	$: console.log(currentItems, items);
 
-	$: {
-		if (component) {
-			if (currentItems.length !== items.length) {
-				tick().then(() => {
-					const height = component.clientHeight + 30 - listComponent.scrollHeight;
-					if (height > 0) {
-						spacer.style.height = `${height}px`;
-					} else {
-						spacer.style.height = `0px`;
-					}
-				});
+	$: if (component) {
+		tick().then(() => {
+			const height = component.clientHeight + 10 - listComponent.scrollHeight;
+			if (height > 0) {
+				spacer.style.height = `${height}px`;
+			} else {
+				spacer.style.height = `0px`;
 			}
-		}
+			currentItems = [...items];
+		});
 	}
 
 	onDestroy(() => {
@@ -86,7 +78,7 @@
 		}
 
 		if (!isFromTop && !responseItems.length) {
-			component.scrollTo({ top: component.scrollHeight - component.clientHeight - 75 });
+			component.scrollTo({ top: component.scrollHeight - component.clientHeight - 70 });
 		}
 	};
 </script>
@@ -102,15 +94,15 @@
 		<svelte:component this={loaderComponent} />
 	</div>
 
-	<ul bind:this={listComponent} class="list">
+	<div bind:this={listComponent} class="list">
+		{#if !currentItems.length}
+			<span class="not-found">{$t(notFoundText)}</span>
+		{/if}
+
 		{#each items as item, index}
 			<svelte:component this={itemComponent} {item} {index} {...itemProps} />
 		{/each}
-	</ul>
-
-	{#if !fetchingMore && !items.length}
-		<span class="text-lg md:text-xl text-primary font-bold m-2">{$t(notFoundText)}</span>
-	{/if}
+	</div>
 
 	<div class="spacer" bind:this={spacer} />
 
@@ -130,6 +122,10 @@
 </div>
 
 <style type="text/postcss">
+	.not-found {
+		@apply text-lg md:text-xl text-primary font-bold m-2 pt-8;
+	}
+
 	.spacer {
 		width: 100%;
 		flex-grow: 1;

@@ -13,8 +13,6 @@
 	export let maxLength = 2000;
 	export let isDisabled = false;
 
-	$: console.log('value ', value);
-
 	let editorContainer;
 	let quill;
 

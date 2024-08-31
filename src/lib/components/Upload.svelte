@@ -53,7 +53,6 @@
 			return;
 		}
 
-		console.log(imageFile);
 		image = imageFile;
 	};
 </script>

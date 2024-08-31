@@ -5,8 +5,10 @@
 	import Select from '../NiceSelect/index.svelte';
 	import TextArea from '../TextArea/index.svelte';
 	import Map from '../Map/index.svelte';
+	import RichText from '../RichText/index.svelte';
 	import Label from '../Label.svelte';
 	import translate from '../../utils/helpers/translate';
+	import { LocalizedText } from '../..';
 
 	export let label = 'Custom fieldConfigs';
 	export let fieldConfig = null;
@@ -32,14 +34,24 @@
 	<Label {t} label="Default value" />
 
 	{#if fieldConfig?.type === 'text'}
-		<TextArea
-			{t}
-			label={translate(fieldConfig.key, locale)}
-			bind:value={fieldValue}
-			errors={[]}
-			minLength={fieldConfig?.properties?.minLength}
-			maxLength={fieldConfig?.properties?.maxLength}
-		/>
+		{#if fieldConfig?.ui === 'html'}
+			<LocalizedText
+				{t}
+				label={translate(fieldConfig.key, locale)}
+				bind:labels={fieldValue}
+				type="html"
+				errors={[]}
+			/>
+		{:else}
+			<TextArea
+				{t}
+				label={translate(fieldConfig.key, locale)}
+				bind:value={fieldValue}
+				errors={[]}
+				minLength={fieldConfig?.properties?.minLength}
+				maxLength={fieldConfig?.properties?.maxLength}
+			/>
+		{/if}
 	{:else if fieldConfig?.properties?.options?.length}
 		{#if fieldConfig?.ui === 'nice_select'}
 			<Select

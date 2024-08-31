@@ -113,8 +113,6 @@
 		};
 	});
 
-	$: console.log(viewDates);
-
 	$: months = locale ? formatter.getLocalizedMonths(locale) : [];
 
 	$: days = locale ? formatter.getLocalizedShortWeekdaysSunday(locale) : [];

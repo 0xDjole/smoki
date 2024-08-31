@@ -1,7 +1,6 @@
 <script lang="ts">
 	import { v4 } from '@lukeed/uuid';
 
-	import { STORAGE_URL } from '../../utils/env';
 	import Upload from '../Upload.svelte';
 	import Modal from '../Modal/index.svelte';
 	import NiceSelect from '../NiceSelect/index.svelte';
@@ -9,8 +8,7 @@
 	import Properties from './Properties.svelte';
 	import FieldsTable from './FieldsTable.svelte';
 	import FieldValue from './FieldValue.svelte';
-	import LocalizedLabels from '../LocalizedLabels/index.svelte';
-	import { stringify } from 'postcss';
+	import LocalizedText from '../LocalizedText/index.svelte';
 
 	export let label = 'Custom fields';
 	export let fields;
@@ -199,8 +197,6 @@
 	$: if (!field) {
 		field = defaultField;
 	}
-
-	$: console.log('field ', field, fields);
 </script>
 
 {#if field}
@@ -215,12 +211,7 @@
 		}}
 	>
 		<div class="add-field-body">
-			<LocalizedLabels
-				{t}
-				label="Key"
-				bind:errors={fieldStatus.key.errors}
-				bind:labels={field.key}
-			/>
+			<LocalizedText {t} label="Key" bind:errors={fieldStatus.key.errors} bind:labels={field.key} />
 			<NiceSelect
 				{t}
 				label="Is requird"

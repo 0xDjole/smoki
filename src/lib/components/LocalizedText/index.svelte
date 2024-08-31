@@ -38,8 +38,6 @@
 		}
 	};
 
-	$: console.log('labels ', labels);
-
 	const onChange = () => {
 		errors = [];
 	};

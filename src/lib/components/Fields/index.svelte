@@ -133,7 +133,7 @@
 	}
 
 	.html-text {
-		@apply font-bold text-primary;
+		@apply text-primary;
 		line-height: 1.6; /* Improves readability */
 	}
 

@@ -15,10 +15,8 @@ let listComponent;
 export let height = '100%';
 export let listStyle = '';
 let fetchingMore = false;
-let parentHeight;
 let spacer;
-let currentItems = [];
-$: if (component) {
+$: if (component && items) {
     tick().then(() => {
         const height = component.clientHeight + 10 - listComponent.scrollHeight;
         if (height > 0) {
@@ -27,7 +25,6 @@ $: if (component) {
         else {
             spacer.style.height = `0px`;
         }
-        currentItems = [...items];
     });
 }
 onDestroy(() => {
@@ -52,9 +49,9 @@ const fetchData = async (isFromTop, shouldFetch) => {
         else {
             items = [...items, ...responseItems];
         }
-        await tick();
         fetchingMore = false;
     }
+    await tick();
     if (isFromTop) {
         component.scrollTo({ top: 50 });
         return null;
@@ -65,19 +62,13 @@ const fetchData = async (isFromTop, shouldFetch) => {
 };
 </script>
 
-<div
-	bind:clientHeight={parentHeight}
-	bind:this={component}
-	style={`--height: ${height}; ${listStyle}`}
-	class="pagination"
-	{id}
->
+<div bind:this={component} style={`--height: ${height}; ${listStyle}`} class="pagination" {id}>
 	<div class="load-wrap">
 		<svelte:component this={loaderComponent} />
 	</div>
 
 	<div bind:this={listComponent} class="list">
-		{#if !currentItems.length}
+		{#if !items.length}
 			<span class="not-found">{$t(notFoundText)}</span>
 		{/if}
 

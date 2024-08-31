@@ -19,6 +19,7 @@ const types = [
     { label: 'Number', value: 'number' },
     { label: 'Boolean', value: 'boolean' },
     { label: 'Date', value: 'date' },
+    { label: 'Badge', value: 'badge' },
     { label: 'Entities', value: 'entities' }
 ];
 const propertyTypes = {
@@ -48,9 +49,15 @@ const propertyTypes = {
         isRange: false,
         defaultProperties: null
     },
+    badge: {
+        operations: [],
+        isOption: false,
+        isRange: false,
+        defaultProperties: null
+    },
     boolean: {
         operations: [],
-        isOption: true,
+        isOption: false,
         isRange: false,
         defaultProperties: null
     },
@@ -82,13 +89,13 @@ const propertyTypes = {
             { label: 'Contains', value: 'contains' },
             { label: 'Range', value: 'range' }
         ],
-        isOptionFieldType: true,
+        isOption: true,
         isRange: true,
         defaultProperties: null
     },
     entities: {
         operations: [],
-        isOptionFieldType: false,
+        isOption: false,
         isRange: false,
         defaultProperties: null
     }
@@ -121,6 +128,7 @@ const uiOptions = {
         { label: 'Nice select', value: 'nice_select' }
     ],
     boolean: [{ label: 'Default', value: 'default' }],
+    badge: [{ label: 'Default', value: 'default' }],
     entities: [{ label: 'Default', value: 'default' }]
 };
 export let field;

@@ -18,26 +18,18 @@ let fetchingMore = false;
 let parentHeight;
 let spacer;
 let currentItems = [];
-$: if (!currentItems.length && component && listComponent) {
-    const height = component.clientHeight + 30 - listComponent.scrollHeight;
-    if (height > 0) {
-        spacer.style.height = `${height}px`;
-    }
-}
-$: {
-    if (component) {
-        if (currentItems.length !== items.length) {
-            tick().then(() => {
-                const height = component.clientHeight + 30 - listComponent.scrollHeight;
-                if (height > 0) {
-                    spacer.style.height = `${height}px`;
-                }
-                else {
-                    spacer.style.height = `0px`;
-                }
-            });
+$: console.log(currentItems, items);
+$: if (component) {
+    tick().then(() => {
+        const height = component.clientHeight + 10 - listComponent.scrollHeight;
+        if (height > 0) {
+            spacer.style.height = `${height}px`;
         }
-    }
+        else {
+            spacer.style.height = `0px`;
+        }
+        currentItems = [...items];
+    });
 }
 onDestroy(() => {
     items = [];
@@ -69,7 +61,7 @@ const fetchData = async (isFromTop, shouldFetch) => {
         }, 20);
     }
     if (!isFromTop && !responseItems.length) {
-        component.scrollTo({ top: component.scrollHeight - component.clientHeight - 75 });
+        component.scrollTo({ top: component.scrollHeight - component.clientHeight - 70 });
     }
 };
 </script>
@@ -85,15 +77,15 @@ const fetchData = async (isFromTop, shouldFetch) => {
 		<svelte:component this={loaderComponent} />
 	</div>
 
-	<ul bind:this={listComponent} class="list">
+	<div bind:this={listComponent} class="list">
+		{#if !currentItems.length}
+			<span class="not-found">{$t(notFoundText)}</span>
+		{/if}
+
 		{#each items as item, index}
 			<svelte:component this={itemComponent} {item} {index} {...itemProps} />
 		{/each}
-	</ul>
-
-	{#if !fetchingMore && !items.length}
-		<span class="text-lg md:text-xl text-primary font-bold m-2">{$t(notFoundText)}</span>
-	{/if}
+	</div>
 
 	<div class="spacer" bind:this={spacer} />
 
@@ -113,6 +105,23 @@ const fetchData = async (isFromTop, shouldFetch) => {
 </div>
 
 <style>
+	.not-found {
+		margin: 0.5rem;
+		padding-top: 2rem;
+		font-size: 1.125rem;
+		line-height: 1.75rem;
+		font-weight: 700;
+		color: var(--primary-text-color);
+}
+
+@media (min-width: 768px) {
+
+		.not-found {
+				font-size: 1.25rem;
+				line-height: 1.75rem;
+		}
+}
+
 	.spacer {
 		width: 100%;
 		flex-grow: 1;

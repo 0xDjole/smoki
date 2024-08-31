@@ -2,7 +2,7 @@ import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
         message: string;
-        type?: "error" | "success" | "warning" | "info" | undefined;
+        type?: "error" | "success" | "info" | "warning" | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

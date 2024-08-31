@@ -41,7 +41,6 @@ const onFileSelected = (e) => {
         loading = false;
         return;
     }
-    console.log(imageFile);
     image = imageFile;
 };
 </script>

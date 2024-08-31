@@ -6,7 +6,7 @@ import DropDown from '../DropDown/index.svelte';
 import Properties from './Properties.svelte';
 import FieldsTable from './FieldsTable.svelte';
 import FieldValue from './FieldValue.svelte';
-import LocalizedLabels from '../LocalizedLabels/index.svelte';
+import LocalizedText from '../LocalizedText/index.svelte';
 export let label = 'Custom fields';
 export let fields;
 export let autofillOptions = [];
@@ -178,7 +178,6 @@ const defaultField = {
 $: if (!field) {
     field = defaultField;
 }
-$: console.log('field ', field, fields);
 </script>
 
 {#if field}
@@ -193,12 +192,7 @@ $: console.log('field ', field, fields);
 		}}
 	>
 		<div class="add-field-body">
-			<LocalizedLabels
-				{t}
-				label="Key"
-				bind:errors={fieldStatus.key.errors}
-				bind:labels={field.key}
-			/>
+			<LocalizedText {t} label="Key" bind:errors={fieldStatus.key.errors} bind:labels={field.key} />
 			<NiceSelect
 				{t}
 				label="Is requird"

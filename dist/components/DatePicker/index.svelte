@@ -88,7 +88,6 @@ $: viewDates = new Array(42).fill(null).map((item, index) => {
         isSelectable
     };
 });
-$: console.log(viewDates);
 $: months = locale ? formatter.getLocalizedMonths(locale) : [];
 $: days = locale ? formatter.getLocalizedShortWeekdaysSunday(locale) : [];
 </script>

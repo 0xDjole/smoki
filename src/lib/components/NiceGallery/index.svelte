@@ -93,8 +93,9 @@
 <style type="text/postcss">
 	.btn {
 		@apply text-white;
-		text-shadow: -1px -1px 0 #ccc, 1px -1px 0 #ccc, -1px 1px 0 #ccc, 1px 1px 0 #ccc; /* Very light gray outline */
+		text-shadow: -0.5px -0.5px 0 #eee, 0.5px -0.5px 0 #eee, -0.5px 0.5px 0 #eee, 0.5px 0.5px 0 #eee; /* Very light gray outline */
 	}
+
 	.slide-img {
 		@apply w-full object-cover;
 	}

@@ -14,13 +14,15 @@
 	export let isOpened = false;
 
 	let swiperInstance;
+	let Fancybox;
 
 	$: swiperItems = items.map((item) => ({
 		src: `${STORAGE_URL}/${item.url}`,
 		title: item.title || 'No title'
 	}));
 
-	let Fancybox;
+	let isFirstSlide = true;
+	let isLastSlide = false;
 
 	onMount(async () => {
 		swiperInstance = new Swiper('.swiper-container', {
@@ -28,6 +30,11 @@
 			pagination: { el: '.swiper-pagination' },
 			navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
 			lazy: true // Enable lazy loading
+		});
+
+		swiperInstance.on('slideChange', () => {
+			isFirstSlide = swiperInstance.isBeginning;
+			isLastSlide = swiperInstance.isEnd;
 		});
 
 		const module = await import('@fancyapps/ui');
@@ -79,11 +86,15 @@
 	</div>
 	<!-- Add Swiper navigation buttons -->
 	<div class="swiper-pagination" />
-	<div class="swiper-button-prev" />
-	<div class="swiper-button-next" />
+	<div class="btn swiper-button-prev" class:hidden-btn={isFirstSlide} />
+	<div class="btn swiper-button-next" class:hidden-btn={isLastSlide} />
 </div>
 
 <style type="text/postcss">
+	.btn {
+		@apply text-white;
+		text-shadow: -1px -1px 0 #ccc, 1px -1px 0 #ccc, -1px 1px 0 #ccc, 1px 1px 0 #ccc; /* Very light gray outline */
+	}
 	.slide-img {
 		@apply w-full object-cover;
 	}
@@ -100,5 +111,8 @@
 	}
 	.swiper-slide {
 		@apply flex justify-center;
+	}
+	.hidden-btn {
+		@apply hidden;
 	}
 </style>

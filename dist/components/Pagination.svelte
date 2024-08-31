@@ -21,7 +21,6 @@ let currentItems = [];
 $: if (component) {
     tick().then(() => {
         const height = component.clientHeight + 10 - listComponent.scrollHeight;
-        console.log('height', height);
         if (height > 0) {
             spacer.style.height = `${height}px`;
         }

@@ -61,15 +61,11 @@
 
 	function share() {
 		if (navigator.share) {
-			navigator
-				.share({
-					title: shareData.title,
-					text: shareData.text,
-					url: shareData.url
-				})
-				.catch(() => {
-					showModal = true;
-				});
+			navigator.share({
+				title: shareData.title,
+				text: shareData.text,
+				url: shareData.url
+			});
 		} else {
 			showModal = true;
 		}
@@ -81,12 +77,10 @@
 		try {
 			await navigator.clipboard.writeText(text);
 			copySuccessIndex = index;
-			console.log('copySuccessIndex', copySuccessIndex);
 			setTimeout(() => {
 				copySuccessIndex = null;
-			}, 2000); // Reset copySuccessIndex after 2 seconds
+			}, 2000);
 		} catch (err) {
-			console.error('Failed to copy: ', err);
 			copySuccessIndex = null;
 		}
 	}
@@ -105,7 +99,7 @@
 				on:click={() => {
 					handleNavigation(field.value.name, field.value.url);
 				}}
-				class="badge"
+				class="badge-row"
 			>
 				<div class="thumbnail">
 					{#if field.value.name === 'viber'}
@@ -128,7 +122,7 @@
 		on:click={() => {
 			share();
 		}}
-		class="badge"
+		class="badge-row"
 	>
 		<div class="thumbnail">
 			<SvgIcon data={Share} size={'30px'} color={'var(--secondary-text-color)'} />
@@ -139,7 +133,7 @@
 <Modal
 	title={shareData.text}
 	bind:showModal
-	modalStyle="width: 95%; max-width: 800px; min-height: 400px; max-height: 500px;"
+	modalStyle="width: 95%; max-width: 600px; min-height: 400px; max-height: 500px;"
 	onCancel={() => {
 		showModal = false;
 	}}
@@ -150,20 +144,20 @@
 				event.stopPropagation();
 				copyToClipboard(shareData.url, 0);
 			}}
-			class="badge-modal"
+			class="badge-item"
 		>
-			<div class="thumbnail">
-				<SvgIcon data={Share} size={'30px'} color={'var(--secondary-text-color)'} />
+			<div class="badge">
+				<div class="thumbnail">
+					<SvgIcon data={Share} size={'30px'} color={'var(--secondary-text-color)'} />
+				</div>
+				<span class="url-text">
+					{shareData.url}
+				</span>
+
+				<span class="copy">{$t('copy')}</span>
+
+				<span class:show={copySuccessIndex === 0} class="copy-feedback show">{$t('copied')}</span>
 			</div>
-			<span>
-				{shareData.url}
-			</span>
-
-			<span class="copy">{$t('copy')}</span>
-
-			{#if copySuccessIndex === 0}
-				<span class="copy-feedback">{$t('copied')}</span>
-			{/if}
 		</div>
 		{#each badgeDetails as { field, fieldConfig }, index}
 			{#if fieldConfig}
@@ -172,30 +166,32 @@
 						event.stopPropagation();
 						copyToClipboard(field.value.url, index + 1);
 					}}
-					class="badge-modal"
+					class="badge-item"
 				>
-					<div class="thumbnail">
-						{#if field.value.name === 'viber'}
-							<SvgIcon data={Viber} size={'30px'} color={'var(--secondary-text-color)'} />
-						{/if}
+					<div class="badge">
+						<div class="thumbnail">
+							{#if field.value.name === 'viber'}
+								<SvgIcon data={Viber} size={'30px'} color={'var(--secondary-text-color)'} />
+							{/if}
 
-						{#if field.value.name === 'whatsapp'}
-							<SvgIcon data={WhatsApp} size={'30px'} color={'var(--secondary-text-color)'} />
-						{/if}
+							{#if field.value.name === 'whatsapp'}
+								<SvgIcon data={WhatsApp} size={'30px'} color={'var(--secondary-text-color)'} />
+							{/if}
 
-						{#if field.value.name === 'phone_number'}
-							<SvgIcon data={PhoneNumber} size={'30px'} color={'var(--secondary-text-color)'} />
-						{/if}
+							{#if field.value.name === 'phone_number'}
+								<SvgIcon data={PhoneNumber} size={'30px'} color={'var(--secondary-text-color)'} />
+							{/if}
+						</div>
+						<span class="url-text">
+							{field.value.url}
+						</span>
+
+						<span class="copy">{$t('copy')}</span>
+
+						<span class:show={copySuccessIndex === index + 1} class="copy-feedback show"
+							>{$t('copied')}</span
+						>
 					</div>
-					<span>
-						{field.value.url}
-					</span>
-
-					<span class="copy">{$t('copy')}</span>
-
-					{#if copySuccessIndex === index + 1}
-						<span class="copy-feedback">{$t('copied')}</span>
-					{/if}
 				</div>
 			{/if}
 		{/each}
@@ -203,16 +199,22 @@
 </Modal>
 
 <style type="text/postcss">
+	.badge-row {
+		@apply flex justify-center items-center bg-primary border-primary rounded-full p-1 cursor-pointer;
+	}
+	.url-text {
+		@apply flex-1 text-nowrap text-ellipsis overflow-hidden;
+	}
 	.copy {
-		@apply text-secondary;
+		@apply text-secondary pr-2;
+	}
+
+	.badge-item {
+		@apply flex bg-primary border-primary rounded-full p-1 font-bold cursor-pointer;
 	}
 
 	.badge {
-		@apply flex justify-center items-center bg-primary border-primary rounded-full p-1;
-	}
-
-	.badge-modal {
-		@apply relative flex gap-x-3 justify-center items-center bg-primary border-primary rounded-full p-1 font-bold cursor-pointer;
+		@apply relative  w-full md:px-[15%] flex gap-x-3 justify-between items-center;
 	}
 
 	.custom-field-body {
@@ -228,6 +230,13 @@
 	}
 
 	.copy-feedback {
-		@apply absolute text-success text-sm font-bold z-10 right-0 -top-3;
+		@apply absolute text-white bg-success border-primary rounded-full p-1 text-sm font-bold z-10 right-0 -top-3;
+		transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
+		transform: translateY(-10px);
+		opacity: 0;
+	}
+	.copy-feedback.show {
+		transform: translateY(0);
+		opacity: 1;
 	}
 </style>

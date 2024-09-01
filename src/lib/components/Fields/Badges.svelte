@@ -162,7 +162,7 @@
 			<span class="copy">{$t('copy')}</span>
 
 			{#if copySuccessIndex === 0}
-				<span class="copy-feedback">Copied!</span>
+				<span class="copy-feedback">{$t('copied')}</span>
 			{/if}
 		</div>
 		{#each badgeDetails as { field, fieldConfig }, index}

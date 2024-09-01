@@ -14,6 +14,11 @@
 	export let label = null;
 	export let t;
 	export let type = 'regular';
+	export let shareData = {
+		title: '',
+		text: '',
+		url: ''
+	};
 
 	let values = [];
 	let key = '';
@@ -102,7 +107,7 @@
 {/if}
 
 {#if type === 'badges'}
-	<Badges {fieldConfigs} {fields} {t} {label} />
+	<Badges {shareData} {fieldConfigs} {fields} {t} {label} />
 {/if}
 
 <style type="text/postcss">

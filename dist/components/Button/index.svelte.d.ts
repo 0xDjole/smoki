@@ -4,7 +4,7 @@ declare const __propDef: {
         kind?: string | undefined;
         size?: string | undefined;
         position?: string | undefined;
-        onClick?: null | undefined;
+        onClick?: (() => void) | undefined;
         style?: string | undefined;
         disabled?: boolean | undefined;
         className?: string | undefined;

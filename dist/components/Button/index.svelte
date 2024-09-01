@@ -2,7 +2,7 @@
 export let kind = 'base';
 export let size = 'normal';
 export let position = '';
-export let onClick = null;
+export let onClick = () => { };
 export let style = '';
 export let disabled = false;
 export let className = '';

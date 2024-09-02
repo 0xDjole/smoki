@@ -5,6 +5,7 @@
 	import WhatsApp from '../../utils/icons/whatsapp.svg?raw';
 	import Share from '../../utils/icons/share.svg?raw';
 	import Modal from '../Modal/index.svelte';
+	import Loader from '../Loader.svelte';
 	import SvgIcon from '../SvgIcon.svelte';
 
 	export let fields = [];
@@ -26,18 +27,20 @@
 		}));
 
 	let showModal = false;
+	let loading = false;
 
 	function cleanNumber(number: string): string {
 		return number.replace(/[^0-9+]/g, '');
 	}
 
-	function handleNavigation(app: string, number: string) {
+	const handleNavigation = async (app: string, number: string) => {
 		if (
 			['viber', 'whatsapp', 'phone_number'].includes(app) &&
 			!window.navigator.userAgent.includes('Mobi')
 		) {
 			showModal = true;
 		} else {
+			loading = true;
 			const cleanedNumber = cleanNumber(number);
 			const noPlusNumber = cleanedNumber.startsWith('+')
 				? cleanedNumber.substring(1)
@@ -56,8 +59,10 @@
 					break;
 			}
 			window.location.href = url;
+			await new Promise((resolve) => setTimeout(resolve, 3000));
+			loading = false;
 		}
-	}
+	};
 
 	function share() {
 		if (navigator.share) {
@@ -92,32 +97,7 @@
 	</div>
 {/if}
 
-<ul class="custom-field-body">
-	{#each badgeDetails as { field, fieldConfig }, index}
-		{#if fieldConfig}
-			<div
-				on:click={() => {
-					handleNavigation(field.value.name, field.value.url);
-				}}
-				class="badge-row"
-			>
-				<div class="thumbnail">
-					{#if field.value.name === 'viber'}
-						<SvgIcon data={Viber} size={'30px'} color={'var(--secondary-text-color)'} />
-					{/if}
-
-					{#if field.value.name === 'whatsapp'}
-						<SvgIcon data={WhatsApp} size={'30px'} color={'var(--secondary-text-color)'} />
-					{/if}
-
-					{#if field.value.name === 'phone_number'}
-						<SvgIcon data={PhoneNumber} size={'30px'} color={'var(--secondary-text-color)'} />
-					{/if}
-				</div>
-			</div>
-		{/if}
-	{/each}
-
+<div class="custom-field-body">
 	<div
 		on:click={() => {
 			share();
@@ -128,7 +108,40 @@
 			<SvgIcon data={Share} size={'30px'} color={'var(--secondary-text-color)'} />
 		</div>
 	</div>
-</ul>
+
+	<div class="badges">
+		{#each badgeDetails as { field, fieldConfig }, index}
+			{#if fieldConfig}
+				<div
+					on:click={() => {
+						handleNavigation(field.value.name, field.value.url);
+					}}
+					class="badge-row"
+				>
+					<div class="thumbnail">
+						{#if field.value.name === 'viber'}
+							<SvgIcon data={Viber} size={'30px'} color={'var(--secondary-text-color)'} />
+						{/if}
+
+						{#if field.value.name === 'whatsapp'}
+							<SvgIcon data={WhatsApp} size={'30px'} color={'var(--secondary-text-color)'} />
+						{/if}
+
+						{#if field.value.name === 'phone_number'}
+							<SvgIcon data={PhoneNumber} size={'30px'} color={'var(--secondary-text-color)'} />
+						{/if}
+					</div>
+				</div>
+			{/if}
+		{/each}
+	</div>
+</div>
+
+{#if loading}
+	<div class="loader">
+		<Loader />
+	</div>
+{/if}
 
 <Modal
 	title={shareData.text}
@@ -199,6 +212,14 @@
 </Modal>
 
 <style type="text/postcss">
+	.loader {
+		@apply fixed top-0 left-0 w-full h-full flex items-center justify-center z-50 bg-opacity-50 bg-black;
+	}
+
+	.badges {
+		@apply flex items-center gap-x-2;
+	}
+
 	.badge-row {
 		@apply flex justify-center items-center bg-primary border-primary rounded-full p-1 cursor-pointer;
 	}
@@ -218,7 +239,7 @@
 	}
 
 	.custom-field-body {
-		@apply flex rounded-md h-full w-full gap-x-2;
+		@apply flex justify-between items-center rounded-md h-full w-full gap-x-2 px-2;
 	}
 
 	.modal-wrapper {

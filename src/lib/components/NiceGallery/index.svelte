@@ -5,8 +5,6 @@
 	import 'swiper/swiper-bundle.css';
 
 	import { STORAGE_URL } from '../../utils/env';
-
-	// Access Fancybox from the imported module
 	import '@fancyapps/ui/dist/fancybox/fancybox.css';
 
 	export let items = [];
@@ -16,21 +14,41 @@
 	let swiperInstance;
 	let Fancybox;
 
-	$: swiperItems = items.map((item) => ({
-		src: `${STORAGE_URL}/${item.url}`,
-		title: item.title || 'No title',
-		isVideo: item.url.endsWith('.mp4') // Check if the URL ends with .mp4
-	}));
-
 	let isFirstSlide = true;
 	let isLastSlide = false;
 
+	$: swiperItems = items.map((item) => ({
+		src: `${STORAGE_URL}/${item.url}`,
+		title: item.title || 'No title',
+		isVideo: item.url.endsWith('.mp4')
+	}));
+
+	function pauseVideo(e, index) {
+		const video = e.target;
+		video.pause();
+	}
+
+	// Resume video when released
+	function resumeVideo(e, index) {
+		const video = e.target;
+		video.play();
+	}
+
+	// Toggle play/pause on click
+	function togglePlayPause(e, index) {
+		const video = e.target;
+		if (video.paused) {
+			video.play();
+		} else {
+			video.pause();
+		}
+	}
 	onMount(async () => {
 		swiperInstance = new Swiper('.swiper-container', {
 			modules: [Navigation, Pagination],
 			pagination: { el: '.swiper-pagination' },
 			navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
-			lazy: true // Enable lazy loading
+			lazy: true
 		});
 
 		swiperInstance.on('slideChange', () => {
@@ -40,7 +58,8 @@
 
 		const module = await import('@fancyapps/ui');
 		Fancybox = module.Fancybox;
-		Fancybox.bind('.link-image img', {
+
+		Fancybox.bind('.link-image img, .link-image video', {
 			Hash: false,
 			on: {
 				reveal: () => {
@@ -49,10 +68,12 @@
 				close: () => {
 					isOpened = false;
 				}
+			},
+			video: {
+				autoStart: true // Automatically start video when opened
 			}
 		});
 	});
-
 	onDestroy(() => {
 		if (swiperInstance) swiperInstance.destroy(true, true);
 	});
@@ -79,7 +100,13 @@
 							data-fancybox="gallery"
 							class="slide-img"
 							src={item.src}
-							controls
+							autoplay
+							muted
+							playsinline
+							loop
+							on:touchstart={(e) => pauseVideo(e, index)}
+							on:touchend={(e) => resumeVideo(e, index)}
+							on:click={(e) => togglePlayPause(e, index)}
 							loading="lazy"
 						/>
 					{:else}
@@ -95,7 +122,6 @@
 			</div>
 		{/each}
 	</div>
-	<!-- Add Swiper navigation buttons -->
 	<div class="swiper-pagination" />
 	<div class="btn swiper-button-prev" class:hidden-btn={isFirstSlide} />
 	<div class="btn swiper-button-next" class:hidden-btn={isLastSlide} />
@@ -104,7 +130,7 @@
 <style type="text/postcss">
 	.btn {
 		@apply text-white;
-		text-shadow: -0.5px -0.5px 0 #eee, 0.5px -0.5px 0 #eee, -0.5px 0.5px 0 #eee, 0.5px 0.5px 0 #eee; /* Very light gray outline */
+		text-shadow: -0.5px -0.5px 0 #eee, 0.5px -0.5px 0 #eee, -0.5px 0.5px 0 #eee, 0.5px 0.5px 0 #eee;
 	}
 
 	.slide-img {
@@ -118,12 +144,15 @@
 	.link-image {
 		@apply flex justify-center w-full h-full;
 	}
+
 	.swiper-container {
 		@apply absolute top-0 left-0 flex w-full h-full overflow-hidden;
 	}
+
 	.swiper-slide {
 		@apply flex justify-center;
 	}
+
 	.hidden-btn {
 		@apply hidden;
 	}

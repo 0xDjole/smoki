@@ -18,7 +18,8 @@
 
 	$: swiperItems = items.map((item) => ({
 		src: `${STORAGE_URL}/${item.url}`,
-		title: item.title || 'No title'
+		title: item.title || 'No title',
+		isVideo: item.url.endsWith('.mp4') // Check if the URL ends with .mp4
 	}));
 
 	let isFirstSlide = true;
@@ -73,13 +74,23 @@
 					rel="noopener noreferrer"
 					class="link-image"
 				>
-					<img
-						class="slide-img"
-						data-fancybox="gallery"
-						src={item.src}
-						alt={item.title}
-						loading="lazy"
-					/>
+					{#if item.isVideo}
+						<video
+							data-fancybox="gallery"
+							class="slide-img"
+							src={item.src}
+							controls
+							loading="lazy"
+						/>
+					{:else}
+						<img
+							class="slide-img"
+							data-fancybox="gallery"
+							src={item.src}
+							alt={item.title}
+							loading="lazy"
+						/>
+					{/if}
 				</a>
 			</div>
 		{/each}

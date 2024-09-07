@@ -51,9 +51,8 @@
 		{#each options as option}
 			<div
 				on:click|preventDefault={() => selectOption(option.value)}
-				class="option bg-secondary border-primary {values?.includes(option.value)
-					? 'selected'
-					: ''}"
+				class:selected={values.includes(option.value)}
+				class="option bg-secondary border-primary"
 			>
 				{option.label}
 			</div>

@@ -33,7 +33,8 @@
 		{#each options as option}
 			<div
 				on:click|preventDefault={() => selectOption(option.value)}
-				class="option {values?.includes(option.value) ? 'selected' : ''}"
+				class:selected={values.some((value) => value.toString() === option.value)}
+				class="option"
 			>
 				{option.label}
 			</div>

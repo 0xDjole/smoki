@@ -4,6 +4,7 @@
 	import Loader from './Loader.svelte';
 	import Label from './Label.svelte';
 	import linkToFile from '../utils/helpers/linkToFile';
+	import Switch from '../components/Switch/index.svelte';
 	import { STORAGE_URL } from '../utils/env';
 
 	export let media = null;
@@ -57,14 +58,15 @@
 	const parseImageFromUrl = async (url) => {
 		if (url) {
 			const fullUrl = `${STORAGE_URL}/${url}`;
+			console.log('full ', fullUrl);
 			const mediaResponse = await linkToFile(fullUrl);
-			media = mediaResponse;
+			media.file = mediaResponse;
 		}
 	};
 
-	$: parseImageFromUrl(media?.url);
+	$: !media?.file && parseImageFromUrl(media?.url);
 
-	$: generateMediaPreview(media);
+	$: generateMediaPreview(media?.file);
 
 	const onFileSelected = (e) => {
 		loading = true;
@@ -76,7 +78,7 @@
 			loading = false;
 			return;
 		}
-		media = mediaFile;
+		media.file = mediaFile;
 	};
 </script>
 
@@ -96,6 +98,10 @@
 		<SvgIcon data={UploadSvg} size={'200px'} color={'var(--secondary-text-color)'} />
 	{/if}
 </div>
+
+{#if media?.settings}
+	<Switch {t} label="Is thumbnail" bind:value={media.settings.isThumbnail} />
+{/if}
 
 <input
 	id="media-uploader"

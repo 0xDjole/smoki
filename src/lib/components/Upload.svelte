@@ -6,7 +6,7 @@
 	import linkToFile from '../utils/helpers/linkToFile';
 	import { STORAGE_URL } from '../utils/env';
 
-	export let file = null;
+	export let media = null;
 	export let label = null;
 	export let alt = 'Alt';
 	export let t;
@@ -58,13 +58,13 @@
 		if (url) {
 			const fullUrl = `${STORAGE_URL}/${url}`;
 			const mediaResponse = await linkToFile(fullUrl);
-			file = mediaResponse;
+			media = mediaResponse;
 		}
 	};
 
-	$: parseImageFromUrl(file?.url);
+	$: parseImageFromUrl(media?.url);
 
-	$: generateMediaPreview(file);
+	$: generateMediaPreview(media);
 
 	const onFileSelected = (e) => {
 		loading = true;
@@ -76,7 +76,7 @@
 			loading = false;
 			return;
 		}
-		file = mediaFile;
+		media = mediaFile;
 	};
 </script>
 

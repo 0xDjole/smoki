@@ -12,6 +12,7 @@
 	export let alt = 'Alt';
 	export let t;
 	export let isRequired = false;
+	export let showSettings = false;
 
 	let fileInput;
 	let mediaSource;
@@ -99,8 +100,10 @@
 	{/if}
 </div>
 
-{#if media?.settings}
-	<Switch {t} label="Is thumbnail" bind:value={media.settings.isThumbnail} />
+{#if showSettings}
+	{#if media?.settings}
+		<Switch {t} label="Is thumbnail" bind:value={media.settings.isThumbnail} />
+	{/if}
 {/if}
 
 <input

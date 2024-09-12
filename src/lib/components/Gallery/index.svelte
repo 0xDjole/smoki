@@ -21,7 +21,7 @@
 <div class="gallery">
 	{#each medias as media}
 		<div class="gallery-item">
-			<Upload {t} bind:media />
+			<Upload {t} bind:media showSettings={true} />
 
 			<button class="remove"
 				><SvgIcon data={Close} width={'50px'} size={'50px'} color={'white'} /></button

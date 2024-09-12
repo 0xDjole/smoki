@@ -4,7 +4,7 @@
 	import SvgIcon from '../SvgIcon.svelte';
 	import Label from '../Label.svelte';
 
-	export let images;
+	export let files;
 	export let label;
 	export let t;
 </script>
@@ -14,14 +14,14 @@
 <button
 	class="add-new"
 	on:click|preventDefault={() => {
-		images = [...images, null];
+		files = [...files, null];
 	}}>Add gallery item</button
 >
 
 <div class="gallery">
-	{#each images as image}
+	{#each files as file}
 		<div class="gallery-item">
-			<Upload {t} bind:image />
+			<Upload {t} bind:file />
 
 			<button class="remove"
 				><SvgIcon data={Close} width={'50px'} size={'50px'} color={'white'} /></button

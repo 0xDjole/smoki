@@ -230,7 +230,7 @@
 
 			<NiceSelect {t} label="Is filter" bind:value={field.isFilter} options={isFilterOptions} />
 
-			<Upload {t} label="Thumbnail" bind:image={field.thumbnail} />
+			<Upload {t} label="Thumbnail" bind:file={field.thumbnail} />
 
 			<DropDown
 				{t}

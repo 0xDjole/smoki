@@ -7,6 +7,18 @@
 	export let medias;
 	export let label;
 	export let t;
+
+	const onChangeThumbnail = (isThumbnail, index) => {
+		medias = medias.map((media, mediaIndex) => {
+			if (mediaIndex !== index && isThumbnail) {
+				console.log('jeb gse', media);
+				media.settings.isThumbnail = false;
+				return media;
+			}
+
+			return media;
+		});
+	};
 </script>
 
 <Label {t} {label} errors={[]} />
@@ -19,9 +31,16 @@
 >
 
 <div class="gallery">
-	{#each medias as media}
+	{#each medias as media, index}
 		<div class="gallery-item">
-			<Upload {t} bind:media showSettings={true} />
+			<Upload
+				{t}
+				bind:media
+				showSettings={true}
+				onChangeThumbnail={(isThumbnail) => {
+					onChangeThumbnail(isThumbnail, index);
+				}}
+			/>
 
 			<button class="remove"
 				><SvgIcon data={Close} width={'50px'} size={'50px'} color={'white'} /></button

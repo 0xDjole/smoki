@@ -13,6 +13,7 @@
 	export let t;
 	export let isRequired = false;
 	export let showSettings = false;
+	export let onChangeThumbnail = (isThumbnail) => {};
 
 	let fileInput;
 	let mediaSource;
@@ -102,7 +103,12 @@
 
 {#if showSettings}
 	{#if media?.settings}
-		<Switch {t} label="Is thumbnail" bind:value={media.settings.isThumbnail} />
+		<Switch
+			{t}
+			label="Is thumbnail"
+			bind:value={media.settings.isThumbnail}
+			onChange={onChangeThumbnail}
+		/>
 	{/if}
 {/if}
 

@@ -14,6 +14,7 @@
 	export let isRequired = false;
 	export let showSettings = false;
 	export let onChangeThumbnail = (isThumbnail) => {};
+	export let onChangeShown = (isShown) => {};
 
 	let fileInput;
 	let mediaSource;
@@ -108,6 +109,13 @@
 			label="Is thumbnail"
 			bind:value={media.settings.isThumbnail}
 			onChange={onChangeThumbnail}
+		/>
+
+		<Switch
+			{t}
+			label="Is shown in slider"
+			value={media.settings.position !== -1}
+			onChange={onChangeShown}
 		/>
 	{/if}
 {/if}

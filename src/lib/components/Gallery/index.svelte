@@ -1,37 +1,97 @@
 <script lang="ts">
+	import { dndzone } from 'svelte-dnd-action';
 	import Upload from '../Upload.svelte';
 	import Close from '../../utils/icons/close.svg?raw';
 	import SvgIcon from '../SvgIcon.svelte';
 	import Label from '../Label.svelte';
 
-	export let medias;
+	export let medias = [];
 	export let label;
 	export let t;
+
+	$: console.log('med ', medias);
 
 	const onChangeThumbnail = (isThumbnail, index) => {
 		medias = medias.map((media, mediaIndex) => {
 			if (mediaIndex !== index && isThumbnail) {
-				console.log('jeb gse', media);
 				media.settings.isThumbnail = false;
-				return media;
 			}
-
 			return media;
 		});
+	};
+
+	const updatePositions = () => {
+		let positionCounter = 1;
+
+		medias = medias
+			.map((media) => {
+				if (media.settings.position !== -1) {
+					return { ...media, settings: { ...media.settings, position: positionCounter++ } };
+				}
+				return media;
+			})
+			.sort((a, b) => a.settings.position - b.settings.position); // Sort by position
+	};
+
+	const handleDndConsider = (e) => {
+		medias = e.detail.items.slice(); // Ensure new reference to trigger reactivity
+	};
+
+	const handleDndFinalize = (e) => {
+		medias = e.detail.items.slice(); // Ensure reactivity by creating a new reference
+		updatePositions(); // Update the positions after finalizing the drag
+	};
+
+	const addNewGalleryItem = () => {
+		medias = [
+			...medias,
+			{
+				id: Math.random().toString(),
+				settings: { isThumbnail: false, position: medias.length + 1, isShown: true } // Add new item with next position
+			}
+		];
+	};
+
+	const removeMedia = (index) => {
+		medias = medias.filter((_, i) => i !== index);
+		updatePositions(); // Update positions after removing an item
+	};
+
+	const onChangeShown = (isShown, index) => {
+		if (isShown) {
+			medias = medias.map((media, mediaIndex) => {
+				if (mediaIndex === index) {
+					media.settings.position = 0;
+				} else if (media.settings.position !== -1) {
+					media.settings.position += 1; // Increment position for other visible items
+				}
+				return media;
+			});
+		} else {
+			medias = medias.map((media, mediaIndex) => {
+				if (mediaIndex === index) {
+					media.settings.position = -1;
+				}
+				return media;
+			});
+		}
+
+		// Sort and update positions of remaining visible items
+		updatePositions();
 	};
 </script>
 
 <Label {t} {label} errors={[]} />
 
-<button
-	class="add-new"
-	on:click|preventDefault={() => {
-		medias = [...media, null];
-	}}>Add gallery item</button
->
+<button class="add-new" on:click|preventDefault={addNewGalleryItem}> Add gallery item </button>
 
-<div class="gallery">
-	{#each medias as media, index}
+<div
+	class="gallery"
+	use:dndzone={{ items: medias }}
+	on:consider={handleDndConsider}
+	on:finalize={handleDndFinalize}
+>
+	{#each medias as media, index (media.id)}
 		<div class="gallery-item">
 			<Upload
 				{t}
@@ -40,11 +100,14 @@
 				onChangeThumbnail={(isThumbnail) => {
 					onChangeThumbnail(isThumbnail, index);
 				}}
+				onChangeShown={(isShown) => {
+					onChangeShown(isShown, index);
+				}}
 			/>
 
-			<button class="remove"
-				><SvgIcon data={Close} width={'50px'} size={'50px'} color={'white'} /></button
-			>
+			<button class="remove" on:click|preventDefault={() => removeMedia(index)}>
+				<SvgIcon data={Close} width="50px" size="50px" color="white" />
+			</button>
 		</div>
 	{/each}
 </div>
@@ -55,12 +118,13 @@
 	}
 
 	.add-new {
-		@apply text-primary font-bold text-xl bg-primary border-primary   p-5;
+		@apply text-primary font-bold text-xl bg-primary border-primary p-5;
 	}
 
 	.gallery-item {
 		@apply relative m-3 w-[300px] h-[300px];
 	}
+
 	.remove {
 		@apply bg-error p-1 rounded-md absolute right-12 top-0;
 	}

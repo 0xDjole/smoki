@@ -1,4 +1,4 @@
-export default (gallery, size) => {
+export default (gallery) => {
 	let thumbnailMedia = gallery.find((media) => media.settings.isThumbnail);
 
 	if (!thumbnailMedia && gallery.length) {
@@ -7,7 +7,8 @@ export default (gallery, size) => {
 
 	let url = null;
 
-	const foundRes = thumbnailMedia.resolutions[size || 'original'];
+	const foundRes =
+		thumbnailMedia.resolutions['thumbnail'] || thumbnailMedia.resolutions['original'];
 
 	if (foundRes) {
 		url = foundRes.url;

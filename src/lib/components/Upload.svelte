@@ -61,13 +61,15 @@
 	const parseImageFromUrl = async (url) => {
 		if (url) {
 			const fullUrl = `${STORAGE_URL}/${url}`;
-			console.log('full ', fullUrl);
 			const mediaResponse = await linkToFile(fullUrl);
 			media.file = mediaResponse;
 		}
 	};
 
-	$: !media?.file && parseImageFromUrl(media?.resolutions['original']?.url);
+	$: !media?.file &&
+		media?.resolutions &&
+		media?.resolutions['original'] &&
+		parseImageFromUrl(media?.resolutions['original']?.url);
 
 	$: generateMediaPreview(media?.file);
 

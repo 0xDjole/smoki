@@ -9,8 +9,6 @@
 	export let label;
 	export let t;
 
-	$: console.log('med ', medias);
-
 	const onChangeThumbnail = (isThumbnail, index) => {
 		medias = medias.map((media, mediaIndex) => {
 			if (mediaIndex !== index && isThumbnail) {

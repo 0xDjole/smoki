@@ -17,11 +17,17 @@
 	let isFirstSlide = true;
 	let isLastSlide = false;
 
-	$: swiperItems = items.map((item) => ({
-		src: `${STORAGE_URL}/${item.url}`,
-		title: item.title || 'No title',
-		isVideo: item.url.endsWith('.mp4')
-	}));
+	$: swiperItems = items
+		.filter((item) => item.settings.position !== -1)
+		.sort((a, b) => a.settings.position - b.settings.position)
+		.map((item) => {
+			const url = item?.resolutions['original']?.url;
+			return {
+				src: `${STORAGE_URL}/${url}`,
+				title: item.title || 'No title',
+				isVideo: url?.endsWith('.mp4')
+			};
+		});
 
 	function pauseVideo(e, index) {
 		const video = e.target;

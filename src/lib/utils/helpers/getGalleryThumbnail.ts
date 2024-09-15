@@ -1,5 +1,4 @@
 export default (gallery) => {
-	console.log('gal', gallery);
 	if (!gallery) {
 		return null;
 	}

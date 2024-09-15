@@ -1,7 +1,7 @@
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        images: any;
+        medias?: any[] | undefined;
         label: any;
         t: any;
     };

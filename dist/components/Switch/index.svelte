@@ -8,13 +8,14 @@
 	export let errors = [];
 	export let t;
 	export let isRequired = false;
+	export let onChange = (isChecked) => {};
 </script>
 
 <div class="switch-container">
 	<Label {isRequired} {t} {errors} {label} {labelThumbnail} />
 
 	<label class="switch">
-		<input type="checkbox" bind:checked={value} />
+		<input type="checkbox" bind:checked={value} on:change={(e) => onChange(e.target.checked)} />
 		<span class="slider" />
 	</label>
 </div>

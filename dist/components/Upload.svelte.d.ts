@@ -1,11 +1,14 @@
 import { SvelteComponentTyped } from "svelte";
 declare const __propDef: {
     props: {
-        image?: null | undefined;
+        media?: null | undefined;
         label?: null | undefined;
         alt?: string | undefined;
         t: any;
         isRequired?: boolean | undefined;
+        showSettings?: boolean | undefined;
+        onChangeThumbnail?: ((isThumbnail: any) => void) | undefined;
+        onChangeShown?: ((isShown: any) => void) | undefined;
     };
     events: {
         [evt: string]: CustomEvent<any>;

@@ -1,4 +1,9 @@
 export default (gallery) => {
+	console.log('gal', gallery);
+	if (!gallery) {
+		return null;
+	}
+
 	let thumbnailMedia = gallery.find((media) => media.settings.isThumbnail);
 
 	if (!thumbnailMedia && gallery.length) {

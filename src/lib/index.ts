@@ -37,4 +37,5 @@ export { default as LocalizedText } from './components/LocalizedText/index.svelt
 export { default as Calendar } from './components/Calendar/index.svelte';
 export { default as formatter } from './utils/helpers/formatter';
 export { default as translate } from './utils/helpers/translate';
+export { default as getGalleryThumbnail } from './utils/helpers/getGalleryThumbnail';
 export * as Layouts from './components/Layouts';

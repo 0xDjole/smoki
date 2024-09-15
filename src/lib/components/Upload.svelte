@@ -67,7 +67,7 @@
 		}
 	};
 
-	$: !media?.file && parseImageFromUrl(media?.url);
+	$: !media?.file && parseImageFromUrl(media?.resolutions['original']?.url);
 
 	$: generateMediaPreview(media?.file);
 

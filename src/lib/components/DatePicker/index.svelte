@@ -14,8 +14,9 @@
 	export let betweenValues = [];
 	export let locale = 'en';
 	export let onChangeDate = (date) => {};
-	export let settingsStore;
 	export let t;
+	export let timeZone;
+	export let onChangeTimeZone = () => {};
 
 	export let month;
 	export let year;
@@ -74,7 +75,7 @@
 	$: firstWeekDay = (dateWithFirstDay.weekday.valueOf() % 7) - 1;
 
 	$: viewDates =
-		$settingsStore &&
+		timeZone &&
 		new Array(42).fill(null).map((item, index) => {
 			let date: DateTime;
 			let isSelectable = true;
@@ -115,7 +116,7 @@
 					month: date.month,
 					day: date.day
 				},
-				{ zone: $settingsStore.appTimeZone }
+				{ zone: timeZone }
 			);
 
 			return {
@@ -133,7 +134,7 @@
 </script>
 
 <div class="wrapper">
-	<TimeZone {t} {settingsStore} />
+	<TimeZone {t} {timeZone} {onChangeTimeZone} />
 
 	<div class="head">
 		<div class="control-date" on:click|preventDefault={() => previousMonth()}>

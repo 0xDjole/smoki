@@ -2,9 +2,9 @@
 	import Select from '../Select/index.svelte';
 	export let t;
 
-	export let settingsStore;
+	export let timeZone;
+	export let onChangeTimeZone;
 
-	let timeZone = $settingsStore?.appTimeZone || 'UTC';
 	let timeZones = [
 		{ label: 'UTC', value: 'UTC' },
 		{ label: 'EST (Eastern Standard Time)', value: 'America/New_York' },
@@ -43,18 +43,12 @@
 		{ label: 'WIB (Western Indonesian Time)', value: 'Asia/Jakarta' },
 		{ label: 'ALMT (Alma-Ata Time)', value: 'Asia/Almaty' }
 	];
-
-	function handleTimezoneChange(selectedTimeZone) {
-		if ($settingsStore) {
-			$settingsStore.appTimeZone = selectedTimeZone;
-		}
-	}
 </script>
 
 <div class="time-zone-wrapper">
 	<div class="time-zone">
 		<div class="select-zone">
-			<Select {t} onChange={handleTimezoneChange} options={timeZones} value={timeZone} />
+			<Select {t} onChange={onChangeTimeZone} options={timeZones} value={timeZone} />
 		</div>
 	</div>
 </div>

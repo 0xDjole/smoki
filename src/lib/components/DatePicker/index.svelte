@@ -4,6 +4,7 @@
 	import SvgIcon from '../SvgIcon.svelte';
 	import Great from '../../utils/icons/great.svg?raw';
 	import Less from '../../utils/icons/less.svg?raw';
+	import TimeZone from './TimeZone.svelte';
 
 	import formatter from '../../utils/helpers/formatter';
 
@@ -13,10 +14,11 @@
 	export let betweenValues = [];
 	export let locale = 'en';
 	export let onChangeDate = (date) => {};
+	export let settingsStore;
+	export let t;
 
 	export let month;
 	export let year;
-	0;
 
 	const nextMonth = () => {
 		if (month === 12) {
@@ -71,47 +73,59 @@
 
 	$: firstWeekDay = (dateWithFirstDay.weekday.valueOf() % 7) - 1;
 
-	$: viewDates = new Array(42).fill(null).map((item, index) => {
-		let date: DateTime;
-		let isSelectable = true;
+	$: viewDates =
+		$settingsStore &&
+		new Array(42).fill(null).map((item, index) => {
+			let date: DateTime;
+			let isSelectable = true;
 
-		let currentDayView = index;
-		let firstDayPostion = firstWeekDay === 7 ? 2 : firstWeekDay + 1;
+			let currentDayView = index;
+			let firstDayPostion = firstWeekDay === 7 ? 2 : firstWeekDay + 1;
 
-		if (currentDayView === firstDayPostion) {
-			date = dateWithFirstDay;
-		}
+			if (currentDayView === firstDayPostion) {
+				date = dateWithFirstDay;
+			}
 
-		if (currentDayView < firstDayPostion) {
-			date = dateWithFirstDay.minus({
-				day: firstDayPostion - currentDayView
-			});
-		}
+			if (currentDayView < firstDayPostion) {
+				date = dateWithFirstDay.minus({
+					day: firstDayPostion - currentDayView
+				});
+			}
 
-		if (currentDayView > firstDayPostion) {
-			date = dateWithFirstDay.plus({
-				day: currentDayView - firstDayPostion
-			});
-		}
+			if (currentDayView > firstDayPostion) {
+				date = dateWithFirstDay.plus({
+					day: currentDayView - firstDayPostion
+				});
+			}
 
-		if (date < currentDate) {
-			isSelectable = false;
-		}
+			if (date < currentDate) {
+				isSelectable = false;
+			}
 
-		if (isSelectable && Array.isArray(availableValues)) {
-			isSelectable = availableValues.some((value) => date.hasSame(value, 'day'));
-		}
+			if (isSelectable && Array.isArray(availableValues)) {
+				isSelectable = availableValues.some((value) => date.hasSame(value, 'day'));
+			}
 
-		const isSelected = selectedValues.some((selectedValue) => selectedValue.hasSame(date, 'day'));
-		const isBetween = betweenValues.some((selectedValue) => selectedValue.hasSame(date, 'day'));
+			const isSelected = selectedValues.some((selectedValue) => selectedValue.hasSame(date, 'day'));
+			const isBetween = betweenValues.some((selectedValue) => selectedValue.hasSame(date, 'day'));
 
-		return {
-			date,
-			isSelected,
-			isBetween,
-			isSelectable
-		};
-	});
+			let dateTimeZone = DateTime.fromObject(
+				{
+					year: date.year,
+					month: date.month,
+					day: date.day
+				},
+				{ zone: $settingsStore.appTimeZone }
+			);
+
+			return {
+				date,
+				dateTimeZone,
+				isSelected,
+				isBetween,
+				isSelectable
+			};
+		});
 
 	$: months = locale ? formatter.getLocalizedMonths(locale) : [];
 
@@ -119,6 +133,8 @@
 </script>
 
 <div class="wrapper">
+	<TimeZone {t} {settingsStore} />
+
 	<div class="head">
 		<div class="control-date" on:click|preventDefault={() => previousMonth()}>
 			<SvgIcon data={Less} color={'var(--primary-text-color)'} size={'20px'} />
@@ -128,6 +144,7 @@
 			<SvgIcon data={Great} color={'var(--primary-text-color)'} size={'20px'} />
 		</div>
 	</div>
+
 	<div class="days">
 		{#each days as day}
 			<div class="item weekdays">{day}</div>
@@ -140,7 +157,7 @@
 
 <style type="text/postcss">
 	.wrapper {
-		@apply grid bg-primary rounded-xl;
+		@apply flex flex-col bg-primary rounded-xl;
 		width: 100%;
 		@screen md {
 			width: 500px;

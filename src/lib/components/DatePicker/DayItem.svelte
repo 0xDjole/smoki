@@ -22,7 +22,7 @@
 	class="item day-of-month {dynamicClass}"
 >
 	<span>
-		{viewDate.date.day}
+		{viewDate.dateTimeZone.day}
 	</span>
 </button>
 

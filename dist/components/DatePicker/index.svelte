@@ -3,6 +3,7 @@ import DayItem from './DayItem.svelte';
 import SvgIcon from '../SvgIcon.svelte';
 import Great from '../../utils/icons/great.svg?raw';
 import Less from '../../utils/icons/less.svg?raw';
+import TimeZone from './TimeZone.svelte';
 import formatter from '../../utils/helpers/formatter';
 export let onSelect;
 export let selectedValues = [];
@@ -10,9 +11,11 @@ export let availableValues = null;
 export let betweenValues = [];
 export let locale = 'en';
 export let onChangeDate = (date) => { };
+export let t;
+export let timeZone;
+export let onChangeTimeZone = () => { };
 export let month;
 export let year;
-0;
 const nextMonth = () => {
     if (month === 12) {
         month = 1;
@@ -55,44 +58,54 @@ let dateWithFirstDay = DateTime.fromObject({
     day: 1
 });
 $: firstWeekDay = (dateWithFirstDay.weekday.valueOf() % 7) - 1;
-$: viewDates = new Array(42).fill(null).map((item, index) => {
-    let date;
-    let isSelectable = true;
-    let currentDayView = index;
-    let firstDayPostion = firstWeekDay === 7 ? 2 : firstWeekDay + 1;
-    if (currentDayView === firstDayPostion) {
-        date = dateWithFirstDay;
-    }
-    if (currentDayView < firstDayPostion) {
-        date = dateWithFirstDay.minus({
-            day: firstDayPostion - currentDayView
+$: viewDates =
+    timeZone &&
+        new Array(42).fill(null).map((item, index) => {
+            let date;
+            let isSelectable = true;
+            let currentDayView = index;
+            let firstDayPostion = firstWeekDay === 7 ? 2 : firstWeekDay + 1;
+            if (currentDayView === firstDayPostion) {
+                date = dateWithFirstDay;
+            }
+            if (currentDayView < firstDayPostion) {
+                date = dateWithFirstDay.minus({
+                    day: firstDayPostion - currentDayView
+                });
+            }
+            if (currentDayView > firstDayPostion) {
+                date = dateWithFirstDay.plus({
+                    day: currentDayView - firstDayPostion
+                });
+            }
+            if (date < currentDate) {
+                isSelectable = false;
+            }
+            if (isSelectable && Array.isArray(availableValues)) {
+                isSelectable = availableValues.some((value) => date.hasSame(value, 'day'));
+            }
+            const isSelected = selectedValues.some((selectedValue) => selectedValue.hasSame(date, 'day'));
+            const isBetween = betweenValues.some((selectedValue) => selectedValue.hasSame(date, 'day'));
+            let dateTimeZone = DateTime.fromObject({
+                year: date.year,
+                month: date.month,
+                day: date.day
+            }, { zone: timeZone });
+            return {
+                date,
+                dateTimeZone,
+                isSelected,
+                isBetween,
+                isSelectable
+            };
         });
-    }
-    if (currentDayView > firstDayPostion) {
-        date = dateWithFirstDay.plus({
-            day: currentDayView - firstDayPostion
-        });
-    }
-    if (date < currentDate) {
-        isSelectable = false;
-    }
-    if (isSelectable && Array.isArray(availableValues)) {
-        isSelectable = availableValues.some((value) => date.hasSame(value, 'day'));
-    }
-    const isSelected = selectedValues.some((selectedValue) => selectedValue.hasSame(date, 'day'));
-    const isBetween = betweenValues.some((selectedValue) => selectedValue.hasSame(date, 'day'));
-    return {
-        date,
-        isSelected,
-        isBetween,
-        isSelectable
-    };
-});
 $: months = locale ? formatter.getLocalizedMonths(locale) : [];
 $: days = locale ? formatter.getLocalizedShortWeekdaysSunday(locale) : [];
 </script>
 
 <div class="wrapper">
+	<TimeZone {t} {timeZone} {onChangeTimeZone} />
+
 	<div class="head">
 		<div class="control-date" on:click|preventDefault={() => previousMonth()}>
 			<SvgIcon data={Less} color={'var(--primary-text-color)'} size={'20px'} />
@@ -102,6 +115,7 @@ $: days = locale ? formatter.getLocalizedShortWeekdaysSunday(locale) : [];
 			<SvgIcon data={Great} color={'var(--primary-text-color)'} size={'20px'} />
 		</div>
 	</div>
+
 	<div class="days">
 		{#each days as day}
 			<div class="item weekdays">{day}</div>
@@ -114,7 +128,8 @@ $: days = locale ? formatter.getLocalizedShortWeekdaysSunday(locale) : [];
 
 <style>
 	.wrapper {
-		display: grid;
+		display: flex;
+		flex-direction: column;
 		border-radius: 0.75rem;
 		background-color: var(--primary-background-color);
 		width: 100%

@@ -7,6 +7,9 @@ declare const __propDef: {
         betweenValues?: any[] | undefined;
         locale?: string | undefined;
         onChangeDate?: ((date: any) => void) | undefined;
+        t: any;
+        timeZone: any;
+        onChangeTimeZone?: (() => void) | undefined;
         month: any;
         year: any;
     };

@@ -21,7 +21,12 @@
 	<button class="select-button" on:click|preventDefault={() => (showModal = !showModal)}>
 		<span class="button-text">{$t(selectedOption?.label || 'choose')}</span>
 		<div class="dropdown-svg">
-			<SvgIcon data={DropDownIcon} width="20px" height="20px" color="white" />
+			<SvgIcon
+				data={DropDownIcon}
+				width="20px"
+				height="20px"
+				color={'var(--secondary-text-color)'}
+			/>
 		</div>
 	</button>
 	{#if showModal}
@@ -46,11 +51,10 @@
 <style type="text/postcss">
 	.select {
 		@apply flex relative w-full;
-		z-index: 1;
 	}
 
 	.select-button {
-		@apply text-base flex w-full p-1 bg-accent text-white rounded-lg font-semibold md:text-lg outline-none gap-x-2 items-center justify-between;
+		@apply text-sm flex w-full p-1 text-secondary font-semibold outline-none gap-x-2 items-center justify-between z-0;
 	}
 
 	.button-text {
@@ -62,7 +66,7 @@
 	}
 
 	.options {
-		@apply flex flex-col w-full absolute top-10 left-0 rounded-md bg-secondary max-h-[300px] overflow-scroll border-primary;
+		@apply flex flex-col w-full absolute top-10 left-0 rounded-md bg-secondary max-h-[300px] overflow-scroll border-primary z-10;
 	}
 	.item {
 		@apply cursor-pointer p-2 w-full text-base text-primary font-bold;

@@ -16,7 +16,12 @@ $: selectedOption = options.find((option) => option.value === value);
 	<button class="select-button" on:click|preventDefault={() => (showModal = !showModal)}>
 		<span class="button-text">{$t(selectedOption?.label || 'choose')}</span>
 		<div class="dropdown-svg">
-			<SvgIcon data={DropDownIcon} width="20px" height="20px" color="white" />
+			<SvgIcon
+				data={DropDownIcon}
+				width="20px"
+				height="20px"
+				color={'var(--secondary-text-color)'}
+			/>
 		</div>
 	</button>
 	{#if showModal}
@@ -42,35 +47,24 @@ $: selectedOption = options.find((option) => option.value === value);
 	.select {
 		position: relative;
 		display: flex;
-		width: 100%;
-		z-index: 1
+		width: 100%
 }
 
 	.select-button {
+		z-index: 0;
 		display: flex;
 		width: 100%;
 		align-items: center;
 		justify-content: space-between;
 		-moz-column-gap: 0.5rem;
 		     column-gap: 0.5rem;
-		border-radius: 0.5rem;
-		background-color: var(--accent-background-color);
 		padding: 0.25rem;
-		font-size: 1rem;
-		line-height: 1.5rem;
+		font-size: 0.875rem;
+		line-height: 1.25rem;
 		font-weight: 600;
-		--tw-text-opacity: 1;
-		color: rgb(255 255 255 / var(--tw-text-opacity));
+		color: var(--secondary-text-color);
 		outline: 2px solid transparent;
 		outline-offset: 2px
-}
-
-	@media (min-width: 768px) {
-
-		.select-button {
-				font-size: 1.125rem;
-				line-height: 1.75rem
-		}
 }
 
 	.button-text {
@@ -87,6 +81,7 @@ $: selectedOption = options.find((option) => option.value === value);
 		position: absolute;
 		top: 2.5rem;
 		left: 0px;
+		z-index: 10;
 		display: flex;
 		max-height: 300px;
 		width: 100%;

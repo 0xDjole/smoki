@@ -14,8 +14,10 @@
 		if (component) {
 			const element = component.parentNode;
 
-			element.addEventListener('scroll', onScroll);
-			element.addEventListener('resize', onScroll);
+			setTimeout(() => {
+				element.addEventListener('scroll', onScroll);
+				element.addEventListener('resize', onScroll);
+			}, 10);
 		}
 	}
 

@@ -1,5 +1,4 @@
 <script>import { v4 } from '@lukeed/uuid';
-import Upload from '../Upload.svelte';
 import Modal from '../Modal/index.svelte';
 import NiceSelect from '../NiceSelect/index.svelte';
 import DropDown from '../DropDown/index.svelte';
@@ -209,8 +208,6 @@ $: if (!field) {
 			/>
 
 			<NiceSelect {t} label="Is filter" bind:value={field.isFilter} options={isFilterOptions} />
-
-			<Upload {t} label="Thumbnail" bind:file={field.thumbnail} />
 
 			<DropDown
 				{t}

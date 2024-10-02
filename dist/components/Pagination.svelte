@@ -27,6 +27,7 @@ $: if (component && items) {
         }
     });
 }
+let mounted = false;
 onDestroy(() => {
     items = [];
 });
@@ -34,6 +35,7 @@ onMount(async () => {
     if (fetchOnMount) {
         await fetchData(true, true);
     }
+    mounted = true;
 });
 const fetchData = async (isFromTop, shouldFetch) => {
     if (fetchingMore || !component) {
@@ -83,15 +85,17 @@ const fetchData = async (isFromTop, shouldFetch) => {
 		<svelte:component this={loaderComponent} />
 	</div>
 
-	<InfiniteScroll
-		fetchTop={async (shouldFetch) => {
-			await fetchData(true, shouldFetch);
-		}}
-		threshold={0}
-		fetchBottom={async (shouldFetch) => {
-			await fetchData(false, shouldFetch);
-		}}
-	/>
+	{#if mounted}
+		<InfiniteScroll
+			fetchTop={async (shouldFetch) => {
+				await fetchData(true, shouldFetch);
+			}}
+			threshold={0}
+			fetchBottom={async (shouldFetch) => {
+				await fetchData(false, shouldFetch);
+			}}
+		/>
+	{/if}
 </div>
 
 <style>

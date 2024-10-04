@@ -30,6 +30,9 @@
 		border-right: none;
 		border-top: none;
 		height: 60px;
+		min-height: 60px;
+		max-height: 60px;
+		overflow: hidden;
 		z-index: 100;
 	}
 

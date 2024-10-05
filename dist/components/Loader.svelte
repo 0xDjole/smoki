@@ -2,37 +2,22 @@
 </script>
 
 {#if show}
-	<div class="loader-container">
-		<div class="lds-dual-ring" />
-	</div>
+	<div class="lds-dual-ring" />
 {/if}
 
 <style>
-	.loader-container {
-		display: grid;
-		align-content: center;
-		justify-content: center;
-		justify-self: center;
+	.lds-dual-ring {
+		display: block;
 		width: 35px;
 		height: 35px;
-}
-
-	.lds-dual-ring {
-		display: inline-block;
-	}
-
-	.lds-dual-ring:after {
-		border-width: 6px;
-		border-style: solid;
-		content: ' ';
-		display: block;
-		width: 34px;
-		height: 34px;
-		margin: 8px;
+		margin-left: auto;
+		margin-right: auto;
+		border: 6px solid var(--accent-color);
 		border-radius: 50%;
-		border-color: var(--accent-color) transparent var(--accent-color) transparent;
+		border-color: var(--accent-color) transparent;
 		animation: lds-dual-ring 1.2s linear infinite;
-}
+		will-change: transform;
+	}
 
 	@keyframes lds-dual-ring {
 		0% {

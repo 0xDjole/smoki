@@ -3,24 +3,23 @@
 </script>
 
 {#if show}
-	<div class="lds-dual-ring" />
+	<div class="simple-spinner" />
 {/if}
 
 <style>
-	.lds-dual-ring {
+	.simple-spinner {
 		display: block;
 		width: 35px;
 		height: 35px;
 		margin-left: auto;
 		margin-right: auto;
-		border: 6px solid var(--accent-color);
+		border: 5px solid var(--accent-color);
+		border-top: 5px solid transparent;
 		border-radius: 50%;
-		border-color: var(--accent-color) transparent;
-		animation: lds-dual-ring 1.2s linear infinite;
-		will-change: transform;
+		animation: spin 1s linear infinite;
 	}
 
-	@keyframes lds-dual-ring {
+	@keyframes spin {
 		0% {
 			transform: rotate(0deg);
 		}

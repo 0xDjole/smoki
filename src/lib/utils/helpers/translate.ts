@@ -5,6 +5,10 @@ export default (labels, lang, fallback) => {
 		parsedLang = 'bih';
 	}
 
+	if (!labels) {
+		return fallback;
+	}
+
 	const label = labels[parsedLang];
 	if (!label) {
 		return fallback;

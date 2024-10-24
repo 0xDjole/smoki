@@ -1,6 +1,6 @@
 {
 	"name": "smoki",
-	"version": "0.0.202",
+	"version": "0.0.203",
 	"main": "dist/index.js",
 	"scripts": {
 		"build": "svelte-kit sync && svelte-package && publint",

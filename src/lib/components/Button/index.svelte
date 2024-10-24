@@ -60,11 +60,10 @@
 	const svgKinds = ['delete', 'add', 'back', 'search', 'user', 'success', 'close', 'preview'];
 
 
-	// <SvgButton {stopPropagation} {size} svgName={kind} {onClick} /> 
 </script>
 
 {#if svgKinds.includes(kind)}
-    <div>SVG</div>
+	 <SvgButton {stopPropagation} {size} svgName={kind} {onClick} /> 
 {:else}
 	<button
 		{disabled}

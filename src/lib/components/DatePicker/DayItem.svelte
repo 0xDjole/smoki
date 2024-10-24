@@ -1,24 +1,25 @@
 <script lang="ts">
-	export let viewDate;
-	export let onSelect;
-	let hovering = false;
+	import { preventDefault } from 'svelte/legacy';
+
+	let { viewDate, onSelect } = $props();
+	let hovering = $state(false);
 
 	const onPointerEnter = () => (hovering = true);
 	const onPointerLeave = () => (hovering = false);
 	const onClick = () => onSelect(viewDate.date);
 
-	$: dynamicClass = `${hovering && viewDate.isSelectable ? ' hoverSuccess ' : ''}
+	let dynamicClass = $derived(`${hovering && viewDate.isSelectable ? ' hoverSuccess ' : ''}
                        ${hovering && !viewDate.isSelectable ? ' hoverError ' : ''}
                        ${viewDate.isSelected ? ' selected ' : ''}
                        ${viewDate.isSelectable ? ' day-color ' : ' day-color-faded '}
-                       ${viewDate.isBetween ? ' between ' : ''}`;
+                       ${viewDate.isBetween ? ' between ' : ''}`);
 </script>
 
 <button
 	disabled={!viewDate.isSelectable}
-	on:click|preventDefault={onClick}
-	on:pointerleave={onPointerLeave}
-	on:pointerenter={onPointerEnter}
+	onclick={preventDefault(onClick)}
+	onpointerleave={onPointerLeave}
+	onpointerenter={onPointerEnter}
 	class="item day-of-month {dynamicClass}"
 >
 	<span>

@@ -1,128 +1,44 @@
 <script lang="ts">
+	import { run, preventDefault } from 'svelte/legacy';
+
 	import { DateTime } from 'luxon';
 	import SvgIcon from '../SvgIcon.svelte';
 	import Plus from '../../utils/icons/plus.svg?raw';
 
-	export let items = [];
-	export let centricDate: DateTime;
-	export let selectDate;
-	export let manageModalOpened = false;
-	export let selectedItem = null;
-	export let onDateChange = (date) => {};
-
-	let clientWidth;
-	let currentTimeTop = null;
-	let currentTimeLeft = null;
-	let currentTimeWidth = null;
-
-	let viewDays = 7;
-
-	$: if (clientWidth < 1000) {
-		viewDays = 1;
-	} else {
-		viewDays = 7;
+	interface Props {
+		items?: any;
+		centricDate: DateTime;
+		selectDate: any;
+		manageModalOpened?: boolean;
+		selectedItem?: any;
+		onDateChange?: any;
 	}
 
-	let parsedItems = [];
+	let {
+		items = [],
+		centricDate = $bindable(),
+		selectDate,
+		manageModalOpened = $bindable(false),
+		selectedItem = $bindable(null),
+		onDateChange = (date) => {}
+	}: Props = $props();
 
-	let displayItems = [];
-	let lookedFrom = {};
-	let lookedFrom2 = {};
+	let clientWidth = $state();
+	let currentTimeTop = $state(null);
+	let currentTimeLeft = $state(null);
+	let currentTimeWidth = $state(null);
+
+	let viewDays = $state(7);
+
+
+	let parsedItems = $state([]);
+
+	let displayItems = $state([]);
+	let lookedFrom = $state({});
+	let lookedFrom2 = $state({});
 	let currentTime = DateTime.local();
 
-	$: if (parsedItems) {
-		displayItems = parsedItems.sort(sortParsed).map(handleOverlapper);
-	}
 
-	$: if (centricDate) {
-		displayItems = [];
-		parsedItems = [];
-		lookedFrom = {};
-		lookedFrom2 = {};
-
-		items
-			.filter((item) => {
-				let fromDate = DateTime.fromISO(item.from);
-
-				return viewDates.some(
-					(viewDate) =>
-						viewDate.date.year === fromDate.year &&
-						viewDate.date.month === fromDate.month &&
-						viewDate.date.day === fromDate.day
-				);
-			})
-			.map((item) => {
-				let fromDateTime = DateTime.fromISO(item.from);
-				const toDateTime = DateTime.fromISO(item.to);
-
-				let diffMinutes = toDateTime.diff(fromDateTime, ['minutes']).toObject().minutes;
-
-				const widthResponsive = (clientWidth / viewDays) * 0.9;
-				let width = widthResponsive > 240 ? 240 : widthResponsive;
-				const height = toDateTime.diff(fromDateTime, ['minutes']).toObject().minutes / 60;
-
-				let left = (fromDateTime.weekday % viewDays) * (clientWidth / viewDays) || 3;
-
-				const isFromAnother = lookedFrom[item.from];
-
-				if (isFromAnother && isFromAnother.length) {
-					width = (width / (isFromAnother.length + 1)) * 1.2;
-
-					lookedFrom[item.from] = [
-						...lookedFrom[item.from],
-						{
-							height,
-							left,
-							index: parsedItems.length
-						}
-					];
-
-					isFromAnother
-						.sort((a, b) => {
-							return b.height - a.height;
-						})
-						.map((another, index) => {
-							parsedItems[another.index].width = width;
-							parsedItems[another.index].left = left + (index + 1) * 80;
-						});
-				} else {
-					lookedFrom[item.from] = [{ height, left, index: parsedItems.length }];
-				}
-
-				while (diffMinutes > 1440) {
-					parsedItems = [
-						...parsedItems,
-						{
-							...item,
-							height,
-							left,
-							zIndex: 1,
-							width,
-							from: fromDateTime,
-							to: fromDateTime.endOf('day').toISO()
-						}
-					];
-					fromDateTime = fromDateTime.plus({ days: 1 }).startOf('day');
-
-					diffMinutes -= 1440;
-				}
-
-				if (diffMinutes < 1440) {
-					parsedItems = [
-						...parsedItems,
-						{
-							...item,
-							zIndex: 1,
-							height,
-							left,
-							width,
-							from: fromDateTime.toISO(),
-							to: toDateTime.toISO()
-						}
-					];
-				}
-			});
-	}
 
 	const getItemStyle = (item, index) => {
 		const fromDate = DateTime.fromISO(item.from);
@@ -154,42 +70,8 @@
 		return `${forprimarydFromDate} - ${forprimarydToDate}`;
 	};
 
-	$: previousSundayDate = centricDate.minus({ days: centricDate.weekday % 7 }).startOf('day');
 
-	$: viewDates = new Array(viewDays).fill(null).map((_, index) => {
-		let date: DateTime;
 
-		if (viewDays >= 7) {
-			date = previousSundayDate.plus({ day: index });
-		} else {
-			date = centricDate;
-		}
-		return {
-			date,
-			isSelected: false,
-			isSelectable: false
-		};
-	});
-
-	$: if (viewDates) {
-		const date = viewDates.find((date) => {
-			return (
-				date.date.year === currentTime.year &&
-				date.date.month === currentTime.month &&
-				date.date.day === currentTime.day
-			);
-		});
-
-		if (date) {
-			currentTimeTop = (currentTime.minute / 60 + currentTime.hour) * 130 + 5;
-			currentTimeLeft = (currentTime.weekday % viewDays) * (clientWidth / viewDays) || 3;
-			currentTimeWidth = clientWidth / viewDays - 10;
-		} else {
-			currentTimeTop = null;
-			currentTimeLeft = null;
-			currentTimeWidth = null;
-		}
-	}
 
 	const handleOverlapper = (item, index: number) => {
 		let fromDateTime = DateTime.fromISO(item.from);
@@ -257,20 +139,159 @@
 			};
 		});
 	};
+	run(() => {
+		if (clientWidth < 1000) {
+			viewDays = 1;
+		} else {
+			viewDays = 7;
+		}
+	});
+	let previousSundayDate = $derived(centricDate.minus({ days: centricDate.weekday % 7 }).startOf('day'));
+	let viewDates = $derived(new Array(viewDays).fill(null).map((_, index) => {
+		let date: DateTime;
+
+		if (viewDays >= 7) {
+			date = previousSundayDate.plus({ day: index });
+		} else {
+			date = centricDate;
+		}
+		return {
+			date,
+			isSelected: false,
+			isSelectable: false
+		};
+	}));
+	run(() => {
+		if (centricDate) {
+			displayItems = [];
+			parsedItems = [];
+			lookedFrom = {};
+			lookedFrom2 = {};
+
+			items
+				.filter((item) => {
+					let fromDate = DateTime.fromISO(item.from);
+
+					return viewDates.some(
+						(viewDate) =>
+							viewDate.date.year === fromDate.year &&
+							viewDate.date.month === fromDate.month &&
+							viewDate.date.day === fromDate.day
+					);
+				})
+				.map((item) => {
+					let fromDateTime = DateTime.fromISO(item.from);
+					const toDateTime = DateTime.fromISO(item.to);
+
+					let diffMinutes = toDateTime.diff(fromDateTime, ['minutes']).toObject().minutes;
+
+					const widthResponsive = (clientWidth / viewDays) * 0.9;
+					let width = widthResponsive > 240 ? 240 : widthResponsive;
+					const height = toDateTime.diff(fromDateTime, ['minutes']).toObject().minutes / 60;
+
+					let left = (fromDateTime.weekday % viewDays) * (clientWidth / viewDays) || 3;
+
+					const isFromAnother = lookedFrom[item.from];
+
+					if (isFromAnother && isFromAnother.length) {
+						width = (width / (isFromAnother.length + 1)) * 1.2;
+
+						lookedFrom[item.from] = [
+							...lookedFrom[item.from],
+							{
+								height,
+								left,
+								index: parsedItems.length
+							}
+						];
+
+						isFromAnother
+							.sort((a, b) => {
+								return b.height - a.height;
+							})
+							.map((another, index) => {
+								parsedItems[another.index].width = width;
+								parsedItems[another.index].left = left + (index + 1) * 80;
+							});
+					} else {
+						lookedFrom[item.from] = [{ height, left, index: parsedItems.length }];
+					}
+
+					while (diffMinutes > 1440) {
+						parsedItems = [
+							...parsedItems,
+							{
+								...item,
+								height,
+								left,
+								zIndex: 1,
+								width,
+								from: fromDateTime,
+								to: fromDateTime.endOf('day').toISO()
+							}
+						];
+						fromDateTime = fromDateTime.plus({ days: 1 }).startOf('day');
+
+						diffMinutes -= 1440;
+					}
+
+					if (diffMinutes < 1440) {
+						parsedItems = [
+							...parsedItems,
+							{
+								...item,
+								zIndex: 1,
+								height,
+								left,
+								width,
+								from: fromDateTime.toISO(),
+								to: toDateTime.toISO()
+							}
+						];
+					}
+				});
+		}
+	});
+	run(() => {
+		if (parsedItems) {
+			displayItems = parsedItems.sort(sortParsed).map(handleOverlapper);
+		}
+	});
+	run(() => {
+		if (viewDates) {
+			const date = viewDates.find((date) => {
+				return (
+					date.date.year === currentTime.year &&
+					date.date.month === currentTime.month &&
+					date.date.day === currentTime.day
+				);
+			});
+
+			if (date) {
+				currentTimeTop = (currentTime.minute / 60 + currentTime.hour) * 130 + 5;
+				currentTimeLeft = (currentTime.weekday % viewDays) * (clientWidth / viewDays) || 3;
+				currentTimeWidth = clientWidth / viewDays - 10;
+			} else {
+				currentTimeTop = null;
+				currentTimeLeft = null;
+				currentTimeWidth = null;
+			}
+		}
+	});
 </script>
 
 <div class="wrapper">
 	<div class="head">
 		<div
 			class="head-item"
-			on:click|preventDefault={() => {
+			onclick={preventDefault(() => {
 				centricDate = centricDate.minus({
 					days: viewDays
 				});
 
 				onDateChange(centricDate);
-			}}
-			on:keyup={() => {
+			})}
+			onkeyup={() => {
 				centricDate = centricDate.minus({
 					days: viewDays
 				});
@@ -283,14 +304,14 @@
 
 		<div
 			class="head-item"
-			on:click|preventDefault={() => {
+			onclick={preventDefault(() => {
 				centricDate = centricDate.plus({
 					days: viewDays
 				});
 
 				onDateChange(centricDate);
-			}}
-			on:keyup={() => {
+			})}
+			onkeyup={() => {
 				centricDate = centricDate.plus({
 					days: viewDays
 				});
@@ -303,7 +324,7 @@
 	</div>
 
 	<div class="date-list" style="grid-template-columns: min-content auto;">
-		<div class="date-buffer" />
+		<div class="date-buffer"></div>
 		<div class="days-date">
 			{#each [null, ...viewDates] as viewDate}
 				{#if viewDate}
@@ -312,7 +333,7 @@
 							{viewDate.date.day}
 							{viewDate.date.weekdayShort}, {viewDate.date.monthShort}
 						</div>
-						<div on:click|preventDefault={() => selectDate(viewDate.date)} class="mr-5">
+						<div onclick={preventDefault(() => selectDate(viewDate.date))} class="mr-5">
 							<SvgIcon data={Plus} color={'white'} size={'25px'} />
 						</div>
 					</div>
@@ -333,12 +354,12 @@
 				<div
 					style={`width: ${currentTimeWidth}px; left: ${currentTimeLeft}px; top: ${currentTimeTop}px`}
 					class="current-time-line"
-				/>
+				></div>
 			{/if}
 			{#each displayItems as item, index}
 				<div
-					on:keyup={() => handleItemClick(item, index)}
-					on:click|preventDefault={() => handleItemClick(item, index)}
+					onkeyup={() => handleItemClick(item, index)}
+					onclick={preventDefault(() => handleItemClick(item, index))}
 					style={getItemStyle(item, index)}
 					class="calendar-item"
 				>
@@ -361,9 +382,9 @@
 					{#each new Array(24).fill(null) as _}
 						<div
 							class="hour"
-							on:keyup={handleEmptyClick}
-							on:click|preventDefault={handleEmptyClick}
-						/>
+							onkeyup={handleEmptyClick}
+							onclick={preventDefault(handleEmptyClick)}
+						></div>
 					{/each}
 				</div>
 			{/each}

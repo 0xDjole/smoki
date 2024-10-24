@@ -1,19 +1,19 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
+
 	import SvgIcon from '../SvgIcon.svelte';
 	import Search from '../../utils/icons/search.svg?raw';
 
-	export let value;
-	export let placeholder;
-	export let onSearch = (value) => {};
+	let { value = $bindable(), placeholder, onSearch = (value) => {} } = $props();
 </script>
 
-<div class="search-name" on:click|preventDefault={() => {}}>
+<div class="search-name" onclick={preventDefault(() => {})}>
 	<div class="search-button">
 		<SvgIcon data={Search} color={'text-primary'} />
 	</div>
 
 	<input
-		on:input={(e) => {
+		oninput={(e) => {
 			const value = e.target.value;
 
 			onSearch(value);

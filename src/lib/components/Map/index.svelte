@@ -1,19 +1,32 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { onMount } from 'svelte';
 	import Label from '../Label.svelte';
 
 	import Location from '../../utils/icons/location.svg?raw';
 
-	let L;
-	let map;
+	let L = $state();
+	let map = $state();
 	let marker;
 
-	export let value;
-	export let label = '';
-	export let labelThumbnail;
-	export let errors = [];
-	export let allowTag = true;
-	export let zoom = 14;
+	interface Props {
+		value: any;
+		label?: string;
+		labelThumbnail: any;
+		errors?: any;
+		allowTag?: boolean;
+		zoom?: number;
+	}
+
+	let {
+		value = $bindable(),
+		label = '',
+		labelThumbnail,
+		errors = [],
+		allowTag = true,
+		zoom = 14
+	}: Props = $props();
 
 	onMount(async () => {
 		L = await import('leaflet');
@@ -45,11 +58,6 @@
 		}
 	});
 
-	// Reactive statement to handle external changes to `value`
-	$: if (value && map) {
-		map.setView(new L.LatLng(value.lat, value.lon));
-		updateMarker(value.lat, value.lon, true);
-	}
 
 	// Function to update or create marker
 	function updateMarker(lat, lon, setMarker) {
@@ -67,11 +75,18 @@
 			}
 		}
 	}
+	// Reactive statement to handle external changes to `value`
+	run(() => {
+		if (value && map) {
+			map.setView(new L.LatLng(value.lat, value.lon));
+			updateMarker(value.lat, value.lon, true);
+		}
+	});
 </script>
 
 <div class="map-wrapper">
 	<Label {label} {errors} {labelThumbnail} />
-	<div id="map" class="map" />
+	<div id="map" class="map"></div>
 </div>
 
 <style type="text/postcss">

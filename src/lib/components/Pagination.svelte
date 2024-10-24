@@ -1,42 +1,62 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { onDestroy, onMount, tick } from 'svelte';
 
 	import InfiniteScroll from './InfiniteScroll.svelte';
 	import Loader from './Loader.svelte';
 
-	export let items = [];
-	export let itemComponent;
-	export let loaderComponent = Loader;
-	export let fetchMore;
-	export let fetchOnMount = true;
-	export let itemProps;
-	export let id;
-	export let notFoundText;
-	export let t;
-	let component;
-	let listComponent;
+	let component = $state();
+	let listComponent = $state();
 
-	export let height = '100%';
 
-	export let listStyle = '';
+	interface Props {
+		items?: any;
+		itemComponent: any;
+		loaderComponent?: any;
+		fetchMore: any;
+		fetchOnMount?: boolean;
+		itemProps: any;
+		id: any;
+		notFoundText: any;
+		t: any;
+		height?: string;
+		listStyle?: string;
+	}
+
+	let {
+		items = $bindable([]),
+		itemComponent,
+		loaderComponent = Loader,
+		fetchMore,
+		fetchOnMount = true,
+		itemProps,
+		id,
+		notFoundText,
+		t,
+		height = '100%',
+		listStyle = ''
+	}: Props = $props();
 
 	let fetchingMore = false;
 
-	let spacer;
+	let spacer = $state();
 
-	$: if (component && items) {
-		tick().then(() => {
-			const height = component.clientHeight + 10 - listComponent.scrollHeight;
+	run(() => {
+		if (component && items) {
+			tick().then(() => {
+				const height = component.clientHeight + 10 - listComponent.scrollHeight;
 
-			if (height > 0) {
-				spacer.style.height = `${height}px`;
-			} else {
-				spacer.style.height = `0px`;
-			}
-		});
-	}
+				if (height > 0) {
+					spacer.style.height = `${height}px`;
+				} else {
+					spacer.style.height = `0px`;
+				}
+			});
+		}
+	});
 
-	let mounted = false;
+	let mounted = $state(false);
 
 	onDestroy(() => {
 		items = [];
@@ -80,11 +100,13 @@
 			component.scrollTo({ top: component.scrollHeight - component.clientHeight - 70 });
 		}
 	};
+
+	const SvelteComponent = $derived(loaderComponent);
 </script>
 
 <div bind:this={component} style={`--height: ${height}; ${listStyle}`} class="pagination" {id}>
 	<div class="load-wrap">
-		<svelte:component this={loaderComponent} />
+		<SvelteComponent />
 	</div>
 
 	<div bind:this={listComponent} class="list">
@@ -93,14 +115,15 @@
 		{/if}
 
 		{#each items as item, index}
-			<svelte:component this={itemComponent} {item} {index} {...itemProps} />
+			{@const SvelteComponent_1 = itemComponent}
+			<SvelteComponent_1 {item} {index} {...itemProps} />
 		{/each}
 	</div>
 
-	<div class="spacer" bind:this={spacer} />
+	<div class="spacer" bind:this={spacer}></div>
 
 	<div class="load-wrap load-bottom">
-		<svelte:component this={loaderComponent} />
+		<SvelteComponent />
 	</div>
 
 	{#if mounted}

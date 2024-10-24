@@ -4,19 +4,34 @@
 	import Loader from '../Loader.svelte';
 	import Header from '../Header/index.svelte';
 
-	export let headerTitle = '';
 
-	export let headerAction = null;
-	export let headerActionName = 'Delete';
-	export let confirmHeaderMessage = 'Are you sure you want to delete item?';
 
-	export let bottomActionName;
-	export let bottomAction;
-	export let goBack = () => {};
 
-	export let isLoading = false;
+	interface Props {
+		headerTitle?: string;
+		headerAction?: any;
+		headerActionName?: string;
+		confirmHeaderMessage?: string;
+		bottomActionName: any;
+		bottomAction: any;
+		goBack?: any;
+		isLoading?: boolean;
+		children?: import('svelte').Snippet;
+	}
 
-	let headerActionModalOpen = false;
+	let {
+		headerTitle = '',
+		headerAction = null,
+		headerActionName = 'Delete',
+		confirmHeaderMessage = 'Are you sure you want to delete item?',
+		bottomActionName,
+		bottomAction,
+		goBack = () => {},
+		isLoading = $bindable(false),
+		children
+	}: Props = $props();
+
+	let headerActionModalOpen = $state(false);
 
 	const clickHeaderAction = () => {
 		headerActionModalOpen = true;
@@ -51,23 +66,29 @@
 	}}
 	confirm={confirmHeader}
 	confirmText={confirmHeaderMessage}
-	><div />
+	><div></div>
 </Modal>
 
 <Header>
-	<Button
-		slot="left"
-		kind="back"
-		onClick={() => {
-			goBack();
-		}}
-	/>
-	<span slot="middle" class="title">{headerTitle}</span>
-	<div class="right-header" slot="right">
-		{#if headerAction}
-			<Button size="small" kind="error" onClick={clickHeaderAction}>{headerActionName}</Button>
-		{/if}
-	</div>
+	{#snippet left()}
+		<Button
+			
+			kind="back"
+			onClick={() => {
+				goBack();
+			}}
+		/>
+	{/snippet}
+	{#snippet middle()}
+		<span  class="title">{headerTitle}</span>
+	{/snippet}
+	{#snippet right()}
+		<div class="right-header" >
+			{#if headerAction}
+				<Button size="small" kind="error" onClick={clickHeaderAction}>{headerActionName}</Button>
+			{/if}
+		</div>
+	{/snippet}
 </Header>
 
 {#if isLoading}
@@ -78,7 +99,7 @@
 
 <div class="layout">
 	<div style={isLoading ? 'opacity: 50%;' : ''} class={`form-wrap`}>
-		<div class="form"><slot /></div>
+		<div class="form">{@render children?.()}</div>
 	</div>
 	<Button size="full" style={`height: 50px`} onClick={clickBottomAction}>{bottomActionName}</Button>
 </div>

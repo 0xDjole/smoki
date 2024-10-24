@@ -1,5 +1,9 @@
 <script lang="ts">
-	export let text = 'placeholder';
+	interface Props {
+		text?: string;
+	}
+
+	let { text = 'placeholder' }: Props = $props();
 </script>
 
 <div style="height: 100%;">

@@ -1,20 +1,32 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
+
 	import Input from '../Input/index.svelte';
 	import DropDown from '../DropDown/index.svelte';
 	import Label from '../Label.svelte';
 	import Close from '../../utils/icons/close.svg?raw';
 	import SvgIcon from '../SvgIcon.svelte';
 
-	export let label = '';
-	export let options = [];
-	export let errors = [];
-	export let type = 'text';
-	export let t;
+	interface Props {
+		label?: string;
+		options?: any;
+		errors?: any;
+		type?: string;
+		t: any;
+	}
 
-	let value;
-	let condition;
+	let {
+		label = '',
+		options = $bindable([]),
+		errors = [],
+		type = 'text',
+		t
+	}: Props = $props();
 
-	$: inputType = type === 'select' ? 'text' : type;
+	let value = $state();
+	let condition = $state();
+
+	let inputType = $derived(type === 'select' ? 'text' : type);
 	const operations = [
 		{ label: 'Smaller than', value: '<' },
 		{ label: 'Greater than', value: '>' },
@@ -40,7 +52,7 @@
 
 	<DropDown {t} options={operations} bind:value={condition} />
 
-	<button on:click|preventDefault={add} class="add-options">Add options</button>
+	<button onclick={preventDefault(add)} class="add-options">Add options</button>
 </div>
 
 <div class="list">
@@ -48,7 +60,7 @@
 		<div class="item">
 			<span>{option}</span>
 
-			<div on:click|preventDefault={() => removeOption(index)}>
+			<div onclick={preventDefault(() => removeOption(index))}>
 				<SvgIcon data={Close} size={'30px'} color={'var(--secondary-text-color)'} />
 			</div>
 		</div>

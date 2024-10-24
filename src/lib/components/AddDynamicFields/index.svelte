@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { v4 } from '@lukeed/uuid';
 
 	import Upload from '../Upload.svelte';
@@ -10,11 +12,6 @@
 	import FieldValue from './FieldValue.svelte';
 	import LocalizedText from '../LocalizedText/index.svelte';
 
-	export let label = 'Custom fields';
-	export let fields;
-	export let autofillOptions = [];
-	export let addEntity = () => {};
-	export let t;
 
 	const types = [
 		{ label: 'Text', value: 'text' },
@@ -145,9 +142,27 @@
 		entities: [{ label: 'Default', value: 'default' }]
 	};
 
-	export let field;
+	interface Props {
+		label?: string;
+		fields: any;
+		autofillOptions?: any;
+		addEntity?: any;
+		t: any;
+		field: any;
+		entities?: import('svelte').Snippet<[any]>;
+	}
 
-	let fieldStatus = {
+	let {
+		label = 'Custom fields',
+		fields = $bindable(),
+		autofillOptions = $bindable([]),
+		addEntity = () => {},
+		t,
+		field = $bindable(),
+		entities
+	}: Props = $props();
+
+	let fieldStatus = $state({
 		key: {
 			errors: []
 		},
@@ -172,7 +187,7 @@
 		properties: {
 			errors: []
 		}
-	};
+	});
 
 	const confirmField = () => {
 		const fieldIdx = fields.findIndex((existingFields) => existingFields.id === field.id);
@@ -187,7 +202,7 @@
 		isAddModalOpen = false;
 	};
 
-	let isAddModalOpen = false;
+	let isAddModalOpen = $state(false);
 
 	const defaultField = {
 		id: v4(),
@@ -203,9 +218,11 @@
 		defaultValue: null
 	};
 
-	$: if (!field) {
-		field = defaultField;
-	}
+	run(() => {
+		if (!field) {
+			field = defaultField;
+		}
+	});
 </script>
 
 {#if field}
@@ -260,9 +277,11 @@
 				bind:errors={fieldStatus.properties.errors}
 				{addEntity}
 			>
-				<div slot="entities" let:value>
-					<slot name="entities" {value} />
-				</div>
+				{#snippet entities({ value })}
+								<div  >
+						{@render entities?.({ value, })}
+					</div>
+							{/snippet}
 			</Properties>
 
 			<DropDown

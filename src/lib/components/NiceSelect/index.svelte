@@ -2,17 +2,33 @@
 	import MultiSelect from './MultiSelect.svelte';
 	import SingleSelect from './SingleSelect.svelte';
 
-	export let value = null;
-	export let disabled = false;
-	export let options = [];
-	export let label = '';
-	export let labelThumbnail = null;
-	export let errors = [];
-	export let position = 'vertical';
-	export let ui = 'default';
-	export let isMultiSelect = false;
-	export let t;
-	export let isRequired = false;
+	interface Props {
+		value?: any;
+		disabled?: boolean;
+		options?: any;
+		label?: string;
+		labelThumbnail?: any;
+		errors?: any;
+		position?: string;
+		ui?: string;
+		isMultiSelect?: boolean;
+		t: any;
+		isRequired?: boolean;
+	}
+
+	let {
+		value = $bindable(null),
+		disabled = false,
+		options = [],
+		label = '',
+		labelThumbnail = null,
+		errors = [],
+		position = 'vertical',
+		ui = 'default',
+		isMultiSelect = false,
+		t,
+		isRequired = false
+	}: Props = $props();
 </script>
 
 {#if isMultiSelect}

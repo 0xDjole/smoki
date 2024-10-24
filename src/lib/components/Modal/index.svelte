@@ -3,17 +3,34 @@
 	import SvgIcon from '../SvgIcon.svelte';
 	import Button from '../Button/index.svelte';
 
-	export let title = '';
-	export let showModal;
-	export let height = 'calc(100vh - 30%)';
-	export let top = '10%';
-	export let zIndex = 1;
-	export let confirmText = null;
-	export let modalStyle = '';
 
-	export let confirm = () => {};
-	export let disabled = false;
-	export let onCancel;
+	interface Props {
+		title?: string;
+		showModal: any;
+		height?: string;
+		top?: string;
+		zIndex?: number;
+		confirmText?: any;
+		modalStyle?: string;
+		confirm?: any;
+		disabled?: boolean;
+		onCancel: any;
+		children?: import('svelte').Snippet;
+	}
+
+	let {
+		title = '',
+		showModal = $bindable(),
+		height = 'calc(100vh - 30%)',
+		top = '10%',
+		zIndex = 1,
+		confirmText = null,
+		modalStyle = '',
+		confirm = () => {},
+		disabled = false,
+		onCancel,
+		children
+	}: Props = $props();
 </script>
 
 {#if showModal}
@@ -35,7 +52,7 @@
 			{/if}
 
 			<div class="content">
-				<slot />
+				{@render children?.()}
 			</div>
 			{#if confirmText}
 				<div class="options">

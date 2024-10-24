@@ -1,13 +1,13 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
+
 	import { dndzone } from 'svelte-dnd-action';
 	import Upload from '../Upload.svelte';
 	import Close from '../../utils/icons/close.svg?raw';
 	import SvgIcon from '../SvgIcon.svelte';
 	import Label from '../Label.svelte';
 
-	export let medias = [];
-	export let label;
-	export let t;
+	let { medias = $bindable([]), label, t } = $props();
 
 	const onChangeThumbnail = (isThumbnail, index) => {
 		medias = medias.map((media, mediaIndex) => {
@@ -81,19 +81,19 @@
 
 <Label {t} {label} errors={[]} />
 
-<button class="add-new" on:click|preventDefault={addNewGalleryItem}> Add gallery item </button>
+<button class="add-new" onclick={preventDefault(addNewGalleryItem)}> Add gallery item </button>
 
 <div
 	class="gallery"
 	use:dndzone={{ items: medias }}
-	on:consider={handleDndConsider}
-	on:finalize={handleDndFinalize}
+	onconsider={handleDndConsider}
+	onfinalize={handleDndFinalize}
 >
 	{#each medias as media, index (media.id)}
 		<div class="gallery-item">
 			<Upload
 				{t}
-				bind:media
+				bind:media={medias[index]}
 				showSettings={true}
 				onChangeThumbnail={(isThumbnail) => {
 					onChangeThumbnail(isThumbnail, index);
@@ -103,7 +103,7 @@
 				}}
 			/>
 
-			<button class="remove" on:click|preventDefault={() => removeMedia(index)}>
+			<button class="remove" onclick={preventDefault(() => removeMedia(index))}>
 				<SvgIcon data={Close} width="50px" size="50px" color="white" />
 			</button>
 		</div>

@@ -8,26 +8,37 @@
 	import Loader from '../Loader.svelte';
 	import SvgIcon from '../SvgIcon.svelte';
 
-	export let fields = [];
-	export let fieldConfigs = [];
-	export let locale = 'en';
-	export let label = null;
-	export let t;
-	export let shareData = {
+	interface Props {
+		fields?: any;
+		fieldConfigs?: any;
+		locale?: string;
+		label?: any;
+		t: any;
+		shareData?: any;
+	}
+
+	let {
+		fields = [],
+		fieldConfigs = [],
+		locale = 'en',
+		label = null,
+		t,
+		shareData = {
 		title: '',
 		text: '',
 		url: ''
-	};
+	}
+	}: Props = $props();
 
-	$: badgeDetails = fieldConfigs
+	let badgeDetails = $derived(fieldConfigs
 		.filter((fieldConfig) => fieldConfig.type === 'badge')
 		.map((fieldConfig) => ({
 			fieldConfig,
 			field: fields.find((field) => fieldConfig.id === field.fieldConfigId)
-		}));
+		})));
 
-	let showModal = false;
-	let loading = false;
+	let showModal = $state(false);
+	let loading = $state(false);
 
 	function cleanNumber(number: string): string {
 		return number.replace(/[^0-9+]/g, '');
@@ -76,7 +87,7 @@
 		}
 	}
 
-	let copySuccessIndex: number | null = null;
+	let copySuccessIndex: number | null = $state(null);
 
 	async function copyToClipboard(text: string, index: number) {
 		try {
@@ -99,7 +110,7 @@
 
 <div class="custom-field-body">
 	<div
-		on:click={() => {
+		onclick={() => {
 			share();
 		}}
 		class="badge-row"
@@ -113,7 +124,7 @@
 		{#each badgeDetails as { field, fieldConfig }, index}
 			{#if fieldConfig}
 				<div
-					on:click={() => {
+					onclick={() => {
 						handleNavigation(field.value.name, field.value.url);
 					}}
 					class="badge-row"
@@ -153,7 +164,7 @@
 >
 	<div class="modal-wrapper">
 		<div
-			on:click={(event) => {
+			onclick={(event) => {
 				event.stopPropagation();
 				copyToClipboard(shareData.url, 0);
 			}}
@@ -175,7 +186,7 @@
 		{#each badgeDetails as { field, fieldConfig }, index}
 			{#if fieldConfig}
 				<div
-					on:click={(event) => {
+					onclick={(event) => {
 						event.stopPropagation();
 						copyToClipboard(field.value.url, index + 1);
 					}}

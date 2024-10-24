@@ -2,19 +2,37 @@
 	import ErrorMessage from '../ErrorMessage.svelte';
 	import Label from '../Label.svelte';
 
-	export let kind;
-	export let onChange = (value) => {};
-	export let placeholder;
-	export let value;
-	export let type = 'text';
-	export let style = '';
-	export let errors = [];
-	export let label = '';
-	export let labelThumbnail;
-	export let t;
-	export let minLength = 0;
-	export let maxLength = 2000;
-	export let isDisabled = false;
+	interface Props {
+		kind: any;
+		onChange?: any;
+		placeholder: any;
+		value: any;
+		type?: string;
+		style?: string;
+		errors?: any;
+		label?: string;
+		labelThumbnail: any;
+		t: any;
+		minLength?: number;
+		maxLength?: number;
+		isDisabled?: boolean;
+	}
+
+	let {
+		kind,
+		onChange = (value) => {},
+		placeholder,
+		value = $bindable(),
+		type = 'text',
+		style = '',
+		errors = $bindable([]),
+		label = '',
+		labelThumbnail,
+		t,
+		minLength = 0,
+		maxLength = 2000,
+		isDisabled = false
+	}: Props = $props();
 </script>
 
 <div class="w-full">
@@ -33,12 +51,12 @@
 				placeholder={placeholder
 					? `${$t('placeholder')}`
 					: `${$t('enter')}  ${$t('between')} ${minLength} ${$t('and')} ${maxLength}`}
-				on:input={(e) => {
+				oninput={(e) => {
 					e.preventDefault();
 					errors = [];
 					onChange(e.target.value);
 				}}
-			/>
+			></textarea>
 		{/if}
 
 		{#if !isDisabled}

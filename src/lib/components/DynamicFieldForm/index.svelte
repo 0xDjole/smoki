@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import Switch from '../Switch/index.svelte';
 	import Range from '../Range/index.svelte';
 	import DropDown from '../DropDown/index.svelte';
@@ -6,20 +8,37 @@
 	import TextArea from '../TextArea/index.svelte';
 	import translate from '../../utils/helpers/translate';
 
-	export let label = 'Custom fieldConfigs';
-	export let fieldConfigs = [];
-	export let fields = [];
-	export let locale = 'en';
-	export let t;
-	export let theme = null;
-
-	$: if (fieldConfigs.length > fields.length) {
-		fields = fieldConfigs.map((config, index) => ({
-			fieldConfigId: config.id,
-			value: fields[index]?.value || '',
-			errors: fields[index]?.errors || []
-		}));
+	interface Props {
+		label?: string;
+		fieldConfigs?: any;
+		fields?: any;
+		locale?: string;
+		t: any;
+		theme?: any;
+		entities?: import('svelte').Snippet<[any]>;
+		custom?: import('svelte').Snippet<[any]>;
 	}
+
+	let {
+		label = 'Custom fieldConfigs',
+		fieldConfigs = $bindable([]),
+		fields = $bindable([]),
+		locale = 'en',
+		t,
+		theme = null,
+		entities,
+		custom
+	}: Props = $props();
+
+	run(() => {
+		if (fieldConfigs.length > fields.length) {
+			fields = fieldConfigs.map((config, index) => ({
+				fieldConfigId: config.id,
+				value: fields[index]?.value || '',
+				errors: fields[index]?.errors || []
+			}));
+		}
+	});
 
 	const parseLabel = (label) => {
 		if (label.startsWith('+')) {
@@ -33,14 +52,14 @@
 		return label;
 	};
 
-	let elements = [];
+	let elements = $state([]);
 
-	$: {
+	run(() => {
 		const errorIndex = fields.findIndex((field) => field.errors && field.errors.length);
 		if (errorIndex !== -1 && elements[errorIndex]) {
 			elements[errorIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
 		}
-	}
+	});
 </script>
 
 <div class="custom-field-config-body">
@@ -116,17 +135,11 @@
 					{/if}
 
 					{#if fieldConfig.type === 'entities'}
-						<slot name="entities" idx={index} value={fields[index].value} {fieldConfig} />
+						{@render entities?.({ idx: index, value: fields[index].value, fieldConfig, })}
 					{/if}
 
 					{#if fieldConfig.type === 'custom'}
-						<slot
-							name="custom"
-							idx={index}
-							errors={fields[index].errors}
-							value={fields[index].value}
-							{fieldConfig}
-						/>
+						{@render custom?.({ idx: index, errors: fields[index].errors, value: fields[index].value, fieldConfig, })}
 					{/if}
 				{/if}
 			</div>

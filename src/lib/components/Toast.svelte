@@ -1,16 +1,24 @@
 <script lang="ts">
-	export let message: string;
-	export let type: 'success' | 'error' | 'warning' | 'info' = 'info';
+	import { run } from 'svelte/legacy';
 
-	let computedClass = '';
-	$: computedClass =
-		type === 'success'
-			? 'bg-green-500'
-			: type === 'error'
-			? 'bg-error'
-			: type === 'warning'
-			? 'bg-yellow-500'
-			: 'bg-blue-500';
+	interface Props {
+		message: string;
+		type?: 'success' | 'error' | 'warning' | 'info';
+	}
+
+	let { message, type = 'info' }: Props = $props();
+
+	let computedClass = $state('');
+	run(() => {
+		computedClass =
+			type === 'success'
+				? 'bg-green-500'
+				: type === 'error'
+				? 'bg-error'
+				: type === 'warning'
+				? 'bg-yellow-500'
+				: 'bg-blue-500';
+	});
 </script>
 
 <div class="toast notificator {computedClass}">

@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import Switch from '../Switch/index.svelte';
 	import Options from './Options.svelte';
 	import Range from './Range.svelte';
@@ -7,17 +9,33 @@
 	import Label from '../Label.svelte';
 	import Button from '../Button/index.svelte';
 
-	export let label = 'Custom fields';
-	export let value;
-	export let errors = [];
-	export let fieldType;
-	export let addEntity;
-	export let t;
-	export let propertyTypes;
-
-	$: if (!value.properties && fieldType) {
-		value.properties = propertyTypes[fieldType].defaultProperties;
+	interface Props {
+		label?: string;
+		value: any;
+		errors?: any;
+		fieldType: any;
+		addEntity: any;
+		t: any;
+		propertyTypes: any;
+		entities?: import('svelte').Snippet<[any]>;
 	}
+
+	let {
+		label = 'Custom fields',
+		value = $bindable(),
+		errors = [],
+		fieldType,
+		addEntity,
+		t,
+		propertyTypes,
+		entities
+	}: Props = $props();
+
+	run(() => {
+		if (!value.properties && fieldType) {
+			value.properties = propertyTypes[fieldType].defaultProperties;
+		}
+	});
 </script>
 
 {#if propertyTypes[fieldType] && value.properties}
@@ -59,7 +77,7 @@
 			>
 
 			{#if value?.properties?.source}
-				<slot name="entities" value={value.properties} />
+				{@render entities?.({ value: value.properties, })}
 
 				{#if value?.properties?.entities?.length}
 					<Switch {t} label="Is multiselect" bind:value={value.properties.isMultiSelect} />

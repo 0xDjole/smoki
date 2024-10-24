@@ -1,17 +1,35 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
+
 	import Label from '../Label.svelte';
 
-	export let value = null;
-	export let options = [];
-	export let label = '';
-	export let errors = [];
-	export let disabled = false;
-	export let position = 'vertical';
-	export let ui = 'default';
-	export let isMultiSelect = false;
-	export let labelThumbnail = null;
-	export let t;
-	export let isRequired = false;
+	interface Props {
+		value?: any;
+		options?: any;
+		label?: string;
+		errors?: any;
+		disabled?: boolean;
+		position?: string;
+		ui?: string;
+		isMultiSelect?: boolean;
+		labelThumbnail?: any;
+		t: any;
+		isRequired?: boolean;
+	}
+
+	let {
+		value = $bindable(null),
+		options = [],
+		label = '',
+		errors = [],
+		disabled = false,
+		position = 'vertical',
+		ui = 'default',
+		isMultiSelect = false,
+		labelThumbnail = null,
+		t,
+		isRequired = false
+	}: Props = $props();
 
 	const selectOption = (optionValue) => {
 		if (!disabled) {
@@ -31,7 +49,7 @@
 	>
 		{#each options as option}
 			<div
-				on:click|preventDefault={() => selectOption(option.value)}
+				onclick={preventDefault(() => selectOption(option.value))}
 				class="option bg-secondary border-primary {value === option.value ? 'selected' : ''}"
 			>
 				{option.label}

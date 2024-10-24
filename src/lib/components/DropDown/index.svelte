@@ -2,15 +2,29 @@
 	import MultiDropDown from './MultiDropDown.svelte';
 	import SingleDropDown from './SingleDropDown.svelte';
 
-	export let value = null;
-	export let options = [];
-	export let label = '';
-	export let labelThumbnail = null;
-	export let errors = [];
-	export let isMultiSelect = false;
-	export let t;
-	export let isRequired = false;
-	export let onSelect = (value) => {};
+	interface Props {
+		value?: any;
+		options?: any;
+		label?: string;
+		labelThumbnail?: any;
+		errors?: any;
+		isMultiSelect?: boolean;
+		t: any;
+		isRequired?: boolean;
+		onSelect?: any;
+	}
+
+	let {
+		value = $bindable(null),
+		options = [],
+		label = '',
+		labelThumbnail = null,
+		errors = [],
+		isMultiSelect = false,
+		t,
+		isRequired = false,
+		onSelect = (value) => {}
+	}: Props = $props();
 </script>
 
 {#if isMultiSelect}

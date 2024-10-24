@@ -1,25 +1,26 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { onDestroy } from 'svelte';
 
-	export let threshold = 0;
-	export let horizontal = false;
-	export let fetchTop = () => {};
-	export let fetchBottom = () => {};
+	interface Props {
+		threshold?: number;
+		horizontal?: boolean;
+		fetchTop?: any;
+		fetchBottom?: any;
+	}
 
-	let component;
+	let {
+		threshold = 0,
+		horizontal = false,
+		fetchTop = () => {},
+		fetchBottom = () => {}
+	}: Props = $props();
+
+	let component = $state();
 	let clearTopTimeoutId;
 	let clearBottomTimeoutId;
 
-	$: {
-		if (component) {
-			const element = component.parentNode;
-
-			setTimeout(() => {
-				element.addEventListener('scroll', onScroll);
-				element.addEventListener('resize', onScroll);
-			}, 10);
-		}
-	}
 
 	const onScroll = (e) => {
 		clearTimeout(clearTopTimeoutId);
@@ -65,6 +66,16 @@
 			element.removeEventListener('resize', null);
 		}
 	});
+	run(() => {
+		if (component) {
+			const element = component.parentNode;
+
+			setTimeout(() => {
+				element.addEventListener('scroll', onScroll);
+				element.addEventListener('resize', onScroll);
+			}, 10);
+		}
+	});
 </script>
 
-<div bind:this={component} style="width:0px" />
+<div bind:this={component} style="width:0px"></div>

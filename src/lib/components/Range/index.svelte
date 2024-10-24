@@ -1,38 +1,57 @@
 <script lang="ts">
+	import { run, nonpassive, preventDefault, stopPropagation } from 'svelte/legacy';
+
 	import { tick } from 'svelte';
 
 	import Label from '../Label.svelte';
 	import ErrorMessage from '../ErrorMessage.svelte';
 
-	export let min = 0;
-	export let max = 100;
-	export let initialValue = 0;
-	export let id = null;
-	export let value = typeof initialValue === 'string' ? parseInt(initialValue) : initialValue;
-	export let theme = null;
 
-	export let label = '';
-	export let labelThumbnail;
 
-	export let t;
-	export let errors = [];
-	export let isRequired = false;
 
-	export let onChange = (value) => {};
+	interface Props {
+		min?: number;
+		max?: number;
+		initialValue?: number;
+		id?: any;
+		value?: any;
+		theme?: any;
+		label?: string;
+		labelThumbnail: any;
+		t: any;
+		errors?: any;
+		isRequired?: boolean;
+		onChange?: any;
+	}
 
-	let thumbOpened = false;
+	let {
+		min = 0,
+		max = 100,
+		initialValue = 0,
+		id = null,
+		value = $bindable(typeof initialValue === 'string' ? parseInt(initialValue) : initialValue),
+		theme = null,
+		label = '',
+		labelThumbnail,
+		t,
+		errors = $bindable([]),
+		isRequired = false,
+		onChange = (value) => {}
+	}: Props = $props();
 
-	let container = null;
-	let thumb = null;
-	let progressBar = null;
-	let element = null;
+	let thumbOpened = $state(false);
 
-	let elementX = null;
+	let container = $state(null);
+	let thumb = $state(null);
+	let progressBar = $state(null);
+	let element = $state(null);
+
+	let elementX = $state(null);
 	let currentThumb = null;
 	let keydownAcceleration = 0;
 	let accelerationTimer = null;
 
-	let input = null;
+	let input = $state(null);
 
 	function resizeWindow() {
 		elementX = element.getBoundingClientRect().left;
@@ -142,7 +161,9 @@
 	}
 
 	// React to left position of element relative to window
-	$: if (element) elementX = element.getBoundingClientRect().left;
+	run(() => {
+		if (element) elementX = element.getBoundingClientRect().left;
+	});
 
 	// Set a class based on if dragging
 
@@ -159,14 +180,16 @@
 	};
 
 	// Update progressbar and thumb styles to represent value
-	$: if (progressBar && thumb) {
-		let percent = getPercent(value, min, max);
-		let offsetLeft = (container.clientWidth - 10) * (percent / 100) + 5;
+	run(() => {
+		if (progressBar && thumb) {
+			let percent = getPercent(value, min, max);
+			let offsetLeft = (container.clientWidth - 10) * (percent / 100) + 5;
 
-		// Update thumb position + active range track width
-		thumb.style.left = `${offsetLeft}px`;
-		progressBar.style.width = `${offsetLeft}px`;
-	}
+			// Update thumb position + active range track width
+			thumb.style.left = `${offsetLeft}px`;
+			progressBar.style.width = `${offsetLeft}px`;
+		}
+	});
 
 	const getLeft = (value) => {
 		let percent = getPercent(value, min, max);
@@ -175,22 +198,24 @@
 		return offsetLeft;
 	};
 
-	$: if (value && element) {
-		tick().then(() => {
-			const elementRect = element.getBoundingClientRect();
-			const desiredOffset = 50;
-			const scrollTarget =
-				window.scrollY +
-				elementRect.top -
-				(window.innerHeight - elementRect.height) / 2 +
-				desiredOffset;
+	run(() => {
+		if (value && element) {
+			tick().then(() => {
+				const elementRect = element.getBoundingClientRect();
+				const desiredOffset = 50;
+				const scrollTarget =
+					window.scrollY +
+					elementRect.top -
+					(window.innerHeight - elementRect.height) / 2 +
+					desiredOffset;
 
-			window.scrollTo({
-				top: scrollTarget,
-				behavior: 'smooth'
+				window.scrollTo({
+					top: scrollTarget,
+					behavior: 'smooth'
+				});
 			});
-		});
-	}
+		}
+	});
 
 	let strips = max <= 30 ? Array.from({ length: max }, (_, i) => i + 1) : [];
 
@@ -209,18 +234,20 @@
 		return numericValue;
 	}
 
-	$: if (value) {
-		thumbOpened = true;
-	}
+	run(() => {
+		if (value) {
+			thumbOpened = true;
+		}
+	});
 </script>
 
 <svelte:window
-	on:touchmove|nonpassive={updateValueOnEvent}
-	on:touchcancel={onDragEnd}
-	on:touchend={onDragEnd}
-	on:mousemove={updateValueOnEvent}
-	on:mouseup={onDragEnd}
-	on:resize={resizeWindow}
+	use:nonpassive={['touchmove', () => updateValueOnEvent]}
+	ontouchcancel={onDragEnd}
+	ontouchend={onDragEnd}
+	onmousemove={updateValueOnEvent}
+	onmouseup={onDragEnd}
+	onresize={resizeWindow}
 />
 
 {#if t}
@@ -230,9 +257,9 @@
 		<div class:passive={!value} class="side side-left">{min}</div>
 		<div class="range__wrapper" bind:this={element} {id}>
 			<div
-				on:mousedown={onTrackEvent}
-				on:touchstart={onTrackEvent}
-				on:keydown={onKeyPress}
+				onmousedown={onTrackEvent}
+				ontouchstart={onTrackEvent}
+				onkeydown={onKeyPress}
 				class:passive={!value}
 				class="range__track"
 				class:light={theme === 'light'}
@@ -242,20 +269,20 @@
 				<div class="strips">
 					{#each strips as strip, i}
 						{#if i > 1 && container}
-							<div style={`left: ${getLeft(i)}px`} class="strip" />
+							<div style={`left: ${getLeft(i)}px`} class="strip"></div>
 						{/if}
 					{/each}
 				</div>
 			</div>
 
-			<div class="range__track--highlighted" bind:this={progressBar} />
+			<div class="range__track--highlighted" bind:this={progressBar}></div>
 
 			<div bind:this={thumb} class="range_thumb_container">
-				<div class="range__thumb" on:touchstart={onDragStart} on:mousedown={onDragStart}>
+				<div class="range__thumb" ontouchstart={onDragStart} onmousedown={onDragStart}>
 					{#if thumbOpened}
 						<div class="range__tooltip" bind:this={input}>
 							<input
-								on:blur={() => {
+								onblur={() => {
 									if (!value) {
 										thumbOpened = false;
 									}
@@ -264,10 +291,10 @@
 								{min}
 								{max}
 								bind:value
-								on:input={(e) => {
+								oninput={(e) => {
 									value = clampValue(e.target.value);
 								}}
-								on:change={(e) => {
+								onchange={(e) => {
 									value = clampValue(e.target.value);
 								}}
 								class="tool-input"
@@ -279,10 +306,10 @@
 				{#if value}
 					<button
 						class="close-range"
-						on:touchstart={() => setValue(null)}
-						on:click|preventDefault|stopPropagation={() => {
+						ontouchstart={() => setValue(null)}
+						onclick={stopPropagation(preventDefault(() => {
 							setValue(null);
-						}}
+						}))}
 					>
 						<span>x</span>
 					</button>

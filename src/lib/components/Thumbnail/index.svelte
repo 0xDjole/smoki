@@ -1,32 +1,45 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { STORAGE_URL } from '../../utils/env';
 	import SvgIcon from '../SvgIcon.svelte';
 	import NoImage from '../../utils/icons/no-image.svg?raw';
 
-	export let url = null;
-	export let isPrefix = true;
-	export let alt = 'thumbnail';
-	export let size = 'md';
+	interface Props {
+		url?: any;
+		isPrefix?: boolean;
+		alt?: string;
+		size?: string;
+	}
 
-	$: src = isPrefix ? `${STORAGE_URL}/${url}` : url;
-	let imageValid = true;
+	let {
+		url = null,
+		isPrefix = true,
+		alt = 'thumbnail',
+		size = 'md'
+	}: Props = $props();
+
+	let src = $derived(isPrefix ? `${STORAGE_URL}/${url}` : url);
+	let imageValid = $state(true);
 
 	function handleImageError() {
 		imageValid = false;
 	}
 
-	$: if (src) {
-		imageValid = true; // Reset the validation state
-		const img = new Image();
-		img.src = src;
-		img.onload = () => (imageValid = true);
-		img.onerror = handleImageError;
-	}
+	run(() => {
+		if (src) {
+			imageValid = true; // Reset the validation state
+			const img = new Image();
+			img.src = src;
+			img.onload = () => (imageValid = true);
+			img.onerror = handleImageError;
+		}
+	});
 </script>
 
 <div class="thumbnail" class:sm={size === 'sm'} class:md={size === 'md'}>
 	{#if imageValid}
-		<img class="image" {alt} {src} on:error={handleImageError} />
+		<img class="image" {alt} {src} onerror={handleImageError} />
 	{:else}
 		<SvgIcon data={NoImage} color={'var(--secondary-text-color)'} />
 	{/if}

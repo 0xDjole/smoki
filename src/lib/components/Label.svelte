@@ -1,19 +1,32 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import Thumbnail from './Thumbnail/index.svelte';
 	import SvgIcon from './SvgIcon.svelte';
 
 	import UploadSvg from '../utils/icons/upload.svg?raw';
 	import linkToFile from '../utils/helpers/linkToFile';
 	import { STORAGE_URL } from '../utils/env';
-	export let label = '';
-	export let labelThumbnail = null;
-	export let isRequired;
-	export let errors = [];
-	export let t;
-	export let size = 'sm';
+	interface Props {
+		label?: string;
+		labelThumbnail?: any;
+		isRequired: any;
+		errors?: any;
+		t: any;
+		size?: string;
+	}
 
-	let avatar = null;
-	let loading = true;
+	let {
+		label = '',
+		labelThumbnail = null,
+		isRequired,
+		errors = [],
+		t,
+		size = 'sm'
+	}: Props = $props();
+
+	let avatar = $state(null);
+	let loading = $state(true);
 
 	const parseImageFromUrl = async (url) => {
 		if (url) {
@@ -23,20 +36,24 @@
 		}
 	};
 
-	$: parseImageFromUrl(labelThumbnail?.url);
+	run(() => {
+		parseImageFromUrl(labelThumbnail?.url);
+	});
 
-	$: if (labelThumbnail && (labelThumbnail instanceof File || labelThumbnail instanceof Blob)) {
-		const reader = new FileReader();
-		reader.readAsDataURL(labelThumbnail);
+	run(() => {
+		if (labelThumbnail && (labelThumbnail instanceof File || labelThumbnail instanceof Blob)) {
+			const reader = new FileReader();
+			reader.readAsDataURL(labelThumbnail);
 
-		reader.onload = (e) => {
-			avatar = e.target.result;
-			loading = false;
-		};
-		reader.onerror = (error) => {
-			console.error('Error reading file:', error);
-		};
-	}
+			reader.onload = (e) => {
+				avatar = e.target.result;
+				loading = false;
+			};
+			reader.onerror = (error) => {
+				console.error('Error reading file:', error);
+			};
+		}
+	});
 </script>
 
 {#if label}

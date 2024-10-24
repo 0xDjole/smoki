@@ -3,17 +3,31 @@
 	import ErrorMessage from '../ErrorMessage.svelte';
 	import 'quill/dist/quill.snow.css';
 
-	export let onChange = (htmlValue) => {};
-	export let placeholder = 'Start typing...';
-	export let value = '';
-	export let errors = [];
-	export let label = '';
-	export let labelThumbnail;
-	export let minLength = 0;
-	export let maxLength = 2000;
-	export let isDisabled = false;
+	interface Props {
+		onChange?: any;
+		placeholder?: string;
+		value?: string;
+		errors?: any;
+		label?: string;
+		labelThumbnail: any;
+		minLength?: number;
+		maxLength?: number;
+		isDisabled?: boolean;
+	}
 
-	let editorContainer;
+	let {
+		onChange = (htmlValue) => {},
+		placeholder = 'Start typing...',
+		value = $bindable(''),
+		errors = [],
+		label = '',
+		labelThumbnail,
+		minLength = 0,
+		maxLength = 2000,
+		isDisabled = false
+	}: Props = $props();
+
+	let editorContainer = $state();
 	let quill;
 
 	onMount(async () => {
@@ -57,7 +71,7 @@
 </script>
 
 <div class="w-full">
-	<div bind:this={editorContainer} class="quill-editor-container" />
+	<div bind:this={editorContainer} class="quill-editor-container"></div>
 	<ErrorMessage {errors} />
 </div>
 

@@ -1,9 +1,7 @@
 <script lang="ts">
 	import Select from '../Select/index.svelte';
-	export let t;
 
-	export let timeZone;
-	export let onChangeTimeZone;
+	let { t, timeZone, onChangeTimeZone } = $props();
 
 	let timeZones = [
 		{ label: 'UTC', value: 'UTC' },

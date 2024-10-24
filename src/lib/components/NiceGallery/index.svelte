@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { onMount, onDestroy } from 'svelte';
 	import Swiper from 'swiper';
 	import { Navigation, Pagination } from 'swiper/modules';
@@ -7,17 +9,21 @@
 	import { STORAGE_URL } from '../../utils/env';
 	import '@fancyapps/ui/dist/fancybox/fancybox.css';
 
-	export let items = [];
-	export let galleryID = 'gallery';
-	export let isOpened = false;
+	interface Props {
+		items?: any;
+		galleryID?: string;
+		isOpened?: boolean;
+	}
+
+	let { items = [], galleryID = 'gallery', isOpened = $bindable(false) }: Props = $props();
 
 	let swiperInstance;
-	let Fancybox;
+	let Fancybox = $state();
 
-	let isFirstSlide = true;
-	let isLastSlide = false;
+	let isFirstSlide = $state(true);
+	let isLastSlide = $state(false);
 
-	$: swiperItems = items
+	let swiperItems = $derived(items
 		.filter((item) => item.settings.position !== -1)
 		.sort((a, b) => a.settings.position - b.settings.position)
 		.map((item) => {
@@ -27,7 +33,7 @@
 				title: item.title || 'No title',
 				isVideo: url?.endsWith('.mp4')
 			};
-		});
+		}));
 
 	function pauseVideo(e, index) {
 		const video = e.target;
@@ -84,9 +90,11 @@
 		if (swiperInstance) swiperInstance.destroy(true, true);
 	});
 
-	$: if (!isOpened && Fancybox) {
-		Fancybox.close(true);
-	}
+	run(() => {
+		if (!isOpened && Fancybox) {
+			Fancybox.close(true);
+		}
+	});
 </script>
 
 <div class="swiper-container">
@@ -110,11 +118,11 @@
 							muted
 							playsinline
 							loop
-							on:touchstart={(e) => pauseVideo(e, index)}
-							on:touchend={(e) => resumeVideo(e, index)}
-							on:click={(e) => togglePlayPause(e, index)}
+							ontouchstart={(e) => pauseVideo(e, index)}
+							ontouchend={(e) => resumeVideo(e, index)}
+							onclick={(e) => togglePlayPause(e, index)}
 							loading="lazy"
-						/>
+						></video>
 					{:else}
 						<img
 							class="slide-img"
@@ -128,9 +136,9 @@
 			</div>
 		{/each}
 	</div>
-	<div class="swiper-pagination" />
-	<div class="btn swiper-button-prev" class:hidden-btn={isFirstSlide} />
-	<div class="btn swiper-button-next" class:hidden-btn={isLastSlide} />
+	<div class="swiper-pagination"></div>
+	<div class="btn swiper-button-prev" class:hidden-btn={isFirstSlide}></div>
+	<div class="btn swiper-button-next" class:hidden-btn={isLastSlide}></div>
 </div>
 
 <style type="text/postcss">

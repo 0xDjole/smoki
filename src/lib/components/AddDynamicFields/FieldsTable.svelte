@@ -1,15 +1,28 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
+
 	import { dndzone } from 'svelte-dnd-action';
 	import Close from '../../utils/icons/close.svg?raw';
 	import SvgIcon from '../SvgIcon.svelte';
 	import Label from '../Label.svelte';
 
-	export let label = 'Custom fields';
-	export let fields;
-	export let field;
-	export let autofillOptions = [];
-	export let defaultField;
-	export let isAddModalOpen = false;
+	interface Props {
+		label?: string;
+		fields: any;
+		field: any;
+		autofillOptions?: any;
+		defaultField: any;
+		isAddModalOpen?: boolean;
+	}
+
+	let {
+		label = 'Custom fields',
+		fields = $bindable(),
+		field = $bindable(),
+		autofillOptions = [],
+		defaultField,
+		isAddModalOpen = $bindable(false)
+	}: Props = $props();
 
 	const addField = () => {
 		isAddModalOpen = true;
@@ -36,7 +49,7 @@
 <div>
 	<div class="field-body">
 		<Label {label} errors={[]} />
-		<button on:click|preventDefault={addField} class="add-field-button">Add field</button>
+		<button onclick={preventDefault(addField)} class="add-field-button">Add field</button>
 	</div>
 	<div class="custom-field-body">
 		<div class="field-header">
@@ -48,8 +61,8 @@
 		<div
 			class="fields"
 			use:dndzone={{ items: fields }}
-			on:consider={handleDndConsider}
-			on:finalize={handleDndFinalize}
+			onconsider={handleDndConsider}
+			onfinalize={handleDndFinalize}
 		>
 			{#if fields.length}
 				{#each fields as field, index (field.id)}
@@ -59,8 +72,8 @@
 						<div class="field">{field.isRequired}</div>
 						<div class="field last-item">
 							{field.isFilter}
-							<div class="remove-button" on:click|preventDefault={() => editField(index)}>Edit</div>
-							<div class="remove-button" on:click|preventDefault={() => removeField(index)}>
+							<div class="remove-button" onclick={preventDefault(() => editField(index))}>Edit</div>
+							<div class="remove-button" onclick={preventDefault(() => removeField(index))}>
 								<SvgIcon data={Close} size={'30px'} color={'white'} />
 							</div>
 						</div>

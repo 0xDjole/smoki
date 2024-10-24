@@ -1,14 +1,30 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
+
 	import Label from '../Label.svelte';
-	export let values = [];
-	export let options = [];
-	export let label = '';
-	export let disabled = false;
-	export let labelThumbnail = null;
-	export let errors = [];
-	export let position = 'vertical';
-	export let t;
-	export let isRequired = false;
+	interface Props {
+		values?: any;
+		options?: any;
+		label?: string;
+		disabled?: boolean;
+		labelThumbnail?: any;
+		errors?: any;
+		position?: string;
+		t: any;
+		isRequired?: boolean;
+	}
+
+	let {
+		values = $bindable([]),
+		options = [],
+		label = '',
+		disabled = false,
+		labelThumbnail = null,
+		errors = [],
+		position = 'vertical',
+		t,
+		isRequired = false
+	}: Props = $props();
 
 	const selectOption = (optionValue) => {
 		if (!disabled) {
@@ -32,7 +48,7 @@
 	>
 		{#each options as option}
 			<div
-				on:click|preventDefault={() => selectOption(option.value)}
+				onclick={preventDefault(() => selectOption(option.value))}
 				class:selected={values && values.some((value) => value.toString() === option.value)}
 				class="option"
 			>

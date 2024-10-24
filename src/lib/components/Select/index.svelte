@@ -1,24 +1,39 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
+
 	import DropDownIcon from '../../utils/icons/dropdown.svg?raw';
 	import SvgIcon from '../SvgIcon.svelte';
 
-	export let value: string | number | boolean;
-	export let defaultOption;
-	export let options = [];
-	export let label = '';
-	export let labelThumbnail = null;
-	export let t;
 
-	export let errors = [];
-	export let onChange = (value) => {};
+	interface Props {
+		value: string | number | boolean;
+		defaultOption: any;
+		options?: any;
+		label?: string;
+		labelThumbnail?: any;
+		t: any;
+		errors?: any;
+		onChange?: any;
+	}
 
-	let showModal = false;
+	let {
+		value = $bindable(),
+		defaultOption,
+		options = [],
+		label = '',
+		labelThumbnail = null,
+		t,
+		errors = [],
+		onChange = (value) => {}
+	}: Props = $props();
 
-	$: selectedOption = options.find((option) => option.value === value);
+	let showModal = $state(false);
+
+	let selectedOption = $derived(options.find((option) => option.value === value));
 </script>
 
 <div class="select">
-	<button class="select-button" on:click|preventDefault={() => (showModal = !showModal)}>
+	<button class="select-button" onclick={preventDefault(() => (showModal = !showModal))}>
 		<span class="button-text">{$t(selectedOption?.label || 'choose')}</span>
 		<div class="dropdown-svg">
 			<SvgIcon
@@ -35,11 +50,11 @@
 				<div
 					class="item"
 					class:selected={option.value === value}
-					on:click|preventDefault={() => {
+					onclick={preventDefault(() => {
 						showModal = false;
 						value = option.value;
 						onChange(option.value);
-					}}
+					})}
 				>
 					{option.label}
 				</div>

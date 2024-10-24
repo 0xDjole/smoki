@@ -1,59 +1,49 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { onMount, onDestroy } from 'svelte';
-	export let open = false;
-	export let duration = 0.8;
-	export let placement = 'right';
-	export let size = null;
-	export let zIndex = -1;
-	export let height = null;
-	export let width = null;
-	export let left = null;
-	export let targetElement = null;
-	export let bindHeightToTarget = false;
-
-	let w = '100%';
-
-	let l = '0';
-
-	let h = '100%';
-
-	let percentageX = 0;
-
-	$: if (left) {
-		l = left;
+	interface Props {
+		open?: boolean;
+		duration?: number;
+		placement?: string;
+		size?: any;
+		zIndex?: any;
+		height?: any;
+		width?: any;
+		left?: any;
+		targetElement?: any;
+		bindHeightToTarget?: boolean;
+		children?: import('svelte').Snippet;
 	}
 
-	$: if (height) {
-		h = height;
-	} else if (drawerTargetTop) {
-		if (bindHeightToTarget) {
-			h = `${targetElement.offsetHeight}px`;
-		} else {
-			h = `calc(100% - ${drawerTargetTop}px)`;
-		}
-	} else {
-		h = `100%`;
-	}
+	let {
+		open = false,
+		duration = 0.8,
+		placement = 'right',
+		size = null,
+		zIndex = -1,
+		height = null,
+		width = null,
+		left = null,
+		targetElement = null,
+		bindHeightToTarget = false,
+		children
+	}: Props = $props();
 
-	$: if (width) {
-		w = width;
-	}
+	let w = $state('100%');
 
-	$: transform =
-		placement === 'right'
-			? `transform: translate(${percentageX}%, 0);`
-			: `transform: translate(0, ${percentageX}%);`;
+	let l = $state('0');
 
-	$: style = `--duration: ${duration}s; --size: ${size}; z-index: ${zIndex};
-	 ${transform} height: ${h}; width: ${w}; left: ${l}px; top: ${drawerTargetTop}px`;
+	let h = $state('100%');
 
-	$: if (open) {
-		percentageX = 0;
-	} else {
-		percentageX = 100;
-	}
+	let percentageX = $state(0);
 
-	$: drawerTargetTop = targetElement?.getBoundingClientRect()?.top || 0;
+
+
+
+
+
+
 
 	function updatePosition() {
 		if (typeof window !== 'undefined' && targetElement) {
@@ -73,10 +63,50 @@
 			window.removeEventListener('resize', updatePosition);
 		}
 	});
+	run(() => {
+		if (left) {
+			l = left;
+		}
+	});
+	let drawerTargetTop;
+	run(() => {
+		drawerTargetTop = targetElement?.getBoundingClientRect()?.top || 0;
+	});
+	run(() => {
+		if (height) {
+			h = height;
+		} else if (drawerTargetTop) {
+			if (bindHeightToTarget) {
+				h = `${targetElement.offsetHeight}px`;
+			} else {
+				h = `calc(100% - ${drawerTargetTop}px)`;
+			}
+		} else {
+			h = `100%`;
+		}
+	});
+	run(() => {
+		if (width) {
+			w = width;
+		}
+	});
+	run(() => {
+		if (open) {
+			percentageX = 0;
+		} else {
+			percentageX = 100;
+		}
+	});
+	let transform =
+		$derived(placement === 'right'
+			? `transform: translate(${percentageX}%, 0);`
+			: `transform: translate(0, ${percentageX}%);`);
+	let style = $derived(`--duration: ${duration}s; --size: ${size}; z-index: ${zIndex};
+	 ${transform} height: ${h}; width: ${w}; left: ${l}px; top: ${drawerTargetTop}px`);
 </script>
 
 <div class="drawer" {style} {placement}>
-	<slot />
+	{@render children?.()}
 </div>
 
 <style type="text/postcss">

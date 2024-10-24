@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run, preventDefault } from 'svelte/legacy';
+
 	import SvgIcon from './SvgIcon.svelte';
 	import UploadSvg from '../utils/icons/upload.svg?raw';
 	import Loader from './Loader.svelte';
@@ -7,18 +9,31 @@
 	import Switch from '../components/Switch/index.svelte';
 	import { STORAGE_URL } from '../utils/env';
 
-	export let media = null;
-	export let label = null;
-	export let alt = 'Alt';
-	export let t;
-	export let isRequired = false;
-	export let showSettings = false;
-	export let onChangeThumbnail = (isThumbnail) => {};
-	export let onChangeShown = (isShown) => {};
+	interface Props {
+		media?: any;
+		label?: any;
+		alt?: string;
+		t: any;
+		isRequired?: boolean;
+		showSettings?: boolean;
+		onChangeThumbnail?: any;
+		onChangeShown?: any;
+	}
 
-	let fileInput;
-	let mediaSource;
-	let loading = false;
+	let {
+		media = $bindable(null),
+		label = null,
+		alt = 'Alt',
+		t,
+		isRequired = false,
+		showSettings = false,
+		onChangeThumbnail = (isThumbnail) => {},
+		onChangeShown = (isShown) => {}
+	}: Props = $props();
+
+	let fileInput = $state();
+	let mediaSource = $state();
+	let loading = $state(false);
 	let isVideo = false;
 
 	const generateMediaPreview = (media) => {
@@ -66,12 +81,16 @@
 		}
 	};
 
-	$: !media?.file &&
-		media?.resolutions &&
-		media?.resolutions['original'] &&
-		parseImageFromUrl(media?.resolutions['original']?.url);
+	run(() => {
+		!media?.file &&
+			media?.resolutions &&
+			media?.resolutions['original'] &&
+			parseImageFromUrl(media?.resolutions['original']?.url);
+	});
 
-	$: generateMediaPreview(media?.file);
+	run(() => {
+		generateMediaPreview(media?.file);
+	});
 
 	const onFileSelected = (e) => {
 		loading = true;
@@ -91,7 +110,7 @@
 
 <div
 	class="avatar-uploader"
-	on:click|preventDefault={() => fileInput.click()}
+	onclick={preventDefault(() => fileInput.click())}
 	aria-role="button"
 	aria-label="Media uploader"
 >
@@ -127,7 +146,7 @@
 	style="display:none"
 	type="file"
 	accept=".jpg, .jpeg, .png, .mp4"
-	on:change={onFileSelected}
+	onchange={onFileSelected}
 	bind:this={fileInput}
 	aria-label="File input"
 />

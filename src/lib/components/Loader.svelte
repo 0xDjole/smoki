@@ -1,9 +1,13 @@
 <script lang="ts">
-	export let show = true;
+	interface Props {
+		show?: boolean;
+	}
+
+	let { show = true }: Props = $props();
 </script>
 
 {#if show}
-	<div class="simple-spinner" />
+	<div class="simple-spinner"></div>
 {/if}
 
 <style>

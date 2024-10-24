@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import { onMount, tick } from 'svelte';
 
 	const easing = {
@@ -15,39 +17,29 @@
 		count: number;
 		sensitivity: number;
 	}
-	export let options: Options;
-	export let onChange;
-	export let selectedValue = null;
+	interface Props {
+		options: Options;
+		onChange: any;
+		selectedValue?: any;
+	}
+
+	let { options, onChange, selectedValue = null }: Props = $props();
 
 	let isScrolling = false;
-	let el;
-	let source;
-	let itemHeight;
-	let itemAngle;
-	let radius;
-	let sourceLength;
-	let selectOptionEl;
-	let highLightEl;
-	let highLightListEl;
+	let el = $state();
+	let source = $state();
+	let itemHeight = $state();
+	let itemAngle = $state();
+	let radius = $state();
+	let sourceLength = $state();
+	let selectOptionEl = $state();
+	let highLightEl = $state();
+	let highLightListEl = $state();
 	let selected;
-	let value;
+	let value = $state();
 	let halfCount = options.count / 2;
 
-	$: {
-		let concatSource = [].concat(options.source);
-		while (concatSource.length < halfCount) {
-			concatSource = concatSource.concat(options.source);
-		}
-		source = concatSource;
-		sourceLength = source.length;
-	}
 
-	$: if (selectedValue !== null) {
-		value = selectedValue;
-		selectValue();
-	} else {
-		value = options.source[0].value;
-	}
 
 	let a = options.sensitivity * 10;
 
@@ -72,7 +64,7 @@
 		highlightList: null
 	};
 
-	let loadedCircleItems = false;
+	let loadedCircleItems = $state(false);
 
 	onMount(() => {
 		elems.el = el;
@@ -92,8 +84,6 @@
 		elems.highlight.style.lineHeight = itemHeight + 'px';
 	});
 
-	$: source && loadItems();
-	$: loadedCircleItems && selectValue();
 
 	const loadItems = async () => {
 		await tick();
@@ -262,14 +252,36 @@
 		}
 		throw new Error(`can not select value: ${value}, ${value} match nothing in current source`);
 	};
+	run(() => {
+		let concatSource = [].concat(options.source);
+		while (concatSource.length < halfCount) {
+			concatSource = concatSource.concat(options.source);
+		}
+		source = concatSource;
+		sourceLength = source.length;
+	});
+	run(() => {
+		if (selectedValue !== null) {
+			value = selectedValue;
+			selectValue();
+		} else {
+			value = options.source[0].value;
+		}
+	});
+	run(() => {
+		source && loadItems();
+	});
+	run(() => {
+		loadedCircleItems && selectValue();
+	});
 </script>
 
 <div
-	on:mousedown={touchStart}
-	on:touchstart={touchStart}
-	on:touchend={touchEnd}
-	on:mouseup={touchEnd}
-	on:mouseleave={touchEnd}
+	onmousedown={touchStart}
+	ontouchstart={touchStart}
+	ontouchend={touchEnd}
+	onmouseup={touchEnd}
+	onmouseleave={touchEnd}
 	id="date-selector"
 	bind:this={el}
 >

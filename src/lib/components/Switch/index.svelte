@@ -1,22 +1,35 @@
 <script lang="ts">
 	import Label from '../Label.svelte';
-	export let value = false;
-	export let color = '#2196F3';
 
-	export let label = '';
-	export let labelThumbnail = null;
-	export let errors = [];
-	export let t;
-	export let isRequired = false;
-	export let onChange = (isChecked) => {};
+	interface Props {
+		value?: boolean;
+		color?: string;
+		label?: string;
+		labelThumbnail?: any;
+		errors?: any;
+		t: any;
+		isRequired?: boolean;
+		onChange?: any;
+	}
+
+	let {
+		value = $bindable(false),
+		color = '#2196F3',
+		label = '',
+		labelThumbnail = null,
+		errors = [],
+		t,
+		isRequired = false,
+		onChange = (isChecked) => {}
+	}: Props = $props();
 </script>
 
 <div class="switch-container">
 	<Label {isRequired} {t} {errors} {label} {labelThumbnail} />
 
 	<label class="switch">
-		<input type="checkbox" bind:checked={value} on:change={(e) => onChange(e.target.checked)} />
-		<span class="slider" />
+		<input type="checkbox" bind:checked={value} onchange={(e) => onChange(e.target.checked)} />
+		<span class="slider"></span>
 	</label>
 </div>
 

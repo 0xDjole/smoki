@@ -1,15 +1,28 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
+
 	import { createEventDispatcher } from 'svelte';
 	import Modal from '../Modal/index.svelte';
 	import TimePicker from '../TimePicker/index.svelte';
 	import formatter from '../../utils/helpers/formatter';
 
-	export let confirmText = 'Confirm';
-	export let label = 'Add Duration';
-	export let value;
-	export let onConfirm = () => {};
+	interface Props {
+		confirmText?: string;
+		label?: string;
+		value: any;
+		onConfirm?: any;
+		children?: import('svelte').Snippet;
+	}
 
-	let showModal = false;
+	let {
+		confirmText = 'Confirm',
+		label = 'Add Duration',
+		value = $bindable(),
+		onConfirm = () => {},
+		children
+	}: Props = $props();
+
+	let showModal = $state(false);
 	let hours = new Array(24).fill(null).map((item, index) => ({
 		text: `${index}h`,
 		value: index
@@ -25,9 +38,9 @@
 		value: index
 	}));
 
-	let hour = 0;
-	let minute = 0;
-	let day = 0;
+	let hour = $state(0);
+	let minute = $state(0);
+	let day = $state(0);
 
 	const onTimePickerSelect = (value, type) => {
 		if (type === 'hour') {
@@ -49,10 +62,10 @@
 		onConfirm();
 	};
 
-	$: parsedValue = formatter.duration(value);
+	let parsedValue = $derived(formatter.duration(value));
 </script>
 
-<button on:click|preventDefault={() => (showModal = true)}>{label} {parsedValue}</button>
+<button onclick={preventDefault(() => (showModal = true))}>{label} {parsedValue}</button>
 
 <Modal
 	title={`Pick duration`}
@@ -85,7 +98,7 @@
 	</div>
 
 	<div class="p-3">
-		<slot />
+		{@render children?.()}
 	</div>
 </Modal>
 

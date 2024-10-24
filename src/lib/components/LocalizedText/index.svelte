@@ -7,13 +7,25 @@
 	import RichText from '../RichText/index.svelte';
 	import ErrorMessage from '../ErrorMessage.svelte';
 
-	export let label = '';
-	export let type = 'text';
-	export let labels = {};
-	export let errors = [];
-	export let placeholder = 'Please enter label';
-	export let t;
-	export let isRequired = false;
+	interface Props {
+		label?: string;
+		type?: string;
+		labels?: any;
+		errors?: any;
+		placeholder?: string;
+		t: any;
+		isRequired?: boolean;
+	}
+
+	let {
+		label = '',
+		type = 'text',
+		labels = $bindable({}),
+		errors = $bindable([]),
+		placeholder = 'Please enter label',
+		t,
+		isRequired = false
+	}: Props = $props();
 
 	export const languages = [
 		{
@@ -28,7 +40,7 @@
 		}
 	];
 
-	let language = 'en';
+	let language = $state('en');
 
 	const addLabel = () => {
 		errors = [];

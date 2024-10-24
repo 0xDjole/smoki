@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
+
 	import Button from '../Button/index.svelte';
 	import NiceSelect from '../NiceSelect/index.svelte';
 	import Modal from '../Modal/index.svelte';
@@ -8,20 +10,36 @@
 	import Map from '../Map/index.svelte';
 	import Badges from './Badges.svelte';
 
-	export let fields = [];
-	export let fieldConfigs = [];
-	export let locale = 'en';
-	export let label = null;
-	export let t;
-	export let type = 'regular';
-	export let shareData = {
+	interface Props {
+		fields?: any;
+		fieldConfigs?: any;
+		locale?: string;
+		label?: any;
+		t: any;
+		type?: string;
+		shareData?: any;
+		entities?: import('svelte').Snippet<[any]>;
+		custom?: import('svelte').Snippet<[any]>;
+	}
+
+	let {
+		fields = [],
+		fieldConfigs = [],
+		locale = 'en',
+		label = null,
+		t,
+		type = 'regular',
+		shareData = {
 		title: '',
 		text: '',
 		url: ''
-	};
+	},
+		entities,
+		custom
+	}: Props = $props();
 
-	let values = [];
-	let key = '';
+	let values = $state([]);
+	let key = $state('');
 
 	const viewMultipleValues = (field) => {
 		key = field.key;
@@ -64,7 +82,7 @@
 			.map( (field) => ({ field, fieldConfig: fieldConfigs.find((fieldConfig) => fieldConfig.id === field.fieldConfigId) }) ) as { field, fieldConfig }, index}
 			{#if fieldConfig}
 				{#if fieldConfig.type === 'entities'}
-					<slot name="entities" idx={index} value={field.value} {fieldConfig} />
+					{@render entities?.({ idx: index, value: field.value, fieldConfig, })}
 				{:else if fieldConfig.type === 'geo_location'}
 					<Map zoom={17} allowTag={false} value={field.value} />
 				{:else if fieldConfig.type === 'text' && fieldConfig.ui === 'html'}
@@ -81,11 +99,11 @@
 						isDisabled={true}
 					/>
 				{:else if fieldConfig.type === 'custom'}
-					<slot name="custom" idx={index} errors={field.errors} value={field.value} {fieldConfig} />
+					{@render custom?.({ idx: index, errors: field.errors, value: field.value, fieldConfig, })}
 				{:else if fieldConfig.type === 'badge'}{:else if field.value}
 					<div
 						class="field"
-						on:click|preventDefault={() => Array.isArray(field.value) && viewMultipleValues(field)}
+						onclick={preventDefault(() => Array.isArray(field.value) && viewMultipleValues(field))}
 					>
 						<div class="key">{translate(fieldConfig.key, locale)}</div>
 						<div class="value">

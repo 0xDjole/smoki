@@ -1,20 +1,35 @@
 <script lang="ts">
+	import { preventDefault } from 'svelte/legacy';
+
 	import Modal from '../Modal/index.svelte';
 
 	import SvgIcon from '../SvgIcon.svelte';
 	import Label from '../Label.svelte';
 	import DropDownIcon from '../../utils/icons/dropdown.svg?raw';
 
-	export let values = [];
-	export let options = [];
-	export let label = '';
-	export let labelThumbnail = null;
-	export let errors = [];
-	export let t;
-	export let isRequired = false;
-	export let onSelect = (values) => {};
+	interface Props {
+		values?: any;
+		options?: any;
+		label?: string;
+		labelThumbnail?: any;
+		errors?: any;
+		t: any;
+		isRequired?: boolean;
+		onSelect?: any;
+	}
 
-	let showModal = false;
+	let {
+		values = $bindable([]),
+		options = [],
+		label = '',
+		labelThumbnail = null,
+		errors = [],
+		t,
+		isRequired = false,
+		onSelect = (values) => {}
+	}: Props = $props();
+
+	let showModal = $state(false);
 
 	const selectOption = (optionValue) => {
 		const isSelected = values.includes(optionValue);
@@ -30,7 +45,7 @@
 <div>
 	<Label {isRequired} {t} {errors} {label} {labelThumbnail} />
 	<div
-		on:click|preventDefault={() => (showModal = true)}
+		onclick={preventDefault(() => (showModal = true))}
 		class="flex justify-between option bg-secondary border-primary selected"
 	>
 		<span>{values.length ? values.join(', ') : 'Choose'}</span>
@@ -50,7 +65,7 @@
 	<div class="px-3">
 		{#each options as option}
 			<div
-				on:click|preventDefault={() => selectOption(option.value)}
+				onclick={preventDefault(() => selectOption(option.value))}
 				class:selected={values.includes(option.value)}
 				class="option bg-secondary border-primary"
 			>

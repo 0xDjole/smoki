@@ -10,12 +10,27 @@
 	import translate from '../../utils/helpers/translate';
 	import { LocalizedText } from '../..';
 
-	export let label = 'Custom fieldConfigs';
-	export let fieldConfig = null;
-	export let fieldValue = null;
-	export let locale = 'en';
-	export let index = 0;
-	export let t;
+	interface Props {
+		label?: string;
+		fieldConfig?: any;
+		fieldValue?: any;
+		locale?: string;
+		index?: number;
+		t: any;
+		entities?: import('svelte').Snippet<[any]>;
+		custom?: import('svelte').Snippet<[any]>;
+	}
+
+	let {
+		label = 'Custom fieldConfigs',
+		fieldConfig = null,
+		fieldValue = $bindable(null),
+		locale = 'en',
+		index = 0,
+		t,
+		entities,
+		custom
+	}: Props = $props();
 
 	const parseLabel = (label) => {
 		if (label.startsWith('+')) {
@@ -125,10 +140,10 @@
 	{/if}
 
 	{#if fieldConfig.type === 'entities'}
-		<slot name="entities" idx={index} value={fieldValue} {fieldConfig} />
+		{@render entities?.({ idx: index, value: fieldValue, fieldConfig, })}
 	{/if}
 
 	{#if fieldConfig.type === 'custom'}
-		<slot name="custom" idx={index} errors={[]} value={fieldValue} {fieldConfig} />
+		{@render custom?.({ idx: index, errors: [], value: fieldValue, fieldConfig, })}
 	{/if}
 {/if}

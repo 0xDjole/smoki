@@ -2,19 +2,37 @@
 	import ErrorMessage from '../ErrorMessage.svelte';
 	import Label from '../Label.svelte';
 
-	export let kind;
-	export let onChange = (value) => {};
-	export let placeholder;
-	export let accept = '';
-	export let value;
-	export let type = 'text';
-	export let style = '';
-	export let errors = [];
-	export let label = '';
-	export let labelThumbnail;
-	export let t;
-	export let isRequired;
-	export let clearErrorsOnInput = true;
+	interface Props {
+		kind: any;
+		onChange?: any;
+		placeholder: any;
+		accept?: string;
+		value: any;
+		type?: string;
+		style?: string;
+		errors?: any;
+		label?: string;
+		labelThumbnail: any;
+		t: any;
+		isRequired: any;
+		clearErrorsOnInput?: boolean;
+	}
+
+	let {
+		kind,
+		onChange = (value) => {},
+		placeholder,
+		accept = '',
+		value = $bindable(),
+		type = 'text',
+		style = '',
+		errors = $bindable([]),
+		label = '',
+		labelThumbnail,
+		t,
+		isRequired,
+		clearErrorsOnInput = true
+	}: Props = $props();
 </script>
 
 <div class="w-full">
@@ -29,7 +47,7 @@
 			{style}
 			placeholder={$t(placeholder)}
 			{accept}
-			on:input={(e) => {
+			oninput={(e) => {
 				e.preventDefault();
 
 				if (clearErrorsOnInput) {
@@ -50,7 +68,7 @@
 			{style}
 			placeholder={$t(placeholder)}
 			{accept}
-			on:input={(e) => {
+			oninput={(e) => {
 				e.preventDefault();
 
 				if (clearErrorsOnInput) {
@@ -71,7 +89,7 @@
 			{style}
 			placeholder={$t(placeholder)}
 			{accept}
-			on:input={(e) => {
+			oninput={(e) => {
 				e.preventDefault();
 
 				if (clearErrorsOnInput) {

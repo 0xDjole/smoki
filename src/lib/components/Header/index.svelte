@@ -1,17 +1,30 @@
 <script lang="ts">
-	export let showBorder = true;
-	export let sticky = true;
+	interface Props {
+		showBorder?: boolean;
+		sticky?: boolean;
+		left?: import('svelte').Snippet;
+		middle?: import('svelte').Snippet;
+		right?: import('svelte').Snippet;
+	}
+
+	let {
+		showBorder = true,
+		sticky = true,
+		left,
+		middle,
+		right
+	}: Props = $props();
 </script>
 
 <div class:header-sticky={sticky} class:header-border={showBorder} class="header">
 	<div class="header-item left">
-		<slot name="left" />
+		{@render left?.()}
 	</div>
 	<div class="header-item middle">
-		<slot name="middle" />
+		{@render middle?.()}
 	</div>
 	<div class="header-item right">
-		<slot name="right" />
+		{@render right?.()}
 	</div>
 </div>
 

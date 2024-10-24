@@ -1,14 +1,29 @@
 <script lang="ts">
 	import SvgButton from './SvgButton.svelte';
 
-	export let kind = 'base';
-	export let size = 'normal';
-	export let position = '';
-	export let onClick = () => {};
-	export let style = '';
-	export let disabled = false;
-	export let className = '';
-	export let stopPropagation = true;
+	interface Props {
+		kind?: string;
+		size?: string;
+		position?: string;
+		onClick?: any;
+		style?: string;
+		disabled?: boolean;
+		className?: string;
+		stopPropagation?: boolean;
+		children?: import('svelte').Snippet;
+	}
+
+	let {
+		kind = 'base',
+		size = 'normal',
+		position = '',
+		onClick = () => {},
+		style = '',
+		disabled = false,
+		className = '',
+		stopPropagation = true,
+		children
+	}: Props = $props();
 
 	const parseSize = (size) => {
 		if (size === 'large') {
@@ -43,17 +58,20 @@
 	};
 
 	const svgKinds = ['delete', 'add', 'back', 'search', 'user', 'success', 'close', 'preview'];
+
+
+	// <SvgButton {stopPropagation} {size} svgName={kind} {onClick} /> 
 </script>
 
 {#if svgKinds.includes(kind)}
-	<SvgButton {stopPropagation} {size} svgName={kind} {onClick} />
+    <div>SVG</div>
 {:else}
 	<button
 		{disabled}
 		class={`base ${parseSize(size)} ${parseKind(kind)} ${disabled ? 'disabled' : ''} ${className}`}
 		{style}
 		title={disabled ? 'Choose an item and date' : ''}
-		on:click={(e) => {
+		onclick={(e) => {
 			e.preventDefault();
 
 			if (stopPropagation) {
@@ -63,7 +81,7 @@
 			if (onClick) {
 				onClick(e);
 			}
-		}}><slot /></button
+		}}>{@render children?.()}</button
 	>
 {/if}
 

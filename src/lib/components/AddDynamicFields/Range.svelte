@@ -1,17 +1,30 @@
 <script lang="ts">
+	import { run } from 'svelte/legacy';
+
 	import Input from '../Input/index.svelte';
 	import Label from '../Label.svelte';
 
-	export let label = '';
-	export let errors = [];
 
-	export let range = { min: '', max: '' };
 
-	export let t;
-
-	$: if (!range) {
-		range = { min: '', max: '' };
+	interface Props {
+		label?: string;
+		errors?: any;
+		range?: any;
+		t: any;
 	}
+
+	let {
+		label = '',
+		errors = [],
+		range = $bindable({ min: '', max: '' }),
+		t
+	}: Props = $props();
+
+	run(() => {
+		if (!range) {
+			range = { min: '', max: '' };
+		}
+	});
 </script>
 
 <Label {t} {label} {errors} />

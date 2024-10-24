@@ -125,8 +125,8 @@
 
 	.value {
 		@apply flex bg-accent rounded-xl px-3 h-full items-center justify-end rounded-l-none text-white flex-1;
-		white-space: normal; /* Allows text wrapping */
-		overflow: auto; /* Keeps text inside the boundary if it's too long */
+		white-space: normal;
+		overflow: auto;
 	}
 
 	.view-button {
@@ -139,7 +139,7 @@
 
 	.html-text {
 		@apply text-primary;
-		line-height: 1.6; /* Improves readability */
+		line-height: 1.6;
 	}
 
 	:global(.html-text h1) {

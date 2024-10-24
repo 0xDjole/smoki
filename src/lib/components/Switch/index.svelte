@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Label from '../Label.svelte';
 	export let value = false;
 	export let color = '#2196F3';

@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import Close from '../../utils/icons/close.svg?raw';
 	import SvgIcon from '../SvgIcon.svelte';
 	import Button from '../Button/index.svelte';

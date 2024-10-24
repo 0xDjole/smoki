@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	export let showBorder = true;
 	export let sticky = true;
 </script>

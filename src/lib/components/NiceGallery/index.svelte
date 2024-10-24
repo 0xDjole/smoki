@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	import { onMount, onDestroy } from 'svelte';
 	import Swiper from 'swiper';
 	import { Navigation, Pagination } from 'swiper/modules';

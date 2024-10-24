@@ -1,6 +1,5 @@
-<script>
-	export let showBorder = true;
-	export let sticky = true;
+<script>export let showBorder = true;
+export let sticky = true;
 </script>
 
 <div class:header-sticky={sticky} class:header-border={showBorder} class="header">

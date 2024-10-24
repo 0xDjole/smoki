@@ -1,19 +1,14 @@
-<script>
-	import Close from '../../utils/icons/close.svg?raw';
-	import SvgIcon from '../SvgIcon.svelte';
-	import Button from '../Button/index.svelte';
-
-	export let title = '';
-	export let showModal;
-	export let height = 'calc(100vh - 30%)';
-	export let top = '10%';
-	export let zIndex = 1;
-	export let confirmText = null;
-	export let modalStyle = '';
-
-	export let confirm = () => {};
-	export let disabled = false;
-	export let onCancel;
+<script>import Button from '../Button/index.svelte';
+export let title = '';
+export let showModal;
+export let height = 'calc(100vh - 30%)';
+export let top = '10%';
+export let zIndex = 1;
+export let confirmText = null;
+export let modalStyle = '';
+export let confirm = () => { };
+export let disabled = false;
+export let onCancel;
 </script>
 
 {#if showModal}

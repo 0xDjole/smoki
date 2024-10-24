@@ -1,217 +1,178 @@
-<script>
-	import { tick } from 'svelte';
-
-	import Label from '../Label.svelte';
-	import ErrorMessage from '../ErrorMessage.svelte';
-
-	export let min = 0;
-	export let max = 100;
-	export let initialValue = 0;
-	export let id = null;
-	export let value = typeof initialValue === 'string' ? parseInt(initialValue) : initialValue;
-	export let theme = null;
-
-	export let label = '';
-	export let labelThumbnail;
-
-	export let t;
-	export let errors = [];
-	export let isRequired = false;
-
-	export let onChange = (value) => {};
-
-	let thumbOpened = false;
-
-	let container = null;
-	let thumb = null;
-	let progressBar = null;
-	let element = null;
-
-	let elementX = null;
-	let currentThumb = null;
-	let keydownAcceleration = 0;
-	let accelerationTimer = null;
-
-	let input = null;
-
-	function resizeWindow() {
-		elementX = element.getBoundingClientRect().left;
-	}
-
-	let blockChange = false;
-	function setValue(val) {
-		if (!blockChange) {
-			if (!val) {
-				blockChange = true;
-
-				setTimeout(() => {
-					blockChange = false;
-				}, 100);
-			}
-
-			if (input && val) {
-				if (val.toString().length === 1) {
-					input.style.width = `50px`;
-				} else if (val.toString().length === 2) {
-					input.style.width = `60px`;
-				} else {
-					input.style.width = `70px`;
-				}
-			}
-
-			if (!val) {
-				thumbOpened = false;
-			}
-
-			value = val;
-			errors = [];
-
-			onChange(value);
-		}
-	}
-
-	function onTrackEvent(e) {
-		// Update value immediately before beginning drag
-		updateValueOnEvent(e);
-		onDragStart(e);
-	}
-
-	function onDragStart(e) {
-		// If mouse event add a pointer events shield
-		currentThumb = thumb;
-	}
-
-	function onDragEnd(e) {
-		// If using mouse - remove pointer event shield
-		if (e.type === 'mouseup') {
-			// Needed to check whether thumb and mouse overlap after shield removed
-		}
-		currentThumb = null;
-	}
-
-	// Accessible keypress handling
-	function onKeyPress(e) {
-		// Max out at +/- 10 to value per event (50 events / 5)
-		// 100 below is to increase the amount of events required to reach max velocity
-		if (keydownAcceleration < 50) keydownAcceleration++;
-		let throttled = Math.ceil(keydownAcceleration / 5);
-
-		if (e.key === 'ArrowUp' || e.key === 'ArrowRight') {
-			if (value + throttled > max || value >= max) {
-				setValue(max);
-			} else {
-				setValue(value + throttled);
-			}
-		}
-		if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') {
-			if (value - throttled < min || value <= min) {
-				setValue(min);
-			} else {
-				setValue(value - throttled);
-			}
-		}
-
-		// Reset acceleration after 100ms of no events
-		clearTimeout(accelerationTimer);
-		accelerationTimer = setTimeout(() => (keydownAcceleration = 1), 100);
-	}
-
-	function calculateNewValue(clientX) {
-		let delta = clientX - (elementX + 10);
-
-		let percent = (delta * 100) / (container.clientWidth - 10);
-
-		percent = percent < 0 ? 0 : percent > 100 ? 100 : percent;
-
-		setValue(parseInt((percent * (max - min)) / 100) + min);
-	}
-
-	// Handles both dragging of touch/mouse as well as simple one-off click/touches
-	function updateValueOnEvent(e) {
-		// touchstart && mousedown are one-off updates, otherwise expect a currentPointer node
-		if (!currentThumb && e.type !== 'touchstart' && e.type !== 'mousedown') return false;
-
-		if (e.stopPropagation) e.stopPropagation();
-		if (e.preventDefault) e.preventDefault();
-
-		// Get client's x cord either touch or mouse
-		const clientX =
-			e.type === 'touchmove' || e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
-
-		calculateNewValue(clientX);
-	}
-
-	// React to left position of element relative to window
-	$: if (element) elementX = element.getBoundingClientRect().left;
-
-	// Set a class based on if dragging
-
-	const getPercent = (value, min, max) => {
-		if (value <= min) {
-			return 0;
-		}
-
-		if (value >= max) {
-			return 100;
-		}
-
-		return ((value - min) * 100) / (max - min);
-	};
-
-	// Update progressbar and thumb styles to represent value
-	$: if (progressBar && thumb) {
-		let percent = getPercent(value, min, max);
-		let offsetLeft = (container.clientWidth - 10) * (percent / 100) + 5;
-
-		// Update thumb position + active range track width
-		thumb.style.left = `${offsetLeft}px`;
-		progressBar.style.width = `${offsetLeft}px`;
-	}
-
-	const getLeft = (value) => {
-		let percent = getPercent(value, min, max);
-		let offsetLeft = (container.clientWidth - 10) * (percent / 100) + 10;
-
-		return offsetLeft;
-	};
-
-	$: if (value && element) {
-		tick().then(() => {
-			const elementRect = element.getBoundingClientRect();
-			const desiredOffset = 50;
-			const scrollTarget =
-				window.scrollY +
-				elementRect.top -
-				(window.innerHeight - elementRect.height) / 2 +
-				desiredOffset;
-
-			window.scrollTo({
-				top: scrollTarget,
-				behavior: 'smooth'
-			});
-		});
-	}
-
-	let strips = max <= 30 ? Array.from({ length: max }, (_, i) => i + 1) : [];
-
-	function clampValue(val) {
-		let numericValue = parseInt(val, 10);
-		if (isNaN(numericValue)) {
-			return '';
-		}
-
-		if (numericValue < min) {
-			return min;
-		}
-		if (numericValue > max) {
-			return max;
-		}
-		return numericValue;
-	}
-
-	$: if (value) {
-		thumbOpened = true;
-	}
+<script>import { tick } from 'svelte';
+import Label from '../Label.svelte';
+import ErrorMessage from '../ErrorMessage.svelte';
+export let min = 0;
+export let max = 100;
+export let initialValue = 0;
+export let id = null;
+export let value = typeof initialValue === 'string' ? parseInt(initialValue) : initialValue;
+export let theme = null;
+export let label = '';
+export let labelThumbnail;
+export let t;
+export let errors = [];
+export let isRequired = false;
+export let onChange = (value) => { };
+let thumbOpened = false;
+let container = null;
+let thumb = null;
+let progressBar = null;
+let element = null;
+let elementX = null;
+let currentThumb = null;
+let keydownAcceleration = 0;
+let accelerationTimer = null;
+let input = null;
+function resizeWindow() {
+    elementX = element.getBoundingClientRect().left;
+}
+let blockChange = false;
+function setValue(val) {
+    if (!blockChange) {
+        if (!val) {
+            blockChange = true;
+            setTimeout(() => {
+                blockChange = false;
+            }, 100);
+        }
+        if (input && val) {
+            if (val.toString().length === 1) {
+                input.style.width = `50px`;
+            }
+            else if (val.toString().length === 2) {
+                input.style.width = `60px`;
+            }
+            else {
+                input.style.width = `70px`;
+            }
+        }
+        if (!val) {
+            thumbOpened = false;
+        }
+        value = val;
+        errors = [];
+        onChange(value);
+    }
+}
+function onTrackEvent(e) {
+    // Update value immediately before beginning drag
+    updateValueOnEvent(e);
+    onDragStart(e);
+}
+function onDragStart(e) {
+    // If mouse event add a pointer events shield
+    currentThumb = thumb;
+}
+function onDragEnd(e) {
+    // If using mouse - remove pointer event shield
+    if (e.type === 'mouseup') {
+        // Needed to check whether thumb and mouse overlap after shield removed
+    }
+    currentThumb = null;
+}
+// Accessible keypress handling
+function onKeyPress(e) {
+    // Max out at +/- 10 to value per event (50 events / 5)
+    // 100 below is to increase the amount of events required to reach max velocity
+    if (keydownAcceleration < 50)
+        keydownAcceleration++;
+    let throttled = Math.ceil(keydownAcceleration / 5);
+    if (e.key === 'ArrowUp' || e.key === 'ArrowRight') {
+        if (value + throttled > max || value >= max) {
+            setValue(max);
+        }
+        else {
+            setValue(value + throttled);
+        }
+    }
+    if (e.key === 'ArrowDown' || e.key === 'ArrowLeft') {
+        if (value - throttled < min || value <= min) {
+            setValue(min);
+        }
+        else {
+            setValue(value - throttled);
+        }
+    }
+    // Reset acceleration after 100ms of no events
+    clearTimeout(accelerationTimer);
+    accelerationTimer = setTimeout(() => (keydownAcceleration = 1), 100);
+}
+function calculateNewValue(clientX) {
+    let delta = clientX - (elementX + 10);
+    let percent = (delta * 100) / (container.clientWidth - 10);
+    percent = percent < 0 ? 0 : percent > 100 ? 100 : percent;
+    setValue(parseInt((percent * (max - min)) / 100) + min);
+}
+// Handles both dragging of touch/mouse as well as simple one-off click/touches
+function updateValueOnEvent(e) {
+    // touchstart && mousedown are one-off updates, otherwise expect a currentPointer node
+    if (!currentThumb && e.type !== 'touchstart' && e.type !== 'mousedown')
+        return false;
+    if (e.stopPropagation)
+        e.stopPropagation();
+    if (e.preventDefault)
+        e.preventDefault();
+    // Get client's x cord either touch or mouse
+    const clientX = e.type === 'touchmove' || e.type === 'touchstart' ? e.touches[0].clientX : e.clientX;
+    calculateNewValue(clientX);
+}
+// React to left position of element relative to window
+$: if (element)
+    elementX = element.getBoundingClientRect().left;
+// Set a class based on if dragging
+const getPercent = (value, min, max) => {
+    if (value <= min) {
+        return 0;
+    }
+    if (value >= max) {
+        return 100;
+    }
+    return ((value - min) * 100) / (max - min);
+};
+// Update progressbar and thumb styles to represent value
+$: if (progressBar && thumb) {
+    let percent = getPercent(value, min, max);
+    let offsetLeft = (container.clientWidth - 10) * (percent / 100) + 5;
+    // Update thumb position + active range track width
+    thumb.style.left = `${offsetLeft}px`;
+    progressBar.style.width = `${offsetLeft}px`;
+}
+const getLeft = (value) => {
+    let percent = getPercent(value, min, max);
+    let offsetLeft = (container.clientWidth - 10) * (percent / 100) + 10;
+    return offsetLeft;
+};
+$: if (value && element) {
+    tick().then(() => {
+        const elementRect = element.getBoundingClientRect();
+        const desiredOffset = 50;
+        const scrollTarget = window.scrollY +
+            elementRect.top -
+            (window.innerHeight - elementRect.height) / 2 +
+            desiredOffset;
+        window.scrollTo({
+            top: scrollTarget,
+            behavior: 'smooth'
+        });
+    });
+}
+let strips = max <= 30 ? Array.from({ length: max }, (_, i) => i + 1) : [];
+function clampValue(val) {
+    let numericValue = parseInt(val, 10);
+    if (isNaN(numericValue)) {
+        return '';
+    }
+    if (numericValue < min) {
+        return min;
+    }
+    if (numericValue > max) {
+        return max;
+    }
+    return numericValue;
+}
+$: if (value) {
+    thumbOpened = true;
+}
 </script>
 
 <svelte:window

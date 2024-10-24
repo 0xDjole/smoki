@@ -1,14 +1,12 @@
-<script>
-	import Label from '../Label.svelte';
-	export let value = false;
-	export let color = '#2196F3';
-
-	export let label = '';
-	export let labelThumbnail = null;
-	export let errors = [];
-	export let t;
-	export let isRequired = false;
-	export let onChange = (isChecked) => {};
+<script>import Label from '../Label.svelte';
+export let value = false;
+export let color = '#2196F3';
+export let label = '';
+export let labelThumbnail = null;
+export let errors = [];
+export let t;
+export let isRequired = false;
+export let onChange = (isChecked) => { };
 </script>
 
 <div class="switch-container">

@@ -61,7 +61,7 @@
 </script>
 
 {#if svgKinds.includes(kind)}
-	<SvgButton {stopPropagation} {size} svgName={kind} {onClick} />
+	<SvgButton {stopPropagation} {size} svgName={kind} {onClick} {position} />
 {:else}
 	<button
 		{disabled}

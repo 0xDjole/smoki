@@ -6,7 +6,7 @@
 	import SvgIcon from '../SvgIcon.svelte';
 	import Great from '../../utils/icons/great.svg?raw';
 	import Less from '../../utils/icons/less.svg?raw';
-	import TimeZone from './TimeZone/index.svelte';
+	import TimeZone from './TimeZone.svelte';
 
 	import formatter from '../../utils/helpers/formatter';
 

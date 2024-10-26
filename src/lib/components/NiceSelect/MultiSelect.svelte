@@ -20,7 +20,7 @@
 		label = '',
 		disabled = false,
 		labelThumbnail = null,
-		errors = [],
+		errors = $bindable([]),
 		position = 'vertical',
 		t,
 		isRequired = false

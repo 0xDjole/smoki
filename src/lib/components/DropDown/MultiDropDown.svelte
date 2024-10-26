@@ -23,7 +23,7 @@
 		options = [],
 		label = '',
 		labelThumbnail = null,
-		errors = [],
+		errors = $bindable([]),
 		t,
 		isRequired = false,
 		onSelect = (values) => {}

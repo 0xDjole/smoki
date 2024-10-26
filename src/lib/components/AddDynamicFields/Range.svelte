@@ -4,8 +4,6 @@
 	import Input from '../Input/index.svelte';
 	import Label from '../Label.svelte';
 
-
-
 	interface Props {
 		label?: string;
 		errors?: any;
@@ -15,7 +13,7 @@
 
 	let {
 		label = '',
-		errors = [],
+		errors = $bindable([]),
 		range = $bindable({ min: '', max: '' }),
 		t
 	}: Props = $props();

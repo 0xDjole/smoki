@@ -7,7 +7,6 @@
 	import Label from '../Label.svelte';
 	import DropDownIcon from '../../utils/icons/dropdown.svg?raw';
 
-
 	interface Props {
 		value?: any;
 		options?: any;
@@ -24,7 +23,7 @@
 		options = [],
 		label = '',
 		labelThumbnail = null,
-		errors = [],
+		errors = $bindable([]),
 		t,
 		isRequired,
 		onSelect = (values) => {}

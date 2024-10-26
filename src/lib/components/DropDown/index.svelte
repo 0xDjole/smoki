@@ -19,7 +19,7 @@
 		options = [],
 		label = '',
 		labelThumbnail = null,
-		errors = [],
+		errors = $bindable([]),
 		isMultiSelect = false,
 		t,
 		isRequired = false,

@@ -23,7 +23,7 @@
 		value = $bindable(),
 		label = '',
 		labelThumbnail,
-		errors = [],
+		errors = $bindable([]),
 		allowTag = true,
 		zoom = 14
 	}: Props = $props();
@@ -57,7 +57,6 @@
 			});
 		}
 	});
-
 
 	// Function to update or create marker
 	function updateMarker(lat, lon, setMarker) {

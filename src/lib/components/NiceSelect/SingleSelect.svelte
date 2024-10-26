@@ -21,7 +21,7 @@
 		value = $bindable(null),
 		options = [],
 		label = '',
-		errors = [],
+		errors = $bindable([]),
 		disabled = false,
 		position = 'vertical',
 		ui = 'default',

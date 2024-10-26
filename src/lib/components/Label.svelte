@@ -20,7 +20,7 @@
 		label = '',
 		labelThumbnail = null,
 		isRequired,
-		errors = [],
+		errors = $bindable([]),
 		t,
 		size = 'sm'
 	}: Props = $props();

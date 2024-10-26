@@ -18,7 +18,7 @@
 	let {
 		label = '',
 		options = $bindable([]),
-		errors = [],
+		errors = $bindable([]),
 		type = 'text',
 		t
 	}: Props = $props();

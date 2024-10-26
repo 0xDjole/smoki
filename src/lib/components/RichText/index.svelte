@@ -19,7 +19,7 @@
 		onChange = (htmlValue) => {},
 		placeholder = 'Start typing...',
 		value = $bindable(''),
-		errors = [],
+		errors = $bindable([]),
 		label = '',
 		labelThumbnail,
 		minLength = 0,

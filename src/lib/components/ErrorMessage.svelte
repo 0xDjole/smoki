@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { fly, fade } from 'svelte/transition';
 
-	let { errors = [], t } = $props();
+	let { errors = $bindable([]), t } = $props();
 </script>
 
 {#if errors.length}

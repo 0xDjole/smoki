@@ -17,7 +17,7 @@
 		color = '#2196F3',
 		label = '',
 		labelThumbnail = null,
-		errors = [],
+		errors = $bindable([]),
 		t,
 		isRequired = false,
 		onChange = (isChecked) => {}

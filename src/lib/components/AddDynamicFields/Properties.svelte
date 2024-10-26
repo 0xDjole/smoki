@@ -23,7 +23,7 @@
 	let {
 		label = 'Custom fields',
 		value = $bindable(),
-		errors = [],
+		errors = $bindable([]),
 		fieldType,
 		addEntity,
 		t,
@@ -77,7 +77,7 @@
 			>
 
 			{#if value?.properties?.source}
-				{@render entities?.({ value: value.properties, })}
+				{@render entities?.({ value: value.properties })}
 
 				{#if value?.properties?.entities?.length}
 					<Switch {t} label="Is multiselect" bind:value={value.properties.isMultiSelect} />

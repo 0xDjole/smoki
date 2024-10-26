@@ -4,7 +4,6 @@
 	import DropDownIcon from '../../utils/icons/dropdown.svg?raw';
 	import SvgIcon from '../SvgIcon.svelte';
 
-
 	interface Props {
 		value: string | number | boolean;
 		defaultOption: any;
@@ -23,7 +22,7 @@
 		label = '',
 		labelThumbnail = null,
 		t,
-		errors = [],
+		errors = $bindable([]),
 		onChange = (value) => {}
 	}: Props = $props();
 

@@ -22,7 +22,7 @@
 		options = [],
 		label = '',
 		labelThumbnail = null,
-		errors = [],
+		errors = $bindable([]),
 		position = 'vertical',
 		ui = 'default',
 		isMultiSelect = false,

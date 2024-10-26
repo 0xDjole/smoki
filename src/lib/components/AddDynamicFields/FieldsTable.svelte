@@ -19,7 +19,7 @@
 		label = 'Custom fields',
 		fields = $bindable(),
 		field = $bindable(),
-		autofillOptions = [],
+		autofillOptions = $bindable([]),
 		defaultField,
 		isAddModalOpen = $bindable(false)
 	}: Props = $props();

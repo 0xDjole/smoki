@@ -1,6 +1,6 @@
 {
 	"name": "smoki",
-	"version": "0.0.209",
+	"version": "0.0.210",
 	"main": "dist/index.js",
 	"scripts": {
 		"build": "svelte-package",

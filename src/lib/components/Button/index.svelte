@@ -80,7 +80,7 @@
 			}
 		}}
 	>
-		children?.()}</button
+		{@render children?.()}</button
 	>
 {/if}
 

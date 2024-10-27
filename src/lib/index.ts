@@ -31,7 +31,6 @@ export { default as ErrorMessage } from './components/ErrorMessage.svelte';
 export { default as Loader } from './components/Loader.svelte';
 export { default as InfiniteScroll } from './components/InfiniteScroll.svelte';
 export { default as FakeScreen } from './components/FakeScreen.svelte';
-export { default as Back } from './components/Back.svelte';
 export { default as Label } from './components/Label.svelte';
 export { default as LocalizedText } from './components/LocalizedText/index.svelte';
 export { default as Calendar } from './components/Calendar/index.svelte';

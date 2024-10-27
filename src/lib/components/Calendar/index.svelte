@@ -15,7 +15,7 @@
 	}
 
 	let {
-		items = [],
+		items = $bindable([]),
 		centricDate = $bindable(),
 		selectDate,
 		manageModalOpened = $bindable(false),
@@ -30,15 +30,12 @@
 
 	let viewDays = $state(7);
 
-
 	let parsedItems = $state([]);
 
 	let displayItems = $state([]);
 	let lookedFrom = $state({});
 	let lookedFrom2 = $state({});
 	let currentTime = DateTime.local();
-
-
 
 	const getItemStyle = (item, index) => {
 		const fromDate = DateTime.fromISO(item.from);
@@ -69,9 +66,6 @@
 
 		return `${forprimarydFromDate} - ${forprimarydToDate}`;
 	};
-
-
-
 
 	const handleOverlapper = (item, index: number) => {
 		let fromDateTime = DateTime.fromISO(item.from);
@@ -146,21 +140,25 @@
 			viewDays = 7;
 		}
 	});
-	let previousSundayDate = $derived(centricDate.minus({ days: centricDate.weekday % 7 }).startOf('day'));
-	let viewDates = $derived(new Array(viewDays).fill(null).map((_, index) => {
-		let date: DateTime;
+	let previousSundayDate = $derived(
+		centricDate.minus({ days: centricDate.weekday % 7 }).startOf('day')
+	);
+	let viewDates = $derived(
+		new Array(viewDays).fill(null).map((_, index) => {
+			let date: DateTime;
 
-		if (viewDays >= 7) {
-			date = previousSundayDate.plus({ day: index });
-		} else {
-			date = centricDate;
-		}
-		return {
-			date,
-			isSelected: false,
-			isSelectable: false
-		};
-	}));
+			if (viewDays >= 7) {
+				date = previousSundayDate.plus({ day: index });
+			} else {
+				date = centricDate;
+			}
+			return {
+				date,
+				isSelected: false,
+				isSelectable: false
+			};
+		})
+	);
 	run(() => {
 		if (centricDate) {
 			displayItems = [];

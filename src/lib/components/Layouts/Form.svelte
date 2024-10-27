@@ -4,9 +4,6 @@
 	import Loader from '../Loader.svelte';
 	import Header from '../Header/index.svelte';
 
-
-
-
 	interface Props {
 		headerTitle?: string;
 		headerAction?: any;
@@ -17,6 +14,7 @@
 		goBack?: any;
 		isLoading?: boolean;
 		children?: import('svelte').Snippet;
+		rightHeader?: import('svelte').Snippet;
 	}
 
 	let {
@@ -28,7 +26,8 @@
 		bottomAction,
 		goBack = () => {},
 		isLoading = $bindable(false),
-		children
+		children,
+		rightHeader
 	}: Props = $props();
 
 	let headerActionModalOpen = $state(false);
@@ -72,7 +71,6 @@
 <Header>
 	{#snippet left()}
 		<Button
-			
 			kind="back"
 			onClick={() => {
 				goBack();
@@ -80,12 +78,13 @@
 		/>
 	{/snippet}
 	{#snippet middle()}
-		<span  class="title">{headerTitle}</span>
+		<span class="title">{headerTitle}</span>
 	{/snippet}
 	{#snippet right()}
-		<div class="right-header" >
+		<div class="right-header">
+			{@render rightHeader?.()}
 			{#if headerAction}
-				<Button size="small" kind="error" onClick={clickHeaderAction}>{headerActionName}</Button>
+				<Button kind="error" onClick={clickHeaderAction}>{headerActionName}</Button>
 			{/if}
 		</div>
 	{/snippet}
@@ -134,6 +133,6 @@
 	}
 
 	.right-header {
-		@apply flex-col sm:flex-row gap-2;
+		@apply flex gap-2;
 	}
 </style>

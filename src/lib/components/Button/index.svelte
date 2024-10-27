@@ -78,7 +78,9 @@
 			if (onClick) {
 				onClick(e);
 			}
-		}}>{@render children?.()}</button
+		}}
+	>
+		children?.()}</button
 	>
 {/if}
 

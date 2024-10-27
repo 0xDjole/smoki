@@ -17,7 +17,7 @@
 	}
 
 	let {
-		open = false,
+		open = $bindable(false),
 		duration = 0.8,
 		placement = 'right',
 		size = null,
@@ -37,13 +37,6 @@
 	let h = $state('100%');
 
 	let percentageX = $state(0);
-
-
-
-
-
-
-
 
 	function updatePosition() {
 		if (typeof window !== 'undefined' && targetElement) {
@@ -97,10 +90,11 @@
 			percentageX = 100;
 		}
 	});
-	let transform =
-		$derived(placement === 'right'
+	let transform = $derived(
+		placement === 'right'
 			? `transform: translate(${percentageX}%, 0);`
-			: `transform: translate(0, ${percentageX}%);`);
+			: `transform: translate(0, ${percentageX}%);`
+	);
 	let style = $derived(`--duration: ${duration}s; --size: ${size}; z-index: ${zIndex};
 	 ${transform} height: ${h}; width: ${w}; left: ${l}px; top: ${drawerTargetTop}px`);
 </script>

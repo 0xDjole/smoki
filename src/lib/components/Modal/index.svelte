@@ -37,7 +37,7 @@
 	<div
 		class="wrapper"
 		style={`z-index: ${zIndex};`}
-		transition:fade={{ duration: 200 }}
+		transition:fade={{ duration: 100 }}
 		on:click={(e) => {
 			if (e.target === e.currentTarget) onCancel();
 		}}
@@ -45,7 +45,7 @@
 		<div
 			class="modal"
 			style={`height: ${height}; top: ${top}; ${modalStyle}`}
-			transition:fly={{ y: 20, duration: 300 }}
+			transition:fly={{ y: 20, duration: 200 }}
 		>
 			<div class="close-button">
 				<Button
@@ -86,7 +86,7 @@
 	.modal {
 		@apply flex flex-col relative rounded-xl inset-0 z-40 bg-primary text-primary 
                border border-primary mx-auto shadow-xl max-w-[900px] w-[90%]
-               transform transition-transform duration-300;
+               transform transition-transform duration-100;
 	}
 
 	.content {

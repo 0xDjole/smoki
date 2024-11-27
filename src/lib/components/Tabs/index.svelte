@@ -44,16 +44,12 @@
 </div>
 
 <style type="text/postcss">
-	.tab-content {
-		@apply flex-1;
-	}
-
 	.tabs-container {
-		@apply flex flex-col w-full border border-gray-200 rounded-lg h-full;
+		@apply flex flex-col w-full border border-gray-200 rounded-lg h-full overflow-hidden;
 	}
 
 	.tab-list {
-		@apply flex border-b border-gray-200;
+		@apply flex border-b border-gray-200 flex-shrink-0;
 	}
 
 	.tab-button {
@@ -66,7 +62,7 @@
 		@apply text-blue-600 border-b-2 border-blue-600 bg-white;
 	}
 
-	.tab-panel {
-		@apply duration-200;
+	.tab-content {
+		@apply flex-1  overflow-hidden;
 	}
 </style>

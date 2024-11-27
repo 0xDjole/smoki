@@ -17,6 +17,7 @@ export { default as NiceSelect } from './components/NiceSelect/index.svelte';
 export { default as Search } from './components/Search/index.svelte';
 export { default as Switch } from './components/Switch/index.svelte';
 export { default as Thumbnail } from './components/Thumbnail/index.svelte';
+export { default as Tabs } from './components/Tabs/index.svelte';
 export { default as Input } from './components/Input/index.svelte';
 export { default as TextArea } from './components/TextArea/index.svelte';
 export { default as Map } from './components/Map/index.svelte';

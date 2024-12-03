@@ -1,6 +1,6 @@
 import './utils/styles.css';
 
-export { default as Pagination } from './components/Pagination.svelte';
+export { default as Pagination } from './components/Pagination/index.svelte';
 export { default as SvgIcon } from './components/SvgIcon.svelte';
 export { default as AddDynamicFields } from './components/AddDynamicFields/index.svelte';
 export { default as Button } from './components/Button/index.svelte';

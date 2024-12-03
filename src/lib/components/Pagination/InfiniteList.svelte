@@ -3,12 +3,11 @@
 
 	import { onDestroy, onMount, tick } from 'svelte';
 
-	import InfiniteScroll from './InfiniteScroll.svelte';
-	import Loader from './Loader.svelte';
+	import InfiniteScroll from '../InfiniteScroll.svelte';
+	import Loader from '../Loader.svelte';
 
 	let component = $state();
 	let listComponent = $state();
-
 
 	interface Props {
 		items?: any;

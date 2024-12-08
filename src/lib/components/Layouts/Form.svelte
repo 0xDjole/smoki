@@ -105,7 +105,7 @@
 
 <style type="text/postcss">
 	.layout {
-		@apply flex flex-col items-center bg-primary overflow-hidden h-screen;
+		@apply flex flex-col items-center bg-primary overflow-hidden h-full;
 		font-family: Arial, sans-serif;
 	}
 

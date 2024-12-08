@@ -68,52 +68,45 @@
 	><div></div>
 </Modal>
 
-<Header>
-	{#snippet left()}
-		<Button
-			kind="back"
-			onClick={() => {
-				goBack();
-			}}
-		/>
-	{/snippet}
-	{#snippet middle()}
-		<span class="title">{headerTitle}</span>
-	{/snippet}
-	{#snippet right()}
-		<div class="right-header">
-			{@render rightHeader?.()}
-			{#if headerAction}
-				<Button kind="error" onClick={clickHeaderAction}>{headerActionName}</Button>
-			{/if}
+<div style={isLoading ? 'opacity: 50%;' : ''} class="layout">
+	<Header>
+		{#snippet left()}
+			<Button
+				kind="back"
+				onClick={() => {
+					goBack();
+				}}
+			/>
+		{/snippet}
+		{#snippet middle()}
+			<span class="title">{headerTitle}</span>
+		{/snippet}
+		{#snippet right()}
+			<div class="right-header">
+				{@render rightHeader?.()}
+				{#if headerAction}
+					<Button kind="error" onClick={clickHeaderAction}>{headerActionName}</Button>
+				{/if}
+			</div>
+		{/snippet}
+	</Header>
+
+	{#if isLoading}
+		<div class="loader">
+			<Loader />
 		</div>
-	{/snippet}
-</Header>
+	{/if}
 
-{#if isLoading}
-	<div class="loader">
-		<Loader />
-	</div>
-{/if}
-
-<div class="layout">
-	<div style={isLoading ? 'opacity: 50%;' : ''} class={`form-wrap`}>
-		<div class="form">{@render children?.()}</div>
+	<div class="form-wrap">
+		{@render children?.()}
 	</div>
 	<Button size="full" style={`height: 50px`} onClick={clickBottomAction}>{bottomActionName}</Button>
 </div>
 
 <style type="text/postcss">
 	.layout {
-		@apply flex flex-col justify-center bg-primary overflow-hidden;
+		@apply flex flex-col items-center bg-primary overflow-hidden h-screen;
 		font-family: Arial, sans-serif;
-	}
-
-	.form {
-		@apply flex flex-col w-full p-5 gap-y-5;
-		@screen md {
-			@apply w-3/4;
-		}
 	}
 
 	.main-content {
@@ -121,7 +114,10 @@
 	}
 
 	.form-wrap {
-		@apply main-content h-full;
+		@apply w-full flex-1 overflow-scroll;
+		@screen md {
+			@apply w-3/4;
+		}
 	}
 
 	.loader {

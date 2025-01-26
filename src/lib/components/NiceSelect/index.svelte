@@ -19,7 +19,7 @@
 	let {
 		value = $bindable(null),
 		disabled = false,
-		options = [],
+		options = $bindable([]),
 		label = '',
 		labelThumbnail = null,
 		errors = $bindable([]),

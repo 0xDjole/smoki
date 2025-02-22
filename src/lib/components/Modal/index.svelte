@@ -4,33 +4,45 @@
 	import SvgIcon from '../SvgIcon.svelte';
 	import Button from '../Button/index.svelte';
 
+	type ModalSize = 'sm' | 'md' | 'lg' | 'xl' | 'full';
+
 	interface Props {
 		title?: string;
 		showModal: any;
-		height?: string;
-		top?: string;
 		zIndex?: number;
-		confirmText?: any;
-		modalStyle?: string;
-		confirm?: any;
+		confirmText?: string | null;
+		class?: string;
+		size?: ModalSize;
+		confirm?: () => void;
 		disabled?: boolean;
-		onCancel: any;
+		onCancel: () => void;
 		children?: import('svelte').Snippet;
 	}
 
 	let {
 		title = '',
 		showModal = $bindable(),
-		height = 'calc(100vh - 30%)',
-		top = '0%',
 		zIndex = 200,
 		confirmText = null,
-		modalStyle = '',
+		class: className = '',
+		size = 'md',
 		confirm = () => {},
 		disabled = false,
 		onCancel,
 		children
 	}: Props = $props();
+
+	// Define widths for each size
+	const sizeWidths = {
+		sm: '32rem', // Small size
+		md: '48rem', // Medium size
+		lg: '64rem', // Large size
+		xl: '80rem', // Extra large size
+		full: '95vw' // Full-screen size
+	};
+
+	// Get the width based on the size prop
+	const modalWidth = sizeWidths[size];
 </script>
 
 {#if showModal}
@@ -41,34 +53,36 @@
 		on:click={(e) => {
 			if (e.target === e.currentTarget) onCancel();
 		}}
+		on:keydown={(e) => {
+			if (e.key === 'Escape') onCancel();
+		}}
+		role="dialog"
+		aria-modal="true"
+		aria-labelledby={title ? 'modal-title' : undefined}
 	>
 		<div
 			class="modal"
-			style={`height: ${height}; top: ${top}; ${modalStyle}`}
+			style={`
+        width: 100%;
+        max-width: ${modalWidth};
+        min-height: ${size === 'full' ? '90vh' : '400px'};
+      `}
 			transition:fly={{ y: 20, duration: 200 }}
 		>
 			<div class="close-button">
-				<Button
-					kind="close"
-					onClick={() => {
-						onCancel();
-					}}
-				/>
+				<Button kind="close" onClick={() => onCancel()} aria-label="Close modal" />
 			</div>
-
 			{#if title}
 				<div class="top-bar">
-					<div class="header-title">{title}</div>
+					<h2 id="modal-title" class="header-title">{title}</h2>
 				</div>
 			{/if}
-
 			<div class="content">
 				{@render children?.()}
 			</div>
-
 			{#if confirmText}
 				<div class="options">
-					<Button {disabled} size={'large'} onClick={() => confirm()}>
+					<Button {disabled} size="large" onClick={() => confirm()}>
 						{confirmText}
 					</Button>
 				</div>
@@ -79,43 +93,78 @@
 
 <style type="text/postcss">
 	.wrapper {
-		@apply justify-center bg-black/60 backdrop-blur-sm fixed top-0 left-0 w-full h-full
-               flex items-center;
+		position: fixed;
+		inset: 0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		background-color: rgba(0, 0, 0, 0.6);
+		backdrop-filter: blur(4px);
+		overflow-y: auto;
+		padding: 1rem;
 	}
-
 	.modal {
-		@apply flex flex-col relative rounded-xl inset-0 z-40 bg-primary text-primary 
-               border border-primary mx-auto shadow-xl max-w-[900px] w-[90%]
-               transform transition-transform duration-100;
+		display: flex;
+		flex-direction: column;
+		position: relative;
+		border-radius: 0.75rem;
+		background-color: var(--primary-background-color);
+		color: var(--primary-text-color);
+		border: 1px solid var(--primary-border-color);
+		box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+		transform: translateY(0);
+		transition: transform 0.1s ease;
 	}
-
 	.content {
-		@apply flex flex-col w-full flex-grow overflow-y-auto px-6 py-4;
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		flex-grow: 1;
+		overflow-y: auto;
+		padding: 1rem;
 	}
-
 	.options {
-		@apply px-6 py-4 border-t border-primary
-               bg-primary rounded-b-xl;
+		padding: 1rem;
+		border-top: 1px solid var(--primary-border-color);
+		background-color: var(--primary-background-color);
+		border-bottom-left-radius: 0.75rem;
+		border-bottom-right-radius: 0.75rem;
 	}
-
 	.header-title {
-		@apply w-full text-2xl font-bold text-center py-4 truncate mx-auto;
-		max-width: calc(100% - 50px);
+		width: 100%;
+		font-size: 1.25rem;
+		font-weight: bold;
+		text-align: center;
+		padding: 0.75rem 0;
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
 	}
-
 	.top-bar {
-		@apply flex justify-between items-center;
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 	}
-
 	.close-button {
-		@apply absolute top-3 right-3 md:top-4 md:right-4 cursor-pointer
-               transition-transform hover:scale-105 active:scale-95;
+		position: absolute;
+		top: 0.5rem;
+		right: 0.5rem;
+		cursor: pointer;
+		transition: transform 0.1s ease;
+	}
+	.close-button:hover {
+		transform: scale(1.05);
+	}
+	.close-button:active {
+		transform: scale(0.95);
 	}
 
-	/* Media queries for responsive sizing */
-	@media (min-width: 768px) {
+	/* Responsive adjustments */
+	@media (max-width: 640px) {
 		.modal {
-			@apply w-[80%];
+			width: 100% !important;
+			max-width: none !important;
+			min-height: auto;
 		}
 	}
 </style>
